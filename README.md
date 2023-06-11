@@ -9,7 +9,6 @@ TypeDI is a [dependency injection](https://en.wikipedia.org/wiki/Dependency_inje
 
 Main features includes:
 
-- property based injection
 - constructor based injection
 - singleton and transient services
 - support for multiple DI containers
