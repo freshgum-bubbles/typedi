@@ -2,8 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2018",
-    "lib": ["es2018"],
+    "target": "ESNext",
+    "lib": ["es2017"],
     "outDir": "build/node",
     "rootDirs": ["./src"],
     "strict": true,
