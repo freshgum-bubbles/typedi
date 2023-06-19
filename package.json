@@ -27,7 +27,7 @@
     "build:es2015": "tsc --project tsconfig.prod.esm2015.json",
     "build:esm5": "tsc --project tsconfig.prod.esm5.json",
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
-    "build:umd": "rollup --config rollup.config.js",
+    "build:umd": "npm run build:esm5 && rollup --config rollup.config.js",
     "build:types": "tsc --project tsconfig.prod.types.json",
     "prettier:fix": "prettier --write \"**/*.{ts,md}\"",
     "prettier:check": "prettier --check \"**/*.{ts,md}\"",
