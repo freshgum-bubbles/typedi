@@ -1,8 +1,8 @@
 {
   "name": "@freshgum/typedi",
   "version": "0.10.0",
-  "description": "Dependency injection for TypeScript.",
-  "author": "TypeStack contributors",
+  "description": "Dependency injection for TypeScript.  Fork of TypeDI.",
+  "author": "freshgum",
   "license": "MIT",
   "sideEffects": false,
   "main": "./cjs/index.js",
