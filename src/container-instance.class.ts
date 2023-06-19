@@ -15,8 +15,7 @@ import { isInjectedFactory } from './utils/is-inject-identifier.util';
 import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
 
-// todo: make const
-export enum ServiceIdentifierLocation {
+export const enum ServiceIdentifierLocation {
   Local = 'local',
   Parent = 'parent',
   None = 'none'
