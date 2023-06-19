@@ -1,4 +1,3 @@
-import { Console } from 'console';
 import 'reflect-metadata';
 import { Container } from '../../../src/index';
 import { Service } from '../../../src/decorators/service.decorator';
@@ -8,7 +7,7 @@ describe('github issues > #53 Token-based services are cached in the Global cont
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
 
   it('should work properly', function () {
-    @Service()
+    @Service([])
     class QuestionRepository {
       userName: string;
 
@@ -19,9 +18,9 @@ describe('github issues > #53 Token-based services are cached in the Global cont
 
     const QuestionControllerToken = new Token<QuestionControllerImpl>('QCImpl');
 
-    @Service({ id: QuestionControllerToken })
+    @Service({ id: QuestionControllerToken }, [QuestionRepository])
     class QuestionControllerImpl {
-      constructor(protected questionRepository: QuestionRepository) {}
+      constructor(protected questionRepository: QuestionRepository) { }
 
       save(name: string) {
         if (name) this.questionRepository.userName = name;

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Constructable, Container } from '../src/index';
+import { Container } from '../src/index';
 import { Service } from '../src/decorators/service.decorator';
 import { Token } from '../src/token.class';
 import { ServiceNotFoundError } from '../src/error/service-not-found.error';
@@ -123,6 +123,7 @@ describe('Container', function () {
   describe('remove', function () {
     it('should be able to remove previously registered services', function () {
       class TestService {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         constructor() {}
       }
 
@@ -141,14 +142,14 @@ describe('Container', function () {
       Container.remove(['test1-service', 'test2-service']);
 
       expect(Container.get(TestService)).toBe(testService);
-      expect(() => Container.get<TestService>('test1-service')).toThrowError(ServiceNotFoundError);
-      expect(() => Container.get<TestService>('test2-service')).toThrowError(ServiceNotFoundError);
+      expect(() => Container.get<TestService>('test1-service')).toThrow(ServiceNotFoundError);
+      expect(() => Container.get<TestService>('test2-service')).toThrow(ServiceNotFoundError);
     });
   });
 
   describe('reset', function () {
     it('should support container reset', () => {
-      @Service()
+      @Service([])
       class TestService {
         constructor(public name: string = 'frank') {}
       }
@@ -162,82 +163,6 @@ describe('Container', function () {
       Container.reset({ strategy: 'resetValue' });
       expect(Container.get(TestService)).not.toBe(testService);
       expect(Container.get(TestService).name).toBe('frank');
-    });
-  });
-
-  describe('registerHandler', function () {
-    it('should have ability to pre-specify class initialization parameters', function () {
-      @Service()
-      class ExtraService {
-        constructor(public luckyNumber: number, public message: string) {}
-      }
-
-      Container.registerHandler({
-        object: ExtraService,
-        index: 0,
-        value: containerInstance => 777,
-      });
-
-      Container.registerHandler({
-        object: ExtraService,
-        index: 1,
-        value: containerInstance => 'hello parameter',
-      });
-
-      expect(Container.get(ExtraService).luckyNumber).toBe(777);
-      expect(Container.get(ExtraService).message).toBe('hello parameter');
-    });
-
-    it('should have ability to pre-specify initialized class properties', function () {
-      function CustomInject(value: any) {
-        return function (target: any, propertyName: string) {
-          Container.registerHandler({
-            object: target,
-            propertyName: propertyName,
-            value: containerInstance => value,
-          });
-        };
-      }
-
-      @Service()
-      class ExtraService {
-        @CustomInject(888)
-        badNumber: number;
-
-        @CustomInject('bye world')
-        byeMessage: string;
-      }
-
-      expect(Container.get(ExtraService).badNumber).toBe(888);
-      expect(Container.get(ExtraService).byeMessage).toBe('bye world');
-    });
-
-    it('should inject the right value in subclass constructor params', function () {
-      function CustomInject(value: any) {
-        return function (target: Constructable<any>, propertyName: string, index: number) {
-          Container.registerHandler({
-            object: target,
-            propertyName: propertyName,
-            index: index,
-            value: containerInstance => value,
-          });
-        };
-      }
-
-      @Service()
-      class SuperService {
-        constructor(@CustomInject(888) readonly num: number) {}
-      }
-
-      @Service()
-      class SubService extends SuperService {
-        constructor(@CustomInject(666) num: number) {
-          super(num);
-        }
-      }
-
-      expect(Container.get(SuperService).num).toBe(888);
-      expect(Container.get(SubService).num).toBe(666);
     });
   });
 
@@ -260,7 +185,7 @@ describe('Container', function () {
     });
 
     it('should support factory classes', function () {
-      @Service()
+      @Service([])
       class Engine {
         public serialNumber = 'A-123';
       }
@@ -269,7 +194,7 @@ describe('Container', function () {
         constructor(public engine: Engine) {}
       }
 
-      @Service()
+      @Service([Engine])
       class CarFactory {
         constructor(private engine: Engine) {}
 
@@ -318,14 +243,14 @@ describe('Container', function () {
     it('should call dispose function on removed service', () => {
       const destroyFnMock = jest.fn();
       const destroyPropertyFnMock = jest.fn();
-      @Service()
+      @Service([])
       class MyServiceA {
         dispose() {
           destroyFnMock();
         }
       }
 
-      @Service()
+      @Service([])
       class MyServiceB {
         public dispose = destroyPropertyFnMock;
       }
@@ -338,8 +263,8 @@ describe('Container', function () {
       const instanceATwo = Container.get(MyServiceA);
       const instanceBTwo = Container.get(MyServiceB);
 
-      expect(destroyFnMock).toBeCalledTimes(1);
-      expect(destroyPropertyFnMock).toBeCalledTimes(1);
+      expect(destroyFnMock).toHaveBeenCalledTimes(1);
+      expect(destroyPropertyFnMock).toHaveBeenCalledTimes(1);
 
       expect(instanceAOne).toBeInstanceOf(MyServiceA);
       expect(instanceATwo).toBeInstanceOf(MyServiceA);
@@ -351,7 +276,7 @@ describe('Container', function () {
     });
 
     it('should be able to destroy services without destroy function', () => {
-      @Service()
+      @Service([])
       class MyService {}
 
       const instanceA = Container.get(MyService);
@@ -370,14 +295,14 @@ describe('Container', function () {
     it('should call dispose function on removed service', () => {
       const destroyFnMock = jest.fn();
       const destroyPropertyFnMock = jest.fn();
-      @Service()
+      @Service([])
       class MyServiceA {
         dispose() {
           destroyFnMock();
         }
       }
 
-      @Service()
+      @Service([])
       class MyServiceB {
         public dispose = destroyPropertyFnMock();
       }
@@ -385,24 +310,24 @@ describe('Container', function () {
       Container.get(MyServiceA);
       Container.get(MyServiceB);
 
-      expect(() => Container.remove(MyServiceA)).not.toThrowError();
-      expect(() => Container.remove(MyServiceB)).not.toThrowError();
+      expect(() => Container.remove(MyServiceA)).not.toThrow();
+      expect(() => Container.remove(MyServiceB)).not.toThrow();
 
-      expect(destroyFnMock).toBeCalledTimes(1);
-      expect(destroyPropertyFnMock).toBeCalledTimes(1);
+      expect(destroyFnMock).toHaveBeenCalledTimes(1);
+      expect(destroyPropertyFnMock).toHaveBeenCalledTimes(1);
 
-      expect(() => Container.get(MyServiceA)).toThrowError(ServiceNotFoundError);
-      expect(() => Container.get(MyServiceB)).toThrowError(ServiceNotFoundError);
+      expect(() => Container.get(MyServiceA)).toThrow(ServiceNotFoundError);
+      expect(() => Container.get(MyServiceB)).toThrow(ServiceNotFoundError);
     });
 
     it('should be able to destroy services without destroy function', () => {
-      @Service()
+      @Service([])
       class MyService {}
 
       Container.get(MyService);
 
-      expect(() => Container.remove(MyService)).not.toThrowError();
-      expect(() => Container.get(MyService)).toThrowError(ServiceNotFoundError);
+      expect(() => Container.remove(MyService)).not.toThrow();
+      expect(() => Container.get(MyService)).toThrow(ServiceNotFoundError);
     });
   });
 });
