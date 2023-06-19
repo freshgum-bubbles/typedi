@@ -18,6 +18,17 @@ export default {
       sourcemap: true,
       plugins: [terser()],
     },
+    {
+      format: 'es',
+      file: 'build/bundles/typedi.mjs',
+      sourcemap: true,
+    },
+    {
+      format: 'es',
+      file: 'build/bundles/typedi.min.mjs',
+      sourcemap: true,
+      plugins: [terser()],
+    }
   ],
   plugins: [commonjs(), nodeResolve()],
 };
