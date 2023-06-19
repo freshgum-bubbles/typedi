@@ -5,6 +5,8 @@
 [![npm version](https://badge.fury.io/js/typedi.svg)](https://badge.fury.io/js/typedi)
 [![Dependency Status](https://david-dm.org/typestack/typedi.svg)](https://david-dm.org/typestack/typedi)
 
+***Note: The current documentation (including any below) is completely outdated and will not work with the current API.***
+
 TypeDI is a [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) tool for TypeScript and JavaScript. With it you can build well-structured and easily testable applications in Node or in the browser.
 
 Main features includes:
