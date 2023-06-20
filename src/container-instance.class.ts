@@ -34,7 +34,7 @@ interface ManyServicesMetadata {
  * One container is ContainerInstance.
  */
 export class ContainerInstance implements Disposable {
-  /** Container instance id. */
+  /** The ID of this container. This will always be unique. */
   public readonly id!: ContainerIdentifier;
 
   /** Metadata for all registered services in this container. */
@@ -51,8 +51,6 @@ export class ContainerInstance implements Disposable {
   /**
    * Indicates if the container has been disposed or not.
    * Any function call should fail when called after being disposed.
-   *
-   * NOTE: Currently not in use
    */
   public disposed: boolean = false;
 
@@ -62,6 +60,14 @@ export class ContainerInstance implements Disposable {
    */
   public static defaultContainer = new ContainerInstance("default");
 
+  /**
+   * Create a ContainerInstance.
+   * 
+   * @param id The ID of the container to create.
+   * @param parent The parent of the container to create.
+   * The parent is used for resolving identifiers which are
+   * not present in this container.
+   */
   protected constructor (id: ContainerIdentifier, public parent?: ContainerInstance) {
     this.id = id;
   }
@@ -73,6 +79,10 @@ export class ContainerInstance implements Disposable {
    * If recursive mode is enabled, the symbol is not available locally, and we have a parent,
    * we tell the parent to search its tree recursively too.
    * If the container tree is substantial, this operation may affect performance.
+   * 
+   * @param identifier The identifier of the service to look up.
+   * 
+   * @returns Whether the identifier is present in the current container, or its parent.
    */
   public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
     this.throwIfDisposed();
@@ -86,6 +96,13 @@ export class ContainerInstance implements Disposable {
    * If recursive mode is enabled, the symbol is not available locally, and we have a parent,
    * we tell the parent to search its tree recursively too.
    * If the container tree is substantial, this operation may affect performance.
+   * 
+   * @param identifier The identifier of the service to look up.
+   * 
+   * @returns A ServiceIdentifierLocation.
+   *  - If the identifier cannot be found, `ServiceIdentifierLocation.None`.
+   *  - If the identifier is found locally, `ServiceIdentifierLocation.Local`.
+   *  - If the identifier is found upstream, `ServiceIdentifierLocation.Parent.`
    */
   protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>): ServiceIdentifierLocation {
     this.throwIfDisposed();
@@ -103,6 +120,19 @@ export class ContainerInstance implements Disposable {
     return ServiceIdentifierLocation.None;
   }
 
+  /**
+   * Get the value for the identifier in the current container.
+   * If the identifier cannot be resolved locally, the parent tree
+   * (if present) is recursively searched until a match is found
+   * (or the tree is exhausted).
+   * 
+   * @param identifier The identifier to get the value of.
+   * 
+   * @returns The value of the identifier in the current scope.
+   * 
+   * @throws ServiceNotFoundError
+   * This exception is thrown if the identifier cannot be found in the tree.
+   */
   public get<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T {
     const response = this.getOrNull<T>(identifier, recursive);
 
@@ -113,7 +143,20 @@ export class ContainerInstance implements Disposable {
     return response as T;
   }
 
-  /** Resolve the metadata for the given identifier.  Returns null if no metadata could be found. */
+  /** 
+   * Resolve the metadata for the given identifier.  Returns null if no metadata could be found. 
+   * 
+   * @param identifier The identifier to resolve metadata for.
+   * @param recursive Whether the lookup operation is recursive.
+   * 
+   * @returns 
+   * If the identifier is found, a tuple is returned consisting of the following:
+   *   1. The metadata for the given identifier, if found.
+   *   2. The location from where the metadata was returned.
+   *   `ServiceIdentifierLocation.Parent` is returned if the identifier was found upstream.
+   * 
+   * If an identifier cannot be found, `null` is returned.
+   */
   protected resolveMetadata<T = unknown> (identifier: ServiceIdentifier<T>, recursive: boolean): readonly [ServiceMetadata<T>, ServiceIdentifierLocation] | null {
     this.throwIfDisposed();
 
@@ -150,6 +193,10 @@ export class ContainerInstance implements Disposable {
    * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
    * 
    * To preserve compatibility with TypeDI, recursive is set to false by default.
+   * 
+   * @param identifier The identifier to get the value of.
+   * 
+   * @returns The resolved value for the given metadata, or `null` if it could not be found.
    */
   public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = false): T | null {
     this.throwIfDisposed();
@@ -229,7 +276,14 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets all instances registered in the container of the given service identifier.
    * Used when service defined with multiple: true flag.
-   * If none can be found, an error is thrown.
+   * 
+   * @param identifier The identifier to resolve.
+   * 
+   * @returns An array containing the service instances for the given
+   * identifier.
+   * 
+   * @throws ServiceNotFoundError
+   * This exception is thrown if a value could not be found for the given identifier.
    */
   public getMany<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T[] {
     const response = this.getManyOrNull(identifier, recursive);
@@ -244,6 +298,10 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets all instances registered in the container of the given service identifier.
    * Used when service defined with multiple: true flag.
+   * 
+   * @param identifier The identifier to resolve.
+   * 
+   * @returns An array containing the service instances for the given identifier.
    * If none can be found, `null` is returned.
    */
   public getManyOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T[] | null {
@@ -280,12 +338,25 @@ export class ContainerInstance implements Disposable {
   /**
    * Add a service to the container using the provided options, along with
    * a pre-wrapped list of dependencies.
+   * 
+   * _This is mainly for internal use._
+   * 
+   * @param serviceOptions The options for the service to add to the container.
+   * @param precompiledDependencies A precompiled list of dependencies in `TypeWrapper` form for the given service.
+   * 
+   * @returns The identifier of the given service in the container.
+   * This can then be passed to `.get` to resolve the identifier.
    */
   public set<T = unknown>(serviceOptions: Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies: TypeWrapper[]): ServiceIdentifier;
 
   /**
    * Add a service to the container using the provided options, containing
    * all information about the new service including its dependencies.
+   * 
+   * @param serviceOptions The options for the service to add to the container.
+   * 
+   * @returns The identifier of the given service in the container.
+   * This can then be passed to `.get` to resolve the identifier.
    */
   public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }): ServiceIdentifier;
 
@@ -383,7 +454,11 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
-   * Removes services with a given service identifiers.
+   * Removes services with the given list of service identifiers.
+   * 
+   * @param identifierOrIdentifierArray The list of service identifiers to remove from the container.
+   * 
+   * @returns The current `ContainerInstance` instance.
    */
   public remove(identifierOrIdentifierArray: ServiceIdentifier | ServiceIdentifier[]): this {
     this.throwIfDisposed();
@@ -404,6 +479,12 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets a separate container instance for the given instance id.
    * Optionally, a parent can be passed, which will act as an upstream resolver for the container.
+   * 
+   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * @param parent The parent of the container.
+   * 
+   * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
+   * if one already exists.
    */
   public static of(containerId: ContainerIdentifier = 'default', parent = ContainerInstance.defaultContainer): ContainerInstance {
     if (containerId === 'default') {
@@ -430,6 +511,22 @@ export class ContainerInstance implements Disposable {
     return container;
   }
 
+  /**
+   * Gets a separate container instance for the given instance id.
+   * 
+   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * 
+   * @example
+   * ```
+   * const newContainer = Container.of('foo');
+   * 
+   * @Service({ container: newContainer }, [])
+   * class MyService {}
+   * ```
+   * 
+   * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
+   * if one already exists.
+   */
   public of(containerId?: ContainerIdentifier): ContainerInstance {
     this.throwIfDisposed();
 
@@ -440,6 +537,11 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Create a registry with the specified ID, with this instance as its parent.
+   * 
+   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * 
+   * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
+   * if one already exists.
    */
   public ofChild (containerId?: ContainerIdentifier) {
     return ContainerInstance.of(containerId, this);
