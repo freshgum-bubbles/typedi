@@ -67,8 +67,6 @@ export function Service<T>(
   maybeDependencies?: AnyInjectIdentifier[]
 ): ClassDecorator {
   return targetConstructor => {
-    const { defaultContainer } = ContainerInstance;
-
     if (optionsOrDependencies == null) {
       // todo: more info in these error messages!!!
       throw new Error('The required configuration was not passed.');
