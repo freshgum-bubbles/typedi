@@ -68,7 +68,7 @@ export class ContainerInstance implements Disposable {
    * The parent is used for resolving identifiers which are
    * not present in this container.
    */
-  protected constructor (id: ContainerIdentifier, public parent?: ContainerInstance) {
+  protected constructor (id: ContainerIdentifier, public readonly parent?: ContainerInstance) {
     this.id = id;
   }
 
