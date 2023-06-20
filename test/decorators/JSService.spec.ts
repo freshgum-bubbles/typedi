@@ -80,4 +80,8 @@ describe('JSService decorator', () => {
         
         const myService: MyService = Container.get(MyService);
     });
+
+    it('should throw an error if the overload is incorrect', () => {
+        expect(() => JSService(undefined, undefined)).toThrow();
+    });
 });
