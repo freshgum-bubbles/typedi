@@ -14,6 +14,9 @@ import { InjectedFactory } from './types/inject-identifier.type';
 import { isInjectedFactory } from './utils/is-inject-identifier.util';
 import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
+import { Service } from './decorators/service.decorator';
+import { BUILT_INS } from './builtins.const';
+import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error';
 
 export const enum ServiceIdentifierLocation {
   Local = 'local',
@@ -284,7 +287,8 @@ export class ContainerInstance implements Disposable {
    * Add a service to the container using the provided options, containing
    * all information about the new service including its dependencies.
    */
-  public set<T = unknown>(serviceOptions: ServiceOptions<T>): ServiceIdentifier;
+  public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }): ServiceIdentifier;
+
   public set<T = unknown>(serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies?: TypeWrapper[]): ServiceIdentifier {
     this.throwIfDisposed();
 
@@ -312,14 +316,14 @@ export class ContainerInstance implements Disposable {
      * or from the dependencies list of the service options object, which must then be compiled to a list of type wrappers.
      */
     const dependencies: TypeWrapper[] = 
-      precompiledDependencies ?? (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map(resolveToTypeWrapper) ?? [];
+      precompiledDependencies ?? (serviceOptions as ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }).dependencies.map(resolveToTypeWrapper) ?? [];
 
     const newMetadata: ServiceMetadata<T> = {
       /**
        * Typescript cannot understand that if ID doesn't exists then type must exists based on the
        * typing so we need to explicitly cast this to a `ServiceIdentifier`
        */
-      id: ((serviceOptions as any).id || (serviceOptions as any).type) as ServiceIdentifier,
+      id: ((serviceOptions as any).id ?? (serviceOptions as any).type) as ServiceIdentifier,
       type: null,
       factory: undefined,
       value: EMPTY_VALUE,
@@ -531,7 +535,7 @@ export class ContainerInstance implements Disposable {
      */
     if (!factoryMeta && serviceMetadata.type) {
       const constructableTargetType: Constructable<unknown> = serviceMetadata.type;
-      const parameters = this.getConstructorParameters(serviceMetadata);
+      const parameters = this.getConstructorParameters(serviceMetadata, true);
       value = new constructableTargetType(...parameters);
     }
 
@@ -548,7 +552,7 @@ export class ContainerInstance implements Disposable {
     return value;
   }
 
-  private getConstructorParameters<T> ({ dependencies }: ServiceMetadata<T>): unknown[] {
+  private getConstructorParameters<T> ({ dependencies }: ServiceMetadata<T>, guardBuiltIns?: boolean): unknown[] {
     /** 
      * Firstly, check if the metadata declares any dependencies.
      */
@@ -562,7 +566,7 @@ export class ContainerInstance implements Disposable {
      * Therefore, it can be safely assumed that if the key is present, the correct
      * data will also be present.
      */
-    return dependencies.map(wrapper => this.resolveTypeWrapper(wrapper));
+    return dependencies.map(wrapper => this.resolveTypeWrapper(wrapper, guardBuiltIns));
   }
 
   private runInjectedFactory (factory: InjectedFactory): unknown {
@@ -575,7 +579,7 @@ export class ContainerInstance implements Disposable {
     return returnedValue;
   }
 
-  private resolveTypeWrapper (wrapper: TypeWrapper) {
+  private resolveTypeWrapper (wrapper: TypeWrapper, guardBuiltIns = false) {
     if (wrapper.isFactory) {
       return this.runInjectedFactory(wrapper.factory);
     }
@@ -590,7 +594,11 @@ export class ContainerInstance implements Disposable {
     const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
 
     if (resolved == null) {
-      throw new Error('The type could not be resolved.');
+      throw new Error(`A value of type "${resolved}" could not be resolved.`);
+    }
+
+    if (guardBuiltIns && BUILT_INS.includes(resolved as any)) {
+      throw new CannotInstantiateBuiltInError((resolved as any)?.name ?? resolved);
     }
 
     /**
