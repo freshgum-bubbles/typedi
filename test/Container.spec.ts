@@ -333,4 +333,43 @@ describe('Container', function () {
       expect(() => Container.get(MyService)).toThrow(ServiceNotFoundError);
     });
   });
+
+  describe('Container.getOrNull', () => {
+    it('either returns the resolved identifier or null', () => {
+      /** The service isn't decorated with `@Service` to make it unknown to the injector. */
+      class UnknownService { }
+
+      expect(Container.has(UnknownService)).toStrictEqual(false);
+      expect(Container.getOrNull(UnknownService)).toStrictEqual(null);
+      expect(Container.getOrNull(class { })).toStrictEqual(null);
+    });
+  });
+
+  describe('Container.getManyOrNull', () => {
+    it('should work correctly', () => {
+      /** The service isn't decorated with `@Service` to make it unknown to the injector. */
+      class UnknownService { }
+
+      expect(Container.has(UnknownService)).toStrictEqual(false);
+      expect(Container.getManyOrNull(UnknownService)).toStrictEqual(null);
+      expect(Container.getManyOrNull(class { })).toStrictEqual(null);
+    });
+  });
+
+  describe('Container.ofChild', () => {
+    it('should not attach new symbols to parents, and should resolve as expected', () => {
+      const fooContainer = Container.ofChild('ofChild');
+
+      @Service({ container: fooContainer }, [])
+      class ValueService {
+        getValue() {
+          return 42;
+        }
+      }
+
+      expect(Container.has(ValueService)).toStrictEqual(false);
+      expect(fooContainer.has(ValueService)).toStrictEqual(true);
+      expect(fooContainer.get(ValueService).getValue()).toStrictEqual(42);
+    });
+  });
 });
