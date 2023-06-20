@@ -14,6 +14,8 @@ import { formatClassName } from '../utils/format-class-name';
 import { resolveToTypeWrapper } from '../utils/resolve-to-type-wrapper.util';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface';
 import { SERVICE_METADATA_DEFAULTS } from '../service-defaults.const';
+import { BUILT_INS } from '../builtins.const';
+import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -140,17 +142,25 @@ export function Service<T>(
      * if they are invalid, instead of when the service is injected.
      */
     wrappedDependencies.forEach((wrapper, index) => {
-      if (wrapper.isFactory) {
+      const { eagerType, isFactory } = wrapper;
+
+      if (isFactory) {
         return;
       }
 
-      if (wrapper.eagerType !== null) {
+      if (eagerType !== null) {
         const type = typeof wrapper;
 
         if (type !== 'function' && type !== 'object' && type !== 'string') {
           throw new Error(
             `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
           );
+        } else if (metadata.factory == null && BUILT_INS.includes(eagerType as any)) {
+          /**
+           * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
+           * without also holding a factory to manually create an instance of the constructor.
+           */
+          throw new CannotInstantiateBuiltInError((eagerType as any)?.name ?? eagerType);
         }
       }
     });
