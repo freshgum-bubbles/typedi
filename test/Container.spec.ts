@@ -378,7 +378,7 @@ describe('Container', function () {
 
       expect(Container.has(AwesomeService)).toStrictEqual(true);
       expect(Container.getManyOrNull(AwesomeService)).not.toBe(null);
-      expect(Container.getManyOrNull(AwesomeService)[0].getValue()).toStrictEqual(42);
+      expect(Container.getManyOrNull(AwesomeService)![0].getValue()).toStrictEqual(42);
     });
   });
 

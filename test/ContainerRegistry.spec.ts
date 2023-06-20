@@ -116,7 +116,7 @@ describe('ContainerRegistry', () => {
 
         it('should wait for the container\'s "dispose" function', () => {
             const fakeDispose = jest.fn();
-            let resolve_: Function, resolved = false;
+            let resolve_!: Function, resolved = false;
 
             fakeDispose.mockReturnValue(new Promise (resolve => {
                 resolve_ = (x: any) => {
