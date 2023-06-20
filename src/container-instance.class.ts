@@ -101,6 +101,9 @@ export class ContainerInstance implements Disposable {
    * @param identifier The identifier of the service to look up.
    * 
    * @returns Whether the identifier is present in the current container, or its parent.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
     this[THROW_IF_DISPOSED]();
@@ -121,6 +124,9 @@ export class ContainerInstance implements Disposable {
    *  - If the identifier cannot be found, `ServiceIdentifierLocation.None`.
    *  - If the identifier is found locally, `ServiceIdentifierLocation.Local`.
    *  - If the identifier is found upstream, `ServiceIdentifierLocation.Parent.`
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>): ServiceIdentifierLocation {
     this[THROW_IF_DISPOSED]();
@@ -150,6 +156,9 @@ export class ContainerInstance implements Disposable {
    * 
    * @throws ServiceNotFoundError
    * This exception is thrown if the identifier cannot be found in the tree.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public get<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T {
     const response = this.getOrNull<T>(identifier, recursive);
@@ -174,6 +183,9 @@ export class ContainerInstance implements Disposable {
    *   `ServiceIdentifierLocation.Parent` is returned if the identifier was found upstream.
    * 
    * If an identifier cannot be found, `null` is returned.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   protected resolveMetadata<T = unknown> (identifier: ServiceIdentifier<T>, recursive: boolean): readonly [ServiceMetadata<T>, ServiceIdentifierLocation] | null {
     this[THROW_IF_DISPOSED]();
@@ -215,6 +227,9 @@ export class ContainerInstance implements Disposable {
    * @param identifier The identifier to get the value of.
    * 
    * @returns The resolved value for the given metadata, or `null` if it could not be found.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = false): T | null {
     this[THROW_IF_DISPOSED]();
@@ -302,6 +317,9 @@ export class ContainerInstance implements Disposable {
    * 
    * @throws ServiceNotFoundError
    * This exception is thrown if a value could not be found for the given identifier.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public getMany<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T[] {
     const response = this.getManyOrNull(identifier, recursive);
@@ -321,6 +339,9 @@ export class ContainerInstance implements Disposable {
    * 
    * @returns An array containing the service instances for the given identifier.
    * If none can be found, `null` is returned.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public getManyOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T[] | null {
     this[THROW_IF_DISPOSED]();
@@ -364,6 +385,9 @@ export class ContainerInstance implements Disposable {
    * 
    * @returns The identifier of the given service in the container.
    * This can then be passed to `.get` to resolve the identifier.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public set<T = unknown>(serviceOptions: Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies: TypeWrapper[]): ServiceIdentifier;
 
@@ -375,6 +399,9 @@ export class ContainerInstance implements Disposable {
    * 
    * @returns The identifier of the given service in the container.
    * This can then be passed to `.get` to resolve the identifier.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }): ServiceIdentifier;
 
@@ -476,6 +503,9 @@ export class ContainerInstance implements Disposable {
    * @param identifierOrIdentifierArray The list of service identifiers to remove from the container.
    * 
    * @returns The current `ContainerInstance` instance.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public remove(identifierOrIdentifierArray: ServiceIdentifier | ServiceIdentifier[]): this {
     this[THROW_IF_DISPOSED]();
@@ -557,6 +587,9 @@ export class ContainerInstance implements Disposable {
    * 
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public ofChild (containerId?: ContainerIdentifier) {
     this[THROW_IF_DISPOSED]();
@@ -566,6 +599,9 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Completely resets the container by removing all previously registered services from it.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public reset(options: { strategy: 'resetValue' | 'resetServices' } = { strategy: 'resetValue' }): this {
     this[THROW_IF_DISPOSED]();
