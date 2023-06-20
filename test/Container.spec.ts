@@ -11,8 +11,8 @@ describe('Container', function () {
     it('should be able to get a boolean', () => {
       const booleanTrue = 'boolean.true';
       const booleanFalse = 'boolean.false';
-      Container.set({ id: booleanTrue, value: true });
-      Container.set({ id: booleanFalse, value: false });
+      Container.set({ id: booleanTrue, value: true, dependencies: [] });
+      Container.set({ id: booleanFalse, value: false, dependencies: [] });
 
       expect(Container.get(booleanTrue)).toBe(true);
       expect(Container.get(booleanFalse)).toBe(false);
@@ -20,14 +20,14 @@ describe('Container', function () {
 
     it('should be able to get an empty string', () => {
       const emptyString = 'emptyString';
-      Container.set({ id: emptyString, value: '' });
+      Container.set({ id: emptyString, value: '', dependencies: [] });
 
       expect(Container.get(emptyString)).toBe('');
     });
 
     it('should be able to get the 0 number', () => {
       const zero = 'zero';
-      Container.set({ id: zero, value: 0 });
+      Container.set({ id: zero, value: 0, dependencies: [] });
 
       expect(Container.get(zero)).toBe(0);
     });
@@ -39,7 +39,7 @@ describe('Container', function () {
         constructor(public name: string) {}
       }
       const testService = new TestService('this is test');
-      Container.set({ id: TestService, value: testService });
+      Container.set({ id: TestService, value: testService, dependencies: [] });
       expect(Container.get(TestService)).toBe(testService);
       expect(Container.get(TestService).name).toBe('this is test');
     });
@@ -49,10 +49,10 @@ describe('Container', function () {
         constructor(public name: string) {}
       }
       const firstService = new TestService('first');
-      Container.set({ id: 'first.service', value: firstService });
+      Container.set({ id: 'first.service', value: firstService, dependencies: [String] });
 
       const secondService = new TestService('second');
-      Container.set({ id: 'second.service', value: secondService });
+      Container.set({ id: 'second.service', value: secondService, dependencies: [String] });
 
       expect(Container.get<TestService>('first.service').name).toBe('first');
       expect(Container.get<TestService>('second.service').name).toBe('second');
@@ -66,10 +66,10 @@ describe('Container', function () {
       const SecondTestToken = new Token<TestService>();
 
       const firstService = new TestService('first');
-      Container.set({ id: FirstTestToken, value: firstService });
+      Container.set({ id: FirstTestToken, value: firstService, dependencies: [] });
 
       const secondService = new TestService('second');
-      Container.set({ id: SecondTestToken, value: secondService });
+      Container.set({ id: SecondTestToken, value: secondService, dependencies: [] });
 
       expect(Container.get(FirstTestToken).name).toBe('first');
       expect(Container.get(SecondTestToken).name).toBe('second');
@@ -82,12 +82,12 @@ describe('Container', function () {
       const TestToken = new Token<TestService>();
 
       const firstService = new TestService('first');
-      Container.set({ id: TestToken, value: firstService });
+      Container.set({ id: TestToken, value: firstService, dependencies: [String] });
       expect(Container.get(TestToken)).toBe(firstService);
       expect(Container.get(TestToken).name).toBe('first');
 
       const secondService = new TestService('second');
-      Container.set({ id: TestToken, value: secondService });
+      Container.set({ id: TestToken, value: secondService, dependencies: [String] });
 
       expect(Container.get(TestToken)).toBe(secondService);
       expect(Container.get(TestToken).name).toBe('second');
@@ -108,10 +108,10 @@ describe('Container', function () {
       const test1Service = new TestService();
       const test2Service = new TestService();
 
-      Container.set({ id: TestService, value: testService });
-      Container.set({ id: 'test1-service', value: test1Service });
-      Container.set({ id: 'test2-service', value: test2Service });
-      Container.set({ id: 'test3-service', factory: [TestServiceFactory, 'create'] });
+      Container.set({ id: TestService, value: testService, dependencies: [] });
+      Container.set({ id: 'test1-service', value: test1Service, dependencies: [] });
+      Container.set({ id: 'test2-service', value: test2Service, dependencies: [] });
+      Container.set({ id: 'test3-service', factory: [TestServiceFactory, 'create'], dependencies: [] });
 
       expect(Container.get(TestService)).toBe(testService);
       expect(Container.get<TestService>('test1-service')).toBe(test1Service);
@@ -131,9 +131,9 @@ describe('Container', function () {
       const test1Service = new TestService();
       const test2Service = new TestService();
 
-      Container.set({ id: TestService, value: testService });
-      Container.set({ id: 'test1-service', value: test1Service });
-      Container.set({ id: 'test2-service', value: test2Service });
+      Container.set({ id: TestService, value: testService, dependencies: [] });
+      Container.set({ id: 'test1-service', value: test1Service, dependencies: [] });
+      Container.set({ id: 'test2-service', value: test2Service, dependencies: [] });
 
       expect(Container.get(TestService)).toBe(testService);
       expect(Container.get<TestService>('test1-service')).toBe(test1Service);
@@ -154,7 +154,7 @@ describe('Container', function () {
         constructor(public name: string = 'frank') {}
       }
 
-      Container.set({ id: TestService, type: TestService });
+      Container.set({ id: TestService, type: TestService, dependencies: [] });
       const testService = Container.get(TestService);
       testService.name = 'john';
 
@@ -179,6 +179,7 @@ describe('Container', function () {
       Container.set({
         id: Car,
         factory: () => new Car(new Engine()),
+        dependencies: [Engine]
       });
 
       expect(Container.get(Car).engine.serialNumber).toBe('A-123');
@@ -206,6 +207,7 @@ describe('Container', function () {
       Container.set({
         id: Car,
         factory: [CarFactory, 'createCar'],
+        dependencies: [Engine]
       });
 
       expect(Container.get(Car).engine.serialNumber).toBe('A-123');
@@ -233,6 +235,7 @@ describe('Container', function () {
       Container.set({
         id: VehicleService,
         factory: [VehicleFactory, 'createBus'],
+        dependencies: []
       });
 
       expect(Container.get(VehicleService).getColor()).toBe('yellow');

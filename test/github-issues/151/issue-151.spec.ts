@@ -1,6 +1,5 @@
 import 'reflect-metadata';
-import { Container } from '../../index';
-import { Service } from '../../decorators/service.decorator';
+import { Container, Service } from '../../../src/index';
 
 describe('Github Issues', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
@@ -21,12 +20,13 @@ describe('Github Issues', function () {
     class DataService {
       constructor(public authService: AuthService) {}
     }
+
     @Service([AuthService])
     class FakeDataService {
       constructor(public authService: AuthService) {}
     }
 
-    Container.set({ id: DataService, type: FakeDataService });
+    Container.set({ id: DataService, type: FakeDataService, dependencies: [AuthService] });
 
     const instance = Container.get<FakeDataService>(DataService as any);
 

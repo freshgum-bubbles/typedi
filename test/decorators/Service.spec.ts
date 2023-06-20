@@ -9,7 +9,7 @@ describe('Service Decorator', function () {
   it('should register class in the container, and its instance should be retrievable', function () {
     @Service([])
     class TestService {}
-    @Service({ id: 'super.service' })
+    @Service({ id: 'super.service' }, [])
     class NamedService {}
     expect(Container.get(TestService)).toBeInstanceOf(TestService);
     expect(Container.get(TestService)).not.toBeInstanceOf(NamedService);
@@ -18,7 +18,7 @@ describe('Service Decorator', function () {
   it('should register class in the container with given name, and its instance should be retrievable', function () {
     @Service([])
     class TestService {}
-    @Service({ id: 'super.service' })
+    @Service({ id: 'super.service' }, [])
     class NamedService {}
     expect(Container.get('super.service')).toBeInstanceOf(NamedService);
     expect(Container.get('super.service')).not.toBeInstanceOf(TestService);
@@ -72,7 +72,7 @@ describe('Service Decorator', function () {
       }
     }
 
-    @Service({ factory: [CarFactory, 'createCar'] })
+    @Service({ factory: [CarFactory, 'createCar'] }, [String, Engine])
     class Car {
       name: string;
       constructor(name: string, public engine: Engine) {
@@ -90,7 +90,7 @@ describe('Service Decorator', function () {
       public type = 'V8';
     }
 
-    @Service([])
+    @Service([Engine])
     class CarFactory {
       createCar(engine: Engine) {
         engine.type = 'V6';
@@ -98,7 +98,7 @@ describe('Service Decorator', function () {
       }
     }
 
-    @Service({ factory: [CarFactory, 'createCar'] })
+    @Service({ factory: [CarFactory, 'createCar'] }, [Engine])
     class Car {
       constructor(public engine: Engine) {}
     }
@@ -112,7 +112,7 @@ describe('Service Decorator', function () {
       public serial = Math.random();
     }
 
-    @Service({ scope: 'transient' })
+    @Service({ scope: 'transient' }, [])
     class Engine {
       public serial = Math.random();
     }
@@ -139,7 +139,7 @@ describe('Service Decorator', function () {
       public name = 'sporty';
     }
 
-    @Service({ scope: 'singleton' })
+    @Service({ scope: 'singleton' }, [])
     class Car {
       public name = 'SportCar';
     }
@@ -166,12 +166,13 @@ describe('Service Decorator', function () {
   it('should support function injection with Token dependencies', function () {
     const myToken: Token<string> = new Token<string>('myToken');
 
-    Container.set({ id: myToken, value: 'test_string' });
+    Container.set({ id: myToken, value: 'test_string', dependencies: [] });
     Container.set({
       id: 'my-service-A',
       factory: function myServiceFactory(container): string {
         return container.get(myToken).toUpperCase();
       },
+      dependencies: []
     });
 
     /**
@@ -180,6 +181,7 @@ describe('Service Decorator', function () {
      */
     Service({
       id: 'my-service-B',
+      dependencies: [],
       factory: function myServiceFactory(container): string {
         return container.get(myToken).toUpperCase();
       },
@@ -187,5 +189,21 @@ describe('Service Decorator', function () {
 
     expect(Container.get<string>('my-service-A')).toBe('TEST_STRING');
     expect(Container.get<string>('my-service-B')).toBe('TEST_STRING');
+  });
+
+  it('should support an object with dependencies with no other arguments', () => {
+    @Service([])
+    class AnotherService {
+      getMeaningOfLife () {
+        return 42;
+      }
+    }
+
+    @Service({ dependencies: [AnotherService] })
+    class MyService {
+      constructor (public anotherService: AnotherService) {}
+    }
+
+    expect(Container.get(MyService).anotherService.getMeaningOfLife()).toStrictEqual(42);
   });
 });

@@ -13,8 +13,8 @@ describe('Eager loading of services', function () {
         public createdAt = callOrder++;
       }
 
-      Container.set({ id: 'eager-service', type: MyService, eager: true });
-      Container.set({ id: 'lazy-service', type: MyService, eager: false });
+      Container.set({ id: 'eager-service', type: MyService, eager: true, dependencies: [] });
+      Container.set({ id: 'lazy-service', type: MyService, eager: false, dependencies: [] });
 
       const timeStampBeforeRequests = callOrder++;
 
@@ -37,12 +37,12 @@ describe('Eager loading of services', function () {
     it('should be able to set eager and lazy service with @Service decorator', () => {
       let callOrder = 1;
 
-      @Service({ eager: true })
+      @Service({ eager: true }, [])
       class MyEagerService {
         public createdAt = callOrder++;
       }
 
-      @Service({ eager: false })
+      @Service({ eager: false }, [])
       class MyLazyService {
         public createdAt = callOrder++;
       }

@@ -22,16 +22,16 @@ describe('github issues > #41 Token as service id in combination with factory', 
     @Service({
       id: SomeInterfaceToken,
       factory: [SomeInterfaceFactory, 'create'],
-    })
+    }, [])
     class SomeImplementation implements SomeInterface {
       foo() {
         return 'hello implementation';
       }
     }
 
-    Container.set({ id: 'moment', value: 'A' });
-    Container.set({ id: 'jsonwebtoken', value: 'B' });
-    Container.set({ id: 'cfg.auth.jwt', value: 'C' });
+    Container.set({ id: 'moment', value: 'A', dependencies: [] });
+    Container.set({ id: 'jsonwebtoken', value: 'B', dependencies: [] });
+    Container.set({ id: 'cfg.auth.jwt', value: 'C', dependencies: [] });
     const someInterfaceImpl = Container.get(SomeInterfaceToken);
     expect(someInterfaceImpl.foo()).toBe('hello implementation');
   });
