@@ -4,9 +4,21 @@ import { Service } from '../src/decorators/service.decorator';
 import { Token } from '../src/token.class';
 import { ServiceNotFoundError } from '../src/error/service-not-found.error';
 import { ContainerRegistry } from '../src/container-registry.class';
+import { Disposable } from '../src/types/disposable.type';
 
 describe('Container', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
+
+  it('should implement Disposable', () => {
+    const tempContainer = Container.of('disposable');
+    const asDisposable: Disposable = tempContainer;
+
+    /** Ensure the variable, and thus its type check, does not get elided by the compiler. */
+    if (asDisposable) { expect(true).toBe(true); }
+
+    expect(tempContainer).toHaveProperty('dispose');
+    expect(tempContainer).toHaveProperty('disposed');
+  });
 
   describe('get', () => {
     it('should be able to get a boolean', () => {
