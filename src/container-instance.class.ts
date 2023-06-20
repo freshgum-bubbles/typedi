@@ -10,7 +10,7 @@ import { EMPTY_VALUE } from './empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { ContainerScope } from './types/container-scope.type';
 import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type';
-import { InjectedFactory } from './types/inject-identifier.type';
+import { AnyInjectIdentifier, InjectedFactory } from './types/inject-identifier.type';
 import { isInjectedFactory } from './utils/is-inject-identifier.util';
 import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
