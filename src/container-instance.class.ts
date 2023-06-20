@@ -743,7 +743,7 @@ export class ContainerInstance implements Disposable {
   }
 
   /** Iterate over each service in the container. */
-  public [Symbol.iterator](): Iterable<[ServiceIdentifier, ServiceMetadata<unknown>]> {
+  public [Symbol.iterator](): IterableIterator<[ServiceIdentifier, ServiceMetadata<unknown>]> {
     return this.metadataMap.entries();
   }
 }
