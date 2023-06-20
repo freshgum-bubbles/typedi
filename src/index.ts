@@ -1,6 +1,7 @@
 /** This is an internal package, so we don't re-export it on purpose. */
 import { ContainerInstance } from './container-instance.class';
 
+export { JSService } from './decorators/js-service.decorator';
 export { Service } from './decorators/service.decorator';
 
 export * from './error/cannot-instantiate-value.error';
