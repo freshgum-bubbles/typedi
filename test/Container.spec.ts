@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Container, ContainerInstance } from '../src/index';
+import { Container, ContainerInstance, ServiceIdentifier, ServiceMetadata } from '../src/index';
 import { Service } from '../src/decorators/service.decorator';
 import { Token } from '../src/token.class';
 import { ServiceNotFoundError } from '../src/error/service-not-found.error';
@@ -444,6 +444,60 @@ describe('Container', function () {
 
     it('should be of type ContainerInstance', () => {
       expect(ContainerInstance.defaultContainer).toBeInstanceOf(ContainerInstance);
+    });
+  });
+
+  describe('Container.disposed', () => {
+    it('should initially be false', () => {
+      expect(ContainerInstance.defaultContainer).toHaveProperty('disposed', false);
+      expect(Container.of('random')).toHaveProperty('disposed', false);
+    });
+  });
+
+  describe('Container.dispose', () => {
+    it('should return a promise', () => {
+      const tempContainer = Container.of(Symbol());
+      expect(tempContainer.dispose()).toBeInstanceOf(Promise);
+    });
+
+    it('should make all methods throw except .of', () => {
+      const tempContainer = Container.of(Symbol());
+
+      /** Create a fake identifier that will never resolve for testing. */
+      class MyService {}
+      
+      expect(tempContainer.dispose()).resolves.toBeUndefined();
+
+      /** Test all methods on the injector. */
+      expect(() => tempContainer.get(MyService)).toThrow();
+      expect(() => tempContainer.getMany(MyService)).toThrow();
+      expect(() => tempContainer.getManyOrNull(MyService)).toThrow();
+      expect(() => tempContainer.getOrNull(MyService)).toThrow();
+      expect(() => tempContainer.has(MyService)).toThrow();
+      expect(() => tempContainer.ofChild(Symbol())).toThrow();
+      expect(() => tempContainer.remove(MyService)).toThrow();
+      expect(() => tempContainer.reset({ strategy: 'resetServices' })).toThrow();
+      expect(() => tempContainer.set({ dependencies: [], type: MyService })).toThrow();
+
+      expect(tempContainer.of(Symbol())).toBeInstanceOf(ContainerInstance);
+    });
+
+    it.skip('should reset services', () => {
+
+    });
+
+    it('should throw an error if the container is already disposed', () => {
+      const tempContainer = Container.of(Symbol());
+
+      expect(tempContainer.dispose()).resolves.toBeUndefined();
+      expect(tempContainer.dispose()).rejects.toBeInstanceOf(Error);
+    });
+
+    it('should set the disposed property to true', () => {
+      const tempContainer = Container.of(Symbol());
+
+      expect(tempContainer.dispose()).resolves.toBeUndefined();
+      expect(tempContainer).toHaveProperty('disposed', true);
     });
   });
 });
