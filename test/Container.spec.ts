@@ -1,8 +1,9 @@
 import 'reflect-metadata';
-import { Container } from '../src/index';
+import { Container, ContainerInstance } from '../src/index';
 import { Service } from '../src/decorators/service.decorator';
 import { Token } from '../src/token.class';
 import { ServiceNotFoundError } from '../src/error/service-not-found.error';
+import { ContainerRegistry } from '../src/container-registry.class';
 
 describe('Container', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
@@ -383,6 +384,38 @@ describe('Container', function () {
       expect(Container.has(ValueService)).toStrictEqual(false);
       expect(fooContainer.has(ValueService)).toStrictEqual(true);
       expect(fooContainer.get(ValueService).getValue()).toStrictEqual(42);
+    });
+  });
+
+  describe('Container.of', () => {
+    it('should create a new container or return existing with given ID', () => {
+      const NAME = 'Container.of-1';
+      const child = Container.ofChild(NAME);
+      expect(child).not.toBe(null);
+      expect(child.id).toStrictEqual(NAME);
+    });
+
+    it('should also have a functional static equivalent', () => {
+      const NAME = 'Container.of-2';
+      const container = ContainerInstance.of(NAME);
+
+      expect(container).not.toBe(null);
+      expect(container.id).toStrictEqual(NAME);
+    });
+
+    it('should return the default container when "default" is passed', () => {
+      const NAME = 'default';
+      const container = Container.of('default');
+
+      expect(container).not.toBe(null);
+      expect(container).toStrictEqual(Container);
+    });
+
+    it('should register the container in ContainerRegistry', () => {
+      const NAME = 'Container.of-3';
+      Container.of(NAME);
+
+      expect(ContainerRegistry.hasContainer(NAME)).toBe(true);
     });
   });
 });
