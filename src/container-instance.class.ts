@@ -14,7 +14,6 @@ import { AnyInjectIdentifier, InjectedFactory } from './types/inject-identifier.
 import { isInjectedFactory } from './utils/is-inject-identifier.util';
 import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
-import { Service } from './decorators/service.decorator';
 import { BUILT_INS } from './builtins.const';
 import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error';
 
