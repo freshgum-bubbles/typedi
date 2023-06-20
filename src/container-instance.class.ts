@@ -28,8 +28,8 @@ import { SERVICE_METADATA_DEFAULTS } from './service-defaults.const';
  * 
  * This is done instead of:
  * 
- * ```
- * this[THROW_IF_DISPOSED]();
+ * ```ts
+ * this.throwIfDisposed();
  * ```
  * 
  * The former version reduces the bundle size, as the variable name can be mangled safely.
