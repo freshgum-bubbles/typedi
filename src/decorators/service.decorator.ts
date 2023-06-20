@@ -14,7 +14,6 @@ import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { formatClassName } from '../utils/format-class-name';
 import { resolveToTypeWrapper } from '../utils/resolve-to-type-wrapper.util';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface';
-import { TypeWrapper } from '../types/type-wrapper.type';
 
 /**
  * Marks class as a service that can be injected using Container.
