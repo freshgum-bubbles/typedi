@@ -402,12 +402,17 @@ export class ContainerInstance implements Disposable {
       eager: false,
       scope: 'container',
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      /** @ts-ignore TypeScript is actually broken here. We've told it dependencies is of type TypeWrapper[], but it still doesn't like it? */
-      dependencies: dependencies as unknown as TypeWrapper[],
-      
       /** We allow overriding the above options via the received config object. */
       ...serviceOptions,
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      /**
+       * We override the service options with the provided dependencies here, as if we have type wrapped
+       * dependencies only, we'll obviously want to overwrite anything in the options with those.
+       * Additionally, this fixes test cases such as #151.
+       */
+      /** @ts-ignore TypeScript is actually broken here. We've told it dependencies is of type TypeWrapper[], but it still doesn't like it? */
+      dependencies: dependencies as unknown as TypeWrapper[],
     };
 
     /** If the incoming metadata is marked as multiple we mask the ID and continue saving as single value. */
