@@ -1,5 +1,5 @@
 import { ContainerInstance } from "../container-instance.class";
-import { INJECTED_FACTORY } from "../type-stamps.const";
+import { INJECTED_FACTORY } from "../constants/type-stamps.const";
 import { LazyReference } from "./lazy-reference.type";
 import { ServiceIdentifier } from "./service-identifier.type";
 

@@ -1,4 +1,4 @@
-import { LAZY_REFERENCE } from "../type-stamps.const";
+import { LAZY_REFERENCE } from "../constants/type-stamps.const";
 import { LazyReference } from "../types/lazy-reference.type";
 
 export function isLazyReference (x: object): x is LazyReference<any> {

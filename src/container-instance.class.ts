@@ -6,7 +6,7 @@ import { Constructable } from './types/constructable.type';
 import { ServiceIdentifier } from './types/service-identifier.type';
 import { ServiceMetadata } from './interfaces/service-metadata.interface';
 import { ServiceOptions } from './interfaces/service-options.interface';
-import { EMPTY_VALUE } from './empty.const';
+import { EMPTY_VALUE } from './constants/empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { ContainerScope } from './types/container-scope.type';
 import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type';
@@ -14,9 +14,9 @@ import { AnyInjectIdentifier, InjectedFactory } from './types/inject-identifier.
 import { isInjectedFactory } from './utils/is-inject-identifier.util';
 import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
-import { BUILT_INS } from './builtins.const';
+import { BUILT_INS } from './constants/builtins.const';
 import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error';
-import { SERVICE_METADATA_DEFAULTS } from './service-defaults.const';
+import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const';
 
 /**
  * A static variable containing "throwIfDisposed".

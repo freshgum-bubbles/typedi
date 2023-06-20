@@ -1,4 +1,4 @@
-import { INJECTED_FACTORY } from "../type-stamps.const";
+import { INJECTED_FACTORY } from "../constants/type-stamps.const";
 import { InjectedFactory } from "../types/inject-identifier.type";
 
 /** Check if the specified object is an InjectedFactory. */

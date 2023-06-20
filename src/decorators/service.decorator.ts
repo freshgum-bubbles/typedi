@@ -13,8 +13,8 @@ import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { formatClassName } from '../utils/format-class-name';
 import { resolveToTypeWrapper } from '../utils/resolve-to-type-wrapper.util';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface';
-import { SERVICE_METADATA_DEFAULTS } from '../service-defaults.const';
-import { BUILT_INS } from '../builtins.const';
+import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const';
+import { BUILT_INS } from '../constants/builtins.const';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error';
 
 /**
