@@ -544,6 +544,8 @@ export class ContainerInstance implements Disposable {
    * if one already exists.
    */
   public ofChild (containerId?: ContainerIdentifier) {
+    this.throwIfDisposed();
+
     return ContainerInstance.of(containerId, this);
   }
 
