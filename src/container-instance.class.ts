@@ -52,7 +52,7 @@ export class ContainerInstance implements Disposable {
    * Indicates if the container has been disposed or not.
    * Any function call should fail when called after being disposed.
    */
-  public disposed: boolean = false;
+  public readonly disposed: boolean = false;
 
   /**
    * The default global container. By default services are registered into this
@@ -576,7 +576,7 @@ export class ContainerInstance implements Disposable {
     this.reset({ strategy: 'resetServices' });
 
     /** We mark the container as disposed, forbidding any further interaction with it. */
-    this.disposed = true;
+    (this as any).disposed = true;
   }
 
   private throwIfDisposed() {
