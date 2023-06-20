@@ -7,13 +7,13 @@
  * The main service logic is hosted by the {@see ContainerInstance} class.
  */
 import { ServiceOptions } from '../interfaces/service-options.interface';
-import { EMPTY_VALUE } from '../empty.const';
 import { Constructable } from '../types/constructable.type';
 import { ContainerInstance } from '../container-instance.class';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { formatClassName } from '../utils/format-class-name';
 import { resolveToTypeWrapper } from '../utils/resolve-to-type-wrapper.util';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface';
+import { SERVICE_METADATA_DEFAULTS } from '../service-defaults.const';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -110,12 +110,8 @@ export function Service<T>(
     let metadata: Omit<ServiceMetadata<T>, 'dependencies'> & { container: ContainerInstance } = {
       id: targetConstructor,
       type: targetConstructor as unknown as Constructable<T>,
-      multiple: false,
-      eager: false,
-      scope: 'container',
-      value: EMPTY_VALUE,
-      factory: undefined,
-      container: defaultContainer
+      ...SERVICE_METADATA_DEFAULTS,
+      container: ContainerInstance.defaultContainer
     };
 
     if (!Array.isArray(optionsOrDependencies)) {

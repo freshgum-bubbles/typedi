@@ -16,6 +16,25 @@ import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
 import { BUILT_INS } from './builtins.const';
 import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error';
+import { SERVICE_METADATA_DEFAULTS } from './service-defaults.const';
+
+/**
+ * A static variable containing "throwIfDisposed".
+ *
+ * @example
+ * ```ts
+ * this[THROW_IF_DISPOSED]();
+ * ```
+ * 
+ * This is done instead of:
+ * 
+ * ```
+ * this[THROW_IF_DISPOSED]();
+ * ```
+ * 
+ * The former version reduces the bundle size, as the variable name can be mangled safely.
+ */
+const THROW_IF_DISPOSED = 'throwIfDisposed';
 
 export const enum ServiceIdentifierLocation {
   Local = 'local',
@@ -84,7 +103,7 @@ export class ContainerInstance implements Disposable {
    * @returns Whether the identifier is present in the current container, or its parent.
    */
   public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     const location = this.getIdentifierLocation(identifier);
     return location === ServiceIdentifierLocation.Local || location === ServiceIdentifierLocation.Parent;
@@ -104,7 +123,7 @@ export class ContainerInstance implements Disposable {
    *  - If the identifier is found upstream, `ServiceIdentifierLocation.Parent.`
    */
   protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>): ServiceIdentifierLocation {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     if (this.metadataMap.has(identifier) || this.multiServiceIds.has(identifier)) {
       return ServiceIdentifierLocation.Local;
@@ -157,7 +176,7 @@ export class ContainerInstance implements Disposable {
    * If an identifier cannot be found, `null` is returned.
    */
   protected resolveMetadata<T = unknown> (identifier: ServiceIdentifier<T>, recursive: boolean): readonly [ServiceMetadata<T>, ServiceIdentifierLocation] | null {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     /** 
      * Firstly, ascertain the location of the identifier.
@@ -198,7 +217,7 @@ export class ContainerInstance implements Disposable {
    * @returns The resolved value for the given metadata, or `null` if it could not be found.
    */
   public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = false): T | null {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     const maybeResolvedMetadata = this.resolveMetadata(identifier, true);
 
@@ -304,7 +323,7 @@ export class ContainerInstance implements Disposable {
    * If none can be found, `null` is returned.
    */
   public getManyOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T[] | null {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     let idMap: ManyServicesMetadata | void = undefined;
 
@@ -360,7 +379,7 @@ export class ContainerInstance implements Disposable {
   public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }): ServiceIdentifier;
 
   public set<T = unknown>(serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies?: TypeWrapper[]): ServiceIdentifier {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     /**
      * If the service is marked as singleton, we set it in the default container.
@@ -395,11 +414,7 @@ export class ContainerInstance implements Disposable {
        */
       id: ((serviceOptions as any).id ?? (serviceOptions as any).type) as ServiceIdentifier,
       type: null,
-      factory: undefined,
-      value: EMPTY_VALUE,
-      multiple: false,
-      eager: false,
-      scope: 'container',
+      ...SERVICE_METADATA_DEFAULTS,
 
       /** We allow overriding the above options via the received config object. */
       ...serviceOptions,
@@ -463,7 +478,7 @@ export class ContainerInstance implements Disposable {
    * @returns The current `ContainerInstance` instance.
    */
   public remove(identifierOrIdentifierArray: ServiceIdentifier | ServiceIdentifier[]): this {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
     if (Array.isArray(identifierOrIdentifierArray)) {
       identifierOrIdentifierArray.forEach(id => this.remove(id));
     } else {
@@ -544,7 +559,7 @@ export class ContainerInstance implements Disposable {
    * if one already exists.
    */
   public ofChild (containerId?: ContainerIdentifier) {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     return ContainerInstance.of(containerId, this);
   }
@@ -553,7 +568,7 @@ export class ContainerInstance implements Disposable {
    * Completely resets the container by removing all previously registered services from it.
    */
   public reset(options: { strategy: 'resetValue' | 'resetServices' } = { strategy: 'resetValue' }): this {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     switch (options.strategy) {
       case 'resetValue':
@@ -572,7 +587,7 @@ export class ContainerInstance implements Disposable {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async dispose(): Promise<void> {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     this.reset({ strategy: 'resetServices' });
 
@@ -724,7 +739,7 @@ export class ContainerInstance implements Disposable {
    * @param force when true the service will be always destroyed even if it's cannot be re-created
    */
   private disposeServiceInstance(serviceMetadata: ServiceMetadata, force = false) {
-    this.throwIfDisposed();
+    this[THROW_IF_DISPOSED]();
 
     /** We reset value only if we can re-create it (aka type or factory exists). */
     const shouldResetValue = force || !!serviceMetadata.type || !!serviceMetadata.factory;
