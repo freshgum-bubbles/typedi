@@ -31,12 +31,6 @@ export class ContainerRegistry {
       throw new Error('Only ContainerInstance instances can be registered.');
     }
 
-    /** If we already set the default container (in index) then no-one else can register a default. */
-    if (!!ContainerInstance.defaultContainer && container.id === 'default') {
-      // TODO: Create custom error for this.
-      throw new Error('You cannot register a container with the "default" ID.');
-    }
-
     if (ContainerRegistry.containerMap.has(container.id)) {
       // TODO: Create custom error for this.
       throw new Error('Cannot register container with same ID.');

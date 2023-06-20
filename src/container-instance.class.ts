@@ -745,3 +745,10 @@ export class ContainerInstance implements Disposable {
     return this.metadataMap.entries();
   }
 }
+
+/** 
+ * Register the default container in ContainerRegistry. 
+ * We don't use `ContainerInstance.of` here we don't need to check
+ * if a container with the "default" ID already exists: it never will.
+ */
+ContainerRegistry.registerContainer(ContainerInstance.defaultContainer);
