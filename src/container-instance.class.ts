@@ -530,8 +530,6 @@ export class ContainerInstance implements Disposable {
    * if one already exists.
    */
   public of(containerId?: ContainerIdentifier): ContainerInstance {
-    this.throwIfDisposed();
-
     // Todo: make this get the constructor at runtime to aid
     // extension of the class.
     return ContainerInstance.of(containerId);
