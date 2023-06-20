@@ -38,7 +38,7 @@ export class ContainerInstance implements Disposable {
   public readonly id!: ContainerIdentifier;
 
   /** Metadata for all registered services in this container. */
-  private metadataMap: Map<ServiceIdentifier, ServiceMetadata<unknown>> = new Map();
+  private readonly metadataMap: Map<ServiceIdentifier, ServiceMetadata<unknown>> = new Map();
 
   /**
    * Services registered with 'multiple: true' are saved as simple services
@@ -46,19 +46,19 @@ export class ContainerInstance implements Disposable {
    * generated one is stored here. This is handled like this to allow simplifying
    * the inner workings of the service instance.
    */
-  private multiServiceIds: Map<ServiceIdentifier, ManyServicesMetadata> = new Map();
+  private readonly multiServiceIds: Map<ServiceIdentifier, ManyServicesMetadata> = new Map();
 
   /**
    * Indicates if the container has been disposed or not.
    * Any function call should fail when called after being disposed.
    */
-  public disposed: boolean = false;
+  public readonly disposed: boolean = false;
 
   /**
    * The default global container. By default services are registered into this
    * container when registered via `Container.set()` or `@Service` decorator.
    */
-  public static defaultContainer = new ContainerInstance("default");
+  public static readonly defaultContainer = new ContainerInstance("default");
 
   /**
    * Create a ContainerInstance.
@@ -68,7 +68,7 @@ export class ContainerInstance implements Disposable {
    * The parent is used for resolving identifiers which are
    * not present in this container.
    */
-  protected constructor (id: ContainerIdentifier, public parent?: ContainerInstance) {
+  protected constructor (id: ContainerIdentifier, public readonly parent?: ContainerInstance) {
     this.id = id;
   }
 
@@ -576,7 +576,7 @@ export class ContainerInstance implements Disposable {
     this.reset({ strategy: 'resetServices' });
 
     /** We mark the container as disposed, forbidding any further interaction with it. */
-    this.disposed = true;
+    (this as any).disposed = true;
   }
 
   private throwIfDisposed() {
