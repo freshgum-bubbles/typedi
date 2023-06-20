@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Container } from '../../src/index';
+import { Container, ContainerInstance } from '../../src/index';
 import { Service } from '../../src/decorators/service.decorator';
 import { Token } from '../../src/token.class';
 
@@ -169,7 +169,7 @@ describe('Service Decorator', function () {
     Container.set({ id: myToken, value: 'test_string', dependencies: [] });
     Container.set({
       id: 'my-service-A',
-      factory: function myServiceFactory(container): string {
+      factory: function myServiceFactory(container: ContainerInstance): string {
         return container.get(myToken).toUpperCase();
       },
       dependencies: []
@@ -182,10 +182,10 @@ describe('Service Decorator', function () {
     Service({
       id: 'my-service-B',
       dependencies: [],
-      factory: function myServiceFactory(container): string {
+      factory: function myServiceFactory(container: ContainerInstance): string {
         return container.get(myToken).toUpperCase();
       },
-    })(null);
+    })(() => {});
 
     expect(Container.get<string>('my-service-A')).toBe('TEST_STRING');
     expect(Container.get<string>('my-service-B')).toBe('TEST_STRING');

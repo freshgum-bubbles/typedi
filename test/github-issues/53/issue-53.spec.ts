@@ -9,7 +9,7 @@ describe('github issues > #53 Token-based services are cached in the Global cont
   it('should work properly', function () {
     @Service([])
     class QuestionRepository {
-      userName: string;
+      userName!: string;
 
       save() {
         return null;

@@ -1,6 +1,6 @@
 import Container from '../../src/index';
 import { JSService } from '../../src/decorators/js-service.decorator';
-import { AnyConstructable } from '../types/any-constructable.type';
+import { AnyConstructable } from '../../src/types/any-constructable.type';
 
 describe('JSService decorator', () => {
     beforeEach(() => Container.reset({ strategy: 'resetValue' }));
@@ -82,6 +82,7 @@ describe('JSService decorator', () => {
     });
 
     it('should throw an error if the overload is incorrect', () => {
-        expect(() => JSService(undefined, undefined)).toThrow();
+        /** Note: the `as any` casts are required because this invalidates the JSService type contract, and is thus a compilation error. */
+        expect(() => JSService(undefined as any, undefined as any)).toThrow();
     });
 });
