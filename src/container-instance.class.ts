@@ -439,12 +439,10 @@ export class ContainerInstance implements Disposable {
     // todo: sort this out
     // I've removed the legacy "extend service if it already exists"
     // behaviour for now.
-    const existingMetadata = this.metadataMap.get(newMetadata.id);
+    // const existingMetadata = this.metadataMap.get(newMetadata.id);
 
-    {
-      /** This service hasn't been registered yet, so we register it. */
-      this.metadataMap.set(newMetadata.id, newMetadata);
-    }
+    /** This service hasn't been registered yet, so we register it. */
+    this.metadataMap.set(newMetadata.id, newMetadata);
 
     /**
      * If the service is eager, we need to create an instance immediately except
