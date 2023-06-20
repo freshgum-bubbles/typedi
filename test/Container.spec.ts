@@ -500,4 +500,40 @@ describe('Container', function () {
       expect(tempContainer).toHaveProperty('disposed', true);
     });
   });
+
+  describe('Container[Symbol.iterator]', () => {
+    it('should be present on the interface', () => {
+      expect(ContainerInstance.defaultContainer[Symbol.iterator]).not.toBeUndefined();
+      expect(ContainerInstance.defaultContainer[Symbol.iterator]).toEqual(expect.any(Function));
+    });
+
+    it('should return an iterator', () => {
+      const iterator = ContainerInstance.defaultContainer[Symbol.iterator]();
+
+      expect(typeof iterator.next).toStrictEqual('function');
+    });
+
+    it('should allow iteration of the container', () => {
+      const tempContainer = Container.of(Symbol());
+      
+      @Service({ container: tempContainer }, [])
+      class MyService {}
+
+      tempContainer.set({ id: 'a', type: MyService, dependencies: [ ] });
+      tempContainer.set({ id: 'b', type: MyService, dependencies: [ ] });
+      tempContainer.set({ id: 'c', type: MyService, dependencies: [ ] });
+
+      const items = [...tempContainer];
+      const itemsAsListOfIDs = items.map(([id]) => id);
+      
+      /** Ensure the type of the items is correct. */
+      expect(items).toContain<ServiceMetadata<unknown>>;
+      expect(itemsAsListOfIDs).toContain<ServiceIdentifier>;
+
+      /** Is dynamically calling expect fine? Should be, this is a static array. */
+      ['a', 'b', 'c'].forEach(identifier => {
+        expect(itemsAsListOfIDs).toContainEqual(identifier);
+      });
+    });
+  });
 });
