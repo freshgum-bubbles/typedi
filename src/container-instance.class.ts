@@ -697,6 +697,7 @@ export class ContainerInstance implements Disposable {
      * 
      * Therefore, if the eager type does not exist, the lazy type should.
      */
+    // eslint-disable-next-line ESLint removes the cast, which causes a compilation error.
     const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
 
     if (resolved == null) {
