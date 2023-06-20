@@ -65,6 +65,7 @@ export function JSService<T extends AnyConstructable>(
     let constructor!: T;
 
     if (typeof dependenciesOrConstructor === 'function') {
+        // eslint-disable-next-line
         constructor = dependenciesOrConstructor as T;
         Service(optionsOrDependencies as ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] })(constructor);
     } else if (maybeConstructor) {
