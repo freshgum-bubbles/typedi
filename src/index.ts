@@ -8,6 +8,8 @@ export * from './error/cannot-instantiate-builtin-error';
 export * from './error/cannot-instantiate-value.error';
 export * from './error/service-not-found.error';
 
+export { Lazy } from './functions/lazy.function';
+
 export { ServiceMetadata } from './interfaces/service-metadata.interface';
 export { ServiceOptions } from './interfaces/service-options.interface';
 export { Constructable } from './types/constructable.type';
