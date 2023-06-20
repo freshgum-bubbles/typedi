@@ -572,6 +572,8 @@ export class ContainerInstance implements Disposable {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async dispose(): Promise<void> {
+    this.throwIfDisposed();
+
     this.reset({ strategy: 'resetServices' });
 
     /** We mark the container as disposed, forbidding any further interaction with it. */
