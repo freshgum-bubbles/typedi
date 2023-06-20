@@ -36,7 +36,7 @@ describe('Container', function () {
   describe('set', function () {
     it('should be able to set a class into the container', function () {
       class TestService {
-        constructor(public name: string) {}
+        constructor(public name: string) { }
       }
       const testService = new TestService('this is test');
       Container.set({ id: TestService, value: testService, dependencies: [] });
@@ -46,7 +46,7 @@ describe('Container', function () {
 
     it('should be able to set a named service', function () {
       class TestService {
-        constructor(public name: string) {}
+        constructor(public name: string) { }
       }
       const firstService = new TestService('first');
       Container.set({ id: 'first.service', value: firstService, dependencies: [String] });
@@ -60,7 +60,7 @@ describe('Container', function () {
 
     it('should be able to set a tokenized service', function () {
       class TestService {
-        constructor(public name: string) {}
+        constructor(public name: string) { }
       }
       const FirstTestToken = new Token<TestService>();
       const SecondTestToken = new Token<TestService>();
@@ -77,7 +77,7 @@ describe('Container', function () {
 
     it('should override previous value if service is written second time', function () {
       class TestService {
-        constructor(public name: string) {}
+        constructor(public name: string) { }
       }
       const TestToken = new Token<TestService>();
 
@@ -96,7 +96,7 @@ describe('Container', function () {
 
   describe('set multiple', function () {
     it('should be able to provide a list of values', function () {
-      class TestService {}
+      class TestService { }
 
       class TestServiceFactory {
         create() {
@@ -124,7 +124,7 @@ describe('Container', function () {
     it('should be able to remove previously registered services', function () {
       class TestService {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        constructor() {}
+        constructor() { }
       }
 
       const testService = new TestService();
@@ -151,7 +151,7 @@ describe('Container', function () {
     it('should support container reset', () => {
       @Service([])
       class TestService {
-        constructor(public name: string = 'frank') {}
+        constructor(public name: string = 'frank') { }
       }
 
       Container.set({ id: TestService, type: TestService, dependencies: [] });
@@ -173,7 +173,7 @@ describe('Container', function () {
       }
 
       class Car {
-        constructor(public engine: Engine) {}
+        constructor(public engine: Engine) { }
       }
 
       Container.set({
@@ -192,12 +192,12 @@ describe('Container', function () {
       }
 
       class Car {
-        constructor(public engine: Engine) {}
+        constructor(public engine: Engine) { }
       }
 
       @Service([Engine])
       class CarFactory {
-        constructor(private engine: Engine) {}
+        constructor(private engine: Engine) { }
 
         createCar(): Car {
           return new Car(this.engine);
@@ -280,7 +280,7 @@ describe('Container', function () {
 
     it('should be able to destroy services without destroy function', () => {
       @Service([])
-      class MyService {}
+      class MyService { }
 
       const instanceA = Container.get(MyService);
 
@@ -325,7 +325,7 @@ describe('Container', function () {
 
     it('should be able to destroy services without destroy function', () => {
       @Service([])
-      class MyService {}
+      class MyService { }
 
       Container.get(MyService);
 
