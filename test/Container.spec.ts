@@ -424,4 +424,14 @@ describe('Container', function () {
       expect(ContainerRegistry.hasContainer(NAME)).toBe(true);
     });
   });
+
+  describe('Container.defaultContainer', () => {
+    it('should not be null', () => {
+      expect(ContainerInstance.defaultContainer).toBeTruthy();
+    });
+
+    it('should be of type ContainerInstance', () => {
+      expect(ContainerInstance.defaultContainer).toBeInstanceOf(ContainerInstance);
+    });
+  });
 });
