@@ -483,7 +483,7 @@ export class ContainerInstance implements Disposable {
    * Optionally, a parent can be passed, which will act as an upstream resolver for the container.
    * 
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * @param parent The parent of the container.
+   * @param parent The parent of the container.  Defaults to the default container.
    * 
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
