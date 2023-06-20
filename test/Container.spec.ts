@@ -385,6 +385,12 @@ describe('Container', function () {
       expect(fooContainer.has(ValueService)).toStrictEqual(true);
       expect(fooContainer.get(ValueService).getValue()).toStrictEqual(42);
     });
+
+    it('should have its parent property set to the parent', () => {
+      const fooContainer = Container.ofChild('ofChild-2');
+      expect(fooContainer).not.toBe(null);
+      expect(fooContainer.parent).toStrictEqual(Container);
+    });
   });
 
   describe('Container.of', () => {
