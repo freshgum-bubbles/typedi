@@ -38,7 +38,7 @@ export class ContainerInstance implements Disposable {
   public readonly id!: ContainerIdentifier;
 
   /** Metadata for all registered services in this container. */
-  private metadataMap: Map<ServiceIdentifier, ServiceMetadata<unknown>> = new Map();
+  private readonly metadataMap: Map<ServiceIdentifier, ServiceMetadata<unknown>> = new Map();
 
   /**
    * Services registered with 'multiple: true' are saved as simple services
@@ -46,7 +46,7 @@ export class ContainerInstance implements Disposable {
    * generated one is stored here. This is handled like this to allow simplifying
    * the inner workings of the service instance.
    */
-  private multiServiceIds: Map<ServiceIdentifier, ManyServicesMetadata> = new Map();
+  private readonly multiServiceIds: Map<ServiceIdentifier, ManyServicesMetadata> = new Map();
 
   /**
    * Indicates if the container has been disposed or not.
