@@ -346,13 +346,26 @@ describe('Container', function () {
   });
 
   describe('Container.getManyOrNull', () => {
-    it('should work correctly', () => {
+    it('should return null when the identifier cannot be resolved', () => {
       /** The service isn't decorated with `@Service` to make it unknown to the injector. */
       class UnknownService { }
 
       expect(Container.has(UnknownService)).toStrictEqual(false);
       expect(Container.getManyOrNull(UnknownService)).toStrictEqual(null);
       expect(Container.getManyOrNull(class { })).toStrictEqual(null);
+    });
+
+    it('should return the instances when the identifier can be resolved', () => {
+      @Service({ multiple: true }, [])
+      class AwesomeService {
+        getValue () {
+          return 42;
+        }
+      }
+
+      expect(Container.has(AwesomeService)).toStrictEqual(true);
+      expect(Container.getManyOrNull(AwesomeService)).not.toBe(null);
+      expect(Container.getManyOrNull(AwesomeService)[0].getValue()).toStrictEqual(42);
     });
   });
 
