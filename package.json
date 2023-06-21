@@ -1,9 +1,10 @@
 {
-  "name": "@freshgum/typedi",
+  "name": "@typed-inject/injector",
   "version": "0.2.0",
   "description": "Dependency injection for TypeScript.  Fork of TypeDI.",
   "author": "freshgum",
   "license": "MIT",
+  "private": false,
   "sideEffects": false,
   "main": "./cjs/index.js",
   "module": "./esm5/index.js",
@@ -37,7 +38,7 @@
     "test:coverage": "jest --coverage --verbose",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand --coverage --verbose",
-    "prepublishOnly": "npm run build:cjs && npm run build:umd && build:types"
+    "prepublishOnly": "npm test && npm run build:cjs && npm run build:umd && build:types"
   },
   "husky": {
     "hooks": {
