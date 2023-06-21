@@ -1,0 +1,22 @@
+name: Prepare Package Manager
+
+on:
+  workflow_call:
+  
+jobs:
+  pnpm_install:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Set PNPM Cache Directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        name: Restore PNPM Package Cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-

@@ -14,25 +14,7 @@ jobs:
         with:
           node-version: 'lts/*'
           registry-url: https://registry.npmjs.org
-      # Set up PNPM so it doesn't write to the lockfile and installes devDependencies.
-      - uses: pnpm/action-setup@v2
-        with:
-          run_install: |
-            - args: [--frozen-lockfile, --save-dev]
-
-      # As instructed by: <https://github.com/pnpm/action-setup>
-      - name: Set PNPM Cache Directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
-        name: Restore PNPM Package Cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
 
       # The rest of this scripts runs the various tasks.
       # - run: pnpm ci --ignore-scripts
