@@ -4,22 +4,15 @@ jobs:
   checks:
     name: Linters
     runs-on: ubuntu-latest
+    uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 'lts/*'
-      - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
       - run: pnpm run prettier:check
       - run: pnpm run lint:check
   tests:
     name: Tests
     runs-on: ubuntu-latest
+    uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 'lts/*'
       - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
       - run: pnpm run test:ci
       - run: pnpm install codecov -g
@@ -27,11 +20,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-            node-version: 'lts/*'
       - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
       - run: pnpm run build:es2015
       - run: pnpm run build:esm5

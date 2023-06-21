@@ -8,14 +8,8 @@ jobs:
   publish:
     name: Publish TypeDI to NPM
     runs-on: ubuntu-latest
+    uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 'lts/*'
-          registry-url: https://registry.npmjs.org
-      - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
-
       # The rest of this scripts runs the various tasks.
       # - run: pnpm ci --ignore-scripts
       - run: pnpm run prettier:check

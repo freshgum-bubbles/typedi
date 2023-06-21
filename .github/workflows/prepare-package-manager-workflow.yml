@@ -8,6 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+          registry-url: https://registry.npmjs.org
       - name: Set PNPM Cache Directory
         id: pnpm-cache
         shell: bash
