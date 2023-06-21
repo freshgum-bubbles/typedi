@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
+      - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
       - run: pnpm run prettier:check
       - run: pnpm run lint:check
   tests:
@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
+      - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
       - run: pnpm run test:ci
       - run: pnpm install codecov -g
       - run: codecov -f ./coverage/clover.xml -t ${{ secrets.CODECOV_TOKEN }}
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
             node-version: 'lts/*'
-      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
+      - uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
       - run: pnpm run build:es2015
       - run: pnpm run build:esm5
       - run: pnpm run build:cjs
