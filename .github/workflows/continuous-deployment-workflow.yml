@@ -1,5 +1,5 @@
 
-name: CD
+name: Publish Package
 on:
   release:
     types: [created]
