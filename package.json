@@ -1,6 +1,6 @@
 {
   "name": "@freshgum/typedi",
-  "version": "0.10.0",
+  "version": "0.2.0",
   "description": "Dependency injection for TypeScript.  Fork of TypeDI.",
   "author": "freshgum",
   "license": "MIT",
