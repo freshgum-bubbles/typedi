@@ -36,7 +36,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage --verbose",
     "test:watch": "jest --watch",
-    "test:ci": "jest --runInBand --coverage --verbose"
+    "test:ci": "jest --runInBand --coverage --verbose",
+    "prepublishOnly": "npm run build:cjs && npm run build:umd && build:types"
   },
   "husky": {
     "hooks": {
