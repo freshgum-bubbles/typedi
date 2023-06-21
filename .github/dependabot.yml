@@ -1,15 +1,33 @@
 version: 2
+
+# Config reference:
+# <https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file>
 updates:
+  # Even though the package ecosystem is marked as NPM below,
+  # Dependabot still makes use of PNPM internally.
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: daily
-    time: "10:00"
-    timezone: Europe/Budapest
-  open-pull-requests-limit: 5
+    interval: weekly
+    time: "07:00"
+    # Use GMT as the timezone.
+    timezone: Europe/London
+  # Limit the open Dependabot pull requests to 2 so it
+  # doesn't blow up the Pull Requests page with individual
+  # dependency updates.
+  open-pull-requests-limit: 2
+  # For future maintainers: feel free to add yourselves here!
+  reviewers:
+    - freshgum-bubbles
   versioning-strategy: increase
   commit-message:
+    # This configuration renders commits as, for example:
+    #   build: bump @rollup/plugin-commonjs from 25.0.1 to 25.0.2
     prefix: build
+    # Make a separate prefix when upgrading "--save-dev" packages.
+    # This makes any errors that may occur as a result of a broken
+    # dependency easier to find in the commit timeline.
+    prefix-development: build(dev)
     include: scope
   ignore:
     - dependency-name: "husky"
