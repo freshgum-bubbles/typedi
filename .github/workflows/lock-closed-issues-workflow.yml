@@ -4,7 +4,7 @@ on:
     - cron: '0 0 * * *'
 jobs:
   lock:
-    name: Lock closed issues
+    name: Lock Inactive Closed Issues
     runs-on: ubuntu-latest
     steps:
       - uses: dessant/lock-threads@v2
