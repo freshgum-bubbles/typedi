@@ -20,6 +20,8 @@ import { ResolutionConstraintFlag } from './types/resolution-constraint.type';
 import { AnyServiceDependency } from './interfaces/service-options-dependency.interface';
 import { HOST_CONTAINER } from './constants/host-container.const';
 import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface';
+import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
+import { VisitorCollection } from './visitor-collection.class';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -96,6 +98,14 @@ export class ContainerInstance implements Disposable {
    * container when registered via `Container.set()` or `@Service` decorator.
    */
   public static readonly defaultContainer = new ContainerInstance('default');
+
+  /** 
+   * The currently-present visitors attached to the container. 
+   * These are conjoined into a container of individual visitors,
+   * which implements the standard ContainerTreeVisitor interface,
+   * and individual listeners can be added and removed at will.
+   */
+  private visitor = new VisitorCollection();
 
   /**
    * Create a ContainerInstance.
@@ -275,6 +285,7 @@ export class ContainerInstance implements Disposable {
     const maybeResolvedMetadata = this.resolveMetadata(identifier, recursive);
 
     if (maybeResolvedMetadata === null) {
+      this.visitor.visitUnavailableService(identifier, false);
       return null;
     }
 
@@ -414,6 +425,7 @@ export class ContainerInstance implements Disposable {
 
     /** If no IDs could be found, return null. */
     if (!idMap) {
+      this.visitor.visitUnavailableService(identifier, true);
       return null;
     }
 
@@ -522,6 +534,8 @@ export class ContainerInstance implements Disposable {
       /** @ts-ignore TypeScript is actually broken here. We've told it dependencies is of type TypeWrapper[], but it still doesn't like it? */
       dependencies: dependencies as unknown as TypeWrapper[],
     };
+
+    this.visitor.visitNewService(newMetadata);
 
     /** If the incoming metadata is marked as multiple we mask the ID and continue saving as single value. */
     if (newMetadata.multiple) {
@@ -640,6 +654,13 @@ export class ContainerInstance implements Disposable {
        */
       container = new ContainerInstance(containerId, parent ?? undefined);
 
+      /**
+       * To keep an understandable API surface, visitors attached to
+       * the default container are notified of the new orphaned service here.
+       * _Note: Orphaned container notifications are only sent for newly-created containers, not duplicate .of calls._
+       */
+      ContainerInstance.defaultContainer.visitor.visitOrphanedContainer(container);
+
       // todo: move this into ContainerInstance ctor
       ContainerRegistry.registerContainer(container);
     }
@@ -666,7 +687,10 @@ export class ContainerInstance implements Disposable {
   public of(containerId?: ContainerIdentifier): ContainerInstance {
     // Todo: make this get the constructor at runtime to aid
     // extension of the class.
-    return ContainerInstance.of(containerId);
+    const newContainer = ContainerInstance.of(containerId);
+
+    /** _Note: The visitor API is not called here, as that is handled in the static method._ */
+    return newContainer;
   }
 
   /**
@@ -683,7 +707,10 @@ export class ContainerInstance implements Disposable {
   public ofChild(containerId?: ContainerIdentifier) {
     this[THROW_IF_DISPOSED]();
 
-    return ContainerInstance.of(containerId, this);
+    const newContainer = ContainerInstance.of(containerId, this);
+    this.visitor.visitChildContainer(newContainer);
+
+    return newContainer;
   }
 
   /**
@@ -746,6 +773,9 @@ export class ContainerInstance implements Disposable {
 
     /** We mark the container as disposed, forbidding any further interaction with it. */
     (this as any).disposed = true;
+
+    /** Also dispose visitors. */
+    this.visitor.dispose();
   }
 
   private throwIfDisposed() {
@@ -975,6 +1005,30 @@ export class ContainerInstance implements Disposable {
 
       serviceMetadata.value = EMPTY_VALUE;
     }
+  }
+
+  /**
+   * Add a visitor to the container.
+   * @experimental
+   * 
+   * @param visitor The visitor to add to this container.
+   * 
+   * @returns Whether the operation was successful.
+   */
+  public acceptTreeVisitor (visitor: ContainerTreeVisitor) {
+    return this.visitor.addVisitor(visitor, this);
+  }
+
+  /**
+   * Remove a visitor from the container.
+   * No-op if the visitor was never attached to the container.
+   * @experimental
+   * 
+   * @param visitor The visitor to remove from the container.
+   * @returns Whether the operation was successful.
+   */
+  public detachTreeVisitor (visitor: ContainerTreeVisitor) {
+    return this.visitor.removeVisitor(visitor);
   }
 
   /** Iterate over each service in the container. */
