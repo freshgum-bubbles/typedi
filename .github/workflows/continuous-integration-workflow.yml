@@ -9,9 +9,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - run: npm ci --ignore-scripts
-      - run: npm run prettier:check
-      - run: npm run lint:check
+      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
+      - run: pnpm run prettier:check
+      - run: pnpm run lint:check
   tests:
     name: Tests
     runs-on: ubuntu-latest
@@ -20,9 +20,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - run: npm ci --ignore-scripts
-      - run: npm run test:ci
-      - run: npm install codecov -g
+      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
+      - run: pnpm run test:ci
+      - run: pnpm install codecov -g
       - run: codecov -f ./coverage/clover.xml -t ${{ secrets.CODECOV_TOKEN }}
   build:
     name: Build
@@ -32,9 +32,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
             node-version: 'lts/*'
-      - run: npm ci --ignore-scripts
-      - run: npm run build:es2015
-      - run: npm run build:esm5
-      - run: npm run build:cjs
-      - run: npm run build:umd
-      - run: npm run build:types
+      - uses: ./.github/workflows/prepare-package-manager-workflow.yml
+      - run: pnpm run build:es2015
+      - run: pnpm run build:esm5
+      - run: pnpm run build:cjs
+      - run: pnpm run build:umd
+      - run: pnpm run build:types
