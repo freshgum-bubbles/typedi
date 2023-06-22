@@ -76,10 +76,6 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
         this.forEach(visitor => visitor.visitNewService?.(serviceOptions));
     }
 
-    visitContainer(container: ContainerInstance): void {
-        this.forEach(visitor => visitor.visitContainer?.(container));
-    }
-
     visitUnavailableService(identifier: ServiceIdentifier, many: boolean): void {
         this.forEach(visitor => visitor.visitUnavailableService?.(identifier, many));
     }
