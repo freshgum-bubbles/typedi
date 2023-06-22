@@ -107,11 +107,6 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
             this.anyVisitorsPresent = true;
         }
 
-        // todo: should visitContainer return false?
-        // this could result in the collection removing it. we'd need to keep the visitor in-place initially,
-        // as if the container calls .get or anything in its visitContainer method, it would most likely want to
-        // get called if the service was unavailable / any new ones were added, etc.
-
         /**
          * Directly call the visitor's "visitContainer" method
          * to initialise it upon the given container.
@@ -122,8 +117,15 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
          * that any call to `visitContainer` means that the visitor was added
          * to a container.
          */
-        visitor.visitContainer?.(container);
-        return true;
+        const isAllowedToAttachVisitor = visitor.visitContainer?.(container);
+        
+        /**
+         * If a false-y return value was returned to signal that the visitor
+         * should not be attached to the given container, immediately remove it.
+         */
+        if (!isAllowedToAttachVisitor) {
+            this.removeVisitor(visitor);
+        }
     }
 
     /**
