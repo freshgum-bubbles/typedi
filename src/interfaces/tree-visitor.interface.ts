@@ -99,8 +99,12 @@ export interface ContainerTreeVisitor extends Disposable {
      * @experimental
      * 
      * @param container The container to visit.
+     * 
+     * @returns Whether the visitor can be attached to the container.
+     * If `false` is returned, no notifications are sent from the provided container.
+     * Otherwise, all notifications from the passed are sent to the visitor.
      */
-    visitContainer? (container: ContainerInstance): void;
+    visitContainer? (container: ContainerInstance): boolean;
 
     /**
      * Visit an unavailable service in the given container.
