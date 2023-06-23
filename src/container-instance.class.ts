@@ -17,6 +17,10 @@ import { Disposable } from './types/disposable.type';
 import { BUILT_INS } from './constants/builtins.const';
 import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error';
 import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const';
+import { Resolvable } from './interfaces/resolvable.interface';
+import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency';
+import { ResolutionConstraintFlag } from './types/resolution-constraint.type';
+import { AnyServiceDependency } from './interfaces/service-options-dependency.interface';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -389,7 +393,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public set<T = unknown>(serviceOptions: Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies: TypeWrapper[]): ServiceIdentifier;
+  public set<T = unknown>(serviceOptions: Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies: Resolvable[]): ServiceIdentifier;
 
   /**
    * Add a service to the container using the provided options, containing
@@ -403,10 +407,9 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }): ServiceIdentifier;
-
-  public set<T = unknown>(serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies?: TypeWrapper[]): ServiceIdentifier {
-    this[THROW_IF_DISPOSED]();
+  public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyServiceDependency[] }): ServiceIdentifier;
+  public set<T = unknown>(serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies?: Resolvable[]): ServiceIdentifier {
+    this.throwIfDisposed();
 
     /**
      * If the service is marked as singleton, we set it in the default container.
@@ -424,15 +427,15 @@ export class ContainerInstance implements Disposable {
        * This is, of course, left to ContainerInstance#set.
        */
       // todo: should we really be binding to defaultContainer here?
-      return ContainerInstance.defaultContainer.set(serviceOptions as Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies as TypeWrapper[]);
+      return ContainerInstance.defaultContainer.set(serviceOptions as Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies as Resolvable[]);
     }
 
     /**
      * The dependencies of the object are either delivered in a pre-compiled list of TypeWrapper objects (from @Service),
      * or from the dependencies list of the service options object, which must then be compiled to a list of type wrappers.
      */
-    const dependencies: TypeWrapper[] = 
-      precompiledDependencies ?? (serviceOptions as ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }).dependencies.map(resolveToTypeWrapper) ?? [];
+    const dependencies: Resolvable[] = 
+      precompiledDependencies ?? (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map(wrapDependencyAsResolvable) ?? [];
 
     const newMetadata: ServiceMetadata<T> = {
       /**
@@ -746,24 +749,88 @@ export class ContainerInstance implements Disposable {
      * Therefore, it can be safely assumed that if the key is present, the correct
      * data will also be present.
      */
-    return dependencies.map(wrapper => this.resolveTypeWrapper(wrapper, guardBuiltIns));
+    return dependencies.map(wrapper => this.resolveResolvable(wrapper));
   }
 
-  private runInjectedFactory (factory: InjectedFactory): unknown {
-    const returnedValue = factory.get(this);
+  /**
+   * Resolve a `Resolvable` object in the current container.
+   * 
+   * @param resolvable The resolvable to resolve.
+   * 
+   * @returns The resolved value of the item.
+   */
+  private resolveResolvable (resolvable: Resolvable): unknown {
+    const identifier = this.resolveTypeWrapper(resolvable.typeWrapper);
 
-    if (returnedValue !== null && typeof returnedValue === 'object' && isInjectedFactory(returnedValue)) {
-      return this.runInjectedFactory(factory);
+    if (resolvable.constraints) {
+      const { constraints } = resolvable;
+
+      /** 
+       * Set up some state registers for various flag configurations.
+       */
+      let identifierIsPresent = this.has(identifier);
+      let resolvedIdentifier!: unknown;
+
+      /**
+       * For the individual bit flags, we don't care about the return from `&`.
+       * All that matters is that, if it doesn't return 0, the flag is activated.
+       * 
+       * Implementation note: as an optimisation, we use double negative to cast
+       * the result to boolean instead of an explicit `Boolean` call here.
+       * To clarify, the "!!" does the *exact* same thing as `Boolean`.
+       */
+      const isOptional = !!(constraints & ResolutionConstraintFlag.Optional);
+      const isSkipSelf = !!(constraints & ResolutionConstraintFlag.SkipSelf);
+      const isSelf = !!(constraints & ResolutionConstraintFlag.Self);
+      const isMany = !!(constraints & ResolutionConstraintFlag.Many);
+
+      /** SkipSelf() and Self() are incompatible. */
+      if (isSkipSelf && isSelf) {
+        throw new Error('SkipSelf() and Self() cannot be used at the same time.');
+      }
+
+      /** If SkipSelf is declared, make sure we actually *have* a parent. */
+      if (isSkipSelf && !this.parent) {
+        throw new Error(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`);
+      }
+
+      /**
+       * Straight away, check if optional was declared.
+       * If it was not and the symbol was not found, throw an error.
+       * However, if it *was*, simply return `null` as expected.
+       */
+      if (!identifierIsPresent) {
+        if (isOptional) {
+          return null;
+        }
+
+        throw new ServiceNotFoundError(identifier);
+      }
+
+      /**
+       * If SkipSelf() is provided, use the parent container for lookups instead.
+       * If not, we use the current container.
+       */
+      const targetContainer = isSkipSelf ? this.parent as ContainerInstance : this;
+
+      /** If Self() is used, do not use recursion. */
+      const recursive = !isSelf;
+
+      if (isMany) {
+        /** If we're in isMany mode, resolve the identifier via `getMany`. */
+        resolvedIdentifier = targetContainer.getMany(identifier, recursive);
+      } else {
+        resolvedIdentifier = targetContainer.get(identifier, recursive);
+      }
+
+      return resolvedIdentifier;
     }
 
-    return returnedValue;
+    /** If no constraints were found, fallback to default behaviour. */
+    return this.get(identifier);
   }
 
-  private resolveTypeWrapper (wrapper: TypeWrapper, guardBuiltIns = false) {
-    if (wrapper.isFactory) {
-      return this.runInjectedFactory(wrapper.factory);
-    }
-  
+  private resolveTypeWrapper (wrapper: TypeWrapper, guardBuiltIns = false): ServiceIdentifier {
     /**
      * Reminder: The type wrapper is either resolvable to:
      *   1. An eager type containing the id of the service, or...
@@ -788,7 +855,7 @@ export class ContainerInstance implements Disposable {
      * This is in-line with prior behaviour, ensuring that services
      * from upstream containers can be resolved correctly.
      */
-    return this.get(resolved, true);
+    return resolved;
   }
 
   /**

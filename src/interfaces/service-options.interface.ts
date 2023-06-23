@@ -1,5 +1,6 @@
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { ServiceMetadata } from './service-metadata.interface';
+import { AnyServiceDependency } from './service-options-dependency.interface';
 
 /**
  * The public ServiceOptions is partial object of ServiceMetadata and either one
@@ -10,7 +11,7 @@ export type ServiceOptions<T = unknown> = (
   | Omit<Partial<ServiceMetadata<T>>, 'value' | 'factory'>
   | Omit<Partial<ServiceMetadata<T>>, 'value' | 'type'>)
   | Pick<Partial<ServiceMetadata<T>>, 'factory'>) &
-  { dependencies?: AnyInjectIdentifier[] };
+  { dependencies?: AnyServiceDependency[] };
 
 
   
