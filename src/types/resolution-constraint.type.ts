@@ -1,5 +1,5 @@
 /**
- * A collection of bit-flags describing resolution constraints to append to a 3-bit wide bitmask.
+ * A collection of bit-flags describing resolution constraints to append to a bitmask.
  */
 export const enum ResolutionConstraintFlag {
     /** Do not ascend the container tree to resolve this identifier. */
