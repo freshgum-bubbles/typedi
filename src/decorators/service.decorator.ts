@@ -9,13 +9,13 @@
 import { ServiceOptions } from '../interfaces/service-options.interface';
 import { Constructable } from '../types/constructable.type';
 import { ContainerInstance } from '../container-instance.class';
-import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { formatClassName } from '../utils/format-class-name';
-import { resolveToTypeWrapper } from '../utils/resolve-to-type-wrapper.util';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface';
 import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const';
 import { BUILT_INS } from '../constants/builtins.const';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error';
+import { AnyServiceDependency } from '../interfaces/service-options-dependency.interface';
+import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -28,7 +28,7 @@ import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-built
  * 
  * @returns A decorator which is then used upon a class.
  */
-export function Service (dependencies: AnyInjectIdentifier[]): ClassDecorator;
+export function Service (dependencies: AnyServiceDependency[]): ClassDecorator;
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -44,7 +44,7 @@ export function Service (dependencies: AnyInjectIdentifier[]): ClassDecorator;
  * 
  * @returns A decorator which is then used upon a class.
  */
-export function Service<T = unknown>(options: Omit<ServiceOptions<T>, 'dependencies'>, dependencies: AnyInjectIdentifier[]): ClassDecorator;
+export function Service<T = unknown>(options: Omit<ServiceOptions<T>, 'dependencies'>, dependencies: AnyServiceDependency[]): ClassDecorator;
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -61,10 +61,10 @@ export function Service<T = unknown>(options: Omit<ServiceOptions<T>, 'dependenc
  * 
  * @returns A decorator which is then used upon a class.
  */
-export function Service (options: ServiceOptions<Constructable<unknown>> & { dependencies: AnyInjectIdentifier[] }): ClassDecorator;
+export function Service (options: ServiceOptions<Constructable<unknown>> & { dependencies: AnyServiceDependency[] }): ClassDecorator;
 export function Service<T>(
-  optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyInjectIdentifier[], 
-  maybeDependencies?: AnyInjectIdentifier[]
+  optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[], 
+  maybeDependencies?: AnyServiceDependency[]
 ): ClassDecorator {
   return targetConstructor => {
     if (optionsOrDependencies == null) {
@@ -73,7 +73,7 @@ export function Service<T>(
     }
 
     /** A list of dependencies resolved from the arguments provided to the function. */
-    let resolvedDependencies!: AnyInjectIdentifier[];
+    let resolvedDependencies!: AnyServiceDependency[];
 
     if (Array.isArray(optionsOrDependencies)) {
       /** 
@@ -82,10 +82,6 @@ export function Service<T>(
        */
       resolvedDependencies = optionsOrDependencies;
     } else if (Array.isArray(maybeDependencies)) {
-      /** 
-       * Alternatively, they may have specified the dependencies as the last argument.
-       * In that case, we'll try to map over the dependencies (if they exist.)
-       */
       resolvedDependencies = maybeDependencies;
     } else if ('dependencies' in optionsOrDependencies) {
       /**
@@ -100,7 +96,7 @@ export function Service<T>(
       throw new Error('The dependencies provided were not able to be resolved.');
     }
 
-    const wrappedDependencies = resolvedDependencies.map(resolveToTypeWrapper);
+    const wrappedDependencies = resolvedDependencies.map(wrapDependencyAsResolvable);
 
     /**
      * A default list of options for this service.
@@ -139,15 +135,11 @@ export function Service<T>(
      * Check any available eager types immediately, so we can quickly raise an error
      * if they are invalid, instead of when the service is injected.
      */
-    wrappedDependencies.forEach((wrapper, index) => {
-      const { eagerType, isFactory } = wrapper;
-
-      if (isFactory) {
-        return;
-      }
+    wrappedDependencies.forEach(({ typeWrapper }, index) => {
+      const { eagerType } = typeWrapper;
 
       if (eagerType !== null) {
-        const type = typeof wrapper;
+        const type = typeof typeWrapper;
 
         if (type !== 'function' && type !== 'object' && type !== 'string') {
           throw new Error(

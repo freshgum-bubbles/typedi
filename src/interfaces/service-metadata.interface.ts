@@ -3,6 +3,7 @@ import { Constructable } from '../types/constructable.type';
 import { ContainerScope } from '../types/container-scope.type';
 import { ServiceIdentifier } from '../types/service-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
+import { Resolvable } from './resolvable.interface';
 
 /**
  * Service metadata is used to initialize service and store its state.
@@ -64,7 +65,7 @@ export interface ServiceMetadata<Type = unknown> {
    * The dependencies of the service's constructor.
    * These are wrapped objects.
    */
-  dependencies: TypeWrapper[];
+  dependencies: Resolvable[];
 
   /**
    * Optionally, a container to register the service under.
