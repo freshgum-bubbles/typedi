@@ -113,7 +113,12 @@ export class ContainerInstance implements Disposable {
     this[THROW_IF_DISPOSED]();
 
     const location = this.getIdentifierLocation(identifier);
-    return location === ServiceIdentifierLocation.Local || location === ServiceIdentifierLocation.Parent;
+
+    if (recursive && location === ServiceIdentifierLocation.Parent) {
+      return true;
+    }
+
+    return location === ServiceIdentifierLocation.Local;
   }
 
   /**
