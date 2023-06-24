@@ -1,8 +1,59 @@
-import { Container, ContainerInstance, Many, Optional, Self, SkipSelf } from '../../src/index';
+import { Container, ContainerInstance, Many, Optional, Self, SkipSelf, ResolutionConstraintFlag } from '../../src/index';
 import { Service } from '../../src/decorators/service.decorator';
 
 describe('Resolution Constraints', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
+
+  describe('Bitmask functions', function () {
+    /**
+     * Iterate over each flag and flag function to ensure they work correctly.
+     * The name is purely there so we can provide pretty test names (as seen below).
+     */
+    const testMaskFunctions = describe.each([
+        { name: 'Many', fn: Many, flag: ResolutionConstraintFlag.Many },
+        { name: 'SkipSelf', fn: SkipSelf, flag: ResolutionConstraintFlag.SkipSelf },
+        { name: 'Self', fn: Self, flag: ResolutionConstraintFlag.Self },
+        { name: 'Optional', fn: Optional, flag: ResolutionConstraintFlag.Optional }
+    ])
+    
+    testMaskFunctions('$name()', function ({ fn, flag }) {
+        it('should return a number', function () {
+            expect(typeof fn()).toStrictEqual('number');
+        });
+
+        it('should match the corresponding constraint flag', function () {
+            const mask = fn();
+            expect(mask).toStrictEqual(flag);
+        });
+
+        it('should be bitwise ANDable to the corresponding constraint flag', function () {
+            const mask = fn();
+            expect(mask & flag).not.toStrictEqual(0);
+        });
+    });
+
+    testMaskFunctions('ResolutionConstraintFlag.$name', function ({ flag }) {
+        it('should be a number', function () {
+            expect(typeof flag).toStrictEqual('number');
+        });
+    });
+  });
+
+  describe('ResolutionConstraintFlag', function () {
+    it('should map with other flags correctly', function () {
+        const bitmask = (
+            ResolutionConstraintFlag.Many |
+            ResolutionConstraintFlag.Optional |
+            ResolutionConstraintFlag.Self |
+            ResolutionConstraintFlag.SkipSelf
+        );
+
+        expect(bitmask & ResolutionConstraintFlag.Many).not.toStrictEqual(0);
+        expect(bitmask & ResolutionConstraintFlag.Optional).not.toStrictEqual(0);
+        expect(bitmask & ResolutionConstraintFlag.Self).not.toStrictEqual(0);
+        expect(bitmask & ResolutionConstraintFlag.SkipSelf).not.toStrictEqual(0);
+    });
+  });
 
   describe('Optional', function () {
     it('should work correctly on its own', function () {
@@ -81,7 +132,7 @@ describe('Resolution Constraints', function () {
   });
 
   describe('Many', function () {
-    it.skip('should return the many instances of the given identifier', function () {
+    it('should return the many instances of the given identifier', function () {
         @Service({ multiple: true }, [ ])
         class Dependency { }
 
@@ -91,23 +142,85 @@ describe('Resolution Constraints', function () {
         }
 
         expect(() => Container.get(MyService)).not.toThrowError();
-        expect(Container.get(MyService).receivedValue).toMatchObject([Dependency]);
+        
+        const { receivedValue } = Container.get(MyService);
+        expect(receivedValue).toBeInstanceOf(Array);
+        expect((receivedValue as Array<any>).length).toStrictEqual(1);
+        expect((receivedValue as Array<any>)[0]).toBeInstanceOf(Dependency);
     });
 
-    it.skip('should throw an error if the identifier cannot be found', function () {
+    it('should throw an error if the identifier cannot be found', function () {
+        class Dependency { }
 
+        @Service([[Dependency, Many()]])
+        class MyService {
+            constructor (public receivedValue: unknown) { }
+        }
+
+        expect(() => Container.get(MyService)).toThrowError();
     });
 
-    it.skip('should return null when combined with Optional and the identifier cannot be found', function () {
+    it('should return null when combined with Optional and the identifier cannot be found', function () {
+        class Dependency { }
 
+        @Service([[Dependency, Many() | Optional()]])
+        class MyService {
+            constructor (public receivedValue: unknown) { }
+        }
+
+        expect(() => Container.get(MyService)).not.toThrowError();
+        expect(Container.get(MyService).receivedValue).toStrictEqual(null);
     });
 
-    it.skip('should work correctly with Skip', function () {
+    it('should work correctly with Self', function () {
+        const childContainer = Container.ofChild(Symbol());
 
+        @Service({ multiple: true }, [])
+        class Dependency { }
+
+        @Service({ container: childContainer }, [[Dependency, Many() | Self()]])
+        class MyService {
+            constructor (public receivedValue: unknown) { }
+        }
+
+        expect(() => childContainer.get(MyService)).toThrowError();
     });
 
-    it.skip('should work correctly with SkipSelf', function () {
+    it('should work correctly with SkipSelf', function () {
+        const childContainer = Container.ofChild(Symbol());
 
+        const mockNeverRunsFn = jest.fn();
+        const mockShouldRunFn = jest.fn();
+
+        @Service({ container: childContainer, multiple: true }, [ ])
+        class ThisShouldNeverRun {
+            constructor () {
+                mockNeverRunsFn();
+            }
+        }
+
+        /** This will be bound to the default container, which is the parent of childContainer. */
+        @Service({ id: ThisShouldNeverRun, multiple: true }, [ ])
+        class ThisShouldRun {
+            constructor () {
+                mockShouldRunFn();
+            }
+        }
+
+        @Service([
+            [ThisShouldNeverRun, SkipSelf() | Many()]
+        ])
+        class MyService {
+            constructor (public receivedValue: unknown) { }
+        }
+
+        expect(() => childContainer.get(MyService)).not.toThrowError();
+        
+        const { receivedValue } = childContainer.get(MyService);
+
+        expect(receivedValue).toBeInstanceOf(Array);
+        expect((receivedValue as Array<any>).length).toStrictEqual(1);
+        expect((receivedValue as Array<any>)[0]).toBeInstanceOf(ThisShouldRun);
     });
   });
 
