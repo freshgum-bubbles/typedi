@@ -19,6 +19,10 @@ export function wrapDependencyAsResolvable (dependency: AnyServiceDependency): R
             throw new Error('The dependency pair was not instantiated correctly.');
         }
 
+        if (typeof options === 'number') {
+            constraints = options;
+        }
+        
         typeWrapper = resolveToTypeWrapper(id);
     } else {
         /** The dependency is an injectable identifier. */
