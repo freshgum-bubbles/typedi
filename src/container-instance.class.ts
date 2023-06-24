@@ -29,13 +29,13 @@ import { AnyServiceDependency } from './interfaces/service-options-dependency.in
  * ```ts
  * this[THROW_IF_DISPOSED]();
  * ```
- * 
+ *
  * This is done instead of:
- * 
+ *
  * ```ts
  * this.throwIfDisposed();
  * ```
- * 
+ *
  * The former version reduces the bundle size, as the variable name can be mangled safely.
  */
 const THROW_IF_DISPOSED = 'throwIfDisposed';
@@ -43,7 +43,7 @@ const THROW_IF_DISPOSED = 'throwIfDisposed';
 export const enum ServiceIdentifierLocation {
   Local = 'local',
   Parent = 'parent',
-  None = 'none'
+  None = 'none',
 }
 
 interface ManyServicesMetadata {
@@ -80,32 +80,32 @@ export class ContainerInstance implements Disposable {
    * The default global container. By default services are registered into this
    * container when registered via `Container.set()` or `@Service` decorator.
    */
-  public static readonly defaultContainer = new ContainerInstance("default");
+  public static readonly defaultContainer = new ContainerInstance('default');
 
   /**
    * Create a ContainerInstance.
-   * 
+   *
    * @param id The ID of the container to create.
    * @param parent The parent of the container to create.
    * The parent is used for resolving identifiers which are
    * not present in this container.
    */
-  protected constructor (id: ContainerIdentifier, public readonly parent?: ContainerInstance) {
+  protected constructor(id: ContainerIdentifier, public readonly parent?: ContainerInstance) {
     this.id = id;
   }
 
   /**
    * Checks if the service with given name or type is registered service container.
    * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
-   * 
+   *
    * If recursive mode is enabled, the symbol is not available locally, and we have a parent,
    * we tell the parent to search its tree recursively too.
    * If the container tree is substantial, this operation may affect performance.
-   * 
+   *
    * @param identifier The identifier of the service to look up.
-   * 
+   *
    * @returns Whether the identifier is present in the current container, or its parent.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -126,14 +126,14 @@ export class ContainerInstance implements Disposable {
    * If recursive mode is enabled, the symbol is not available locally, and we have a parent,
    * we tell the parent to search its tree recursively too.
    * If the container tree is substantial, this operation may affect performance.
-   * 
+   *
    * @param identifier The identifier of the service to look up.
-   * 
+   *
    * @returns A ServiceIdentifierLocation.
    *  - If the identifier cannot be found, `ServiceIdentifierLocation.None`.
    *  - If the identifier is found locally, `ServiceIdentifierLocation.Local`.
    *  - If the identifier is found upstream, `ServiceIdentifierLocation.Parent.`
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -158,14 +158,14 @@ export class ContainerInstance implements Disposable {
    * If the identifier cannot be resolved locally, the parent tree
    * (if present) is recursively searched until a match is found
    * (or the tree is exhausted).
-   * 
+   *
    * @param identifier The identifier to get the value of.
-   * 
+   *
    * @returns The value of the identifier in the current scope.
-   * 
+   *
    * @throws ServiceNotFoundError
    * This exception is thrown if the identifier cannot be found in the tree.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -179,27 +179,30 @@ export class ContainerInstance implements Disposable {
     return response as T;
   }
 
-  /** 
-   * Resolve the metadata for the given identifier.  Returns null if no metadata could be found. 
-   * 
+  /**
+   * Resolve the metadata for the given identifier.  Returns null if no metadata could be found.
+   *
    * @param identifier The identifier to resolve metadata for.
    * @param recursive Whether the lookup operation is recursive.
-   * 
-   * @returns 
+   *
+   * @returns
    * If the identifier is found, a tuple is returned consisting of the following:
    *   1. The metadata for the given identifier, if found.
    *   2. The location from where the metadata was returned.
    *   `ServiceIdentifierLocation.Parent` is returned if the identifier was found upstream.
-   * 
+   *
    * If an identifier cannot be found, `null` is returned.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  protected resolveMetadata<T = unknown> (identifier: ServiceIdentifier<T>, recursive: boolean): readonly [ServiceMetadata<T>, ServiceIdentifierLocation] | null {
+  protected resolveMetadata<T = unknown>(
+    identifier: ServiceIdentifier<T>,
+    recursive: boolean
+  ): readonly [ServiceMetadata<T>, ServiceIdentifierLocation] | null {
     this[THROW_IF_DISPOSED]();
 
-    /** 
+    /**
      * Firstly, ascertain the location of the identifier.
      * If it is located on the parent, we shall yield to the parent's .get.
      */
@@ -230,13 +233,13 @@ export class ContainerInstance implements Disposable {
   /**
    * Retrieves the service with given name or type from the service container.
    * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
-   * 
+   *
    * To preserve compatibility with TypeDI, recursive is set to false by default.
-   * 
+   *
    * @param identifier The identifier to get the value of.
-   * 
+   *
    * @returns The resolved value for the given metadata, or `null` if it could not be found.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -249,11 +252,11 @@ export class ContainerInstance implements Disposable {
       return null;
     }
 
-    /** 
+    /**
      * At this point, we have narrowed the location of the identifier
      * down to ServiceIdentifierLocation.Local.
      * Therefore, the symbol exists locally.
-     * 
+     *
      * To preserve compatibility with TypeDI, if the identifier exists on
      * the parent but not locally, we still treat it as if it were resolved locally.
      */
@@ -275,7 +278,7 @@ export class ContainerInstance implements Disposable {
          * If the service is a singleton, we'll import its value directly into this container.
          * Otherwise, we set the value to the well-known placeholder.
          */
-        value
+        value,
       };
 
       /**
@@ -294,7 +297,7 @@ export class ContainerInstance implements Disposable {
       const newServiceID = this.set(newServiceMetadata, [...baseMetadata.dependencies]);
       return this.getOrNull(newServiceID, recursive) as T;
     }
-    
+
     let metadata = baseMetadata;
 
     /** Firstly, we shall check if the service is a singleton.  If it is, load it from the global registry. */
@@ -318,15 +321,15 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets all instances registered in the container of the given service identifier.
    * Used when service defined with multiple: true flag.
-   * 
+   *
    * @param identifier The identifier to resolve.
-   * 
+   *
    * @returns An array containing the service instances for the given
    * identifier.
-   * 
+   *
    * @throws ServiceNotFoundError
    * This exception is thrown if a value could not be found for the given identifier.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -343,12 +346,12 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets all instances registered in the container of the given service identifier.
    * Used when service defined with multiple: true flag.
-   * 
+   *
    * @param identifier The identifier to resolve.
-   * 
+   *
    * @returns An array containing the service instances for the given identifier.
    * If none can be found, `null` is returned.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -376,9 +379,10 @@ export class ContainerInstance implements Disposable {
      * If the service is registered as a singleton, we load it from the global container.
      * Otherwise, the local registry is used.
      */
-    const subject = idMap.scope === 'singleton' ? 
-      (generatedId: Token<unknown>) => ContainerInstance.defaultContainer.get<T>(generatedId) :
-      (generatedId: Token<unknown>) => this.get<T>(generatedId, recursive);
+    const subject =
+      idMap.scope === 'singleton'
+        ? (generatedId: Token<unknown>) => ContainerInstance.defaultContainer.get<T>(generatedId)
+        : (generatedId: Token<unknown>) => this.get<T>(generatedId, recursive);
 
     return idMap.tokens.map(subject);
   }
@@ -386,34 +390,42 @@ export class ContainerInstance implements Disposable {
   /**
    * Add a service to the container using the provided options, along with
    * a pre-wrapped list of dependencies.
-   * 
+   *
    * _This is mainly for internal use._
-   * 
+   *
    * @param serviceOptions The options for the service to add to the container.
    * @param precompiledDependencies A precompiled list of dependencies in `TypeWrapper` form for the given service.
-   * 
+   *
    * @returns The identifier of the given service in the container.
    * This can then be passed to `.get` to resolve the identifier.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public set<T = unknown>(serviceOptions: Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies: Resolvable[]): ServiceIdentifier;
+  public set<T = unknown>(
+    serviceOptions: Omit<ServiceOptions<T>, 'dependencies'>,
+    precompiledDependencies: Resolvable[]
+  ): ServiceIdentifier;
 
   /**
    * Add a service to the container using the provided options, containing
    * all information about the new service including its dependencies.
-   * 
+   *
    * @param serviceOptions The options for the service to add to the container.
-   * 
+   *
    * @returns The identifier of the given service in the container.
    * This can then be passed to `.get` to resolve the identifier.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public set<T = unknown>(serviceOptions: ServiceOptions<T> & { dependencies: AnyServiceDependency[] }): ServiceIdentifier;
-  public set<T = unknown>(serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies?: Resolvable[]): ServiceIdentifier {
+  public set<T = unknown>(
+    serviceOptions: ServiceOptions<T> & { dependencies: AnyServiceDependency[] }
+  ): ServiceIdentifier;
+  public set<T = unknown>(
+    serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>,
+    precompiledDependencies?: Resolvable[]
+  ): ServiceIdentifier {
     this.throwIfDisposed();
 
     /**
@@ -426,21 +438,26 @@ export class ContainerInstance implements Disposable {
        * together if we can very quickly determine if the argument is of type object?
        * If we did this return below, we'd be wasting a newly-constructed object, PLUS
        * a few function calls to helpers like resolveToTypeWrapper.
-       * 
+       *
        * 2. Below, we trick TypeScript into thinking we're using the 1st overload here.
        * However, we haven't actually checked the types of each argument.
        * This is, of course, left to ContainerInstance#set.
        */
       // todo: should we really be binding to defaultContainer here?
-      return ContainerInstance.defaultContainer.set(serviceOptions as Omit<ServiceOptions<T>, 'dependencies'>, precompiledDependencies as Resolvable[]);
+      return ContainerInstance.defaultContainer.set(
+        serviceOptions as Omit<ServiceOptions<T>, 'dependencies'>,
+        precompiledDependencies as Resolvable[]
+      );
     }
 
     /**
      * The dependencies of the object are either delivered in a pre-compiled list of TypeWrapper objects (from @Service),
      * or from the dependencies list of the service options object, which must then be compiled to a list of type wrappers.
      */
-    const dependencies: Resolvable[] = 
-      precompiledDependencies ?? (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map(wrapDependencyAsResolvable) ?? [];
+    const dependencies: Resolvable[] =
+      precompiledDependencies ??
+      (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map(wrapDependencyAsResolvable) ??
+      [];
 
     const newMetadata: ServiceMetadata<T> = {
       /**
@@ -507,11 +524,11 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Removes services with the given list of service identifiers.
-   * 
+   *
    * @param identifierOrIdentifierArray The list of service identifiers to remove from the container.
-   * 
+   *
    * @returns The current `ContainerInstance` instance.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -534,14 +551,17 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets a separate container instance for the given instance id.
    * Optionally, a parent can be passed, which will act as an upstream resolver for the container.
-   * 
+   *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
    * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  Defaults to the default container.
-   * 
+   *
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
    */
-  public static of(containerId: ContainerIdentifier = 'default', parent: ContainerInstance | null = ContainerInstance.defaultContainer): ContainerInstance {
+  public static of(
+    containerId: ContainerIdentifier = 'default',
+    parent: ContainerInstance | null = ContainerInstance.defaultContainer
+  ): ContainerInstance {
     if (containerId === 'default') {
       return this.defaultContainer;
     }
@@ -568,17 +588,17 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Gets a separate container instance for the given instance id.
-   * 
+   *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * 
+   *
    * @example
    * ```
    * const newContainer = Container.of('foo');
-   * 
+   *
    * @Service({ container: newContainer }, [])
    * class MyService {}
    * ```
-   * 
+   *
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
    */
@@ -590,16 +610,16 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Create a registry with the specified ID, with this instance as its parent.
-   * 
+   *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * 
+   *
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public ofChild (containerId?: ContainerIdentifier) {
+  public ofChild(containerId?: ContainerIdentifier) {
     this[THROW_IF_DISPOSED]();
 
     return ContainerInstance.of(containerId, this);
@@ -607,7 +627,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Completely resets the container by removing all previously registered services from it.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
@@ -631,29 +651,30 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Dispose the container, rendering it unable to perform any further injection or storage.
-   * 
+   *
    * @example
    * ```ts
    * const appContainer = Container.of('app');
-   * 
+   *
    * appContainer.dispose().then(
    *   () => console.log('The container has been disposed.')
    * );
-   * 
+   *
    * appContainer.disposed === true;
-   * 
+   *
    * // This will throw an error:
    * appContainer.get(
    *   new Token<unknown>('test')
    * );
    * ```
-   * 
+   *
    * @returns A promise that resolves when the disposal process is complete.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public async dispose(): Promise<void> { // eslint-disable-next-line @typescript-eslint/require-await
+  public async dispose(): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/require-await
     this[THROW_IF_DISPOSED]();
 
     this.reset({ strategy: 'resetServices' });
@@ -740,8 +761,8 @@ export class ContainerInstance implements Disposable {
     return value;
   }
 
-  private getConstructorParameters<T> ({ dependencies }: ServiceMetadata<T>, guardBuiltIns?: boolean): unknown[] {
-    /** 
+  private getConstructorParameters<T>({ dependencies }: ServiceMetadata<T>, guardBuiltIns?: boolean): unknown[] {
+    /**
      * Firstly, check if the metadata declares any dependencies.
      */
     if (dependencies.length === 0) {
@@ -759,12 +780,12 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Resolve a `Resolvable` object in the current container.
-   * 
+   *
    * @param resolvable The resolvable to resolve.
-   * 
+   *
    * @returns The resolved value of the item.
    */
-  private resolveResolvable (resolvable: Resolvable): unknown {
+  private resolveResolvable(resolvable: Resolvable): unknown {
     const identifier = this.resolveTypeWrapper(resolvable.typeWrapper);
 
     if (resolvable.constraints) {
@@ -775,7 +796,7 @@ export class ContainerInstance implements Disposable {
       /**
        * For the individual bit flags, we don't care about the return from `&`.
        * All that matters is that, if it doesn't return 0, the flag is activated.
-       * 
+       *
        * Implementation note: as an optimisation, we use double negative to cast
        * the result to boolean instead of an explicit `Boolean` call here.
        * To clarify, the "!!" does the *exact* same thing as `Boolean`.
@@ -799,12 +820,12 @@ export class ContainerInstance implements Disposable {
        * If SkipSelf() is provided, use the parent container for lookups instead.
        * If not, we use the current container.
        */
-      const targetContainer = isSkipSelf ? this.parent as ContainerInstance : this;
+      const targetContainer = isSkipSelf ? (this.parent as ContainerInstance) : this;
 
       /** If Self() is used, do not use recursion. */
       const recursive = !isSelf ?? undefined;
 
-      /** 
+      /**
        * Set up some state registers for various flag configurations.
        */
       let identifierIsPresent = targetContainer.has(identifier, recursive);
@@ -836,16 +857,16 @@ export class ContainerInstance implements Disposable {
     return this.get(identifier);
   }
 
-  private resolveTypeWrapper (wrapper: TypeWrapper, guardBuiltIns = false): ServiceIdentifier {
+  private resolveTypeWrapper(wrapper: TypeWrapper, guardBuiltIns = false): ServiceIdentifier {
     /**
      * Reminder: The type wrapper is either resolvable to:
      *   1. An eager type containing the id of the service, or...
      *   2. A lazy type containing a function that must be called to resolve the id.
-     * 
+     *
      * Therefore, if the eager type does not exist, the lazy type should.
      */
     /** ESLint removes the cast, which causes a compilation error: */
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
 
     if (resolved == null) {
@@ -897,8 +918,8 @@ export class ContainerInstance implements Disposable {
   }
 }
 
-/** 
- * Register the default container in ContainerRegistry. 
+/**
+ * Register the default container in ContainerRegistry.
  * We don't use `ContainerInstance.of` here we don't need to check
  * if a container with the "default" ID already exists: it never will.
  */

@@ -1,4 +1,4 @@
 export interface Disposable {
-    disposed: boolean;
-    dispose (): Promise<void> | void;
+  disposed: boolean;
+  dispose(): Promise<void> | void;
 }

@@ -14,7 +14,9 @@ describe('Container', function () {
     const asDisposable: Disposable = tempContainer;
 
     /** Ensure the variable, and thus its type check, does not get elided by the compiler. */
-    if (asDisposable) { expect(true).toBe(true); }
+    if (asDisposable) {
+      expect(true).toBe(true);
+    }
 
     expect(tempContainer).toHaveProperty('dispose');
     expect(tempContainer).toHaveProperty('disposed');
@@ -49,7 +51,7 @@ describe('Container', function () {
   describe('set', function () {
     it('should be able to set a class into the container', function () {
       class TestService {
-        constructor(public name: string) { }
+        constructor(public name: string) {}
       }
       const testService = new TestService('this is test');
       Container.set({ id: TestService, value: testService, dependencies: [] });
@@ -59,7 +61,7 @@ describe('Container', function () {
 
     it('should be able to set a named service', function () {
       class TestService {
-        constructor(public name: string) { }
+        constructor(public name: string) {}
       }
       const firstService = new TestService('first');
       Container.set({ id: 'first.service', value: firstService, dependencies: [String] });
@@ -73,7 +75,7 @@ describe('Container', function () {
 
     it('should be able to set a tokenized service', function () {
       class TestService {
-        constructor(public name: string) { }
+        constructor(public name: string) {}
       }
       const FirstTestToken = new Token<TestService>();
       const SecondTestToken = new Token<TestService>();
@@ -90,7 +92,7 @@ describe('Container', function () {
 
     it('should override previous value if service is written second time', function () {
       class TestService {
-        constructor(public name: string) { }
+        constructor(public name: string) {}
       }
       const TestToken = new Token<TestService>();
 
@@ -109,7 +111,7 @@ describe('Container', function () {
 
   describe('set multiple', function () {
     it('should be able to provide a list of values', function () {
-      class TestService { }
+      class TestService {}
 
       class TestServiceFactory {
         create() {
@@ -137,7 +139,7 @@ describe('Container', function () {
     it('should be able to remove previously registered services', function () {
       class TestService {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        constructor() { }
+        constructor() {}
       }
 
       const testService = new TestService();
@@ -164,7 +166,7 @@ describe('Container', function () {
     it('should support container reset', () => {
       @Service([])
       class TestService {
-        constructor(public name: string = 'frank') { }
+        constructor(public name: string = 'frank') {}
       }
 
       Container.set({ id: TestService, type: TestService, dependencies: [] });
@@ -186,13 +188,13 @@ describe('Container', function () {
       }
 
       class Car {
-        constructor(public engine: Engine) { }
+        constructor(public engine: Engine) {}
       }
 
       Container.set({
         id: Car,
         factory: () => new Car(new Engine()),
-        dependencies: [Engine]
+        dependencies: [Engine],
       });
 
       expect(Container.get(Car).engine.serialNumber).toBe('A-123');
@@ -205,12 +207,12 @@ describe('Container', function () {
       }
 
       class Car {
-        constructor(public engine: Engine) { }
+        constructor(public engine: Engine) {}
       }
 
       @Service([Engine])
       class CarFactory {
-        constructor(private engine: Engine) { }
+        constructor(private engine: Engine) {}
 
         createCar(): Car {
           return new Car(this.engine);
@@ -220,7 +222,7 @@ describe('Container', function () {
       Container.set({
         id: Car,
         factory: [CarFactory, 'createCar'],
-        dependencies: [Engine]
+        dependencies: [Engine],
       });
 
       expect(Container.get(Car).engine.serialNumber).toBe('A-123');
@@ -248,7 +250,7 @@ describe('Container', function () {
       Container.set({
         id: VehicleService,
         factory: [VehicleFactory, 'createBus'],
-        dependencies: []
+        dependencies: [],
       });
 
       expect(Container.get(VehicleService).getColor()).toBe('yellow');
@@ -293,7 +295,7 @@ describe('Container', function () {
 
     it('should be able to destroy services without destroy function', () => {
       @Service([])
-      class MyService { }
+      class MyService {}
 
       const instanceA = Container.get(MyService);
 
@@ -338,7 +340,7 @@ describe('Container', function () {
 
     it('should be able to destroy services without destroy function', () => {
       @Service([])
-      class MyService { }
+      class MyService {}
 
       Container.get(MyService);
 
@@ -350,28 +352,28 @@ describe('Container', function () {
   describe('Container.getOrNull', () => {
     it('either returns the resolved identifier or null', () => {
       /** The service isn't decorated with `@Service` to make it unknown to the injector. */
-      class UnknownService { }
+      class UnknownService {}
 
       expect(Container.has(UnknownService)).toStrictEqual(false);
       expect(Container.getOrNull(UnknownService)).toStrictEqual(null);
-      expect(Container.getOrNull(class { })).toStrictEqual(null);
+      expect(Container.getOrNull(class {})).toStrictEqual(null);
     });
   });
 
   describe('Container.getManyOrNull', () => {
     it('should return null when the identifier cannot be resolved', () => {
       /** The service isn't decorated with `@Service` to make it unknown to the injector. */
-      class UnknownService { }
+      class UnknownService {}
 
       expect(Container.has(UnknownService)).toStrictEqual(false);
       expect(Container.getManyOrNull(UnknownService)).toStrictEqual(null);
-      expect(Container.getManyOrNull(class { })).toStrictEqual(null);
+      expect(Container.getManyOrNull(class {})).toStrictEqual(null);
     });
 
     it('should return the instances when the identifier can be resolved', () => {
       @Service({ multiple: true }, [])
       class AwesomeService {
-        getValue () {
+        getValue() {
           return 42;
         }
       }
@@ -465,7 +467,7 @@ describe('Container', function () {
 
       /** Create a fake identifier that will never resolve for testing. */
       class MyService {}
-      
+
       expect(tempContainer.dispose()).resolves.toBeUndefined();
 
       /** Test all methods on the injector. */
@@ -482,9 +484,7 @@ describe('Container', function () {
       expect(tempContainer.of(Symbol())).toBeInstanceOf(ContainerInstance);
     });
 
-    it.skip('should reset services', () => {
-
-    });
+    it.skip('should reset services', () => {});
 
     it('should throw an error if the container is already disposed', () => {
       const tempContainer = Container.of(Symbol());
@@ -515,17 +515,17 @@ describe('Container', function () {
 
     it('should allow iteration of the container', () => {
       const tempContainer = Container.of(Symbol());
-      
+
       @Service({ container: tempContainer }, [])
       class MyService {}
 
-      tempContainer.set({ id: 'a', type: MyService, dependencies: [ ] });
-      tempContainer.set({ id: 'b', type: MyService, dependencies: [ ] });
-      tempContainer.set({ id: 'c', type: MyService, dependencies: [ ] });
+      tempContainer.set({ id: 'a', type: MyService, dependencies: [] });
+      tempContainer.set({ id: 'b', type: MyService, dependencies: [] });
+      tempContainer.set({ id: 'c', type: MyService, dependencies: [] });
 
       const items = [...tempContainer];
       const itemsAsListOfIDs = items.map(([id]) => id);
-      
+
       /** Ensure the type of the items is correct. */
       expect(items).toContain<ServiceMetadata<unknown>>;
       expect(itemsAsListOfIDs).toContain<ServiceIdentifier>;

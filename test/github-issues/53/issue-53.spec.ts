@@ -20,7 +20,7 @@ describe('github issues > #53 Token-based services are cached in the Global cont
 
     @Service({ id: QuestionControllerToken }, [QuestionRepository])
     class QuestionControllerImpl {
-      constructor(protected questionRepository: QuestionRepository) { }
+      constructor(protected questionRepository: QuestionRepository) {}
 
       save(name: string) {
         if (name) this.questionRepository.userName = name;

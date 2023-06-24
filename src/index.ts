@@ -12,7 +12,11 @@ export { Lazy } from './functions/lazy.function';
 export { Many, Optional, Self, SkipSelf } from './functions/resolution-constraints.functions';
 
 export { ServiceMetadata } from './interfaces/service-metadata.interface';
-export { AnyServiceDependency, DependencyPairWithConfiguration, ServiceDependencyOptions } from './interfaces/service-options-dependency.interface';
+export {
+  AnyServiceDependency,
+  DependencyPairWithConfiguration,
+  ServiceDependencyOptions,
+} from './interfaces/service-options-dependency.interface';
 export { ServiceOptions } from './interfaces/service-options.interface';
 
 export { Constructable } from './types/constructable.type';

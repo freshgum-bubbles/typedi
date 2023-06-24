@@ -19,10 +19,13 @@ describe('github issues > #41 Token as service id in combination with factory', 
       }
     }
 
-    @Service({
-      id: SomeInterfaceToken,
-      factory: [SomeInterfaceFactory, 'create'],
-    }, [])
+    @Service(
+      {
+        id: SomeInterfaceToken,
+        factory: [SomeInterfaceFactory, 'create'],
+      },
+      []
+    )
     class SomeImplementation implements SomeInterface {
       foo() {
         return 'hello implementation';

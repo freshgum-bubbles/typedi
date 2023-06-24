@@ -7,11 +7,10 @@ import { AnyServiceDependency } from './service-options-dependency.interface';
  * of the following is set: `type`, `factory`, `value` but not more than one.
  */
 export type ServiceOptions<T = unknown> = (
-  (| Omit<Partial<ServiceMetadata<T>>, 'type' | 'factory'>
-  | Omit<Partial<ServiceMetadata<T>>, 'value' | 'factory'>
-  | Omit<Partial<ServiceMetadata<T>>, 'value' | 'type'>)
-  | Pick<Partial<ServiceMetadata<T>>, 'factory'>) &
-  { dependencies?: AnyServiceDependency[] };
-
-
-  
+  | (
+      | Omit<Partial<ServiceMetadata<T>>, 'type' | 'factory'>
+      | Omit<Partial<ServiceMetadata<T>>, 'value' | 'factory'>
+      | Omit<Partial<ServiceMetadata<T>>, 'value' | 'type'>
+    )
+  | Pick<Partial<ServiceMetadata<T>>, 'factory'>
+) & { dependencies?: AnyServiceDependency[] };

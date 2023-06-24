@@ -172,7 +172,7 @@ describe('Service Decorator', function () {
       factory: function myServiceFactory(container: ContainerInstance): string {
         return container.get(myToken).toUpperCase();
       },
-      dependencies: []
+      dependencies: [],
     });
 
     /**
@@ -194,14 +194,14 @@ describe('Service Decorator', function () {
   it('should support an object with dependencies with no other arguments', () => {
     @Service([])
     class AnotherService {
-      getMeaningOfLife () {
+      getMeaningOfLife() {
         return 42;
       }
     }
 
     @Service({ dependencies: [AnotherService] })
     class MyService {
-      constructor (public anotherService: AnotherService) {}
+      constructor(public anotherService: AnotherService) {}
     }
 
     expect(Container.get(MyService).anotherService.getMeaningOfLife()).toStrictEqual(42);

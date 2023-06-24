@@ -12,9 +12,7 @@ import { isLazyReference } from './is-lazy-reference.util';
  * @param typeOrIdentifier a service identifier or a function returning a type acting as service identifier or nothing
  * @param target the class definition of the target of the decorator
  */
-export function resolveToTypeWrapper(
-  typeOrIdentifier: AnyInjectIdentifier
-): TypeWrapper {
+export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): TypeWrapper {
   /**
    * ? We want to error out as soon as possible when looking up services to inject, however
    * ? we cannot determine the type at decorator execution when cyclic dependencies are involved
@@ -27,17 +25,20 @@ export function resolveToTypeWrapper(
   let typeWrapper!: TypeWrapper;
 
   /** If requested type is explicitly set via a string ID or token, we set it explicitly. */
-  if (typeOrIdentifier && (typeof typeOrIdentifier === 'string' || typeOrIdentifier instanceof Token || typeof typeOrIdentifier === 'function')) {
+  if (
+    typeOrIdentifier &&
+    (typeof typeOrIdentifier === 'string' ||
+      typeOrIdentifier instanceof Token ||
+      typeof typeOrIdentifier === 'function')
+  ) {
     typeWrapper = { eagerType: typeOrIdentifier, lazyType: () => typeOrIdentifier, isFactory: false };
-  }
+  } else if (typeof typeOrIdentifier === 'object' && isInjectedFactory(typeOrIdentifier)) {
 
   /** If requested type is an injected factory, we set it explicitly. */
-  else if (typeof typeOrIdentifier === 'object' && isInjectedFactory(typeOrIdentifier)) {
-    typeWrapper = { eagerType: null, factory: typeOrIdentifier, isFactory: true }
-  }
+    typeWrapper = { eagerType: null, factory: typeOrIdentifier, isFactory: true };
+  } else if (typeOrIdentifier && isLazyReference(typeOrIdentifier as object)) {
 
   /** If requested type is explicitly set via a LazyReference, we set it explicitly. */
-  else if (typeOrIdentifier && isLazyReference(typeOrIdentifier as object)) {
     /** We set eagerType to null, preventing the raising of the CannotInjectValueError in decorators.  */
     typeWrapper = { eagerType: null, lazyType: () => (typeOrIdentifier as LazyReference<any>).get(), isFactory: false };
   }

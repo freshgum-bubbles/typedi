@@ -21,49 +21,54 @@ import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency'
  * Marks class as a service that can be injected using Container.
  * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
  * By default, the service shall be registered upon the `defaultContainer` container.
- * 
+ *
  * @param dependencies The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
- * 
+ *
  * @returns A decorator which is then used upon a class.
  */
-export function Service (dependencies: AnyServiceDependency[]): ClassDecorator;
+export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
 
 /**
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
- * 
+ *
  * @param options The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
- * 
+ *
  * @param dependencies The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
- * 
+ *
  * @returns A decorator which is then used upon a class.
  */
-export function Service<T = unknown>(options: Omit<ServiceOptions<T>, 'dependencies'>, dependencies: AnyServiceDependency[]): ClassDecorator;
+export function Service<T = unknown>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: AnyServiceDependency[]
+): ClassDecorator;
 
 /**
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
- * 
+ *
  * @param options The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  * The options must also contain the dependencies that the service requires.
- * 
+ *
  * If found, the specified dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
- * 
+ *
  * @returns A decorator which is then used upon a class.
  */
-export function Service (options: ServiceOptions<Constructable<unknown>> & { dependencies: AnyServiceDependency[] }): ClassDecorator;
+export function Service(
+  options: ServiceOptions<Constructable<unknown>> & { dependencies: AnyServiceDependency[] }
+): ClassDecorator;
 export function Service<T>(
-  optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[], 
+  optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]
 ): ClassDecorator {
   return targetConstructor => {
@@ -76,9 +81,9 @@ export function Service<T>(
     let resolvedDependencies!: AnyServiceDependency[];
 
     if (Array.isArray(optionsOrDependencies)) {
-      /** 
-       * If our first argument is an array, then the user has not specified any options, 
-       * and has instead filled the slot with a list of dependencies. 
+      /**
+       * If our first argument is an array, then the user has not specified any options,
+       * and has instead filled the slot with a list of dependencies.
        */
       resolvedDependencies = optionsOrDependencies;
     } else if (Array.isArray(maybeDependencies)) {
@@ -107,7 +112,7 @@ export function Service<T>(
       id: targetConstructor,
       type: targetConstructor as unknown as Constructable<T>,
       ...SERVICE_METADATA_DEFAULTS,
-      container: ContainerInstance.defaultContainer
+      container: ContainerInstance.defaultContainer,
     };
 
     if (!Array.isArray(optionsOrDependencies)) {
@@ -128,7 +133,9 @@ export function Service<T>(
      * This is most likely user error, as the function should __never__ be called twice.
      */
     if (container.has(id) && container.get(id) === targetConstructor) {
-      throw new Error(`@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`);
+      throw new Error(
+        `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
+      );
     }
 
     /**
@@ -158,7 +165,7 @@ export function Service<T>(
     /**
      * The `.set(Omit<ServiceOptions<unknown>, "dependencies">, TypeWrapper[])` overload is used here.
      * TypeScript downcasts the metadata to the type above.
-     * 
+     *
      * By default, this is set to `defaultContainer`.
      * Therefore, it will be bound to that.
      */
