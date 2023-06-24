@@ -819,7 +819,6 @@ export class ContainerInstance implements Disposable {
           return null;
         }
 
-        // throw new Error('identifier not found');
         throw new ServiceNotFoundError(identifier);
       }
 
