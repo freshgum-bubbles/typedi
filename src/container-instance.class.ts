@@ -770,10 +770,6 @@ export class ContainerInstance implements Disposable {
     if (resolvable.constraints) {
       const { constraints } = resolvable;
 
-      /** 
-       * Set up some state registers for various flag configurations.
-       */
-      let identifierIsPresent = this.has(identifier);
       let resolvedIdentifier!: unknown;
 
       /**
@@ -800,6 +796,20 @@ export class ContainerInstance implements Disposable {
       }
 
       /**
+       * If SkipSelf() is provided, use the parent container for lookups instead.
+       * If not, we use the current container.
+       */
+      const targetContainer = isSkipSelf ? this.parent as ContainerInstance : this;
+
+      /** If Self() is used, do not use recursion. */
+      const recursive = !isSelf ?? undefined;
+
+      /** 
+       * Set up some state registers for various flag configurations.
+       */
+      let identifierIsPresent = targetContainer.has(identifier, recursive);
+
+      /**
        * Straight away, check if optional was declared.
        * If it was not and the symbol was not found, throw an error.
        * However, if it *was*, simply return `null` as expected.
@@ -809,17 +819,9 @@ export class ContainerInstance implements Disposable {
           return null;
         }
 
+        // throw new Error('identifier not found');
         throw new ServiceNotFoundError(identifier);
       }
-
-      /**
-       * If SkipSelf() is provided, use the parent container for lookups instead.
-       * If not, we use the current container.
-       */
-      const targetContainer = isSkipSelf ? this.parent as ContainerInstance : this;
-
-      /** If Self() is used, do not use recursion. */
-      const recursive = !isSelf;
 
       if (isMany) {
         /** If we're in isMany mode, resolve the identifier via `getMany`. */
