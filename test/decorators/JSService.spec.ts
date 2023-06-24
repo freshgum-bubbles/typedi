@@ -1,4 +1,4 @@
-import Container from '../../src/index';
+import Container, { Optional } from '../../src/index';
 import { JSService } from '../../src/decorators/js-service.decorator';
 import { AnyConstructable } from '../../src/types/any-constructable.type';
 
@@ -79,6 +79,20 @@ describe('JSService decorator', () => {
         type MyService = JSService<typeof MyService>;
         
         const myService: MyService = Container.get(MyService);
+    });
+
+    it('should accept resolution constraints', () => {
+        class ThisShouldNeverWork { }
+
+        const MyService = JSService([
+            [ThisShouldNeverWork, Optional()]
+        ], class MyService {
+            constructor (public receivedValue: unknown) { }
+        });
+        type MyService = JSService<typeof MyService>;
+
+        expect(() => Container.get(MyService)).not.toThrowError();
+        expect(Container.get(MyService).receivedValue).toStrictEqual(null);
     });
 
     it('should throw an error if the overload is incorrect', () => {
