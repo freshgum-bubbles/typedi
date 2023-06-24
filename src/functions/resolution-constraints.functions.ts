@@ -101,5 +101,5 @@ export function SkipSelf () {
  * @returns The resolution constraint bit-flag for SkipSelf.
  */
 export function Many () {
-    return ResolutionConstraintFlag.SkipSelf;
+    return ResolutionConstraintFlag.Many;
 }
