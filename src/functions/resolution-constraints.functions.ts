@@ -2,6 +2,7 @@ import { ResolutionConstraintFlag } from "../types/resolution-constraint.type";
 
 /** 
  * If the identifier cannot be found, substitute it with `null`.
+ * @experimental
  * 
  * The constraints supported are listed in {@see ResolutionConstraintFlag}.
  * 
@@ -28,6 +29,7 @@ export function Optional () {
 
 /** 
  * Do not ascend the container tree to resolve this identifier.
+ * @experimental
  * 
  * The constraints supported are listed in {@see ResolutionConstraintFlag}.
  * 
@@ -54,6 +56,7 @@ export function Self () {
 
 /** 
  * Begin searching from the parent container to resolve this identifier.
+ * @experimental
  * 
  * The constraints supported are listed in {@see ResolutionConstraintFlag}.
  * 
@@ -80,6 +83,7 @@ export function SkipSelf () {
 
 /** 
  * Resolve multiple services for this identifier via `getMany`.
+ * @experimental
  * 
  * The constraints supported are listed in {@see ResolutionConstraintFlag}.
  * 
