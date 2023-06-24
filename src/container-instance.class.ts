@@ -240,10 +240,10 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = false): T | null {
+  public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T | null {
     this[THROW_IF_DISPOSED]();
 
-    const maybeResolvedMetadata = this.resolveMetadata(identifier, true);
+    const maybeResolvedMetadata = this.resolveMetadata(identifier, recursive);
 
     if (maybeResolvedMetadata === null) {
       return null;
