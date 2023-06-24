@@ -1,3 +1,4 @@
+import { AnyServiceDependency } from "../interfaces/service-options-dependency.interface";
 import { ServiceOptions } from "../interfaces/service-options.interface";
 import { AnyConstructable } from "../types/any-constructable.type";
 import { AnyInjectIdentifier } from "../types/inject-identifier.type";
@@ -17,7 +18,7 @@ import { Service } from "./service.decorator";
  * 
  * @returns The constructor.
  */
-export function JSService<T extends AnyConstructable>(dependencies: AnyInjectIdentifier[], constructor: T): T;
+export function JSService<T extends AnyConstructable>(dependencies: AnyServiceDependency[], constructor: T): T;
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -36,12 +37,13 @@ export function JSService<T extends AnyConstructable>(dependencies: AnyInjectIde
  * 
  * @returns The constructor.
  */
-export function JSService<T extends AnyConstructable>(options: Omit<ServiceOptions<T>, 'dependencies'>, dependencies: AnyInjectIdentifier[], constructor: T): T;
+export function JSService<T extends AnyConstructable>(options: Omit<ServiceOptions<T>, 'dependencies'>, dependencies: AnyServiceDependency[], constructor: T): T;
 
 /**
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
+ * @experimental
  * 
  * @param options The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
@@ -55,10 +57,10 @@ export function JSService<T extends AnyConstructable>(options: Omit<ServiceOptio
  * 
  * @returns The constructor.
  */
-export function JSService<T extends AnyConstructable>(options: ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] }, constructor: T): T;
+export function JSService<T extends AnyConstructable>(options: ServiceOptions<T> & { dependencies: AnyServiceDependency[] }, constructor: T): T;
 
 export function JSService<T extends AnyConstructable>(
-    optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyInjectIdentifier[], 
+    optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[], 
     dependenciesOrConstructor: AnyInjectIdentifier[] | T, 
     maybeConstructor?: T
 ): T {
