@@ -536,12 +536,12 @@ export class ContainerInstance implements Disposable {
    * Optionally, a parent can be passed, which will act as an upstream resolver for the container.
    * 
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * @param parent The parent of the container.  Defaults to the default container.
+   * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  Defaults to the default container.
    * 
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
    */
-  public static of(containerId: ContainerIdentifier = 'default', parent = ContainerInstance.defaultContainer): ContainerInstance {
+  public static of(containerId: ContainerIdentifier = 'default', parent: ContainerInstance | null = ContainerInstance.defaultContainer): ContainerInstance {
     if (containerId === 'default') {
       return this.defaultContainer;
     }
@@ -557,7 +557,7 @@ export class ContainerInstance implements Disposable {
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
        * This will be reworked when container inheritance is reworked.
        */
-      container = new ContainerInstance(containerId, parent);
+      container = new ContainerInstance(containerId, parent ?? undefined);
 
       // todo: move this into ContainerInstance ctor
       ContainerRegistry.registerContainer(container);
