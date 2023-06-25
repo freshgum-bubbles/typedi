@@ -38,11 +38,13 @@
     "test:coverage": "jest --coverage --verbose",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand --coverage --verbose",
+    "prepare": "husky install",
     "prepublishOnly": "npm test && npm run build:cjs && npm run build:umd && build:types"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "npx --no -- commitlint --edit ${1}"
     }
   },
   "lint-staged": {
