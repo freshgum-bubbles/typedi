@@ -18,6 +18,7 @@ import { Resolvable } from './interfaces/resolvable.interface';
 import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency';
 import { ResolutionConstraintFlag } from './types/resolution-constraint.type';
 import { AnyServiceDependency } from './interfaces/service-options-dependency.interface';
+import { HOST_CONTAINER } from './constants/host-container.const';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -242,6 +243,13 @@ export class ContainerInstance implements Disposable {
    */
   public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T | null {
     this[THROW_IF_DISPOSED]();
+
+    /**
+     * Provide compatibility with the `HostContainer()` API.
+     */
+    if (identifier === HOST_CONTAINER) {
+      return this as unknown as T;
+    }
 
     const maybeResolvedMetadata = this.resolveMetadata(identifier, recursive);
 
