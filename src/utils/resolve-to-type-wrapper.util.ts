@@ -33,12 +33,10 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
   ) {
     typeWrapper = { eagerType: typeOrIdentifier, lazyType: () => typeOrIdentifier, isFactory: false };
   } else if (typeof typeOrIdentifier === 'object' && isInjectedFactory(typeOrIdentifier)) {
-
-  /** If requested type is an injected factory, we set it explicitly. */
+    /** If requested type is an injected factory, we set it explicitly. */
     typeWrapper = { eagerType: null, factory: typeOrIdentifier, isFactory: true };
   } else if (typeOrIdentifier && isLazyReference(typeOrIdentifier as object)) {
-
-  /** If requested type is explicitly set via a LazyReference, we set it explicitly. */
+    /** If requested type is explicitly set via a LazyReference, we set it explicitly. */
     /** We set eagerType to null, preventing the raising of the CannotInjectValueError in decorators.  */
     typeWrapper = { eagerType: null, lazyType: () => (typeOrIdentifier as LazyReference<any>).get(), isFactory: false };
   }
