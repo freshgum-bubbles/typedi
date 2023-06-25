@@ -11,8 +11,8 @@ jobs:
     uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
     steps:
       # The rest of this scripts runs the various tasks.
-      # - run: pnpm ci --ignore-scripts
-      - run: pnpm ci
+      # - run: pnpm install --ignore-scripts
+      - run: pnpm install
       - run: pnpm run prettier:check
       - run: pnpm run lint:check
       - run: pnpm run test:ci
