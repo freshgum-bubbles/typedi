@@ -16,7 +16,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 8.6.1
       - name: Set PNPM Cache Directory
         id: pnpm-cache
         shell: bash
@@ -47,7 +47,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 8.6.1
       - name: Set PNPM Cache Directory
         id: pnpm-cache
         shell: bash
@@ -79,7 +79,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 8.6.1
       - name: Set PNPM Cache Directory
         id: pnpm-cache
         shell: bash
@@ -120,7 +120,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8
+          version: 8.6.1
       - name: Set PNPM Cache Directory
         id: pnpm-cache
         shell: bash
