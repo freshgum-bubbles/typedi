@@ -10,9 +10,6 @@ import { EMPTY_VALUE } from './constants/empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { ContainerScope } from './types/container-scope.type';
 import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type';
-import { AnyInjectIdentifier, InjectedFactory } from './types/inject-identifier.type';
-import { isInjectedFactory } from './utils/is-inject-identifier.util';
-import { resolveToTypeWrapper } from './utils/resolve-to-type-wrapper.util';
 import { Disposable } from './types/disposable.type';
 import { BUILT_INS } from './constants/builtins.const';
 import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error';
@@ -828,7 +825,7 @@ export class ContainerInstance implements Disposable {
       /**
        * Set up some state registers for various flag configurations.
        */
-      let identifierIsPresent = targetContainer.has(identifier, recursive);
+      const identifierIsPresent = targetContainer.has(identifier, recursive);
 
       /**
        * Straight away, check if optional was declared.
@@ -870,11 +867,11 @@ export class ContainerInstance implements Disposable {
     const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
 
     if (resolved == null) {
-      throw new Error(`A value of type "${resolved}" could not be resolved.`);
+      throw new Error(`The wrapped value could not be resolved.`);
     }
 
-    if (guardBuiltIns && BUILT_INS.includes(resolved as any)) {
-      throw new CannotInstantiateBuiltInError((resolved as any)?.name ?? resolved);
+    if (guardBuiltIns && (BUILT_INS as unknown[]).includes(resolved)) {
+      throw new CannotInstantiateBuiltInError((resolved as Constructable<unknown>)?.name ?? resolved);
     }
 
     /**

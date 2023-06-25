@@ -1,4 +1,3 @@
-import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { ServiceMetadata } from './service-metadata.interface';
 import { AnyServiceDependency } from './service-options-dependency.interface';
 

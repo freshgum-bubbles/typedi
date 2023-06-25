@@ -152,12 +152,12 @@ export function Service<T>(
           throw new Error(
             `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
           );
-        } else if (metadata.factory == null && BUILT_INS.includes(eagerType as any)) {
+        } else if (metadata.factory == null && (BUILT_INS as unknown[]).includes(eagerType)) {
           /**
            * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
            * without also holding a factory to manually create an instance of the constructor.
            */
-          throw new CannotInstantiateBuiltInError((eagerType as any)?.name ?? eagerType);
+          throw new CannotInstantiateBuiltInError((eagerType as Constructable<unknown>)?.name ?? eagerType);
         }
       }
     });

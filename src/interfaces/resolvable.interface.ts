@@ -1,4 +1,3 @@
-import { ServiceIdentifier } from '../types/service-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
 
 /**

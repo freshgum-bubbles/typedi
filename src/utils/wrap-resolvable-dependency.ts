@@ -4,7 +4,6 @@ import {
   DependencyPairWithConfiguration,
 } from '../interfaces/service-options-dependency.interface';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
-import { ServiceIdentifier } from '../types/service-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
 import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util';
 

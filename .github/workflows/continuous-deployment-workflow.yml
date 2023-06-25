@@ -8,7 +8,6 @@ jobs:
   publish:
     name: Publish TypeDI to NPM
     runs-on: ubuntu-latest
-    uses: freshgum-bubbles/typedi/.github/workflows/prepare-package-manager-workflow.yml@develop
     steps:
       # The rest of this scripts runs the various tasks.
       # - run: pnpm install --ignore-scripts
@@ -26,7 +25,7 @@ jobs:
       # Copy the package.json to the newly-created build folder, without devDependencies and scripts present.
       - run: jq 'del(.devDependencies) | del(.scripts)' package.json > build/package.json
       # Finally, publish the build to NPM.
-      - run: pnpm publish ./build
-        env:
-          # Get this via NPM's webpage.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      # - run: pnpm publish ./build
+        # env:
+        #   # Get this via NPM's webpage.
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
