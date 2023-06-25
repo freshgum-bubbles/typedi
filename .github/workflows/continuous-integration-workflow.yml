@@ -1,5 +1,12 @@
 name: Continuous Integration
 on: [push, pull_request]
+
+# TODO: Fix Horrendous CI jobs
+# There's got to be a way around copy-pasting the Node+PNPM+caching scripts everywhere, right?
+# I tried to do this with a reusable workflow, but it wasn't having it.
+# Perhaps I'll fix it in future or preferably, someone who actually knows
+# how to use this thing will magically appear.
+
 jobs:
   checks:
     name: Linters
