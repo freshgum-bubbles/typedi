@@ -20,6 +20,7 @@ rules:
   '@typescript-eslint/member-delimiter-style': off
   '@typescript-eslint/no-inferrable-types': off
   '@typescript-eslint/no-explicit-any': off
+  '@typescript-eslint/require-await': off
   '@typescript-eslint/no-unused-vars':
     - 'error'
     - args: 'none'
