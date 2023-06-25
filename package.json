@@ -37,6 +37,7 @@
     "build:rollup": "npm run build:esm5 && rollup --config rollup.config.mjs",
     "build:umd": "npm run build:esm5",
     "build:types": "tsc --project tsconfig.prod.types.json",
+    "docs:website": "",
     "prettier:fix": "prettier --write \"**/*.{ts,md}\"",
     "prettier:check": "prettier --check \"**/*.{ts,md}\"",
     "lint:fix": "eslint --max-warnings 0 --fix --ext .ts src/",
