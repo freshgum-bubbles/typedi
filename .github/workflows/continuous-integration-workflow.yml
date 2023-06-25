@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-      - run: pnpm ci
+      - run: pnpm install
       - run: pnpm run prettier:check
       - run: pnpm run lint:check
   tests:
@@ -60,7 +60,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-      - run: pnpm ci
+      - run: pnpm install
       - run: pnpm run test:ci
       - run: pnpm install codecov -g
       - run: codecov -f ./coverage/clover.xml -t ${{ secrets.CODECOV_TOKEN }}
@@ -92,7 +92,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-      - run: pnpm ci
+      - run: pnpm install
       - run: pnpm run build:es2015
       - run: pnpm run build:esm5
       - run: pnpm run build:cjs
@@ -142,7 +142,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install commitlint
         run: |
-          pnpm ci
+          pnpm install
           pnpm install conventional-changelog-conventionalcommits
           pnpm install commitlint@latest
 
