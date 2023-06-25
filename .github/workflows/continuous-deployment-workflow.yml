@@ -12,6 +12,7 @@ jobs:
     steps:
       # The rest of this scripts runs the various tasks.
       # - run: pnpm ci --ignore-scripts
+      - run: pnpm ci
       - run: pnpm run prettier:check
       - run: pnpm run lint:check
       - run: pnpm run test:ci
