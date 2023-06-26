@@ -141,7 +141,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
       },
       docs: {
         sidebar: {
@@ -151,6 +151,27 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        /**
+         * Implements magic comments in Markdown code blocks.
+         * See: <https://docusaurus.io/docs/markdown-features/code-blocks#custom-magic-comments>
+         */
+        magicComments: [
+          // Remember to extend the default highlight class name as well!
+          {
+            className: 'theme-code-block-highlighted-line',
+            line: 'highlight-next-line',
+            block: {start: 'highlight-start', end: 'highlight-end'},
+          },
+          {
+            className: 'code-block-error-line',
+            line: 'highlight-next-line-error',
+          },
+          {
+            className: 'code-block-error-line-comment',
+            line: 'highlight-error-comment',
+            block: {start: 'highlight-error-comment-start', end: 'highlight-error-comment-end'}
+          }
+        ],
       },
     }),
 };
