@@ -4,6 +4,20 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+/** @type {import('./src/app-config').AppConfigCustomFields} */
+const customFields = {
+  apiReference: {
+    location: '/api-reference/',
+    /**
+     * Provide a pathname for easy use in Markdown files as a link.
+     * The `pathname://` directive prevents Docusaurus from using its SPA's router
+     * to interpret the link.
+     * <https://docusaurus.io/docs/advanced/routing#escaping-from-spa-redirects>
+    */
+    link: 'pathname:///api-reference/'
+  }
+};
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'TypeDI',
@@ -31,6 +45,8 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  customFields,
 
   presets: [
     [
@@ -77,7 +93,7 @@ const config = {
             label: 'Tutorial',
           },
           {
-            href: '/api-reference',
+            href: customFields.apiReference.link,
             label: 'API Reference',
             position: 'right'
           },
