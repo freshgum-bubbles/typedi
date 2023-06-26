@@ -1,0 +1,258 @@
+---
+sidebar_position: 4
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Mermaid from '@theme/Mermaid';
+
+# Resolution Constraints
+
+Many times, you'll want a service to rely on a dependency, but there's always
+the possibility of it not existing (and you wouldn't want your service to fail if it didn't).
+
+Or, you want to take advantage of [container inheritance](../containers/inheritance.md)
+and resolve a symbol in the context of the current parent's container, or restrict the
+resolution process to return `null` if the *current* container doesn't have it.
+
+_(There are more features too.)_
+
+---
+
+This is where *resolution constraints* shine.  They allow you to specify how you'd like a certain
+dependency to be resolved, by a set-list of pre-defined strategies.
+
+:::tip
+
+This feature is *very* similar to [Angular's DI decorators](https://angular.io/guide/dependency-injection-in-action#qualify-dependency-lookup-with-parameter-decorators).
+In fact, resolution constraints *were* originally designed to mimic these features in TypeDI.
+
+Therefore, if you're familiar with Angular, you most likely already
+understand resolution constraints.
+
+:::
+
+## Introduction
+
+When a service requests an identifier (which can be another service or a token) as a dependency,
+the Dependency Injection framework has to check its internal map for that identifier and, if found,
+return an instance of that value.  
+If the identifier cannot be found, it checks its parent, which checks its parent (recursively)
+until the chain is exhausted. An error is then thrown.
+
+<details>
+  <summary>If you're a visual learner, here's a flow-chart of the process.</summary>
+{/** 
+  * Note for future implementors: `Codeblock language="mermaid"` doesn't actually work. 
+  * You have to use the [undocumented Mermaid component](https://github.com/sjwall/docusaurus/blob/1377f4abaaaf093dc8ff87b9386808eaa0187c8a/packages/docusaurus-theme-mermaid/src/theme/Mermaid/index.tsx). 
+  * TODO: file issue on facebook/docusaurus regarding this.
+  */}
+<Mermaid value={`
+flowchart
+	1("A service is requested \nfrom the container.") --> 704938("Lookup the item\nin the container.")
+	704938 --> 627865{"Was it\nfound?"}
+	627865 ---|"Yes"| 326567("Return value.")
+	627865 ---|"No"| 392131{"Does container\nhave parent?"}
+	392131 ---|"No"| 415873("Throw error.")
+	392131 ---|"Yes"| 924841("Set container to\nparent container.")
+	924841 --- 704938
+`} />
+{/* https://www.mermaidflow.app/flowchart#N4IgZgNg9g7iBcoB2UAmBTAzgg2qGAlqgC4AWCATAAwAcANCKegQOanEICMnFDRCITiAYAHKJgLECUJAlAAPSlSoMAnpQDMFAL4NUAQ2L65ICPoBG6CAICCAAkzoATgDcCAY3R2CmO0-QAjgCuWMToqABkSOaYIgDcADyoBC4AfGBOUAC2dmRe7jJGBEjOAHQJAPTJacIgTvpIANaYACL1MLKIuiAi+v5IxABKDY0IKiCo7QDKxKoQ6Ahg+hCODJiz89jwOOAEEBDwAMRgJ6cgALrdsyIL8HVQQUgYqIPo7kZILPMAcmgLouJJNIkDYYlAIEEwiZFPBqON1LCtN1HPN3uFFstVhN6iwWMUWBiVuhdPgiGQlPRGMw2Bx4NxeCB+HcAOxUAAsAE4NDRamIJFIZNClFRSgA2GhctlSgCsHOlNGZzLUCG5FFKVA5VAoEo07M4cuZ3QMRhMZks1juABkoFBGkERLkmN4wlkkilUsVHflCvpimVKtVUrV1nMsLhdvsjqczucGPUmq12p1gN1ev0hiMxnpphtbksiVdVDcBJlHs9Xu8Gl90L8MMGrG8wqhCVi+UCZKDMODIbcFMKxTqpWzZfLFcr4Kr1ZrtVy9QajTi8Z8W8S6KSSOQ6RpRQwmKx2Fxt3xm3dRRRmTRRdLeYCBcmQDCKNvSpwaBQn2yKFeqMz5TuQAi0pspwpRcueHJDgaHI6HohjGIgpgWFYAgAOr6L4khumkYAPE8AD8AbusGuZbDsYB7AcxzRmAFxxiMib6B0cipn06ADMMTRZtijEzKGK6FsWdxOKQ2TmEEmC1v8IAoo26LwPmra3sCnbdlCCGPs+r7vhon7fr+l7jkBIFgcyEFSlBMHcbi+L8WuICEBuFK7tSB50jwx4CFoV6isyN78sCQrwGyNDSqUNAaBoF5stybLMqKtCGdKIrBcBPnMhQ0GcLKRpwaaSEWiArzEEEThIHYLjLCEpTEaGpGxnU9FtIxyYsemHGjPA4yTDxuYIMQTghAJtz3GW4QVh81aSfWqJNiu2b6NZy7yZi6AAv5HZghCal9kFIVhRFUUxXFCUAQg0pJaUKWcGlGUUFlHLaCS9lkpunBHlS+60m9-5MiAGiZRoQhre294aaF4oRVqd3cFQ33joqIqvllsXpdKd1fjlJoIWayF3C0UBYHYBQDL6JROFhqSkPoLheGmbHEARVREWsJG4PV8bNE1TFdKIrHsZmnXzTAvHzH1A2riA1zDcJoniVNawNmiJ4KatVlLgSy1EsDd4qVtvYPpo4Phbq77cJwsPvQiCMvjQyOKhQaM8KKj12Q55Kwide40lw7mMieIDAaOGh+SDgWcmypTSjpPk-ujGiyvDzIR1H+qaoOSWcJj8GgDjBUACqkJkMB2M4mRONVLO1WzdEJlzLW821AtdTmfHwP1g0MFLJa4eWjZVj8fzTbJysrfNi0ayr2vKZtPZhxBkfR6y6U8PHHKJ8ngMcmnkoZy767u9QlJe659IeXc0FXSHd6BQAtIDYUO3KsNZe+rLDuOoqxaU74-m9sXSubeOWc8rmgEFMdAxAiY+j9E4XIUAKZ0wGFAkmMDyhMxqJXTY1cGq1yTMxBu9N2pcW6sLXqbdxZDW7qNF4fdPgDzrArGaclJ5qxsprRS60QQz22gbeAd8QJvhHM-NG552TSg-l-H+zI-6-kAdKR69VwgsDDNsUAXc7juHEsQbItQsh9EaM4GYfRaQgCgDcWQDA9FOAMU4AAok8AQYhigcD4AMZw+h3jAhQi9JQmD9brEyAY7xjk6TIgeE4TwAggbSXCZ4AAEg0VAos7gUFqEYJwyiTFvy5DyTufRMkJKeMkwQtRfpKPQDfDKZsQpJSoKKYODAGgED0bNdhqtjTZ2kmQnYATbToCOOYTggzzCilooyTAtjkhSCWirboAAvAAkk8dAMJzbjBkkrWyaiizDU0esHRlj9GGPSSYsxbFdFHLsQ4u4TiBilLcfUTxMhgkH3WWQ0AvSgk+NCWsWJw1sncmDH8wpSThqpLyRkiBAgzwXivGk-JECQXFOiWU1Ayib7QQ1G+ep7JAa1CaS05ho8Ji5QQiGZJPT+p9IGUMoZoz6o+EmUCGZK15lLIwKs5QjDh5bMljsgQeztFZAudY45xiBBnIsSAKxNj7H+0lfcsIjy7wvM3NQPxJhPnoFVVwMJJVImnnPJea8vz9XoCRWC+FkKTFeWlD5K1BTEnItKf7cpN9YoSnij5DkioGkgAJYYIlWsSVYw+d0rpgT+mHGGXSsZjKplsJYbnAQABNMMbLlmcvWYrVpsy7LqJAIKg50rLlGKcKc8xIrZXXNMZW1xSqPEqu+eqrprcw2Rp1T8mJZroVGrhaaiJ5qnWWohZkzyANonpMdUU4aKLXVooqSFYKttFSvnlPipAzTA0j2DR0zV4atU0uGfSvgEyE0suDcmu4vwQAZo5VwLl0kc1BscE9AtRbhWHNFU4MtFbzlfurfKutjIHmNq8c2t5baI19M7ZnAdBq-oTqBWai1AhwWSwRSYwOCo-VTsRcOqJLqBBuuggqYKOkqC6g5BurdubiV7rJQeqlBij2xoZWe5lE9iVXpADeu9KyH3ZqYTu19+b+UaK0cWmVYry0SuA9Jq5QH-0gYbU8pAnaW3kv8cx7V3y4PdsHeOu6eL4NDpnWhh1ULz4UEvqO-D5m7hzuIwu91op4rm2gqZEz-rN2EpE+00lYbW6UsjaxkZcaOPTK45e-Kqb00MEWZmwT3LNltLfeJwtknP0lu-b+uTymFNyvy1K5x7i1Macg8k9tMG9N6sM9Z2zBn4kEZSZZrJ7IcltdQ45ojdw3VxRRuFb6HJRmNN89uuaIbOlafDIe6NtLwuXAS+ygTdJH0bLowWeqbh0AwDELJ9SCB3OlC0EBT154zwhXHDfS8L5WS2ydq+OUEoEs2mFZ1MUGc2TihG6KV8tsHpGgIAteoWQACyED9AtECxMAg-g1MCDzgAIVqBkQoYPDBKpMFIYgxSWjoHMRgJA7hVB2FeF2LawI7AtGBywUHt69Bw8bCkFROB6oFCyFkemdUGDuDMJgRwdVuiMvkPt4gAAFBoVgADylbyEhAYF8KA5hliTOUXncToBUBBGWJNiAfoNeCRifr5sDBykY+-Yb4aCrefgigE4AQ83j0M5AErlXEBJJW+xxl+HE16FSQKNAB3dxDjKDD1QWoKv3CNDpz3AAwnb4PIAqLRkj-bjATgE9B8d+H5QaenAZ4Lh4RoJQBcCAp-wU90PMBMH849IAA */}
+</details>
+
+While this behaviour makes sense for most configurations, there are most certainly times when you'll
+want to modify it a little.  In the below sections, we'll explore how to do that in TypeDI.
+
+## Resolution Constraint Flags
+
+In TypeDI, the concept of constraining certain resolutions is done through specific functions which,
+when called, return a *bit*.  Multiple functions can be conjoined with the [Bitwise OR](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR)
+operator, like so:
+
+```ts
+Optional() | Many() | Self()
+```
+
+:::note
+
+You don't have to understand how bitmasks work to make use of resolution constraints.
+The functions above construct the bitmask for you, which can then be safely passed to TypeDI.
+
+:::
+
+:::warning
+
+You should always make use of the above functions instead of constructing a bitmask yourself,
+as the signature of the mask could change at any time.
+
+:::
+
+## Making dependencies optional with `Optional()`
+
+If your service *wants* a dependency, but doesn't *need* it, you can make use of the `Optional()` flag.
+If the identifier cannot be found, the value will be substituted with `null`. _(This would be useful if you were, 
+for example, building a library where some parts of the configuration might not have been set-up by the end-user.)_
+
+:::tip
+
+Adding an optinal constraint isn't always necessary: only add it if you're not 100% sure that
+the service you're using as a dependency will not be available at runtime.
+
+:::
+
+Let's explore how we could make use of `Optional` in an example service, which 
+requests an identifier from the container that may not exist.
+
+```ts title="src/configuration-reader.service.ts"
+import { Service, Optional } from '@typed-inject/inject';
+import { APP_TOKEN } from './configuration'; // Where APP_TOKEN is a Token<string>.
+
+@Service([
+  [APP_TOKEN, Optional()]
+])
+export class ConfigurationReaderService {
+  constructor (private appToken: string | null) { }
+
+  validateConfiguration () {
+    if (this.appToken === null) {
+      console.warn('An app token was not provided!');
+    }
+  }
+}
+```
+
+:::caution
+
+If you're using an optional service, make sure you also allow the type
+to be null (like above, where we used `| null`)
+Otherwise in usage, you may forget that the value may not exist, causing runtime errors.
+
+:::
+
+In the above service, we requested `APP_TOKEN` as a dependency.
+In the case of our library, this would be set by the user before they start the root service.
+
+However, if that value isn't set, we log a warning to the console.
+
+*Normally, if `APP_TOKEN` wasn't present in the container, the container itself would throw an error.*
+
+## Resolve via the container's parent with `SkipSelf()`
+
+Much like in Angular, the `SkipSelf` can be applied to individual dependencies
+to tell the container to resolve them from its parent container.
+
+This can be useful in the case of an application which makes use of container
+inheritance to provide a different set of tokens to services under it.
+
+:::caution
+
+Use of `SkipSelf` makes your services dependent on a certain container structure.
+If you were to change that structure, resolutions may fail, leading to runtime errors.
+Use it carefully.
+
+:::
+
+For instance, consider the following example of an blog.
+The application creates a `Page` service for each page of the blog.
+Each `Page` service has access to the `DOM_NODE` token, which:
+  - in the child container the `Page` is run in, is set to the DOM element containing the individual page.
+  - in the parent container, is set to the `body` element.
+
+Each page contains a dark mode button which, when clicked,
+toggles the "dark-mode" class on the `<body>` element.
+
+```ts title="src/dom-node.token.ts"
+import { Token } from '@typed-inject/inject';
+
+export const DOM_NODE = new Token<HTMLElement>(`\
+The current DOM node. In services for individual pages,
+this will be set to the node of the page element.
+In the root, this will be set to the body of the document.
+`);
+```
+
+```ts title="src/page.service.ts"
+import { Service, SkipSelf } from '@typed-inject/inject';
+import { STORAGE } from './storage.token';
+
+@Service([
+  DOM_NODE,
+  [DOM_NODE, SkipSelf()]
+])
+export class PageService {
+  constructor (private pageNode: HTMLElement, private rootNode: HTMLElement) { }
+
+  bootstrap () {
+    this.pageNode.getElementById('dark-mode-button').addEventListener('click', () => {
+      this.rootNode.classList.toggle('dark-mode');
+    });
+  }
+}
+```
+
+```ts title="src/root.service.ts"
+import { ContainerInstance, Service, HostContainer } from '@typed-inject/inject';
+import { PageService } from './page.service';
+import { route } from 'my-router'; // Placeholder for your router :-)
+
+@Service([
+  HostContainer()
+])
+export class RootService {
+  constructor (private container: ContainerInstance) {
+    container.set({ id: DOM_NODE, value: document.body, dependencies: [ ] });
+  }
+
+  async renderPage (pageUrl: string) {
+    const childContainer = this.container.ofChild(Symbol('page'));
+    const { renderedElement } = await route(pageUrl);
+    childDontainer.set({ id: DOM_NODE, value: renderedElement, dependencies: [ ] });
+    childContainer.get(PageService).bootstrap();
+  }
+}
+
+const root = Container.get(RootService);
+root.renderPage('/introduction');
+```
+
+_(While this is a rather contrived example, it serves as a guide for how to use the constraint.)_
+
+## Resolve non-recursively with `Self()`
+
+The `Self` constraint allows you to tell the container *not* to traverse up the container
+parent tree until it finds a value.
+
+:::tip
+
+This constraint is most useful when combined with `Optional`.
+That way, if the current container doesn't have the value, a runtime error would not occur.
+
+:::
+
+
+<details>
+  <summary>If you're a visual learner, here's a flow-chart of the resolution process with <code>Self</code>.</summary>
+<p>If we were to modify our flow-chart from above, the resolution for resolving identifiers marked with <code>Self</code> would look like this:</p>
+{/** 
+  * Note for future implementors: `Codeblock language="mermaid"` doesn't actually work. 
+  * You have to use the [undocumented Mermaid component](https://github.com/sjwall/docusaurus/blob/1377f4abaaaf093dc8ff87b9386808eaa0187c8a/packages/docusaurus-theme-mermaid/src/theme/Mermaid/index.tsx). 
+  * TODO: file issue on facebook/docusaurus regarding this.
+  */}
+<Mermaid value={`
+flowchart
+	1("A service is requested \nfrom the container.") --> 704938("Lookup the item\nin the container.")
+	704938 --> 627865{"Was it\nfound?"}
+	627865 ---|"Yes"| 326567("Return value.")
+	627865 ---|"No"| 415873("Throw error.")
+`} />
+{/* https://www.mermaidflow.app/flowchart#N4IgZgNg9g7iBcoB2UAmBTAzgg2qGAlqgC4AWCATAAwAcANCKegQOanEICMnFDRCITiAYAHKJgLECUJAlAAPSlSoMAnpQDMFAL4NUAQ2L65ICPoBG6CAICCAAkzoATgDcCAY3R2CmO0-QAjgCuWMToqABkSOaYIgDcADyoBC4AfGBOUAC2dmRe7jJGBEjOAHQJAPTJacIgTvpIANaYACL1MLKIuiAi+v5IxABKDY0IKiCo7QDKxKoQ6Ahg+hCODJiz89jwOOAEEBDwAMRgJ6cgALrdsyIL8HVQQUgYqIPo7kZILPMAcmgLouJJNIkDYYlAIEEwiZFPBqON1LCtN1HPN3uFFstVhN6iwWMUWBiVuhdPgiGQlPRGMw2Bx4NxeCB+HcAOxUAAsAE4NDRamIJFIZNClFRSgA2GhctlSgCsHOlNGZzLUCG5FFKVA5VAoEo07M4cuZ3QMRhMZks1juABkoFBGkERLkmN4wlkkilUsVHflCvpimVKtVUrV1nMsLhdvsjqczucGPUmq12p1gN1ev0hiMxnpphtbksiVdVDcBJlHs9Xu8Gl90L8MMGrG8wqhCVi+UCZKDMODIbcFMKxTqpWzZfLFcr4Kr1ZrtVy9QajTi8Z8W8S6KSSOQ6RpRQwmKx2Fxt3xm3dRRRmTRRdLeYCBcmQDCKNvSpwaBQn2yKFeqMz5TuQAi0pspwpRcueHJDgaHI6HohjGIgpgWFYAgAOr6L4khumkYAPE8AD8AbusGuZbDsYB7AcxzRmAFxxiMib6B0cipn06ADMMTRZtijEzKGK6FsWdxOKQ2TmEEmC1v8IAoo26LwPmra3sCnbdlCCGPs+r7vhon7fr+l7jkBIFgcyEFSlBMHcbi+L8WuICEBuFK7tSB50jwx4CFoV6isyN78sCQrwGyNDSqUNAaBoF5stybLMqKtCGdKIrBcBPnMhQ0GcLKRpwaaSEWiArzEEEThIHYLjLCEpTEaGpGxnU9FtIxyYsemHGjPA4yTDxuYIMQTghAJtz3GW4QVh81aSfWqJNiu2b6NZy7yZi6AAv5HZghCal9kFIVhRFUUxXFCUAQg0pJaUKWcGlGUUFlHLaCS9lkpu1CUnuNJcO5jIniAwGjhofntvej5UKKoE-tu0q6pFPkcv+CK-mqHIcuFcrhUB0qmTlJoIWayF3AAKqQmQwHYziZE41VrCRuD1fGzRNUxXSiKx7GZp180wLx8x9QNq4gNcw2lk8Y2NlWPx-NNskngpq1WUuBLLUSa3AypW29g+Sjg5qzJQzDcWmQjCBI6BqMaOjGiY9j2j1eELBhtsoBCwI7jicQ2S1FkfSNM4Mx9LSIBQDcsgMN7Ti+04ACiTwCGIxQcHwAzOPo7zAihL1KDTfEIesmS+xnjl0siDxOJ4AhCGspeeAAEg0qC83cFC1EYTgO4HrKctyLd9O3ddPI3gi1EyID2+gAC0GXcK+53KKKgMMA0BDe7NytYsa8GgCGjc7HntroEc5icEf5iirRjKYFHyRSEtcvdAAXgAkqLMKcMoawNmissrU9Lt3G76xPZhx9n7Vugdg5sS9iA6Osc7jxwGMPZO9Q04yELuSWE4xt6az3gXTOxcq4lXLiydkXIeQELLugfuDdhrNwYK3duAgzwXivD3Nu6BiBUMHpXH6Agx7j2ghqN8892QaG4UvFeck5awVxlvXq2xpL9X3ofY+x8z71R8FfIEt8f4MCfi-Lg79pKf1XnfOyf8QAAI9lkKBEdQEBwEBA0OIBw6Rxjr9RxiCwjILvGg16mC5GyPzugXxXAS6EOGkwy815yG13roPWhgte7sM8l+aUPlWF9zicNbhI8+GxQlPFOGioF4gHEYYSRK1pGbwUTnXeijfbKJPmovgl9r42TXvLfGBUACaYYH7PwwK-QxMkv62WdkWYaligHOOgf7Jw4CQ42NcbAoOiyk5eNTj4vB1Bs6N0CfvEJ+DpLVwieeKJwYTmcJoRk5Jdx-oKhKfQ9hVyK7D1+nw88pkREQXurUMpJjKkTFyrnORdSgmNNUefDRbTtEq0QuaAQvwQD9P0XSYZxiKkFnqm4dAMAxDzMCvFDQpQtBAQKeeM8IVxzj1lC+VkNB6SilfOjDkuibTWM6mKJKnA2TinhkymgDKHpGgIAteoWQACy7D9AtGBaAZI-gUGdBAITAAQrUDIhQJWGC8SYKQxBB4tHQCHDASB3CqDsK8LsW1gR2BaKKlg4rkV6AIIqqQLhHY4HqgULIWQ2LEDqgwdwZhMCODqt0DR8h8XEAAAoNCsAAeUWfAfqIQGBfCgOYZYV8HaEwmSYVAQRlhzVMH6PNgljkQH4AwMe2rbFOHLcNDxQbwRQCcAIQ4J9IXdAzVmiAklG16vzUJcWnxJZ1hbdAdtdxDjKDnVQWoWb3CNEdbhVAABhVt06QBUWjIuttGAnCbqnR2+dyh91OEPcTDwjQSihoENa6tF9ZWYCYN-As2ggA */}
+</details>
+
+## Acquire multiple services with `Many()`
+
+The `Many` constraint is functionally equivalent to `Container.getMany`.
+It can also be combined with `Optional`, `SkipSelf` (or `Self`) to further constrain resolution.
+
+To provide an example of this, consider the following:
+
+XXX
+
