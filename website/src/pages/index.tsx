@@ -1,14 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
 import styles from './index.module.css';
+import { useAppContext } from '../app-config';
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const {siteConfig} = useAppContext();
   return (
     <header className={clsx('hero shadow--lw', styles.heroBanner)}>
       <div className="container">
@@ -22,7 +22,7 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/api-reference/">
+            to={siteConfig.customFields.apiReference.link}>
               API Reference
             </Link>
         </div>
@@ -32,7 +32,7 @@ function HomepageHeader() {
 }
 
 export default function Home(): JSX.Element {
-  const {siteConfig} = useDocusaurusContext();
+  const {siteConfig} = useAppContext();
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
