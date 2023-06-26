@@ -20,7 +20,6 @@ $ npm install -g ts-node
 ```
 
 It's installed globally so it can be run from the command line, like `ts-node main.ts`.
-This makes it easier to run the code below.
 
 :::
 
@@ -102,5 +101,3 @@ I hear the questions already:
 > How does that work?
 
 Fear not!  How TypeDI works is covered in the [Learning TypeDI](../guide/) section.
-
-
