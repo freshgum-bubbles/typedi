@@ -181,6 +181,15 @@ const config = {
           }
         ],
       },
+      colorMode: {
+        defaultMode: 'dark',
+        respectPrefersColorScheme: true
+      },
+      mermaid: {
+        options: {
+          fontSize: 17
+        }
+      }
     }),
 };
 
