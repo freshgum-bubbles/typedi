@@ -42,7 +42,7 @@
     "prettier:check": "prettier --check \"**/*.{ts,md}\"",
     "lint:fix": "eslint --max-warnings 0 --fix --ext .ts src/",
     "lint:check": "eslint --max-warnings 0 --ext .ts src/",
-    "docs:api-reference": "typedoc",
+    "docs:api-reference": "rimraf website/build/api-reference && typedoc",
     "test": "jest",
     "test:coverage": "jest --coverage --verbose",
     "test:watch": "jest --watch",
