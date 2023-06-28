@@ -51,7 +51,7 @@ As a concrete example of this, let's see what happens when we register a service
 container, and then request the service from a newly-created child container.
 
 ```ts
-import { Container, Service } from '@typed-inject/inject';
+import { Container, Service } from '@typed-inject/injector';
 
 @Service([ ])
 class MyService { }
@@ -114,7 +114,7 @@ service instances would then be cached in the default container.
 To remedy this, we can create a *child container* of the default container, like so:
 
 ```ts
-import { Container } from '@typed-inject/inject';
+import { Container } from '@typed-inject/injector';
 
 // highlight-revision-start
 const myNewContainer = Container.ofChild('my-new-container');
@@ -133,7 +133,7 @@ will be available in the container.
 Currently, the API provides the following function to achieve this:
 
 ```ts
-import { ContainerInstance } from '@typed-inject/inject';
+import { ContainerInstance } from '@typed-inject/injector';
 
 // highlight-revision-start
 ContainerInstance.of('my-new-container-without-a-parent', null);
@@ -149,7 +149,7 @@ In this case, you can make use of the container's `dispose` method, which dispos
 of the container asynchronously.
 
 ```ts
-import { Container } from '@typed-inject/inject';
+import { Container } from '@typed-inject/injector';
 
 // Create a new container.
 const myNewContainer = Container.ofChild('my-new-container');

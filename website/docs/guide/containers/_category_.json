@@ -1,4 +1,5 @@
 {
     "label": "Containers",
-    "position": 1
+    "position": 1,
+    "link": { "type": "doc", "id": "guide/containers/introduction" }
   }

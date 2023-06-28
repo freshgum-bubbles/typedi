@@ -18,7 +18,7 @@ The application would have multiple instances of this service
 for each page of the app.
 
 ```ts title="src/diagnostics.service.ts"
-import { Container, Service } from '@typed-inject/inject';
+import { Container, Service } from '@typed-inject/injector';
 
 interface DiagnosticsEvent {
     name: string;
@@ -53,7 +53,7 @@ new ones, so we can start using the diagnostics service in other services.
 
 
 ```ts title="app/diagnostics.service.ts"
-import { Container } from '@typed-inject/inject';
+import { Container } from '@typed-inject/injector';
 import { DiagnosticsService } from './diagnostics.service';
 
 @Service()
