@@ -1,0 +1,175 @@
+---
+sidebar_position: 1
+---
+
+import Mermaid from '@theme/Mermaid';
+import Admonition from '@theme/Admonition';
+
+# Containers
+
+Containers power the majority of TypeDI. They're used to store, retrieve and instantiate services on-the-fly.
+Crucially, a TypeDI-dependent application must have a container to function.
+
+## Default Container
+
+Thankfully, TypeDI provides one by default, which is aptly named the _default container_.
+By default, services are attached to this, and can be retrieved at any time (like we saw in our [Hello World!](../../examples/hello-world.md) example.)
+
+:::tip
+
+Throughout this guide, we've assumed services are bound to the default container.
+
+**This isn't always true!** TypeDI allows you to bind services to different containers.
+Read more about this in [the Services section](../services/introduction#attaching-to-containers).
+
+:::
+
+To get the default container, we just need to import `Container` from TypeDI:
+
+```ts
+import { Container } from '@typed-inject/injcet';
+```
+
+## Container Inheritance
+
+One of the most powerful features of TypeDI is **container inheritance.**
+
+To understand how inheritance works, you first have to understand how individual containers work.
+
+Each container holds an internal map of services and values. When a service is registered against
+a specific container, it's added to that internal registry.  Then, when the service is requested,
+the container knows how to handle the request.
+
+In most circumstances, the service knows how to handle the value itself. However, in some cases, it
+may have to ask its *parent*.
+
+By design, containers can have *parents*.  If a container can't find a value itself, it can defer
+the operation to its parent.  This happens **recursively** until either the value is found somewhere
+in the tree, or an error is thrown once the tree has been exhausted.
+
+As a concrete example of this, let's see what happens when we register a service to the default
+container, and then request the service from a newly-created child container.
+
+```ts
+import { Container, Service } from '@typed-inject/inject';
+
+@Service([ ])
+class MyService { }
+
+const childContainer = Container.ofChild('my-new-container');
+
+// highlight-revision-start
+childContainer.get(MyService);
+// highlight-revision-end
+```
+
+The child container didn't know how to resolve that value, so it looked it up in its parent,
+the defualt container, which *did*.  The metadata for that service was then pulled from the parent,
+with the newly-created instance being stored in the child container and then returned to the caller.
+
+:::tip
+
+This highlights an important TypeDI design point: **service instances are bound to the containers which
+created them**. So, in the above example, even though the child container *resolved* the identifier
+via its parent (the default container), the actual instance of `MyService` was then stored in the child container.
+
+**This is good!**  It gives you the flexibility to use services from other containers
+while also supplying them with different values.
+
+:::
+
+<details>
+  <summary>If you're a visual learner, here's a flow-chart of the value resolution process.</summary>
+{/** 
+  * Note for future implementors: `Codeblock language="mermaid"` doesn't actually work. 
+  * You have to use the [undocumented Mermaid component](https://github.com/sjwall/docusaurus/blob/1377f4abaaaf093dc8ff87b9386808eaa0187c8a/packages/docusaurus-theme-mermaid/src/theme/Mermaid/index.tsx). 
+  * TODO: file issue on facebook/docusaurus regarding this.
+  */}
+<Mermaid value={`
+flowchart
+	1("A service is requested \nfrom the container.") --> 704938("Lookup the item\nin the container.")
+	704938 --> 627865{"Was it\nfound?"}
+	627865 ---|"Yes"| 326567("Return value.")
+	627865 ---|"No"| 392131{"Does container\nhave parent?"}
+	392131 ---|"No"| 415873("Throw error.")
+	392131 ---|"Yes"| 924841("Set container to\nparent container.")
+	924841 --- 704938
+`} />
+{/* https://www.mermaidflow.app/flowchart#N4IgZgNg9g7iBcoB2UAmBTAzgg2qGAlqgC4AWCATAAwAcANCKegQOanEICMnFDRCITiAYAHKJgLECUJAlAAPSlSoMAnpQDMFAL4NUAQ2L65ICPoBG6CAICCAAkzoATgDcCAY3R2CmO0-QAjgCuWMToqABkSOaYIgDcADyoBC4AfGBOUAC2dmRe7jJGBEjOAHQJAPTJacIgTvpIANaYACL1MLKIuiAi+v5IxABKDY0IKiCo7QDKxKoQ6Ahg+hCODJiz89jwOOAEEBDwAMRgJ6cgALrdsyIL8HVQQUgYqIPo7kZILPMAcmgLouJJNIkDYYlAIEEwiZFPBqON1LCtN1HPN3uFFstVhN6iwWMUWBiVuhdPgiGQlPRGMw2Bx4NxeCB+HcAOxUAAsAE4NDRamIJFIZNClFRSgA2GhctlSgCsHOlNGZzLUCG5FFKVA5VAoEo07M4cuZ3QMRhMZks1juABkoFBGkERLkmN4wlkkilUsVHflCvpimVKtVUrV1nMsLhdvsjqczucGPUmq12p1gN1ev0hiMxnpphtbksiVdVDcBJlHs9Xu8Gl90L8MMGrG8wqhCVi+UCZKDMODIbcFMKxTqpWzZfLFcr4Kr1ZrtVy9QajTi8Z8W8S6KSSOQ6RpRQwmKx2Fxt3xm3dRRRmTRRdLeYCBcmQDCKNvSpwaBQn2yKFeqMz5TuQAi0pspwpRcueHJDgaHI6HohjGIgpgWFYAgAOr6L4khumkYAPE8AD8AbusGuZbDsYB7AcxzRmAFxxiMib6B0cipn06ADMMTRZtijEzKGK6FsWdxOKQ2TmEEmC1v8IAoo26LwPmra3sCnbdlCCGPs+r7vhon7fr+l7jkBIFgcyEFSlBMHcbi+L8WuICEBuFK7tSB50jwx4CFoV6isyN78sCQrwGyNDSqUNAaBoF5stybLMqKtCGdKIrBcBPnMhQ0GcLKRpwaaSEWiArzEEEThIHYLjLCEpTEaGpGxnU9FtIxyYsemHGjPA4yTDxuYIMQTghAJtz3GW4QVh81aSfWqJNiu2b6NZy7yZi6AAv5HZghCal9kFIVhRFUUxXFCUAQg0pJaUKWcGlGUUFlHLaCS9lkpunBHlS+60m9-5MiAGiZRoQhre294aaF4oRVqd3cFQ33joqIqvllsXpdKd1fjlJoIWayF3C0UBYHYBQDL6JROFhqSkPoLheGmbHEARVREWsJG4PV8bNE1TFdKIrHsZmnXzTAvHzH1A2riA1zDcJoniVNawNmiJ4KatVlLgSy1EsDd4qVtvYPpo4Phbq77cJwsPvQiCMvjQyOKhQaM8KKj12Q55Kwide40lw7mMieIDAaOGh+SDgWcmypTSjpPk-ujGiyvDzIR1H+qaoOSWcJj8GgDjBUACqkJkMB2M4mRONVLO1WzdEJlzLW821AtdTmfHwP1g0MFLJa4eWjZVj8fzTbJysrfNi0ayr2vKZtPZhxBkfR6y6U8PHHKJ8ngMcmnkoZy767u9QlJe659IeXc0FXSHd6BQAtIDYUO3KsNZe+rLDuOoqxaU74-m9sXSubeOWc8rmgEFMdAxAiY+j9E4XIUAKZ0wGFAkmMDyhMxqJXTY1cGq1yTMxBu9N2pcW6sLXqbdxZDW7qNF4fdPgDzrArGaclJ5qxsprRS60QQz22gbeAd8QJvhHM-NG552TSg-l-H+zI-6-kAdKR69VwgsDDNsUAXc7juHEsQbItQsh9EaM4GYfRaQgCgDcWQDA9FOAMU4AAok8AQYhigcD4AMZw+h3jAhQi9JQmD9brEyAY7xjk6TIgeE4TwAggbSXCZ4AAEg0VAos7gUFqEYJwyiTFvy5DyTufRMkJKeMkwQtRfpKPQDfDKZsQpJSoKKYODAGgED0bNdhqtjTZ2kmQnYATbToCOOYTggzzCilooyTAtjkhSCWirboAAvAAkk8dAMJzbjBkkrWyaiizDU0esHRlj9GGPSSYsxbFdFHLsQ4u4TiBilLcfUTxMhgkH3WWQ0AvSgk+NCWsWJw1sncmDH8wpSThqpLyRkiBAgzwXivGk-JECQXFOiWU1Ayib7QQ1G+ep7JAa1CaS05ho8Ji5QQiGZJPT+p9IGUMoZoz6o+EmUCGZK15lLIwKs5QjDh5bMljsgQeztFZAudY45xiBBnIsSAKxNj7H+0lfcsIjy7wvM3NQPxJhPnoFVVwMJJVImnnPJea8vz9XoCRWC+FkKTFeWlD5K1BTEnItKf7cpN9YoSnij5DkioGkgAJYYIlWsSVYw+d0rpgT+mHGGXSsZjKplsJYbnAQABNMMbLlmcvWYrVpsy7LqJAIKg50rLlGKcKc8xIrZXXNMZW1xSqPEqu+eqrprcw2Rp1T8mJZroVGrhaaiJ5qnWWohZkzyANonpMdUU4aKLXVooqSFYKttFSvnlPipAzTA0j2DR0zV4atU0uGfSvgEyE0suDcmu4vwQAZo5VwLl0kc1BscE9AtRbhWHNFU4MtFbzlfurfKutjIHmNq8c2t5baI19M7ZnAdBq-oTqBWai1AhwWSwRSYwOCo-VTsRcOqJLqBBuuggqYKOkqC6g5BurdubiV7rJQeqlBij2xoZWe5lE9iVXpADeu9KyH3ZqYTu19+b+UaK0cWmVYry0SuA9Jq5QH-0gYbU8pAnaW3kv8cx7V3y4PdsHeOu6eL4NDpnWhh1ULz4UEvqO-D5m7hzuIwu91op4rm2gqZEz-rN2EpE+00lYbW6UsjaxkZcaOPTK45e-Kqb00MEWZmwT3LNltLfeJwtknP0lu-b+uTymFNyvy1K5x7i1Macg8k9tMG9N6sM9Z2zBn4kEZSZZrJ7IcltdQ45ojdw3VxRRuFb6HJRmNN89uuaIbOlafDIe6NtLwuXAS+ygTdJH0bLowWeqbh0AwDELJ9SCB3OlC0EBT154zwhXHDfS8L5WS2ydq+OUEoEs2mFZ1MUGc2TihG6KV8tsHpGgIAteoWQACyED9AtECxMAg-g1MCDzgAIVqBkQoYPDBKpMFIYgxSWjoHMRgJA7hVB2FeF2LawI7AtGBywUHt69Bw8bCkFROB6oFCyFkemdUGDuDMJgRwdVuiMvkPt4gAAFBoVgADylbyEhAYF8KA5hliTOUXncToBUBBGWJNiAfoNeCRifr5sDBykY+-Yb4aCrefgigE4AQ83j0M5AErlXEBJJW+xxl+HE16FSQKNAB3dxDjKDD1QWoKv3CNDpz3AAwnb4PIAqLRkj-bjATgE9B8d+H5QaenAZ4Lh4RoJQBcCAp-wU90PMBMH849IAA */}
+</details>
+
+Over the course of our application, we may want to make separate containers for different parts
+of the application.  This will let us compartmentalise values and services under different containers,
+with each container having a different responsibility.
+
+To do this, we have multiple APIs which we will explore below.
+
+### Creating child containers
+
+As we explored above, all services are bound to the default container by default.
+However, one potentially unwanted behaviour in this API is that, if you request
+any identifiers via `Container.get` (or use them as dependencies in a service and then execute that service),
+service instances would then be cached in the default container.
+
+To remedy this, we can create a *child container* of the default container, like so:
+
+```ts
+import { Container } from '@typed-inject/inject';
+
+// highlight-revision-start
+const myNewContainer = Container.ofChild('my-new-container');
+// highlight-revision-end
+```
+
+This also lets us immutably extend the default container by adding new services to
+our child container via `Container.set`.
+
+### Creating containers with no parent
+
+Sometimes, you might *not* want to create a container with a parent.
+In this case, only the values explicitly set in that container (and via `@Service` decorator's `container` option)
+will be available in the container.
+
+Currently, the API provides the following function to achieve this:
+
+```ts
+import { ContainerInstance } from '@typed-inject/inject';
+
+// highlight-revision-start
+ContainerInstance.of('my-new-container-without-a-parent', null);
+// highlight-revision-end
+```
+
+## Disposing a container
+
+In many cases, you'll want to get rid of a container once you're finished with it.
+This might be when you're using individual containers for worker tasks, for example.
+
+In this case, you can make use of the container's `dispose` method, which disposes
+of the container asynchronously.
+
+```ts
+import { Container } from '@typed-inject/inject';
+
+// Create a new container.
+const myNewContainer = Container.ofChild('my-new-container');
+myNewContainer.set({ id: 'my-value', value: 'hello-world', dependencies: [ ] });
+
+myNewContainer.dispose().then(() => console.log('disposed!'));
+```
+
+Once you've disposed a container, it's essentially useless.
+You won't be able to resolve values from it (even from its parent),
+or perform any other actions.
+
+If you try to get a value from a container after you've disposed it,
+TypeDI will throw a runtime error.
+
+:::caution
+
+It's typically best not to dispose of the default container.
+Unless you've bound all your services to a different container,
+without the default container they're virtually inacessible.
+
+:::
+
