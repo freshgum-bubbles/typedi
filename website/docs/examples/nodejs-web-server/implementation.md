@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+sidebar_class_name: sidebar_doc_incomplete
 ---
 
 # NodeJS Web Server
@@ -38,24 +39,22 @@ responding to requests, and closing the server.
 
 ```ts title="src/webserver.service.ts"
 import { Service } from '@typed-inject/inject';
-import http, { Server } from 'http'; // Node's HTTP module.
+import http, { Server, IncomingMessage, ServerResponse } from 'http'; // Node's HTTP module.
 
 @Service([ ])
 export class WebServerService {
   private server!: Server;
 
-  startServer () {
+  async startServer () {
     if (this.server?.listening) {
-      return false;
+      return null;
     }
 
     const server = this.createServer();
 
     // Listen for connections on port 8080.
     // Make sure this isn't taken when you run the example!
-    server.listen(8080);
-
-    return true;
+    return server.listen(8080);
   }
 
   protected createServer () {
@@ -64,7 +63,7 @@ export class WebServerService {
     );
   }
 
-  protected handleRequest (request: http.Request, response: http.Response) {
+  protected handleRequest (request: IncomingMessage, response: ServerResponse<IncomingMessage>) {
     switch (response.url) {
       case '/hello':
         response.writeHead(200);
@@ -79,6 +78,154 @@ export class WebServerService {
   }
 }
 ```
+
+The `WebServerService` supports the creation of the server and management of requests.
+This lets it respond to HTTP requests from users.
+
+This is a good start, *but we're not done yet...*
+
+## Creating our `RootService`
+
+To make our example run, we'll need something called a *root service*.
+This service will depend on our web server and start it.
+
+:::note
+
+While not explicitly required, the root service pattern is recommended for applications.
+It keeps your application initialisation code inside the context of a DI container, with
+as little as possible outside it.
+
+:::
+
+```ts title="src/root.service.ts"
+import { Service, Container } from '@typed-inject/inject';
+import { WebServerService } from './webserver.service';
+
+@Service([WebServerService])
+export class RootService {
+  constructor (private webServer: WebServerService) { }
+  
+  async bootstrap () {
+    return this.webServer.startServer();
+  }
+}
+
+// If we're being run as "$ ts-node root.service.ts", start the server automatically.
+if (require.main === module) {
+  const rootService = Container.get(RootService);
+  rootService.bootstrap().then(() => console.log('Web server online!'));
+}
+```
+
+**Let's run our app!** Run the following code:
+
+```sh
+$ ts-node ./root.service.ts
+```
+
+Now, navigate to `http://localhost:3000/hello` and examine your work :-)
+
+## Adding a database
+
+As with any modern web application, we'll need a way to store inputs from users and then
+output them at a later date.  To do this, we'll be using a database.
+
+:::note
+
+*This section is skippable.*
+
+**We won't be setting up a database here.** The example below makes use of a map to keep the example simple.
+
+:::
+
+We'll achieve this through a service which will read and write to an in-memory database.
+To make it easier to migrate to an out-of-process database like SQLite later on, we'll also 
+make the APIs for reading and writing data asynchronous.
+
+```ts title="src/database.service.ts"
+import { Service } from '@typed-inject/inject';
+
+@Service([ ])
+export const DatabaseService {
+  private _map = new Map<string, string>();
+
+  async read (key: string) {
+    this._map.get(key);
+  }
+
+  async write (key: string, value: string) {
+    this._map.set(key, value);
+  }
+}
+```
+
+### Updating our `WebServerService`
+
+Now we have a database, we can update the web server to read and write values to it.
+
+Let's update our web-server service with two new routes: one for reading a value, and another for writing it.
+
+```ts title="src/webserver.service.ts"
+// ...
+// highlight-revision-start
+import { DatabaseService } from './database.service';
+// highlight-revision-end
+
+// highlight-revision-start
+@Service([DatabaseService])
+// highlight-revision-end
+class WebServerService {
+  // ...
+
+  // highlight-revision-start
+  constructor (private database: DatabaseService) { }
+  // highlight-revision-end
+
+  protected handleRequest (request: IncomingMessage, response: ServerResponse<IncomingMessage>) {
+    // highlight-revision-start
+    const { searchParams: params } = new URL(request.url ?? '');
+    // highlight-revision-end
+
+    switch (response.url) {
+      case '/hello':
+        response.writeHead(200);
+        // highlight-revision-start
+        this.database.get('name').then(name => {
+          response.end(`Hello, ${name ?? 'unknown person'}!`);
+        });
+        // highlight-revision-end
+      break;
+
+      case '/setname':
+        response.writeHead(200);
+        // highlight-revision-start
+        this.database.set('name', params.name).then(() => {
+          response.end(`Hello, ${params.name}!`);
+        });
+        // highlight-revision-end
+      break;
+
+      default:
+        response.writeHead(404);
+        response.end('Not Found');
+      break;
+    }
+  }
+  // ...
+}
+```
+
+Now, we've got a functioning web-server which can store the user's name in memory.
+Try running the updated version, like so:
+
+```sh
+$ ts-node ./root.service.ts
+```
+
+Now, when we tell the server our name with `http://localhost:3000/setname?name=Joe`,
+the `/hello` endpoint will address you by name! 🎉
+
+
 
 <!--
 TODO: in testing section, show why http.Server call was bad
