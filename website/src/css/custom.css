@@ -48,3 +48,16 @@
   padding: 0 var(--ifm-pre-padding);
   border-left: 3px solid #ff000035;
 }
+
+.code-block-revision-line-comment {
+  background-color: #0073ff23;
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid #0073ff62;
+}
+
+.sidebar_doc_incomplete {
+  /* opacity: 55%; */
+  display: none;
+}
