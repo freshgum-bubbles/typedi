@@ -66,7 +66,7 @@ want to modify it a little.  In the below sections, we'll explore how to do that
 
 In TypeDI, the concept of constraining certain resolutions is done through specific functions which,
 when called, return a *bit*.  Multiple functions can be conjoined with the [Bitwise OR](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR)
-operator, like so:
+operator to form a bitmask, like so:
 
 ```ts
 Optional() | Many() | Self()
