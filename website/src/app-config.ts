@@ -13,7 +13,16 @@ interface APIReferenceCustomField {
 export interface AppConfig extends DocusaurusConfig {
     customFields: {
         apiReference: APIReferenceCustomField;
-    };
+        github: {
+            /**
+             * A string which references a GitHub repository.
+             * 
+             * @example
+             * "freshgum-bubbles/typedi"
+             */
+            repoPath: string;
+        };
+    }
 }
 
 export type AppConfigCustomFields = AppConfig['customFields'];

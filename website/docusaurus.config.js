@@ -15,6 +15,9 @@ const customFields = {
      * <https://docusaurus.io/docs/advanced/routing#escaping-from-spa-redirects>
     */
     link: 'pathname:///api-reference/'
+  },
+  github: {
+    repoPath: 'freshgum-bubbles/typedi'
   }
 };
 
