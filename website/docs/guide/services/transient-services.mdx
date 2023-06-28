@@ -1,0 +1,113 @@
+---
+sidebar_position: 6
+---
+
+import { GitHubRefLink } from '@theme/GitHubRefLink';
+
+# Transient Services
+
+Normally, when you create a service, it's cached and any further calls to `Container.get`
+(or when the service is used as a dependency) result in the same instance of the service.
+
+In some cases, that behaviour may actually be *undesirable*. For this use-case, TypeDI
+provides *transient services*, which are re-instantiated every time they're requested.
+
+:::tip
+
+If your service performs complicated calculations, or emits side-effects (e.g. database connections), 
+you may find that the performance of your application quickly deteriorates.
+
+To fix this, you can "hoist" the logic outside of your transient service.
+Read more about this in [the Performance section](#performance).
+
+:::
+
+## Demo
+
+To demonstrate how transient services, let's create a simple example: a performance timing API.
+The timing API should correspond with one set of marks alongside a final measurement.
+
+```ts title="src/timer.service.ts"
+import { Service } from '@typed-inject/inject';
+
+@Service({ transient: true }, [ ])
+export class TimerService {
+    private name: string | null = null;
+
+    start (name: string) {
+        this.name = name;
+        performance.mark(`${name}-start`);
+    }
+
+    end () {
+        const endName = `${this.name}-end`;
+        performance.mark(endName);
+        performance.measure(this.name, `${this.name}-start`, endName);
+    }
+}
+```
+
+Now, we'll make use of this timing API in our page service,
+a fictional service which is responsible for rendering pages.
+
+```ts title="src/page.service.ts"
+import { Service, HostContainer } from '@typed-inject/inject';
+import { TimerService } from './timer.service';
+
+@Service([
+    HostContainer()
+])
+export class PageService {
+    constructor (private container: ContainerInstance) { }
+
+    async renderPage () {
+        const timer = this.container.get(TimerService);
+        timer.start('page-render');
+        // Perform page rendering logic...
+        timer.end();
+    }
+}
+```
+
+:::note
+
+The current API for getting fresh transient services isn't ideal.
+[`HostContainer`](./host-container) is an "escape hatch", and it should be avoided where possible.
+
+The issue is being tracked and investigated in issue <GitHubRefLink type="issue" nodeID={28} />.
+
+:::
+
+Now, when a page is rendered, we'll have new performance entries to upload to a central diagnostics server.
+
+## Transient Services as Dependencies
+
+When you use a transient service as a dependency, the same instance of the service will
+be used over the lifetime over the consuming service.  If this isn't the desired behaviour,
+you would be better served by the `HostContainer()` API, which allows you to get an instance
+of the container the service is running under.
+
+Then, you can replace references to the transient service with calls to `Container.get`.
+
+In the example above, we did just that.  This allowed us to get a new instance of `TimerService`
+for each page that was rendered in the app.
+
+## Transient Factories
+
+TODO
+
+## Performance
+
+If your transient service relies on a great number of other transient services, computes expensive
+computations, or creates side-effects which may affect the application, you may find that transient
+services affect your application's performance.
+
+For this reason, it's typically recommended to use static services or [singletons](./singletons) if
+your workflow doesn't explicitly require services to be transient.
+
+If you would still prefer transient scenarios in this case, consider **hoisting** calculations
+and side-effects out of *individual* transient services, replacing them with references to a 
+static / singleton service.
+
+{/* TODO: add hoisting example: Database and UserEntity service */}
+
