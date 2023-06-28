@@ -29,7 +29,7 @@ To begin, you'll want to create your `log.service.ts` file, which will contain t
 log messages to the console.  We'll then use this service later on to log a message!
 
 ```ts title="src/log.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 
 @Service([ ])
 export class LogService {
@@ -57,7 +57,7 @@ a method on the root service to run the application.
 In our `root.service.ts` file, we'll be doing just that.
 
 ```ts title="src/root.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 
 @Service([LogService])
 export class RootService {
@@ -78,7 +78,7 @@ part of the library.  With it, you can declare services with a multitude of diff
 Finally, to put everything together, we'll create a nice `main.ts` file which starts the `RootService` and calls its `run` method.
 
 ```ts title="src/main.ts"
-import { Container } from '@typed-inject/inject';
+import { Container } from '@typed-inject/injector';
 import { RootService } from './root.service';
 
 const rootService = Container.get(RootService);
@@ -100,4 +100,4 @@ I hear the questions already:
 >
 > How does that work?
 
-Fear not!  How TypeDI works is covered in the [Learning TypeDI](../guide/) section.
+Fear not!  How TypeDI works is covered in the [Learning TypeDI](../guide/containers/introduction) section.

@@ -15,7 +15,7 @@ print the value of a token instead of a hard-coded string.
 First, we'll create a file which holds the token.
 
 ```ts src="app/message.token.ts"
-import { Token } from '@typed-inject/inject';
+import { Token } from '@typed-inject/injector';
 
 // highlight-revision-start
 export const MESSAGE = new Token<string>('The message to print to the console.');
@@ -38,7 +38,7 @@ As this file centres around exporting a token, we add a ".token.ts" suffix to th
 Let's now update our logging service to print the value of the token.
 
 ```ts src="app/log.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 import { MESSAGE } from './message.token';
 
 // highlight-revision-start
@@ -70,7 +70,7 @@ For brevity, the `RootService` service in the example is skipped here.
 :::
 
 ```ts title="src/main.ts"
-import { Container } from '@typed-inject/inject';
+import { Container } from '@typed-inject/injector';
 import { LogService } from './log.service';
 import { MESSAGE } from './message.token';
 

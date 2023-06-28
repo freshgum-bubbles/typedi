@@ -10,7 +10,7 @@ However, to make it *easier* to make use of it in JavaScript, a `JSService` func
 As an example of how to use it, let's tweak the logging service we made in the [Hello World! example](../../examples/hello-world.md):
 
 ```js title="src/log.service.js"
-import { JSService } from '@typed-inject/inject';
+import { JSService } from '@typed-inject/injector';
 
 export const LogService = JSService([ ], class LogService {
     log (message) {
@@ -20,7 +20,7 @@ export const LogService = JSService([ ], class LogService {
 ```
 
 ```ts title="src/root.service.js"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 
 export const RootService = JSService([LogService], class RootService {
     public constructor (private logger) { }
@@ -86,7 +86,7 @@ This lets us take advantage of TypeDI in ES5 environments without any transpilat
 As an example, let's change the `LogService` we made above to the following:
 
 ```js title="src/log.service.js"
-import { JSService } from '@typed-inject/inject';
+import { JSService } from '@typed-inject/injector';
 
 export const LogService = JSService([ ], function LogService () { });
 

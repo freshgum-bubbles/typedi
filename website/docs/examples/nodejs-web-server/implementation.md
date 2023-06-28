@@ -5,7 +5,7 @@ sidebar_class_name: sidebar_doc_incomplete
 
 # NodeJS Web Server
 
-In [the Services section](../guide/services/introduction), we talk about an implementation
+In [the Services section](../../guide/services/introduction), we talk about an implementation
 of a simple web server in TypeDI, through NodeJS and TypeScript.
 
 The server would declare the following services:
@@ -38,7 +38,7 @@ To start, let's create a `webserver.service.ts` which contains the logic for dep
 responding to requests, and closing the server.
 
 ```ts title="src/webserver.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 import http, { Server, IncomingMessage, ServerResponse } from 'http'; // Node's HTTP module.
 
 @Service([ ])
@@ -98,7 +98,7 @@ as little as possible outside it.
 :::
 
 ```ts title="src/root.service.ts"
-import { Service, Container } from '@typed-inject/inject';
+import { Service, Container } from '@typed-inject/injector';
 import { WebServerService } from './webserver.service';
 
 @Service([WebServerService])
@@ -143,7 +143,7 @@ To make it easier to migrate to an out-of-process database like SQLite later on,
 make the APIs for reading and writing data asynchronous.
 
 ```ts title="src/database.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 
 @Service([ ])
 export const DatabaseService {

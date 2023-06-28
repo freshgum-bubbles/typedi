@@ -24,7 +24,7 @@ As an example, let's create services for an application that hosts a web server.
 We'd only want that web server to be created once, so we'd mark it as a singleton.
 
 ```ts title="src/webserver.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 import http from 'http'; // Node's HTTP module
 
 @Service({ singleton: true }, [ ])
@@ -44,7 +44,7 @@ export class WebServerService {
 Once we've done that, we can then start the web server in our root service.
 
 ```ts title="src/root.service.ts"
-import { Service } from '@typed-inject/inject';
+import { Service } from '@typed-inject/injector';
 import { WebServerService } from './webserver.service';
 
 @Service([WebServerService])
