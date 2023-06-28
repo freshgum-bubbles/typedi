@@ -31,6 +31,13 @@ export const RootService = JSService([LogService], class RootService {
 });
 ```
 
+:::caution
+
+As with `Service`, don't forget to place any dependencies your service requires in the array.
+Otherwise, TypeDI won't know your service requires them, and won't pass them in as arguments.
+
+:::
+
 As you can see, the API is quite similar to its TypeScript-friendly equivalent.
 With our changes, the example above will run in plain JavaScript with no problems.
 
