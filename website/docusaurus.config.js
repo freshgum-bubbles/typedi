@@ -173,6 +173,11 @@ const config = {
             className: 'code-block-error-line-comment',
             line: 'highlight-error-comment',
             block: {start: 'highlight-error-comment-start', end: 'highlight-error-comment-end'}
+          },
+          {
+            className: 'code-block-revision-line-comment',
+            line: 'highlight-revision',
+            block: {start: 'highlight-revision-start', end: 'highlight-revision-end'}
           }
         ],
       },
