@@ -8,6 +8,7 @@ export * from './error/cannot-instantiate-builtin-error';
 export * from './error/cannot-instantiate-value.error';
 export * from './error/service-not-found.error';
 
+export { HostContainer } from './functions/host-container.function';
 export { Lazy } from './functions/lazy.function';
 export { Many, Optional, Self, SkipSelf } from './functions/resolution-constraints.functions';
 
