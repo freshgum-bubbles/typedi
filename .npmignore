@@ -1,0 +1,17 @@
+/.husky/
+/.vscode/
+/coverage/
+/docs/
+/node_modules/
+/scripts/
+/test/
+/website/
+
+/.commitlintrc.js
+/.eslintrc.yml
+/.gitbook.yaml
+/.prettierrc.yml
+/codecov.yml
+/jest.config.js
+/tsconfig*.json
+/tslint.json
