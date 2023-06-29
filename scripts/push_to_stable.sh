@@ -39,7 +39,7 @@ fi
 # Make sure we're working with the most up-to-date version of develop.
 git fetch origin develop
 
-git merge --squash origin/develop -m "merge: Release $CURRENT_DEVELOP_NPM_VERSION as stable"
+git merge --squash origin/develop --message "merge: Release $CURRENT_DEVELOP_NPM_VERSION as stable" -Xtheirs
 
 # Finally, publish the package to the registry.
 pnpm publish
