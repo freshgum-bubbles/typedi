@@ -27,10 +27,13 @@ describe('HostContainer', function () {
       expect(container.get(HostContainer())).toStrictEqual(container);
     });
 
-    it('always resolves', function () {
-      expect(container.has(HostContainer())).toStrictEqual(true);
+    it('always resolves with .get', function () {
       expect(container.get(HostContainer())).toStrictEqual(container);
     });
+
+    it('always resolves with .getOrNull', function () {
+        expect(container.getOrNull(HostContainer())).toStrictEqual(container);
+    })
 
     it('resolves as a service dependency', function () {
       @Service({ container }, [HostContainer()])
