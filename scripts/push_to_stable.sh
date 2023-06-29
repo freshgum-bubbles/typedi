@@ -39,10 +39,7 @@ fi
 # Make sure we're working with the most up-to-date version of develop.
 git fetch origin develop
 
+# The "-Xtheirs" part automatically resolves merge conflicts by accepting the changes from develop.
+# Remember that, in this context, we're in the master branch, so "theirs" refers to the develop branch.
 git merge --squash origin/develop --message "merge: Release $CURRENT_DEVELOP_NPM_VERSION as stable" -Xtheirs
 
-# Finally, publish the package to the registry.
-pnpm publish
-
-# Go back to the develop branch.
-# git checkout develop
