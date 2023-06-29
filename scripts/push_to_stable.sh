@@ -45,4 +45,4 @@ git merge --squash origin/develop --message "merge: Release $CURRENT_DEVELOP_NPM
 pnpm publish
 
 # Go back to the develop branch.
-git checkout develop
+# git checkout develop
