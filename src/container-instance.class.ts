@@ -559,6 +559,10 @@ export class ContainerInstance implements Disposable {
    * This can then be passed to `.get` to resolve the identifier.
    */
   public setValue (id: string | Token<unknown>, value: unknown) {
+    if (typeof id !== 'string' && !(id instanceof Token)) {
+      throw new Error('The ID passed to setValue must either be a string or a Token.');
+    }
+    
     return this.set({ id, value }, [ ]);
   }
 
