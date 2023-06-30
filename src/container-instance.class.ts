@@ -332,6 +332,7 @@ export class ContainerInstance implements Disposable {
 
     /** This should never happen as multi services are masked with custom token in Container.set. */
     if (metadata && metadata.multiple === true) {
+      /* istanbul ignore next */
       throw new Error(`Cannot resolve multiple values for ${identifier.toString()} service!`);
     }
 
