@@ -549,21 +549,21 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Add a value to the container.
-   * 
+   *
    * @param id The ID of the new value to set inside the container.
    * Must be either a string or a Token.
-   * 
+   *
    * @param value The value to set the ID to.
-   * 
+   *
    * @returns The identifier of the given service in the container.
    * This can then be passed to `.get` to resolve the identifier.
    */
-  public setValue (id: string | Token<unknown>, value: unknown) {
+  public setValue(id: string | Token<unknown>, value: unknown) {
     if (typeof id !== 'string' && !(id instanceof Token)) {
       throw new Error('The ID passed to setValue must either be a string or a Token.');
     }
-    
-    return this.set({ id, value }, [ ]);
+
+    return this.set({ id, value }, []);
   }
 
   /**
