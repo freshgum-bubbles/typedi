@@ -548,6 +548,21 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
+   * Add a value to the container.
+   * 
+   * @param id The ID of the new value to set inside the container.
+   * Must be either a string or a Token.
+   * 
+   * @param value The value to set the ID to.
+   * 
+   * @returns The identifier of the given service in the container.
+   * This can then be passed to `.get` to resolve the identifier.
+   */
+  public setValue (id: string | Token<unknown>, value: unknown) {
+    return this.set({ id, value }, [ ]);
+  }
+
+  /**
    * Removes services with the given list of service identifiers.
    *
    * @param identifierOrIdentifierArray The list of service identifiers to remove from the container.
