@@ -72,7 +72,7 @@ export function Service<T>(
   maybeDependencies?: AnyServiceDependency[]
 ): ClassDecorator {
   return targetConstructor => {
-    if (optionsOrDependencies == null) {
+    if (optionsOrDependencies == null || targetConstructor == null) {
       // todo: more info in these error messages!!!
       throw new Error('The required configuration was not passed.');
     }
