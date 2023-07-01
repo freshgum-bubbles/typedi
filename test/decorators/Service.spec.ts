@@ -211,20 +211,20 @@ describe('Service Decorator', function () {
     // @ts-expect-error
     expect(() => Service(null, null)(null)).toThrowError();
     // @ts-expect-error
-    expect(() => Service(null, [ ])(class {})).toThrowError();
+    expect(() => Service(null, [])(class {})).toThrowError();
     // @ts-expect-error
-    expect(() => Service({ }, [ ])(null)).toThrowError();
+    expect(() => Service({}, [])(null)).toThrowError();
     // @ts-expect-error
-    expect(() => Service({ }, null)(class { })).toThrowError();
+    expect(() => Service({}, null)(class {})).toThrowError();
     // @ts-expect-error
-    expect(() => Service([ ])(null)).toThrowError();
+    expect(() => Service([])(null)).toThrowError();
   });
 
   it('should throw if called twice on the same class', () => {
     expect(() => {
-      @Service([ ])
-      @Service([ ])
-      class MyService { }
+      @Service([])
+      @Service([])
+      class MyService {}
     }).toThrowError();
   });
 
@@ -232,14 +232,14 @@ describe('Service Decorator', function () {
     it('should work with the same ID', () => {
       const id = new Token<MyService>('MyService');
 
-      @Service({ id, multiple: true }, [ ])
-      class MyService { }
+      @Service({ id, multiple: true }, [])
+      class MyService {}
 
-      @Service({ id, multiple: true }, [ ])
-      class MyService1 { }
+      @Service({ id, multiple: true }, [])
+      class MyService1 {}
 
-      @Service({ id, multiple: true }, [ ])
-      class MyService2 { }
+      @Service({ id, multiple: true }, [])
+      class MyService2 {}
 
       expect(() => Container.getMany(id)).not.toThrowError();
 
@@ -259,13 +259,13 @@ describe('Service Decorator', function () {
       it('throws if used and no factory is provided', () => {
         expect(() => {
           @Service([builtinType])
-          class MyService { }
+          class MyService {}
         }).toThrowError();
       });
 
       it('does not throw if used and a factory is provided', () => {
         @Service({ factory: () => new MyService() }, [builtinType])
-        class MyService { }
+        class MyService {}
 
         expect(Container.get(MyService)).toBeInstanceOf(MyService);
       });
@@ -275,7 +275,7 @@ describe('Service Decorator', function () {
 
         expect(() => {
           @Service({ id }, [builtinType])
-          class MyService { }
+          class MyService {}
         }).toThrowError();
 
         expect(Container.has(id)).toStrictEqual(false);
