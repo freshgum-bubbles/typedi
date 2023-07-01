@@ -23,10 +23,6 @@ describe('HostContainer', function () {
     { name: 'Orphaned Container', container: ContainerInstance.of(Symbol(), null) },
     { name: 'Child Container', container: Container.ofChild(Symbol()) },
   ])('$name: HostContainer usage', ({ container }) => {
-    it('returns the host container', function () {
-      expect(container.get(HostContainer())).toStrictEqual(container);
-    });
-
     it('always resolves with .get', function () {
       expect(container.get(HostContainer())).toStrictEqual(container);
     });
