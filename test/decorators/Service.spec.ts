@@ -206,4 +206,80 @@ describe('Service Decorator', function () {
 
     expect(Container.get(MyService).anotherService.getMeaningOfLife()).toStrictEqual(42);
   });
+
+  it('should throw if incorrect arguments are passed', () => {
+    // @ts-expect-error
+    expect(() => Service(null, null)(null)).toThrowError();
+    // @ts-expect-error
+    expect(() => Service(null, [ ])(class {})).toThrowError();
+    // @ts-expect-error
+    expect(() => Service({ }, [ ])(null)).toThrowError();
+    // @ts-expect-error
+    expect(() => Service({ }, null)(class { })).toThrowError();
+    // @ts-expect-error
+    expect(() => Service([ ])(null)).toThrowError();
+  });
+
+  it('should throw if called twice on the same class', () => {
+    expect(() => {
+      @Service([ ])
+      @Service([ ])
+      class MyService { }
+    }).toThrowError();
+  });
+
+  describe('multiple: true', () => {
+    it('should work with the same ID', () => {
+      const id = new Token<MyService>('MyService');
+
+      @Service({ id, multiple: true }, [ ])
+      class MyService { }
+
+      @Service({ id, multiple: true }, [ ])
+      class MyService1 { }
+
+      @Service({ id, multiple: true }, [ ])
+      class MyService2 { }
+
+      expect(() => Container.getMany(id)).not.toThrowError();
+
+      const instances = Container.getMany(id);
+
+      expect(instances).toBeInstanceOf(Array);
+      expect(instances[0]).toBeInstanceOf(MyService);
+      expect(instances[1]).toBeInstanceOf(MyService1);
+      expect(instances[2]).toBeInstanceOf(MyService2);
+    });
+  });
+
+  describe('Protection against built-in types', () => {
+    const builtinTypes = [String, Object, Symbol, Array, Number];
+
+    describe.each(builtinTypes.map(type => ({ type, name: type.name })))('$name() usage', ({ type: builtinType }) => {
+      it('throws if used and no factory is provided', () => {
+        expect(() => {
+          @Service([builtinType])
+          class MyService { }
+        }).toThrowError();
+      });
+
+      it('does not throw if used and a factory is provided', () => {
+        @Service({ factory: () => new MyService() }, [builtinType])
+        class MyService { }
+
+        expect(Container.get(MyService)).toBeInstanceOf(MyService);
+      });
+
+      it('does not add the ID to the registry if usage was incorrect', () => {
+        const id = new Token();
+
+        expect(() => {
+          @Service({ id }, [builtinType])
+          class MyService { }
+        }).toThrowError();
+
+        expect(Container.has(id)).toStrictEqual(false);
+      });
+    });
+  });
 });
