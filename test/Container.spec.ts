@@ -133,6 +133,29 @@ describe('Container', function () {
       expect(Container.get<TestService>('test2-service')).toBe(test2Service);
       expect(Container.get<string>('test3-service')).toBe('test3-service-created-by-factory');
     });
+
+    it('should work with the same ID', function () {
+      class TestService {}
+
+      const testService = new TestService();
+      const test1Service = new TestService();
+      const test2Service = new TestService();
+
+      Container.set({ id: TestService, value: testService, dependencies: [], multiple: true });
+      Container.set({ id: TestService, value: test1Service, dependencies: [], multiple: true });
+      Container.set({ id: TestService, value: test2Service, dependencies: [], multiple: true });
+
+      expect(() => Container.getMany(TestService)).not.toThrowError();
+      
+      const instances = Container.getMany(TestService);
+      
+      expect(instances).toBeInstanceOf(Array);
+      expect(instances.length).toStrictEqual(3);
+      
+      for (const index of [0, 1, 2]) {
+        expect(instances[index]).toBeInstanceOf(TestService);
+      }
+    });
   });
 
   describe('remove', function () {
