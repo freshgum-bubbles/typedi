@@ -592,4 +592,46 @@ describe('Container', function () {
       });
     });
   });
+
+  describe('Container.has', () => {
+    describe.each([
+      { name: 'Orphaned Containers', container: ContainerInstance.of(Symbol(), null) },
+      { name: 'Child Containers', container: Container.ofChild(Symbol()) },
+      { name: 'Default Container', container: Container }
+    ])('$name: Container.has(...) usage', ({ container }) => {
+      it('returns false if the ID cannot be resolved locally', () => {
+        /** Class without Service decorator which is not added to container. */
+        class Unknown {}
+  
+        expect(container.has(Unknown)).toStrictEqual(false);
+        expect(container.has('doesnotexist')).toStrictEqual(false);
+        expect(container.has(new Token<unknown>())).toStrictEqual(false);
+      });
+  
+      it('returns true if the ID can be resolved locally', () => {
+        @Service({ container }, [ ])
+        class MyService { }
+  
+        expect(container.has(MyService)).toStrictEqual(true);
+      });
+    });
+
+    /** 
+     * The below tests are not included above as we also include orphaned 
+     * containers in the test cases, which do not have a parent. 
+     */
+    it('returns true if the ID is present in the parent and recursive is true', () => {
+      @Service([])
+      class MyService { }
+
+      expect(Container.ofChild(Symbol()).has(MyService, true)).toStrictEqual(true);
+    });
+
+    it('returns false if the ID is present in the parent and recursive is false', () => {
+      @Service([])
+      class MyService { }
+
+      expect(Container.ofChild(Symbol()).has(MyService, false)).toStrictEqual(false);
+    });
+  });
 });
