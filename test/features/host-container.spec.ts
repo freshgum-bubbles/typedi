@@ -32,8 +32,8 @@ describe('HostContainer', function () {
     });
 
     it('always resolves with .getOrNull', function () {
-        expect(container.getOrNull(HostContainer())).toStrictEqual(container);
-    })
+      expect(container.getOrNull(HostContainer())).toStrictEqual(container);
+    });
 
     it('resolves as a service dependency', function () {
       @Service({ container }, [HostContainer()])
