@@ -4,7 +4,7 @@ import { Service } from '../../src/decorators/service.decorator';
 import { Token } from '../../src/token.class';
 
 describe('Service Decorator', function () {
-  beforeEach(() => Container.reset({ strategy: 'resetValue' }));
+  beforeEach(() => Container.reset({ strategy: 'resetServices' }));
 
   it('should register class in the container, and its instance should be retrievable', function () {
     @Service([])
