@@ -405,6 +405,23 @@ describe('Container', function () {
       expect(Container.getManyOrNull(AwesomeService)).not.toBe(null);
       expect(Container.getManyOrNull(AwesomeService)![0].getValue()).toStrictEqual(42);
     });
+
+    it('resolves singletons from the default container', () => {
+      @Service({ multiple: true, scope: 'singleton' }, [ ])
+      class AwesomeService { }
+
+      const childContainer = Container.ofChild(Symbol());
+      const childResult = childContainer.getManyOrNull(AwesomeService);
+      const defaultResult = Container.getManyOrNull(AwesomeService);
+
+      expect(childResult).toBeInstanceOf(Array);
+      expect(childResult![0]).toBeInstanceOf(AwesomeService);
+
+      expect(defaultResult).toBeInstanceOf(Array);
+      expect(defaultResult![0]).toBeInstanceOf(AwesomeService);
+
+      expect(childResult![0]).toStrictEqual(defaultResult![0]);
+    });
   });
 
   describe('Container.ofChild', () => {
