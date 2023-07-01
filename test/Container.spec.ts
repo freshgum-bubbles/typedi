@@ -524,7 +524,23 @@ describe('Container', function () {
       expect(tempContainer.of(Symbol())).toBeInstanceOf(ContainerInstance);
     });
 
-    it.skip('should reset services', () => {});
+    it('should reset services', () => {
+      const childContainer = Container.ofChild(Symbol());
+      const disposeFn = jest.fn();
+
+      @Service({ container: childContainer }, [ ])
+      class MyService {
+        dispose = disposeFn;
+      }
+
+      /** An instance of the service needs to exist for it to get disposed. */
+      childContainer.get(MyService);
+
+      return childContainer.dispose().then(() => {
+        expect(disposeFn).toHaveBeenCalled();
+        expect(disposeFn).toHaveBeenCalledWith();
+      });
+    });
 
     it('should throw an error if the container is already disposed', () => {
       const tempContainer = Container.of(Symbol());
