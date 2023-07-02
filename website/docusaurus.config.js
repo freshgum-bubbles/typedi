@@ -31,7 +31,18 @@ const config = {
     mermaid: true
   },
 
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid',
+    [
+      // @ts-ignore
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions & Record<string, any>} */
+      ({
+        hashed: true,
+        language: ['en']
+      })
+    ]
+  ],
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-test-site.com',
