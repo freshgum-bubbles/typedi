@@ -1,0 +1,46 @@
+.featureList {
+
+}
+
+.featureListItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    padding: 25px;
+    margin: 0 auto;
+}
+
+.sideBySide {
+    display: flex;
+    flex-direction: row;
+    gap: 75px;
+    justify-content: space-evenly;
+}
+
+.displayInline {
+    display: inline-flex;
+}
+
+.demoCodeBlock {
+    padding: 25px;
+    margin-bottom: 15px;
+    font-size: 17.5px;
+}
+
+.featureListItemLeadup {
+    text-align: center;
+    padding: 20px;
+}
+
+.leadupHeading {
+    font-size: 40px;
+}
+
+.leadupSummary {
+    font-size: 20px;
+}
+
+.featureListItemDemo {
+    
+}
