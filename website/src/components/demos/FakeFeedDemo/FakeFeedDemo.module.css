@@ -1,0 +1,33 @@
+.fakeFeedContent {
+    min-width: 250px;
+
+    border: 1px solid var(--ifm-color-primary-darkest);
+    border-radius: 10px;
+
+    background-color: var(--ifm-background-color-emphasis);
+}
+
+.fakeChatList {
+    min-height: 300px;
+    max-height: 300px;
+    overflow-y:auto;
+}
+
+.roundedHeavy {
+    --feed-radius: 5px;
+    padding: var(--feed-radius) var(--feed-radius) 0px var(--feed-radius);
+}
+
+.contentGrow {
+    flex-grow: 1;
+}
+
+.fakeFeedContent {
+    display: flex;
+    flex-direction: column;
+    /* height: 100%;     */
+}
+
+.fakeFeedBottomRack {
+
+}
