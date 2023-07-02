@@ -1,0 +1,19 @@
+.messageAuthor {
+    font-size: 10px;
+    filter: brightness(65%);
+}
+
+.messageContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.fakePost {
+    border-radius: 10px;
+    
+    padding-left: 7.5px;
+    padding-right: 5px;
+}

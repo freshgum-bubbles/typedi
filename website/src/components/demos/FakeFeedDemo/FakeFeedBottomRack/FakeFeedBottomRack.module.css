@@ -1,0 +1,42 @@
+.bottomRack {
+
+}
+
+.messageForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.messageInput {
+    padding: 12.5px;
+    outline: none;
+    background: var(--ifm-background-color-emphasis-2);
+    border: 2px solid var(--ifm-color-primary-darkest);
+    border-radius: 0px 0px 10px 10px;
+
+    color: white;
+
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+
+    flex-grow: 1;
+}
+
+.messageInput::placeholder {
+    color: darkgrey;
+}
+
+.messageInput:focus::placeholder {
+    color: rgb(195, 194, 194);
+}
+
+.submitButton {
+    border: none;
+    border-radius: 100em;
+}
+
+.messageInput:focus {
+    border-color: var(--ifm-color-primary-dark);
+}
