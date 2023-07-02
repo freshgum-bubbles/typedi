@@ -1,0 +1,36 @@
+.greetingDemo {
+    border-radius: 10px;
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 300px;
+    max-height: 300px;
+
+    background-color: var(--ifm-background-color-emphasis);
+
+    --feed-radius: 5px;
+    padding: var(--feed-radius) var(--feed-radius) 0px var(--feed-radius);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.nameInput {
+    padding: 10px;
+    border: 2px solid var(--ifm-color-primary-darkest);
+    border-radius: 10px;
+}
+
+.nameInput::placeholder {
+    color: darkgrey;
+}
+
+.nameInput:focus::placeholder {
+    color: rgb(195, 194, 194);
+}
+
+.nameInput:focus {
+    border-color: var(--ifm-color-primary-dark);
+}
