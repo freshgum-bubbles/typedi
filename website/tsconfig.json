@@ -3,5 +3,9 @@
   "extends": "@tsconfig/docusaurus/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "target": "ES2015",
+    "moduleResolution": "NodeNext",
+    // "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
   }
 }
