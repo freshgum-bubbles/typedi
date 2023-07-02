@@ -8,7 +8,14 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-color: --ifm-color-secondary-darkest;
+  background-color: var(--hero-background-color);
+}
+
+.hero__title {
+  font-family: monospace;
+  letter-spacing: 2px;
+  font-size: 50px;
+  color: var(--ifm-color-primary);
 }
 
 @media screen and (max-width: 996px) {
@@ -21,5 +28,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  margin-top: 45px;
+  gap: 25px;
 }
