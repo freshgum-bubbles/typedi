@@ -1,4 +1,4 @@
-# TypeDI
+# `@typed-inject/injector`
 
 Elegant Dependency Injection in JavaScript and TypeScript.
 
