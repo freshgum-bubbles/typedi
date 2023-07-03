@@ -44,6 +44,11 @@ export const enum ServiceIdentifierLocation {
   None = 'none',
 }
 
+export const enum EagerLoadingStrategy {
+  Enabled,
+  Disabled
+}
+
 interface ManyServicesMetadata {
   tokens: Token<unknown>[];
   scope: ContainerScope;
@@ -95,6 +100,18 @@ export class ContainerInstance implements Disposable {
    * container when registered via `Container.set()` or `@Service` decorator.
    */
   public static readonly defaultContainer = new ContainerInstance('default');
+
+  /**
+   * The eager loading strategy for use for this container.
+   * 
+   * If this is set to `Enabled`, then eager loading will take place.
+   * However, if this is `Disabled`, it shall not.
+   * 
+   * @remarks
+   * It should generally be noted that, before any eager services are
+   * imported, this should be set to enabled to ensure expected behaviour.
+   */
+  private eagerLoadingStrategy = EagerLoadingStrategy.Enabled;
 
   /**
    * Create a ContainerInstance.
@@ -541,7 +558,11 @@ export class ContainerInstance implements Disposable {
      * when the service is also marked as transient. In that case we ignore
      * the eager flag to prevent creating a service what cannot be disposed later.
      */
-    if (newMetadata.eager && newMetadata.scope !== 'transient') {
+    if (
+      newMetadata.eager &&
+      newMetadata.scope !== 'transient' &&
+      this.eagerLoadingStrategy === EagerLoadingStrategy.Enabled
+    ) {
       this.get(newMetadata.id);
     }
 
@@ -676,7 +697,9 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public reset(options: { strategy: 'resetValue' | 'resetServices' } = { strategy: 'resetValue' }): this {
+  public reset(
+    options: { strategy: 'resetValue' | 'resetServices' } = { strategy: 'resetValue' }
+  ): this {
     this[THROW_IF_DISPOSED]();
 
     switch (options.strategy) {
@@ -955,6 +978,29 @@ export class ContainerInstance implements Disposable {
 
       serviceMetadata.value = EMPTY_VALUE;
     }
+  }
+
+  /**
+   * Enable eager loading of services for this container.
+   * @experimental
+   * <br />
+   * 
+   * __Note: Ensure this is set before importing any eager services.__
+   * 
+   * @remarks
+   * Eager loading is generally discouraged, as it makes testing harder
+   * and makes the application more confusing to work with.
+   * For instance, see [typestack/typedi#380](https://github.com/typestack/typedi/issues/380).
+   * 
+   * Consider an example of a DatabaseService with eager loading enabled.
+   * Once imported, database connections and more will immediately start taking place.
+   * In many cases, this will be unexpected and will ultimately be an unwanted side effect.
+   * 
+   * Therefore, we place the eager loading functionality behind a toggleable option,
+   * which must be enabled prior to any eager loading strategies taking place.
+   */
+  public enableEagerLoading () {
+    this.eagerLoadingStrategy = EagerLoadingStrategy.Enabled;
   }
 
   /** Iterate over each service in the container. */
