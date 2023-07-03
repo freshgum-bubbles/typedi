@@ -1,1 +1,1 @@
-export const BUILT_INS = [String, Object, Symbol, Array, Number];
+export const BUILT_INS = [String, Object, Boolean, Symbol, Array, Number];

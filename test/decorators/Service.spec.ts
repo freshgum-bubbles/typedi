@@ -253,7 +253,7 @@ describe('Service Decorator', function () {
   });
 
   describe('Protection against built-in types', () => {
-    const builtinTypes = [String, Object, Symbol, Array, Number];
+    const builtinTypes = [String, Object, Symbol, Array, Number, Boolean];
 
     describe.each(builtinTypes.map(type => ({ type, name: type.name })))('$name() usage', ({ type: builtinType }) => {
       it('throws if used and no factory is provided', () => {
