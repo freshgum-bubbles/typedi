@@ -32,7 +32,7 @@ As a quick example, let's consider the `LogService` from the documentation websi
 In TypeDI, we'd implement it like so:
 
 ```ts
-import { Service } from '@typed-inject/injector';
+import { Container, Service } from '@typed-inject/injector';
 
 @Service([ ])
 export class LogService {
