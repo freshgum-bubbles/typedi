@@ -72,6 +72,34 @@ import { TypedConstructable } from './typed-constructable.type';
  */
 
 /**
+ * Map a built-in to its native type.
+ * 
+ * As built-in types can only be expressed using constructors,
+ * we need to cast them to their TypeScript-friendly type, as
+ * otherwise classes using these built-in types would be forced
+ * to accept, for example, a String in the place of a String dependency.
+ * 
+ * The [TypeScript *Do's And Don'ts* docs][dos-and-donts] suggests the following transformations:
+ *   - String -> string
+ *   - Number -> number
+ *   - Boolean -> boolean
+ *   - Symbol -> symbol
+ *   - Object -> object
+ * 
+ * We extend this by also casting Array dependencies to `unknown[]`.
+ * 
+ * [dos-and-donts]: https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html
+ */
+export type MaybeTransformBuiltIn<T> =
+  T extends typeof String ? string :
+  T extends typeof Number ? number :
+  T extends typeof Boolean ? boolean :
+  T extends typeof Symbol ? symbol :
+  T extends typeof Object ? object :
+  T extends typeof Array ? unknown[] :
+  T;
+
+/**
  * Map an `AnyServiceDependency` type to its true value.
  * For example, in the case of a `Token<string>`, `string` is returned.
  * @ignore
@@ -81,9 +109,9 @@ export type UnpackServiceDependency<T extends AnyServiceDependency> =
   /** Map [type, Constraints] pairs to the base type for easier unwrapping. */
   T extends DependencyPairWithConfiguration
     ? UnpackServiceDependency<T[0]> :
-    T extends Exclude<ServiceIdentifier<infer U>, string | CallableFunction> ? U :
+    T extends Exclude<ServiceIdentifier<infer U>, string | CallableFunction> ? MaybeTransformBuiltIn<U> :
     /** If we have a Token<string> as a dependency, the constructor should accept `string` in its place. */
-    T extends Token<infer U> ? U :
+    T extends Token<infer U> ? MaybeTransformBuiltIn<U> :
     /**
      * There's no way to statically cast a string key to anything useful,
      * so we just use `unknown` here.
@@ -92,7 +120,7 @@ export type UnpackServiceDependency<T extends AnyServiceDependency> =
      * in the constructor.
      */
     T extends string ? unknown :
-    T extends LazyReference<infer U extends ServiceIdentifier> ? UnpackServiceDependency<U> : 
+    T extends LazyReference<infer U extends ServiceIdentifier> ? MaybeTransformBuiltIn<UnpackServiceDependency<U>> :
     never;
 
 /** @ignore */ type Array1 = [any];
