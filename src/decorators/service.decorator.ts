@@ -17,6 +17,253 @@ import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-built
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error';
+import { ServiceSubject } from '../types/service-subject.type';
+
+/**
+ * We use some very repetitive overloads below to perform type-checking
+ * on the constructor's input arguments.
+ *
+ * The main advantage of this is that the following will no longer compile:
+ * ```ts
+ * @Service([AnotherService])
+ * export class MyService {
+ *   constructor (private arg: number) { }
+ * }
+ * ```
+ *
+ * @ignore
+ * You may notice that, for each of these overloads, we make use of the `@ignore`
+ * JSDoc tag.  This means that the overloads won't appear in the generated TSDoc.
+ * We need to copy-paste the standard documentation for each overload as otherwise,
+ * when one of them is used, there'll be no documentation in VSCode's view.
+ *
+ * We definitely don't want that to happen; these are just for type-checking
+ * dependencies.
+ */
+
+// #region service-overloads
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<TDep1 extends AnyServiceDependency>(
+  dependencies: [TDep1]
+): (subject: ServiceSubject<unknown, [TDep1]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<TDep1 extends AnyServiceDependency, TDep2 extends AnyServiceDependency>(
+  dependencies: [TDep1, TDep2]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency
+>(dependencies: [TDep1, TDep2, TDep3]): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency
+>(dependencies: [TDep1, TDep2, TDep3, TDep4]): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency
+>(
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency
+>(
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency
+>(
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  TDep8 extends AnyServiceDependency
+>(
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  TDep8 extends AnyServiceDependency,
+  TDep9 extends AnyServiceDependency
+>(
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  TDep8 extends AnyServiceDependency,
+  TDep9 extends AnyServiceDependency,
+  TDep10 extends AnyServiceDependency
+>(
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9, TDep10]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9, TDep10]>) => void;
+
+/**
+ * The default overload for the `Service` decorator is below.
+ * We've really covered 98% of use-cases here.
+ * Any class that uses over 10 dependencies most likely needs refactoring anyway.
+ * @ignore
+ */
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -46,6 +293,274 @@ import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.e
  * @returns A decorator which is then used upon a class.
  */
 export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<TDep1 extends AnyServiceDependency, T = unknown>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1]
+): (subject: ServiceSubject<unknown, [TDep1]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<TDep1 extends AnyServiceDependency, TDep2 extends AnyServiceDependency, T = unknown>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  TDep8 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  TDep8 extends AnyServiceDependency,
+  TDep9 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9]>) => void;
+
+/**
+ * Marks class as a service that can be injected using Container.
+ * The options allow customization of how the service is injected.
+ * By default, the service shall be registered upon the `defaultContainer` container.
+ * @ignore
+ *
+ * @param options The options to use for initialisation of the service.
+ * Documentation for the options can be found in ServiceOptions.
+ *
+ * @param dependencies The dependencies to provide upon initialisation of this service.
+ * These will be provided to the service as arguments to its constructor.
+ * They must be valid identifiers in the container the service shall be executed under.
+ *
+ * @returns A decorator which is then used upon a class.
+ */
+export function Service<
+  TDep1 extends AnyServiceDependency,
+  TDep2 extends AnyServiceDependency,
+  TDep3 extends AnyServiceDependency,
+  TDep4 extends AnyServiceDependency,
+  TDep5 extends AnyServiceDependency,
+  TDep6 extends AnyServiceDependency,
+  TDep7 extends AnyServiceDependency,
+  TDep8 extends AnyServiceDependency,
+  TDep9 extends AnyServiceDependency,
+  TDep10 extends AnyServiceDependency,
+  T = unknown
+>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
+  dependencies: [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9, TDep10]
+): (subject: ServiceSubject<unknown, [TDep1, TDep2, TDep3, TDep4, TDep5, TDep6, TDep7, TDep8, TDep9, TDep10]>) => void;
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -85,6 +600,7 @@ export function Service<T = unknown>(
   options: Omit<ServiceOptions<T>, 'dependencies'>,
   dependencies: AnyServiceDependency[]
 ): ClassDecorator;
+// #endregion
 
 /**
  * Marks class as a service that can be injected using Container.
