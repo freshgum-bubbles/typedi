@@ -77,8 +77,8 @@ import { TypedConstructable } from './typed-constructable.type';
  * This is fine, as the return types of decorators doesn't actually matter to TypeScript.
  * This makes the implementation a little bit simpler.
  *
- * The advantage of this approach is that it mostly keeps the type-checking decoupled from the Service
- * decorator implementation.  The actual type-checking is performed in this file.
+ * The advantage of this overall approach is that it mostly keeps the type-checking decoupled from 
+ * the Service decorator implementation.  The actual type-checking is performed in this file.
  * Furthermore, we get type-checking basically for free; this doesn't impact the size
  * of the final bundle at all. Sweet!
  *
@@ -107,6 +107,7 @@ type BuiltIn =
 
 /**
  * Map a built-in to its native type.
+ * @ignore
  * 
  * As built-in types can only be expressed using constructors,
  * we need to cast them to their TypeScript-friendly type, as
