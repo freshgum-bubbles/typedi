@@ -213,8 +213,3 @@ export type ServiceSubject <T extends unknown, TDeps extends readonly AnyService
     TDeps extends Array9 ? TypedConstructable<T, [USD<TDeps[0]>, USD<TDeps[1]>, USD<TDeps[2]>, USD<TDeps[3]>, USD<TDeps[4]>, USD<TDeps[5]>, USD<TDeps[6]>, USD<TDeps[7]>, USD<TDeps[8]>]> : /* 9 args */
     TDeps extends Array10 ? TypedConstructable<T, [USD<TDeps[0]>, USD<TDeps[1]>, USD<TDeps[2]>, USD<TDeps[3]>, USD<TDeps[4]>, USD<TDeps[5]>, USD<TDeps[6]>, USD<TDeps[7]>, USD<TDeps[8]>, USD<TDeps[9]>]> : /* 10 args */
     never;
-
-class B { }
-
-@Service([B])
-class A { }
