@@ -128,7 +128,7 @@ type BuiltIn =
  * 
  * [dos-and-donts]: https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html
  */
-export type MaybeTransformBuiltIn<T> =
+export type MapBuiltInToNativeType<T> =
   T extends typeof String ? string :
   T extends typeof Number ? number :
   T extends typeof Boolean ? boolean :
@@ -158,7 +158,7 @@ export type UnpackServiceDependency<T extends AnyServiceDependency> =
    * Furthermore, we need to operate on T as, in the case of a String dependency,
    * T would be StringConstructor (which equates to `typeof string`).
    */
-  T extends BuiltIn ? MaybeTransformBuiltIn<T> :
+  T extends BuiltIn ? MapBuiltInToNativeType<T> :
   
   /**
    * If it's a ServiceIdentifier, unpack it to its underlying type.
@@ -169,13 +169,13 @@ export type UnpackServiceDependency<T extends AnyServiceDependency> =
   T extends ServiceIdentifier<infer U> ? U :
   
   /** If we have a Token<string> as a dependency, the constructor should accept `string` in its place. */
-  T extends Token<infer U> ? MaybeTransformBuiltIn<U> :
+  T extends Token<infer U> ? MapBuiltInToNativeType<U> :
 
   /**
    * Also unpack LazyReference types to their underlying type, ensuring we also transform
    * the return type of the reference if it resolves to a built-in.
    */
-  T extends LazyReference<infer U extends ServiceIdentifier> ? MaybeTransformBuiltIn<UnpackServiceDependency<U>> :
+  T extends LazyReference<infer U extends ServiceIdentifier> ? MapBuiltInToNativeType<UnpackServiceDependency<U>> :
   never;
 
 /** @ignore */ type Array1 = [any];
