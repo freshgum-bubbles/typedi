@@ -52,6 +52,27 @@ import { TypedConstructable } from './typed-constructable.type';
  * }
  * ```
  * 
+ * If you look below, we also guard against built-in types surfacing into type design.
+ * For instance, if a class uses Number as a dependency, the accompanying argument in
+ * the constructor would be `number` instead of the discouraged `Number` type.
+ * 
+ * Consider the following example:
+ * ```ts
+ * @Service({ factory: () => new Car(2) }, [Number])
+ * class Car {
+ *   constructor (private modelNumber: number) { }
+ * }
+ * ```
+ * 
+ * Instead of using `Number` in the constructor, we're able to use `number` in its place.
+ * This is because, for each dependency, we check if the type matches any of the built-in
+ * constructors, such as Number, String and Object.
+ * If they do, they're cast to their underlying native types. In the case of Number such
+ * as in the above example, that type is cast to `number`.
+ * The type compiler below is specially designed to accommodate this use-case.
+ * 
+ * ---
+ * 
  * One note is that in the implementation, the expected type's return value is `unknown`.
  * This is fine, as the return types of decorators doesn't actually matter to TypeScript.
  * This makes the implementation a little bit simpler.
@@ -72,6 +93,19 @@ import { TypedConstructable } from './typed-constructable.type';
  */
 
 /**
+ * A built-in type, which is usable as a dependency in a service implementation.
+ * This needs to be kept up-to-date with the {@see BUILT_INS} constant.
+ * @ignore
+ */
+type BuiltIn = 
+  | typeof String
+  | typeof Number
+  | typeof Boolean
+  | typeof Symbol
+  | typeof Object
+  | typeof Array;
+
+/**
  * Map a built-in to its native type.
  * 
  * As built-in types can only be expressed using constructors,
@@ -80,11 +114,14 @@ import { TypedConstructable } from './typed-constructable.type';
  * to accept, for example, a String in the place of a String dependency.
  * 
  * The [TypeScript *Do's And Don'ts* docs][dos-and-donts] suggests the following transformations:
- *   - String -> string
- *   - Number -> number
- *   - Boolean -> boolean
- *   - Symbol -> symbol
- *   - Object -> object
+ * 
+ * | Dependency     | TS Type   |
+ * |----------------|-----------|
+ * | **String**     | `string`  |
+ * | **Number**     | `number`  |
+ * | **Boolean**    | `boolean` |
+ * | **Symbol**     | `symbol`  |
+ * | **Object**     | `object`  |
  * 
  * We extend this by also casting Array dependencies to `unknown[]`.
  * 
@@ -107,21 +144,38 @@ export type MaybeTransformBuiltIn<T> =
 // prettier-ignore
 export type UnpackServiceDependency<T extends AnyServiceDependency> =
   /** Map [type, Constraints] pairs to the base type for easier unwrapping. */
-  T extends DependencyPairWithConfiguration
-    ? UnpackServiceDependency<T[0]> :
-    T extends Exclude<ServiceIdentifier<infer U>, string | CallableFunction> ? MaybeTransformBuiltIn<U> :
-    /** If we have a Token<string> as a dependency, the constructor should accept `string` in its place. */
-    T extends Token<infer U> ? MaybeTransformBuiltIn<U> :
-    /**
-     * There's no way to statically cast a string key to anything useful,
-     * so we just use `unknown` here.
-     * The advantage (or disadvantage, depending on your perspective)
-     * here is that, by using unknown, we're effectively forcing a cast
-     * in the constructor.
-     */
-    T extends string ? unknown :
-    T extends LazyReference<infer U extends ServiceIdentifier> ? MaybeTransformBuiltIn<UnpackServiceDependency<U>> :
-    never;
+  T extends DependencyPairWithConfiguration ? UnpackServiceDependency<T[0]> :
+
+  /**
+   * If it's a built-in (Number, String), then let's resolve to an unpacked version of it.
+   * In the case of String, this would be string.
+   * 
+   * We need to check if the type is a built-in as otherwise, in the next case,
+   * it would be implicitly matched to a ServiceIdentifier<String>, and the
+   * built-in type transformer in {@see MaybeTransformBuiltIn} wouldn't work.
+   * 
+   * Furthermore, we need to operate on T as, in the case of a String dependency,
+   * T would be StringConstructor (which equates to `typeof string`).
+   */
+  T extends BuiltIn ? MaybeTransformBuiltIn<T> :
+  
+  /**
+   * If it's a ServiceIdentifier, unpack it to its underlying type.
+   * In the case of a class, this would resolve to an instance of the class.
+   * 
+   * In the case of Tokens, this resolves to the token's underlying type.
+   */
+  T extends ServiceIdentifier<infer U> ? U :
+  
+  /** If we have a Token<string> as a dependency, the constructor should accept `string` in its place. */
+  T extends Token<infer U> ? MaybeTransformBuiltIn<U> :
+
+  /**
+   * Also unpack LazyReference types to their underlying type, ensuring we also transform
+   * the return type of the reference if it resolves to a built-in.
+   */
+  T extends LazyReference<infer U extends ServiceIdentifier> ? MaybeTransformBuiltIn<UnpackServiceDependency<U>> :
+  never;
 
 /** @ignore */ type Array1 = [any];
 /** @ignore */ type Array2 = [any, any];
