@@ -1,6 +1,7 @@
 import { Token } from '@typed-inject/injector';
 
 export interface Post {
+    id: number;
     username: string;
     post: string;
 }
