@@ -17,6 +17,7 @@ import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-built
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
 import { ServiceWithDependencies } from '../types/service-subject.type';
+import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -120,11 +121,14 @@ export function Service<T extends ServiceWithDependencies<TDependencies>, TDepen
  *
  * @returns A decorator which is then used upon a class.
  */
-export function Service(options: ServiceOptionsWithDependencies<Constructable<unknown>>): ClassDecorator;
-export function Service<T>(
+export function Service<T extends ServiceWithDependencies<TDependencies>, TDependencies extends AnyServiceDependency[]>(
+  options: ServiceOptions<Constructable<unknown>> & { dependencies: AnyServiceDependency[] }
+): (type: T) => void;
+
+export function Service<T extends ServiceWithDependencies<TDependencies>, TDependencies extends AnyServiceDependency[]>(
   optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
-  maybeDependencies?: AnyServiceDependency[]
-): ClassDecorator {
+  maybeDependencies?: TDependencies
+): (type: T) => void {
   return targetConstructor => {
     if (optionsOrDependencies == null || targetConstructor == null) {
       // todo: more info in these error messages!!!
