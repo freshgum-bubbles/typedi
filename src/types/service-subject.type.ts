@@ -174,6 +174,8 @@ export type ServiceWithDependencies<TDeps extends readonly unknown[], T = unknow
 /**
  * Unpack a list of dependencies for a service, mapping each one
  * to an appropriate type for the service's constructor.
+ * 
+ * The returned type is compatible with the array type.
  */
 export type UnpackDependencies<TDeps extends readonly any[]> = typeof Array['prototype'] & {
   [TIndex in keyof Pick<TDeps, number>]: UnpackServiceDependency<TDeps[TIndex]>;
