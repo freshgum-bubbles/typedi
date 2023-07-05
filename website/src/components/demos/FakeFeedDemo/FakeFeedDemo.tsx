@@ -78,7 +78,7 @@ export function FakeFeedDemo () {
                 <div className={clsx(styles.roundedHeavy, styles.contentGrow)}>
                     <div className={styles.fakeChatList} ref={fakeChatListRef}>
                         {posts.map(post => (
-                            <FakePost post={post} />
+                            <FakePost post={post} key={post.id} />
                         ))}
                     </div>
                 </div>
