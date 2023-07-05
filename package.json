@@ -48,7 +48,9 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand --coverage --verbose",
     "prepare": "husky install",
-    "prepublishOnly": "npm test && npm run build:cjs && npm run build:umd && npm run build:types"
+    "prepublishOnly": "npm test && npm run build:cjs && npm run build:umd && npm run build:types",
+    "website:start": "pushd website && npm run start && popd",
+    "website:build": "pushd website && npm run build && popd"
   },
   "husky": {
     "hooks": {
