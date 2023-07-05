@@ -7,7 +7,7 @@ import {
 import { AnyConstructable } from '../types/any-constructable.type';
 import { Constructable } from '../types/constructable.type';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
-import { ServiceWithDependencies, UnpackDependencies } from '../types/service-subject.type';
+import { ServiceWithDependencies, UnpackDependencies } from '../types/typed-dependencies.type';
 import { Service } from './service.decorator';
 
 /**

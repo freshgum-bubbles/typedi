@@ -16,8 +16,8 @@ import { BUILT_INS } from '../constants/builtins.const';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
-import { ServiceWithDependencies } from '../types/service-subject.type';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error';
+import { ServiceWithDependencies } from '../types/typed-dependencies.type';
 
 /**
  * Marks class as a service that can be injected using Container.
