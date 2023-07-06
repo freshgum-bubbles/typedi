@@ -23,6 +23,7 @@ export { ServiceOptions } from './interfaces/service-options.interface';
 export { Constructable } from './types/constructable.type';
 export { ContainerIdentifier } from './types/container-identifier.type';
 export { ContainerScope } from './types/container-scope.type';
+export { ExtractToken } from './types/extract-token.type';
 export { ServiceIdentifier } from './types/service-identifier.type';
 export { LazyReference } from './types/lazy-reference.type';
 export { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from './types/resolution-constraint.type';
