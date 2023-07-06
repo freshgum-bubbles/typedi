@@ -19,6 +19,7 @@ import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency';
 import { ResolutionConstraintFlag } from './types/resolution-constraint.type';
 import { AnyServiceDependency } from './interfaces/service-options-dependency.interface';
 import { HOST_CONTAINER } from './constants/host-container.const';
+import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -64,10 +65,6 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
    */
   HOST_CONTAINER,
 ];
-
-interface ContainerResetOptions {
-  strategy: 'resetValue' | 'resetServices';
-}
 
 /**
  * TypeDI can have multiple containers.
@@ -680,14 +677,18 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public reset(options: ContainerResetOptions = { strategy: 'resetValue' }): this {
+  public reset(
+    options: ContainerResetOptions = {
+      strategy: ContainerResetStrategy.ResetValue,
+    }
+  ): this {
     this[THROW_IF_DISPOSED]();
 
     switch (options.strategy) {
-      case 'resetValue':
+      case ContainerResetStrategy.ResetValue:
         this.metadataMap.forEach(service => this.disposeServiceInstance(service));
         break;
-      case 'resetServices':
+      case ContainerResetStrategy.ResetServices:
         this.metadataMap.forEach(service => this.disposeServiceInstance(service));
         this.metadataMap.clear();
         this.multiServiceIds.clear();
