@@ -675,7 +675,10 @@ export class ContainerInstance implements Disposable {
    * @returns The identifier of the given service in the container.
    * This can then be passed to `.get` to resolve the identifier.
    */
-  public setValue(id: string | Token<unknown>, value: unknown) {
+  public setValue<
+    TServiceID extends string | Token<TValue>,
+    TValue extends TServiceID extends Token<infer U> ? U : unknown
+  >(id: TServiceID, value: TValue) {
     if (typeof id !== 'string' && !(id instanceof Token)) {
       throw new Error('The ID passed to setValue must either be a string or a Token.');
     }
