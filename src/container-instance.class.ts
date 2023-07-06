@@ -276,6 +276,12 @@ export class ContainerInstance implements Disposable {
     this[THROW_IF_DISPOSED]();
 
     /**
+     * Notify any listeners of the retrieval request before
+     * we check if the identifier is resolvable in the container.
+     */
+    this.visitor.visitRetrieval(identifier, { recursive, many: false });
+
+    /**
      * Provide compatibility with the `HostContainer()` API.
      */
     if (identifier === HOST_CONTAINER) {
@@ -412,6 +418,12 @@ export class ContainerInstance implements Disposable {
     this[THROW_IF_DISPOSED]();
 
     let idMap: ManyServicesMetadata | void = undefined;
+
+    /**
+     * Notify any listeners of the retrieval request before
+     * we check if the identifier is resolvable in the container.
+     */
+    this.visitor.visitRetrieval(identifier, { recursive, many: true });
 
     if (!this.multiServiceIds.has(identifier)) {
       /** If this container has no knowledge of the identifier, then we check the parent (if we have one). */
