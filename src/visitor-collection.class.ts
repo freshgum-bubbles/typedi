@@ -1,6 +1,6 @@
 import { ContainerInstance } from "./container-instance.class";
 import { ServiceMetadata } from "./interfaces/service-metadata.interface";
-import { ContainerTreeVisitor } from "./interfaces/tree-visitor.interface";
+import { ContainerTreeVisitor, VisitRetrievalOptions } from "./interfaces/tree-visitor.interface";
 import { Disposable } from "./types/disposable.type";
 import { ServiceIdentifier } from "./types/service-identifier.type";
 
@@ -78,6 +78,10 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
 
     visitUnavailableService(identifier: ServiceIdentifier, many: boolean): void {
         this.forEach(visitor => visitor.visitUnavailableService?.(identifier, many));
+    }
+
+    visitRetrieval(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
+        this.forEach(visitor => visitor.visitRetrieval?.(identifier, options));
     }
 
     /**

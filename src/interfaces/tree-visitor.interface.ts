@@ -4,6 +4,28 @@ import { ServiceIdentifier } from "../types/service-identifier.type";
 import { ServiceMetadata } from "./service-metadata.interface";
 
 /**
+ * A collection of options passed to {@link ContainerTreeVisitor.visitRetrieval}.
+ */
+export interface VisitRetrievalOptions {
+    /**
+     * Whether the request was recursive.
+     * If the option was not specified in the request, defaults to `true`.
+     */
+    recursive: boolean;
+
+    /**
+     * If true, the identifier was requested via the following methods:
+     *   - {@link ContainerInstance.getMany}
+     *   - {@link ContainerInstance.getManyOrNull}
+     * 
+     * Otherwise, the identifier was requested using:
+     *   - {@link ContainerInstance.get}
+     *   - {@link ContainerInstance.getOrNull}.
+     */
+    many: boolean;
+}
+
+/**
  * A visitor for Container objects, which allows for extension of container functionality.
  * @experimental **This API is still being developed.  It will probably change.**
  * 
@@ -114,4 +136,19 @@ export interface ContainerTreeVisitor extends Disposable {
      * @param identifier The identifier of the unavailable service.
      */
     visitUnavailableService? (identifier: ServiceIdentifier, many: boolean): void;
+
+    /**
+     * Visit a request for a container to retrieve a service.
+     * @experimental
+     *
+     * This is similar to the `visitUnavailableService` handler, but it
+     * is always called in the event of service retrieval.
+     * If the identifier can not be found, `visitUnavailableService` is then called.
+     *
+     * @param identifier The identifier of the requested service.
+     *
+     * @param options A set of options passed to the listener.
+     * Documented in {@link VisitRetrievalOptions}.
+     */
+    visitRetrieval? (identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void;
 }
