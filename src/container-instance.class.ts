@@ -65,6 +65,10 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
   HOST_CONTAINER,
 ];
 
+interface ContainerResetOptions {
+  strategy: 'resetValue' | 'resetServices';
+}
+
 /**
  * TypeDI can have multiple containers.
  * One container is ContainerInstance.
@@ -676,7 +680,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public reset(options: { strategy: 'resetValue' | 'resetServices' } = { strategy: 'resetValue' }): this {
+  public reset(options: ContainerResetOptions = { strategy: 'resetValue' }): this {
     this[THROW_IF_DISPOSED]();
 
     switch (options.strategy) {
