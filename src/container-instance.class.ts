@@ -99,13 +99,23 @@ export class ContainerInstance implements Disposable {
    */
   public static readonly defaultContainer = new ContainerInstance('default');
 
-  /** 
-   * The currently-present visitors attached to the container. 
+  /**
+   * The currently-present visitors attached to the container.
    * These are conjoined into a container of individual visitors,
    * which implements the standard ContainerTreeVisitor interface,
    * and individual listeners can be added and removed at will.
    */
   private visitor = new VisitorCollection();
+
+  /**
+   * Whether the container is currently retrieving an identifier
+   * which visitors should not be notified of.
+   *
+   * This is used to prevent {@link ContainerInstance.getManyOrNull}
+   * from notifying visitors that it is retrieving a masked token,
+   * which is used to store services of `{ multiple: true }`.
+   */
+  private isRetrievingPrivateToken = false;
 
   /**
    * Create a ContainerInstance.
@@ -276,22 +286,38 @@ export class ContainerInstance implements Disposable {
     this[THROW_IF_DISPOSED]();
 
     /**
-     * Notify any listeners of the retrieval request before
-     * we check if the identifier is resolvable in the container.
+     * Use the internal flag as a guide to whether we should
+     * notify visitors of this retrieval.
      */
-    this.visitor.visitRetrieval(identifier, { recursive, many: false });
+    const notifyVisitors = !this.isRetrievingPrivateToken;
+
+    const partialVisitRetrievalOptions = { recursive, many: false } as const;
 
     /**
      * Provide compatibility with the `HostContainer()` API.
      */
     if (identifier === HOST_CONTAINER) {
+      if (notifyVisitors) {
+        this.visitor.visitRetrieval(identifier, {
+          ...partialVisitRetrievalOptions,
+          location: ServiceIdentifierLocation.Local,
+        });
+      }
+
       return this as unknown as T;
     }
 
     const maybeResolvedMetadata = this.resolveMetadata(identifier, recursive);
 
     if (maybeResolvedMetadata === null) {
-      this.visitor.visitUnavailableService(identifier, false);
+      if (notifyVisitors) {
+        /** Notify our listeners that the identifier wasn't found. */
+        this.visitor.visitRetrieval(identifier, {
+          ...partialVisitRetrievalOptions,
+          location: ServiceIdentifierLocation.None,
+        });
+      }
+
       return null;
     }
 
@@ -329,7 +355,7 @@ export class ContainerInstance implements Disposable {
        * We can safely assume it exists there.
        */
       if (newServiceMetadata.scope === 'singleton') {
-        return ContainerInstance.defaultContainer.getOrNull(identifier, recursive);
+        return defaultContainer.getOrNull(identifier, recursive);
       }
 
       /**
@@ -338,14 +364,44 @@ export class ContainerInstance implements Disposable {
        * instead of dealing with upstream metadata.
        */
       const newServiceID = this.set(newServiceMetadata, [...baseMetadata.dependencies]);
-      return this.getOrNull(newServiceID, recursive) as T;
+
+      /**
+       * Cache the value in a variable so we're able to wrap the call in the
+       * {@link ContainerInstance.isRetrievingPrivateToken} flag to prevent
+       * notifying visitors.
+       */
+      this.isRetrievingPrivateToken = true;
+
+      const resolvedValue = this.getOrNull(newServiceID, recursive) as T;
+
+      /** Reset the flag to its original value. */
+      this.isRetrievingPrivateToken = false;
+
+      this.visitor.visitRetrieval(identifier, {
+        ...partialVisitRetrievalOptions,
+        location: ServiceIdentifierLocation.Parent,
+      });
+
+      return resolvedValue;
+    }
+
+    /**
+     * Notify our listeners that the identifier was found.
+     * We do this *after* the above importing code as otherwise, we would have to
+     * set the {@link ContainerInstance.isRetrievingPrivateToken} flag.
+     */
+    if (notifyVisitors) {
+      this.visitor.visitRetrieval(identifier, {
+        ...partialVisitRetrievalOptions,
+        location,
+      });
     }
 
     let metadata = baseMetadata;
 
     /** Firstly, we shall check if the service is a singleton.  If it is, load it from the global registry. */
     if (baseMetadata?.scope === 'singleton') {
-      metadata = ContainerInstance.defaultContainer.metadataMap.get(identifier) as ServiceMetadata<T>;
+      metadata = defaultContainer.metadataMap.get(identifier) as ServiceMetadata<T>;
     }
 
     /** This should never happen as multi services are masked with custom token in Container.set. */
@@ -403,39 +459,57 @@ export class ContainerInstance implements Disposable {
     this[THROW_IF_DISPOSED]();
 
     let idMap: ManyServicesMetadata | void = undefined;
-
-    /**
-     * Notify any listeners of the retrieval request before
-     * we check if the identifier is resolvable in the container.
-     */
-    this.visitor.visitRetrieval(identifier, { recursive, many: true });
+    let location: ServiceIdentifierLocation = ServiceIdentifierLocation.None;
 
     if (!this.multiServiceIds.has(identifier)) {
       /** If this container has no knowledge of the identifier, then we check the parent (if we have one). */
       if (recursive && this.parent && this.parent.multiServiceIds.has(identifier)) {
         /** It looks like it does! Let's use that instead. */
         idMap = this.parent.multiServiceIds.get(identifier) as ManyServicesMetadata;
+        location = ServiceIdentifierLocation.Parent;
       }
     } else {
       idMap = this.multiServiceIds.get(identifier);
+
+      if (idMap) {
+        location = ServiceIdentifierLocation.Local;
+      }
     }
+
+    /** Notify listeners we have retrieved a service. */
+    this.visitor.visitRetrieval(identifier, {
+      recursive,
+      many: true,
+      location,
+    });
 
     /** If no IDs could be found, return null. */
     if (!idMap) {
-      this.visitor.visitUnavailableService(identifier, true);
       return null;
     }
+
+    const isRetrievingSingleton = idMap.scope === 'singleton';
+    const targetContainer = isRetrievingSingleton ? defaultContainer : this;
+
+    /**
+     * Prevent {@link ContainerInstance.getOrNull} from notifying
+     * visitors that we are retrieving a masked token.
+     */
+    targetContainer.isRetrievingPrivateToken = true;
 
     /**
      * If the service is registered as a singleton, we load it from the global container.
      * Otherwise, the local registry is used.
      */
-    const subject =
-      idMap.scope === 'singleton'
-        ? (generatedId: Token<unknown>) => ContainerInstance.defaultContainer.get<T>(generatedId)
-        : (generatedId: Token<unknown>) => this.get<T>(generatedId, recursive);
+    const subject = (generatedId: Token<unknown>) =>
+      targetContainer.get<T>(generatedId, targetContainer === defaultContainer ? undefined : recursive);
 
-    return idMap.tokens.map(subject);
+    const mapped = idMap.tokens.map(subject);
+
+    /** Restore the flag we set above to its original value. */
+    targetContainer.isRetrievingPrivateToken = false;
+
+    return mapped;
   }
 
   /**
@@ -483,7 +557,7 @@ export class ContainerInstance implements Disposable {
      * If the service is marked as singleton, we set it in the default container.
      * (And avoid an infinite loop via checking if we are in the default container or not.)
      */
-    if ((serviceOptions as any)['scope'] === 'singleton' && ContainerInstance.defaultContainer !== this) {
+    if ((serviceOptions as any)['scope'] === 'singleton' && defaultContainer !== this) {
       /**
        * 1. The (as any) cast above is for performance: why bother putting the arguments
        * together if we can very quickly determine if the argument is of type object?
@@ -495,7 +569,7 @@ export class ContainerInstance implements Disposable {
        * This is, of course, left to ContainerInstance#set.
        */
       // todo: should we really be binding to defaultContainer here?
-      return ContainerInstance.defaultContainer.set(
+      return defaultContainer.set(
         serviceOptions as Omit<ServiceOptions<T>, 'dependencies'>,
         precompiledDependencies as Resolvable[]
       );
@@ -632,10 +706,10 @@ export class ContainerInstance implements Disposable {
    */
   public static of(
     containerId: ContainerIdentifier = 'default',
-    parent: ContainerInstance | null = ContainerInstance.defaultContainer
+    parent: ContainerInstance | null = defaultContainer
   ): ContainerInstance {
     if (containerId === 'default') {
-      return this.defaultContainer;
+      return defaultContainer;
     }
 
     // todo: test parent= default arg
@@ -651,12 +725,14 @@ export class ContainerInstance implements Disposable {
        */
       container = new ContainerInstance(containerId, parent ?? undefined);
 
-      /**
-       * To keep an understandable API surface, visitors attached to
-       * the default container are notified of the new orphaned service here.
-       * _Note: Orphaned container notifications are only sent for newly-created containers, not duplicate .of calls._
-       */
-      ContainerInstance.defaultContainer.visitor.visitOrphanedContainer(container);
+      if (parent === null) {
+        /**
+         * To keep an understandable API surface, visitors attached to
+         * the default container are notified of the new orphaned service here.
+         * _Note: Orphaned container notifications are only sent for newly-created containers, not duplicate .of calls._
+         */
+        defaultContainer.visitor.visitOrphanedContainer(container);
+      }
 
       // todo: move this into ContainerInstance ctor
       ContainerRegistry.registerContainer(container);
@@ -1007,12 +1083,12 @@ export class ContainerInstance implements Disposable {
   /**
    * Add a visitor to the container.
    * @experimental
-   * 
+   *
    * @param visitor The visitor to add to this container.
-   * 
+   *
    * @returns Whether the operation was successful.
    */
-  public acceptTreeVisitor (visitor: ContainerTreeVisitor) {
+  public acceptTreeVisitor(visitor: ContainerTreeVisitor) {
     return this.visitor.addVisitor(visitor, this);
   }
 
@@ -1020,11 +1096,11 @@ export class ContainerInstance implements Disposable {
    * Remove a visitor from the container.
    * No-op if the visitor was never attached to the container.
    * @experimental
-   * 
+   *
    * @param visitor The visitor to remove from the container.
    * @returns Whether the operation was successful.
    */
-  public detachTreeVisitor (visitor: ContainerTreeVisitor) {
+  public detachTreeVisitor(visitor: ContainerTreeVisitor) {
     return this.visitor.removeVisitor(visitor);
   }
 
@@ -1035,8 +1111,16 @@ export class ContainerInstance implements Disposable {
 }
 
 /**
+ * Keep a reference to the default container which we then utilise
+ * in {@link ContainerInstance}.  This reduces the final size of the bundle,
+ * as we are referencing a static variable instead of continuously
+ * looking up a property.
+ */
+export const { defaultContainer } = ContainerInstance;
+
+/**
  * Register the default container in ContainerRegistry.
  * We don't use `ContainerInstance.of` here we don't need to check
  * if a container with the "default" ID already exists: it never will.
  */
-ContainerRegistry.registerContainer(ContainerInstance.defaultContainer);
+ContainerRegistry.registerContainer(defaultContainer);
