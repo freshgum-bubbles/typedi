@@ -6,6 +6,7 @@ import {
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
 import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util';
+import { throwError } from './throw-error.util';
 
 export function wrapDependencyAsResolvable(dependency: AnyServiceDependency): Resolvable {
   let constraints!: number | undefined;
@@ -18,7 +19,7 @@ export function wrapDependencyAsResolvable(dependency: AnyServiceDependency): Re
     /** Perform some very basic sanity checking on the pair. */
     if (id == null || options == null) {
       // TODO: make this more descriptive
-      throw new Error('The dependency pair was not instantiated correctly.');
+      throwError(new Error('The dependency pair was not instantiated correctly.'));
     }
 
     if (typeof options === 'number') {
