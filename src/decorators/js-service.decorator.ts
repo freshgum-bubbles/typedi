@@ -2,6 +2,7 @@ import { AnyServiceDependency } from '../interfaces/service-options-dependency.i
 import { ServiceOptions } from '../interfaces/service-options.interface';
 import { AnyConstructable } from '../types/any-constructable.type';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
+import { throwError } from '../utils/throw-error.util';
 import { Service } from './service.decorator';
 
 /**
@@ -83,7 +84,7 @@ export function JSService<T extends AnyConstructable>(
   }
 
   if (!constructor) {
-    throw new Error('The JSService overload was not used correctly.');
+    throwError(new Error('The JSService overload was not used correctly.'));
   }
 
   return constructor;
