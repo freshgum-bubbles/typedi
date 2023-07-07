@@ -296,7 +296,22 @@ export class ContainerInstance implements Disposable {
      * <https://github.com/typestack/typedi/blob/8da3ef286299bca6bd7ddf4082268f422f700630/src/container-instance.class.ts#L94>
      */
     if (isUpstreamMetadata) {
-      const value = baseMetadata.scope === 'singleton' ? baseMetadata.value : EMPTY_VALUE;
+      let value: unknown;
+
+      /**
+       * If the type cannot be reconstructed  (i.e. it's a static value, possibly set via
+       * {@link ContainerInstance.setValue}), do not erase the type in the new metadata.
+       *
+       * Furthermore, do not erase the value if the imported service is a singleton.
+       * This mirrors the behaviour of the prior implementation.
+       */
+      const isReconstructable = baseMetadata.factory != null || baseMetadata.type != null;
+
+      if (!isReconstructable || baseMetadata.scope === 'singleton') {
+        value = baseMetadata.value;
+      } else {
+        value = EMPTY_VALUE;
+      }
 
       const newServiceMetadata: ServiceMetadata<T> = {
         ...baseMetadata,
