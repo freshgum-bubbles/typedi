@@ -134,9 +134,11 @@ export function Service<T>(
      * This is most likely user error, as the function should __never__ be called twice.
      */
     if (container.has(id) && !metadata.multiple) {
-      throwError(new Error(
-        `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
-      ));
+      throwError(
+        new Error(
+          `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
+        )
+      );
     }
 
     /**
@@ -150,9 +152,11 @@ export function Service<T>(
         const type = typeof typeWrapper;
 
         if (type !== 'function' && type !== 'object' && type !== 'string') {
-          throwError(new Error(
-            `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
-          ));
+          throwError(
+            new Error(
+              `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
+            )
+          );
         } else if (metadata.factory == null && (BUILT_INS as unknown[]).includes(eagerType)) {
           /**
            * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
