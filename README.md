@@ -1,57 +1,50 @@
-# `@typed-inject/injector`
+# TypeDI<sup>++</sup>
 
-Elegant Dependency Injection in JavaScript and TypeScript.
+![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@typed-inject/injector) ![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
-[**Early documentation available now!**](https://64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app/)
+*Elegant Dependency Injection in JavaScript and TypeScript.*
 
-**This is a fork of [the original TypeDI](https://github.com/typestack/typedi)**.
-Quite a lot has changed in this fork. To name a few changes and additions:
+- `Optional`, `SkipSelf`, `Self`, `Many` support; just like Angular!
+- Purely functional injection without any runtime reflection.
+- Strict integration with TypeScript.
+- Easy testability with the Container-based API.
+- Rigorously tested API (nearly 100% coverage!)
+- **🔥 10 kB bundle size.** (no dependencies!)
 
-- **Resolution constraints**: `Optional`, `SkipSelf`, `Self`, `Many`.  This is very much copied from Angular: you can use them to change the strategy used for resolving a certain dependency of a service.
-- Removal of property injection (which is a real anti-pattern) and parameter injection; removed as it isn't a feature in the official decorator spec; therefore, it's at a strong risk of being removed -- see https://github.com/angular/angular/issues/50439.  It's been removed with a more sensible API that has the exact same functionality.
-- **Proper container inheritance** through `of` and `ofChild` (and an API for creating containers with no parent)
-- **Easier use in JavaScript** through the `JSService` function, without any manual calls to `Container.set` required.
-- **ESM bundles** (comes in at 7.9kB for the curious) alongside UMD.
-- `getOrNull` and `getManyOrNull` methods for resolving identifiers (alongside the former error-throwing APIs)
-- No more passing containers into services unexpectedly and causing runtime errors (re: https://github.com/typestack/typedi/issues/571)
-- Investigating disabling eager services by default (see https://github.com/freshgum-bubbles/typedi/pull/17); though they can easily be re-enabled through a method call.
-- An experimental [**tree visitor API**](https://github.com/freshgum-bubbles/typedi/blob/7004e81cec5152bff75fd4529e29e1f87541bbc1/src/interfaces/tree-visitor.interface.ts) (see https://github.com/freshgum-bubbles/typedi/pull/14) which allows you to traverse containers, child containers, and their respective services from a single visitor object.
-- A new work-in-progress documentation website: https://github.com/freshgum-bubbles/typedi/pull/19
-- Proposed API change that disables eager services by default for easier testing: https://github.com/freshgum-bubbles/typedi/pull/17
-- Addition of a `Container.setValue` method that makes it easier to set string & Token keys: https://github.com/freshgum-bubbles/typedi/pull/30
-- `HostContainer`, to allow services to get the container they're running under: https://github.com/freshgum-bubbles/typedi/pull/26
-- Lazy references to services, through `LazyReference`, to replace the old function-based API
-- Type-checking for dependencies of services, WIP: https://github.com/freshgum-bubbles/typedi/issues/32
-- A more strict testing suite to prevent regressions in API functionality, partly helped by https://github.com/freshgum-bubbles/typedi/pull/31
-- An actively maintained project 😉
+~~(The only thing it can't do is make coffee.)~~
 
-## Example
-
-As a quick example, let's consider the `LogService` from the documentation website.
-
-In TypeDI, we'd implement it like so:
+*Dependency Injection in 23 lines:*
 
 ```ts
-import { Container, Service } from '@typed-inject/injector';
+import { Service, Container } from '@typed-inject/injector';
 
+// Make a service that logs a message to the console.
 @Service([ ])
-export class LogService {
-    public log (message: string) {
+class LogService {
+    log (message: string) {
         console.log(message);
     }
 }
 
+// Then, use our logging service in our root service,
+// which will log "hello world!" to the console.
 @Service([LogService])
-export class RootService {
-    public constructor (private logger: LogService) { }
-
+class RootService {
+    // Store the instance of the logger inside the class.
+    constructor (private logger: LogService) { }
     run () {
-        this.logger.log('Hello World!');
+        this.logger.log("hello world!");
     }
 }
 
-const rootService = Container.get(RootService);
-rootService.run();
+// Now, run our service!
+Container.get(RootService).run();
 ```
 
-**For a more complete example along with guidance, please visit the documentation website.**
+**Congrats!** You've just mastered DI in 23 lines. To learn more,
+[check out the documentation](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app)!
+
+## License
+
+Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbles) & [upstream TypeDI contributors](https://github.com/typestack/typedi/blob/develop/LICENSE).
+
