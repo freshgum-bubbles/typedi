@@ -1,4 +1,4 @@
-import { PickRequired } from "../types/helper-types.type";
+import { PickRequired } from "../types/pick-required.type";
 import { ServiceOptions } from "./service-options.interface";
 
 /**
