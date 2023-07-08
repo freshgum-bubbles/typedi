@@ -148,7 +148,7 @@ describe('Tree Visitors', () => {
 
       it('should be called for setValue', () => {
         const visitor = createAndSetupVisitorMock(container);
-        const token = new Token<string>();
+        const token = new Token<symbol>();
         const key = 'TEST_ABC';
         const testValue = Symbol();
 
