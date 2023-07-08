@@ -1,6 +1,6 @@
 {
   "name": "@typed-inject/injector",
-  "version": "0.3.22-beta.1",
+  "version": "0.3.22-beta.2",
   "description": "Dependency injection for TypeScript.  Fork of TypeDI.",
   "author": "freshgum",
   "license": "MIT",
