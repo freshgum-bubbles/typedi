@@ -569,6 +569,15 @@ export class ContainerInstance implements Disposable {
     this.throwIfDisposed();
 
     /**
+     * Check if the identifier being set is a virtual one,
+     * such as HostContainer.
+     * If so, we can't reasonably allow this service to be set.
+     */
+    if (ALWAYS_RESOLVABLE.includes((serviceOptions as any).id as ServiceIdentifier)) {
+      throw new Error('Virtual identifiers can not be overriden.');
+    }
+
+    /**
      * If the service is marked as singleton, we set it in the default container.
      * (And avoid an infinite loop via checking if we are in the default container or not.)
      */
