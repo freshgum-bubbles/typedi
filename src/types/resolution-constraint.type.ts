@@ -3,18 +3,32 @@
  * @experimental
  */
 export const enum ResolutionConstraintFlag {
-  /** Do not ascend the container tree to resolve this identifier. */
+  /** 
+   * Do not ascend the container tree to resolve this identifier. 
+   * 
+   * @inheritDoc Self
+   */
   Self = 0b1000,
 
-  /** Begin searching from the parent container to resolve this identifier. */
+  /** 
+   * Begin searching from the parent container to resolve this identifier. 
+   * 
+   * @inheritDoc SkipSelf
+   */
   SkipSelf = 0b0100,
 
-  /** If the identifier cannot be found, substitute it with `null`.  */
+  /** 
+   * If the identifier cannot be found, substitute it with `null`.  
+   * 
+   * @inheritDoc Optional
+   */
   Optional = 0b0010,
 
   /**
    * Resolve multiple services for this identifier via `getMany`.
    * The returned array is then inserted as an argument at the specified index.
+   * 
+   * @inheritDoc Many
    */
   Many = 0b0001,
 }
