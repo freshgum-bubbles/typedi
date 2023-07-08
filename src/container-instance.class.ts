@@ -68,7 +68,7 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
   /**
    * Provide compatibility with the `HostContainer()` API.
    */
-  HOST_CONTAINER,
+  HOST_CONTAINER
 ];
 
 /**
