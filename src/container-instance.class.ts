@@ -17,7 +17,7 @@ import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const';
 import { Resolvable } from './interfaces/resolvable.interface';
 import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency';
 import { ResolutionConstraintFlag } from './types/resolution-constraint.type';
-import { AnyServiceDependency } from './interfaces/service-options-dependency.interface';
+import { AnyServiceDependency } from './interfaces/service-dependency.interface';
 import { HOST_CONTAINER } from './constants/host-container.const';
 import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface';
 import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
@@ -439,6 +439,15 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets all instances registered in the container of the given service identifier.
    * Used when service defined with multiple: true flag.
+   * 
+   * @example
+   * ```ts
+   * Container.set({ id: 'key', value: 1, dependencies: [ ], multiple: true });
+   * Container.set({ id: 'key', value: 2, dependencies: [ ], multiple: true });
+   * Container.set({ id: 'key', value: 3, dependencies: [ ], multiple: true });
+   * 
+   * const [one, two, three] = Container.getMany('key');
+   * ```
    *
    * @param identifier The identifier to resolve.
    *
@@ -678,6 +687,14 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Add a value to the container.
+   * 
+   * @example
+   * ```ts
+   * // We can simplify this:
+   * Container.set({ id: 'key', value: 'test', dependencies: [ ] });
+   * // To this:
+   * Container.setValue('key', 'test');
+   * ```
    *
    * @param id The ID of the new value to set inside the container.
    * Must be either a string or a Token.
@@ -727,6 +744,21 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets a separate container instance for the given instance id.
    * Optionally, a parent can be passed, which will act as an upstream resolver for the container.
+   * 
+   * @remarks This is functionally equivalent to {@link ContainerInstance.of}.
+   * However, it allows container creation from a static interface.
+   * 
+   * @example
+   * ```ts
+   * // Create a container which has the default container as its parent:
+   * ContainerInstance.of('my-new-container');
+   * 
+   * // Create a container without a parent:
+   * ContainerInstance.of('my-new-container-without-a-parent', null);
+   * 
+   * // Create a container with a separate container:
+   * ContainerInstance.of('my-new-special-container', myOtherContainer);
+   * ```
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
    * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  Defaults to the default container.
@@ -818,7 +850,7 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
-   * Gets a separate container instance for the given instance id.
+   * Gets a separate container instance for the given instance id.}
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
    *
@@ -899,6 +931,10 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Dispose the container, rendering it unable to perform any further injection or storage.
+   * 
+   * @remarks
+   * It is currently not advised to dispose of the default container.
+   * This would result in resolution issues in your application.
    *
    * @example
    * ```ts
@@ -1137,8 +1173,11 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
-   * Checks if the given service metadata contains a destroyable service instance and destroys it in place. If the service
-   * contains a callable function named `destroy` it is called but not awaited and the return value is ignored..
+   * Check if the given service is able to be destroyed and, if so, destroys it in-place.
+   * 
+   * @remarks
+   * If the service contains a method named `destroy`, it is called.
+   * However, its value is ignored.
    *
    * @param serviceMetadata the service metadata containing the instance to destroy
    * @param force when true the service will be always destroyed even if it's cannot be re-created
