@@ -20,6 +20,8 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  *   console.log('The dependency is optional.');
  * }
  * ```
+ * 
+ * @see {@link ResolutionConstraintFlag}
  *
  * @returns The resolution constraint bit-flag for Optional.
  */
@@ -47,6 +49,8 @@ export function Optional() {
  *   console.log('The dependency will not be resolved recursively.');
  * }
  * ```
+ * 
+ * @see {@link ResolutionConstraintFlag}
  *
  * @returns The resolution constraint bit-flag for Self.
  */
@@ -75,6 +79,8 @@ export function Self() {
  * }
  * ```
  *
+ * @see {@link ResolutionConstraintFlag}
+ * 
  * @returns The resolution constraint bit-flag for SkipSelf.
  */
 export function SkipSelf() {
@@ -102,6 +108,8 @@ export function SkipSelf() {
  * }
  * ```
  *
+ * @see {@link ResolutionConstraintFlag}
+ * 
  * @returns The resolution constraint bit-flag for SkipSelf.
  */
 export function Many() {
