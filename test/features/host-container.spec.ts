@@ -31,6 +31,11 @@ describe('HostContainer', function () {
       expect(container.getOrNull(HostContainer())).toStrictEqual(container);
     });
 
+    it('cannot be overriden in a container', () => {
+      expect(() => container.set({ id: HostContainer(), value: 2, dependencies: [ ] })).toThrowError();
+      expect(() => container.setValue(HostContainer(), ContainerInstance.defaultContainer)).toThrowError();
+    });
+
     it('resolves as a service dependency', function () {
       @Service({ container }, [HostContainer()])
       class MyService {
