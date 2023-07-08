@@ -1,5 +1,5 @@
 import { ServiceMetadata } from './service-metadata.interface';
-import { AnyServiceDependency } from './service-options-dependency.interface';
+import { AnyServiceDependency } from './service-dependency.interface';
 
 /**
  * The public ServiceOptions is partial object of ServiceMetadata and either one
