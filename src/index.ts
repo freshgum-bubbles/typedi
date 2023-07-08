@@ -16,7 +16,7 @@ export {
   AnyServiceDependency,
   DependencyPairWithConfiguration,
   ServiceDependencyOptions,
-} from './interfaces/service-options-dependency.interface';
+} from './interfaces/service-dependency.interface';
 export { ServiceOptions } from './interfaces/service-options.interface';
 
 export { Constructable } from './types/constructable.type';

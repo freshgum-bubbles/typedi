@@ -2,7 +2,7 @@ import { Resolvable } from '../interfaces/resolvable.interface';
 import {
   AnyServiceDependency,
   DependencyPairWithConfiguration,
-} from '../interfaces/service-options-dependency.interface';
+} from '../interfaces/service-dependency.interface';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
 import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util';
