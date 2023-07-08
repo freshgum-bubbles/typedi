@@ -1,6 +1,3 @@
-/** This is an internal package, so we don't re-export it on purpose. */
-import { ContainerInstance } from './container-instance.class';
-
 export { JSService } from './decorators/js-service.decorator';
 export { Service } from './decorators/service.decorator';
 
@@ -33,5 +30,4 @@ export { ContainerInstance } from './container-instance.class';
 export { Token } from './token.class';
 
 /** We export the default container under the Container alias. */
-export const Container = ContainerInstance.defaultContainer;
-export default Container;
+export { defaultContainer as Container, defaultContainer as default } from './container-instance.class';
