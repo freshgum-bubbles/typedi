@@ -1,4 +1,5 @@
 import { ContainerInstance } from './container-instance.class';
+import { ContainerRegistryError } from './error/container-registry-error.error';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { throwError } from './utils/throw-error.util';
 
@@ -28,13 +29,11 @@ export class ContainerRegistry {
    */
   public static registerContainer(container: ContainerInstance): void {
     if (container instanceof ContainerInstance === false) {
-      // TODO: Create custom error for this.
-      throwError(new Error('Only ContainerInstance instances can be registered.'));
+      throwError(new ContainerRegistryError('Only ContainerInstance instances can be registered.'));
     }
 
     if (ContainerRegistry.containerMap.has(container.id)) {
-      // TODO: Create custom error for this.
-      throwError(new Error('Cannot register container with same ID.'));
+      throwError(new ContainerRegistryError('Cannot register container with same ID.'));
     }
 
     ContainerRegistry.containerMap.set(container.id, container);
@@ -59,8 +58,7 @@ export class ContainerRegistry {
     const registeredContainer = this.containerMap.get(id);
 
     if (registeredContainer === undefined) {
-      // TODO: Create custom error for this.
-      throwError(new Error('No container is registered with the given ID.'));
+      throwError(new ContainerRegistryError('No container is registered with the given ID.'));
     }
 
     return registeredContainer;
@@ -80,8 +78,7 @@ export class ContainerRegistry {
     const registeredContainer = ContainerRegistry.containerMap.get(container.id);
 
     if (registeredContainer === undefined) {
-      // TODO: Create custom error for this.
-      throwError(new Error('No container is registered with the given ID.'));
+      throwError(new ContainerRegistryError('No container is registered with the given ID.'));
     }
 
     /** We remove the container first. */
