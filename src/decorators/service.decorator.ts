@@ -17,6 +17,7 @@ import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-built
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
 import { throwError } from '../utils/throw-error.util';
+import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -153,7 +154,7 @@ export function Service<T>(
 
         if (type !== 'function' && type !== 'object' && type !== 'string') {
           throwError(
-            new Error(
+            new CannotInstantiateValueError(
               `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
             )
           );
