@@ -1,60 +1,88 @@
 ---
 sidebar_position: 3
-sidebar_class_name: sidebar_doc_incomplete
 ---
 
 # Multiple Services
 
 In some scenarios, you may want to store multiple instances of a service
-in your container.  TypeDI caters to this with the `getMany` method, which
-we'll explore below.
+in your container.  Using `get` wouldn't accomplish this, as subsequent
+calls would provide the same instance.
 
-While we *could* implement this by creating a container
-for each page (and that's totally fine!), we can *also* do it
-by utilising *multiple services*.
+However, one important feature of TypeDI is its ability to allow you
+to store multiple values under one ID. **Let's explore this below with a quick example.**
 
-Let's consider the example of a diagnostics collector service.
-The application would have multiple instances of this service
-for each page of the app.
+Let's consider the example of an application which needs to store
+information about multiple users.  Some users have different roles,
+which we'll also need to represent via individual services.
 
-```ts title="src/diagnostics.service.ts"
-import { Container, Service } from '@typed-inject/injector';
-
-interface DiagnosticsEvent {
-    name: string;
-    value: string;
+```ts title="src/user.class.ts"
+export class UserService {
+    public readonly role = 'user';
+    constructor (public name: string) { }
 }
+```
 
-@Service({ multiple: true }, [ ])
-export class DiagnosticsService {
-    private buffer: DiagnosticsEvent[] = [ ];
+Now, let's create a `ManagerService` to represent managers.
+Managers should have the ability to perform administrative actions, 
+so we'll add a `deleteComment` method.
 
-    addEvent (name: string, value: string) {
-        this.buffer.push({ name, value });
+```ts title="src/manager-user.class.ts"
+import { User } from './user.class';
+
+export class Manager extends User {
+    public readonly role = 'manager';
+
+    constructor (public name: string) {
+        super(name);
     }
 
-    getAllEvents (): DiagnosticsEvent[] {
-        return this.buffer;
+    deleteComment (commentId: string) {
+        // ...
     }
 }
 ```
 
-:::note
+To store each user, we'd also want a [Token](../tokens/introduction) that we can use to reference them.
+Let's do this below.
 
+```ts title="src/app.ts"
+import { Container } from '@typed-inject/injector';
+import { User } from './user.class';
+
+export const USER = new Token<User>();
+
+const joe = new User("Joe");
+const rick = new ManagerUser("Rick");
+
+function addUser (value: User) {
+    Container.set({ id: USER, multiple: true, value, dependencies: [ ] });
+}
+
+addUser(joe);
+addUser(rick);
+```
+
+:::note
+    
 The advantage of this approach is that it's much easier to keep
 track of each service instance, as they're all stored in one
 container.
 
 :::
 
-We stated that in each page, we would have multiple diagnostics collectors.
-Let's update the diagnostics service with a static method easier to create 
-new ones, so we can start using the diagnostics service in other services.
+You'll notice that while we can *store* individual users,
+we can't currently access them. Let's fix that.
+```ts title="src/app.ts"
+// ...
 
+function getUsers () {
+    // highlight-revision-start
+    return Container.getMany(USER);
+    // highlight-revision-end
+}
 
-```ts title="app/diagnostics.service.ts"
-import { Container } from '@typed-inject/injector';
-import { DiagnosticsService } from './diagnostics.service';
-
-@Service()
+console.log(getUsers());
+// -> [class User, class ManagerUser]
 ```
+
+There we go! There's a basic example of how to use multiple services in TypeDI.
