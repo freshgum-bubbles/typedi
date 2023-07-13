@@ -1238,6 +1238,71 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
+   * Import a value from the parent container.
+   * 
+   * **In most cases, you won't need to use this.**
+   * 
+   * @example
+   * Here's an example:
+   * ```ts
+   * @Service([ ])
+   * class MyService { }
+   * 
+   * // Create our child container.
+   * const child = Container.ofChild(Symbol());
+   * 
+   * // An example using .get:
+   * const myServiceFromChild = child.get(MyService);
+   * const myServiceFromDefault = Container.get(MyService);
+   * assert(myServiceFromChild !== myServiceFromDefault);
+   * 
+   * 
+   * // However, with importValueFromParent...
+   * const child = Container.ofChild(Symbol());
+   * child.importValueFromParent(MyService);
+   * assert(myServiceFromChild === myServiceFromDefault);
+   * ```
+   * 
+   * @remarks
+   * Normally, when class or factory-based services are implicitly 
+   * imported via {@link ContainerInstance.get}, a copy of the internal
+   * metadata representing the service is made from that of the parent,
+   * which is then stored in the child's map.
+   * 
+   * However, in the case of class-based or factory-based services,
+   * values are not copied into the child's metadata for the service.
+   * This means that, when the service is requested, a brand new instance
+   * is made and then stored in the child.
+   * 
+   * *The main advantage of this is that it simplifies the extension
+   * of containers.  The implicit import mechanism makes it much
+   * easier to create a child of a container, supplement additional
+   * values, and then run the services with the differing values.*
+   * 
+   * However, one notable disadvantage is that, for class-based services,
+   * **every dependency of that service has to be re-created** in the
+   * context of the child container.  In some cases, this may not be
+   * desired behaviour.
+   * 
+   * @throws Error
+   * This exception is thrown if the container does not have a parent.
+   */
+  public importValueFromParent (id: ServiceIdentifier) {
+    const { parent } = this;
+
+    if (!parent) {
+      throw new Error('Cannot import value as parent is not present.');
+    }
+
+    if (!parent.has(id)) {
+      throw new Error('Cannot import value as the parent does not have it.');
+    }
+
+    const metadata = parent.metadataMap.get(id);
+    this.metadataMap.set(id, metadata as ServiceMetadata);
+  }
+
+  /**
    * Add a visitor to the container.
    * @experimental
    *
