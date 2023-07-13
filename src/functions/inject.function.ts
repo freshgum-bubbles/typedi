@@ -1,4 +1,4 @@
-import { ContainerInstance } from "../container-instance.class";
+import { defaultContainer } from "../container-instance.class";
 import { ServiceIdentifier } from "../types/service-identifier.type";
 
 /**
@@ -19,10 +19,10 @@ import { ServiceIdentifier } from "../types/service-identifier.type";
  * ```
  */
 export function inject<TDependencies extends ServiceIdentifier[]> (
-    dependencies: TDependencies, 
-    injector: ContainerInstance,
+    dependencies: TDependencies,
     // TODO: update this when deps type-checking is live
-    contextFn: (...dependencies: unknown[]) => void
+    contextFn: (...dependencies: unknown[]) => void,
+    injector = defaultContainer
 ) {
     const retrievedDeps = dependencies.map(dependency => injector.get(dependency));
     contextFn(...retrievedDeps);
