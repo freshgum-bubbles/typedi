@@ -4,7 +4,7 @@
  * the registration of individual services (along with their dependencies).
  * Mainly, the Service function performs argument normalization, and then
  * passes the normalized metadata to the container.
- * The main service logic is hosted by the {@see ContainerInstance} class.
+ * The main service logic is hosted by the {@link ContainerInstance} class.
  */
 import { ServiceOptions } from '../interfaces/service-options.interface';
 import { Constructable } from '../types/constructable.type';
@@ -23,6 +23,20 @@ import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.e
  * Marks class as a service that can be injected using Container.
  * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
  * By default, the service shall be registered upon the `defaultContainer` container.
+ * 
+ * @remarks
+ * **This ia a TypeScript decorator.**
+ * 
+ * @example
+ * ```ts
+ * @Service([ ])
+ * class OtherService { }
+ * 
+ * @Service([OtherService])
+ * class MyService {
+ *   constructor (private otherService: OtherService) { }
+ * }
+ * ```
  *
  * @param dependencies The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
@@ -37,12 +51,30 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
+ * @remarks
+ * **This ia a TypeScript decorator.**
+ * 
+ * @example
+ * ```ts
+ * const OTHER_SERVICE = new Token<OtherService>();
+ * 
+ * @Service({ id: OTHER_SERVICE }, [ ])
+ * class OtherService { }
+ * 
+ * @Service([OTHER_SERVICE])
+ * class MyService {
+ *   constructor (private otherService: OtherService) { }
+ * }
+ * ```
+ * 
  * @param options The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  *
  * @param dependencies The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
+ * 
+ * @see {@link ServiceOptions}
  *
  * @returns A decorator which is then used upon a class.
  */
@@ -56,6 +88,22 @@ export function Service<T = unknown>(
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
+ * @remarks
+ * **This ia a TypeScript decorator.**
+ * 
+ * @example
+ * ```ts
+ * const OTHER_SERVICE = new Token<OtherService>();
+ * 
+ * @Service({ id: OTHER_SERVICE, dependencies: [ ] })
+ * class OtherService { }
+ * 
+ * @Service({ dependencies: [OtherService] })
+ * class MyService {
+ *   constructor (private otherService: OtherService) { }
+ * }
+ * ```
+ * 
  * @param options The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  * The options must also contain the dependencies that the service requires.
