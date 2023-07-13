@@ -6,7 +6,7 @@ import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 export interface ServiceDependencyOptions {
   /**
    * The mode of the dependency.
-   * This is set with the use of the bit-flag helpers, such as {@see Optional}.
+   * This is set with the use of the bit-flag helpers, such as {@link Optional}.
    *
    * @example
    * An example of this option can be seen below:
@@ -17,6 +17,12 @@ export interface ServiceDependencyOptions {
    * ])
    * export class RootService { }
    * ```
+   * 
+   * @see {@link Optional}
+   * @see {@link Many}
+   * @see {@link SkipSelf}
+   * @see {@link Self}
+   * @see {@link ResolutionConstraintFlag}
    */
   mode?: number;
 }
