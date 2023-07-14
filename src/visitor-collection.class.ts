@@ -2,7 +2,6 @@ import { ContainerInstance, defaultContainer } from './container-instance.class'
 import { ServiceMetadata } from './interfaces/service-metadata.interface';
 import { ContainerTreeVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface';
 import { Disposable } from './types/disposable.type';
-import { PartialPick } from './types/helper-types.type';
 import { ServiceIdentifier } from './types/service-identifier.type';
 
 /**
