@@ -209,6 +209,7 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
     this.disposed = true;
 
     /** Notify all containers of disposal. */
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- who cares??
     this.forEach(visitor => visitor.dispose());
   }
 }
