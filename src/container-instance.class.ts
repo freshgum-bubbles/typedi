@@ -765,14 +765,14 @@ export class ContainerInstance implements Disposable {
        * Test whether the container matches according to the conflict
        * definition given by the caller.
        */
-      const containerMatches = (
-        conflictDefinition === 'allowSameParent' ? container.parent === parent :
-        /**
-         * To shave a few bytes off the output, we emit false here, as that should
-         * always happen if the value is 'rejectAll' (and we've narrowed it to that).
-         */
-        false
-      );
+      const containerMatches =
+        conflictDefinition === 'allowSameParent'
+          ? container.parent === parent
+          : /**
+             * To shave a few bytes off the output, we emit false here, as that should
+             * always happen if the value is 'rejectAll' (and we've narrowed it to that).
+             */
+            false;
 
       if (!containerMatches) {
         /** Note: 'returnExisting' is deliberarely ignored here, as that is the default logic. */

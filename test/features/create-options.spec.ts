@@ -54,8 +54,8 @@ describe('Container creation options', () => {
     const id = getID();
 
     expect(() => {
-        defaultContainer.of(id);
-        ContainerInstance.of(id, null, { conflictDefinition: 'allowSameParent' });
+      defaultContainer.of(id);
+      ContainerInstance.of(id, null, { conflictDefinition: 'allowSameParent' });
     }).toThrow();
   });
 
@@ -63,7 +63,7 @@ describe('Container creation options', () => {
     const id = getID();
 
     expect(() => {
-        defaultContainer.of(id, { onConflict: 'throw' });
+      defaultContainer.of(id, { onConflict: 'throw' });
     }).not.toThrow();
   });
 
@@ -80,9 +80,9 @@ describe('Container creation options', () => {
     const id = getID();
 
     expect(() => {
-        // todo: add more expect()s here
-        ContainerInstance.of(id, null);
-        defaultContainer.ofChild(id, { onConflict: 'returnExisting' });
+      // todo: add more expect()s here
+      ContainerInstance.of(id, null);
+      defaultContainer.ofChild(id, { onConflict: 'returnExisting' });
     }).not.toThrow();
   });
 
@@ -104,22 +104,22 @@ describe('Container creation options', () => {
 
   describe('onFree', () => {
     it('should throw if set to "throw" and a container with the ID does not exist', () => {
-        const id = getID();
-        expect(() => defaultContainer.of(id, { onFree: 'throw' })).toThrow();
+      const id = getID();
+      expect(() => defaultContainer.of(id, { onFree: 'throw' })).toThrow();
     });
 
     it('should return null if set to "null" and a container with the ID does not exist', () => {
-        const id = getID();
-        expect(defaultContainer.of(id, { onFree: 'null' })).toBeNull();
+      const id = getID();
+      expect(defaultContainer.of(id, { onFree: 'null' })).toBeNull();
     });
 
     it('should use default behaviour if set to "returnNew"', () => {
-        const id = getID();
-        const child = defaultContainer.of(id, { onFree: 'returnNew' });
-        
-        expect(child).not.toBeNull();
-        expect(child.id).toStrictEqual(id);
-        expect(child).toBeInstanceOf(ContainerInstance);
+      const id = getID();
+      const child = defaultContainer.of(id, { onFree: 'returnNew' });
+
+      expect(child).not.toBeNull();
+      expect(child.id).toStrictEqual(id);
+      expect(child).toBeInstanceOf(ContainerInstance);
     });
   });
 });

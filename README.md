@@ -2,7 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@typed-inject/injector) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)](https://64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app/) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
-*Elegant Dependency Injection in JavaScript and TypeScript.*
+_Elegant Dependency Injection in JavaScript and TypeScript._
 
 - `Optional`, `SkipSelf`, `Self`, `Many` support; just like Angular!
 - Purely functional injection without any runtime reflection.
@@ -13,28 +13,28 @@
 
 ~~(The only thing it can't do is make coffee.)~~
 
-*Dependency Injection in 23 lines:*
+_Dependency Injection in 23 lines:_
 
 ```ts
 import { Service, Container } from '@typed-inject/injector';
 
 // Make a service that logs a message to the console.
-@Service([ ])
+@Service([])
 class LogService {
-    log (message: string) {
-        console.log(message);
-    }
+  log(message: string) {
+    console.log(message);
+  }
 }
 
 // Then, use our logging service in our root service,
 // which will log "hello world!" to the console.
 @Service([LogService])
 class RootService {
-    // Store the instance of the logger inside the class.
-    constructor (private logger: LogService) { }
-    run () {
-        this.logger.log("hello world!");
-    }
+  // Store the instance of the logger inside the class.
+  constructor(private logger: LogService) {}
+  run() {
+    this.logger.log('hello world!');
+  }
 }
 
 // Now, run our service!
@@ -47,4 +47,3 @@ Container.get(RootService).run();
 ## License
 
 Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbles) & [upstream TypeDI contributors](https://github.com/typestack/typedi/blob/develop/LICENSE).
-

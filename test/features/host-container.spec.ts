@@ -32,7 +32,7 @@ describe('HostContainer', function () {
     });
 
     it('cannot be overriden in a container', () => {
-      expect(() => container.set({ id: HostContainer(), value: 2, dependencies: [ ] })).toThrowError();
+      expect(() => container.set({ id: HostContainer(), value: 2, dependencies: [] })).toThrowError();
       expect(() => container.setValue(HostContainer(), ContainerInstance.defaultContainer)).toThrowError();
     });
 
