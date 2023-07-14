@@ -22,6 +22,8 @@ import { HOST_CONTAINER } from './constants/host-container.const';
 import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface';
 import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
 import { VisitorCollection } from './visitor-collection.class';
+import { CreateContainerOptions } from './interfaces/create-container-options.interface';
+import { CreateContainerResult } from './types/create-container-result.type';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -727,14 +729,18 @@ export class ContainerInstance implements Disposable {
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
    * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  Defaults to the default container.
+   * @param options The options to supplement how the container is created.
+   *
+   * @see {@link CreateContainerOptions}
    *
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
    */
-  public static of(
+  public static of<TOptions extends CreateContainerOptions>(
     containerId: ContainerIdentifier = 'default',
-    parent: ContainerInstance | null = defaultContainer
-  ): ContainerInstance {
+    parent: ContainerInstance | null = defaultContainer,
+    options?: TOptions
+  ): CreateContainerResult<TOptions> {
     if (containerId === 'default') {
       return defaultContainer;
     }
@@ -742,10 +748,52 @@ export class ContainerInstance implements Disposable {
     // todo: test parent= default arg
 
     let container: ContainerInstance;
+    const conflictDefinition = options?.conflictDefinition ?? 'rejectAll';
+
+    /**
+     * If a conflict definition is passed without an accompanying strategy,
+     * we default to `throw`. This makes the API more consistent.
+     */
+    const onConflict = options?.onConflict ?? (options?.conflictDefinition ? 'throw' : 'returnExisting');
+
+    const onFree = options?.onFree ?? 'returnNew';
 
     if (ContainerRegistry.hasContainer(containerId)) {
       container = ContainerRegistry.getContainer(containerId);
+
+      /**
+       * Test whether the container matches according to the conflict
+       * definition given by the caller.
+       */
+      const containerMatches = (
+        conflictDefinition === 'allowSameParent' ? container.parent === parent :
+        /**
+         * To shave a few bytes off the output, we emit false here, as that should
+         * always happen if the value is 'rejectAll' (and we've narrowed it to that).
+         */
+        false
+      );
+
+      if (!containerMatches) {
+        /** Note: 'returnExisting' is deliberarely ignored here, as that is the default logic. */
+        if (onConflict === 'null') {
+          /**
+           * The cast here is correct.
+           * TypeScript isn't smart enough to understand that, if 'onConflict' is 'null'
+           * and the container already exists, we're allowed to return null to the caller.
+           */
+          return null as unknown as ContainerInstance;
+        } else if (onConflict === 'throw') {
+          throw new Error(`A container with the specified name ("${String(containerId)}") already exists.`);
+        }
+      }
     } else {
+      if (onFree === 'null') {
+        /** As above: The cast here is correct. */
+        return null as unknown as ContainerInstance;
+      } else if (onFree === 'throw') {
+        throw new Error(`A container with the specified name ("${String(containerId)}) does not already exist.`);
+      }
       /**
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
        * This will be reworked when container inheritance is reworked.
@@ -784,13 +832,14 @@ export class ContainerInstance implements Disposable {
    * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
    * if one already exists.
    */
-  public of(containerId?: ContainerIdentifier): ContainerInstance {
+  public of<TOptions extends CreateContainerOptions>(
+    containerId?: ContainerIdentifier,
+    options?: TOptions
+  ): CreateContainerResult<TOptions> {
     // Todo: make this get the constructor at runtime to aid
     // extension of the class.
-    const newContainer = ContainerInstance.of(containerId);
-
     /** _Note: The visitor API is not called here, as that is handled in the static method._ */
-    return newContainer;
+    return ContainerInstance.of(containerId, defaultContainer, options);
   }
 
   /**
@@ -804,11 +853,17 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public ofChild(containerId?: ContainerIdentifier) {
+  public ofChild<TOptions extends CreateContainerOptions>(
+    containerId?: ContainerIdentifier,
+    options?: TOptions
+  ): CreateContainerResult<TOptions> {
     this[THROW_IF_DISPOSED]();
 
-    const newContainer = ContainerInstance.of(containerId, this);
-    this.visitor.visitChildContainer(newContainer);
+    const newContainer = ContainerInstance.of(containerId, this, options);
+
+    if (newContainer) {
+      this.visitor.visitChildContainer(newContainer);
+    }
 
     return newContainer;
   }
