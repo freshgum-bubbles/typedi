@@ -5,7 +5,7 @@ import { Token } from './token.class';
 import { Constructable } from './types/constructable.type';
 import { ServiceIdentifier } from './types/service-identifier.type';
 import { ServiceMetadata } from './interfaces/service-metadata.interface';
-import { ServiceOptions } from './interfaces/service-options.interface';
+import { ServiceOptions, ServiceOptionsWithDependencies } from './interfaces/service-options.interface';
 import { EMPTY_VALUE } from './constants/empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { ContainerScope } from './types/container-scope.type';
@@ -591,9 +591,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public set<T = unknown>(
-    serviceOptions: ServiceOptions<T> & { dependencies: AnyServiceDependency[] }
-  ): ServiceIdentifier;
+  public set<T = unknown>(serviceOptions: ServiceOptionsWithDependencies<T>): ServiceIdentifier;
   public set<T = unknown>(
     serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>,
     precompiledDependencies?: Resolvable[]
