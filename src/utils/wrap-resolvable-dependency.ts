@@ -15,7 +15,7 @@ export function wrapDependencyAsResolvable(dependency: AnyServiceDependency): Re
     /** Perform some very basic sanity checking on the pair. */
     if (id == null || options == null) {
       // TODO: make this more descriptive
-      throw new Error('The dependency pair was not instantiated correctly.');
+      throw Error('The dependency pair was not instantiated correctly.');
     }
 
     if (typeof options === 'number') {
