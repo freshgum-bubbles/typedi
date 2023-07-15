@@ -7,6 +7,7 @@ import { AnyServiceDependency } from './service-dependency.interface';
  */
 export type ServiceOptions<T = unknown> = (
   | (
+    // THISISFINE: use type-fest RequireAtLeastOne
       | Omit<Partial<ServiceMetadata<T>>, 'type' | 'factory'>
       | Omit<Partial<ServiceMetadata<T>>, 'value' | 'factory'>
       | Omit<Partial<ServiceMetadata<T>>, 'value' | 'type'>

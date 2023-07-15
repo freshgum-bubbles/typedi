@@ -16,7 +16,6 @@ import { BUILT_INS } from '../constants/builtins.const';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
-import { throwError } from '../utils/throw-error.util';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error';
 
 /**
@@ -130,7 +129,7 @@ export function Service<T>(
   return targetConstructor => {
     if (optionsOrDependencies == null || targetConstructor == null) {
       // todo: more info in these error messages!!!
-      throwError(new Error('The required configuration was not passed.'));
+      throw Error('The required configuration was not passed.');
     }
 
     /** A list of dependencies resolved from the arguments provided to the function. */
@@ -154,7 +153,7 @@ export function Service<T>(
 
     if (!resolvedDependencies) {
       /** At this point we have exhausted all options, so throw. */
-      throwError(new Error('The dependencies provided were not able to be resolved.'));
+      throw Error('The dependencies provided were not able to be resolved.');
     }
 
     const wrappedDependencies = resolvedDependencies.map(wrapDependencyAsResolvable);
@@ -189,10 +188,8 @@ export function Service<T>(
      * This is most likely user error, as the function should __never__ be called twice.
      */
     if (container.has(id) && !metadata.multiple) {
-      throwError(
-        new Error(
+      throw Error(
           `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
-        )
       );
     }
 
@@ -207,17 +204,15 @@ export function Service<T>(
         const type = typeof typeWrapper;
 
         if (type !== 'function' && type !== 'object' && type !== 'string') {
-          throwError(
-            new CannotInstantiateValueError(
+          throw new CannotInstantiateValueError(
               `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
-            )
-          );
+            );
         } else if (metadata.factory == null && (BUILT_INS as unknown[]).includes(eagerType)) {
           /**
            * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
            * without also holding a factory to manually create an instance of the constructor.
            */
-          throwError(new CannotInstantiateBuiltInError((eagerType as Constructable<unknown>)?.name ?? eagerType));
+          throw new CannotInstantiateBuiltInError((eagerType as Constructable<unknown>)?.name ?? eagerType);
         }
       }
     });
