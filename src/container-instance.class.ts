@@ -1211,10 +1211,11 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Check if the given service is able to be destroyed and, if so, destroys it in-place.
+   * @deprecated
    * 
    * @remarks
    * If the service contains a method named `destroy`, it is called.
-   * However, its value is ignored.
+   * However, the value it returns is ignored.
    *
    * @param serviceMetadata the service metadata containing the instance to destroy
    * @param force when true the service will be always destroyed even if it's cannot be re-created
