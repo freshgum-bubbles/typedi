@@ -184,10 +184,10 @@ export class ContainerInstance implements Disposable {
    *
    * @param identifier The identifier of the service to look up.
    *
-   * @returns A ServiceIdentifierLocation.
-   *  - If the identifier cannot be found, `ServiceIdentifierLocation.None`.
-   *  - If the identifier is found locally, `ServiceIdentifierLocation.Local`.
-   *  - If the identifier is found upstream, `ServiceIdentifierLocation.Parent.`
+   * @returns A {@link ServiceIdentifierLocation}.
+   *  - If the identifier cannot be found, {@link ServiceIdentifierLocation.None | None}.
+   *  - If the identifier is found locally, {@link ServiceIdentifierLocation.Local | Local}.
+   *  - If the identifier is found upstream, {@link ServiceIdentifierLocation.Parent | Parent}.
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
