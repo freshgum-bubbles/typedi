@@ -289,8 +289,6 @@ export class ContainerInstance implements Disposable {
    * Retrieves the service with given name or type from the service container.
    * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
    *
-   * To preserve compatibility with TypeDI, recursive is set to false by default.
-   *
    * @param identifier The identifier to get the value of.
    *
    * @returns The resolved value for the given metadata, or `null` if it could not be found.
