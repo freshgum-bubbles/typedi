@@ -13,7 +13,6 @@
     "removeComments": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": true,
     "strictNullChecks": true,
