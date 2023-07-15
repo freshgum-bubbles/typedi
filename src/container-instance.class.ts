@@ -71,8 +71,19 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
 ];
 
 /**
- * TypeDI can have multiple containers.
- * One container is ContainerInstance.
+ * An instance of a TypeDI container.
+ * 
+ * A container allows you to get, set, and modify dependencies in-place.
+ * You can also attach individual services to a container, using them
+ * to store services for later execution.
+ * 
+ * @example
+ * ```ts
+ * const container = defaultContainer.ofChild('my-new-container');
+ * 
+ * @Service({ container })
+ * class MyService { }
+ * ```
  */
 export class ContainerInstance implements Disposable {
   /** The ID of this container. This will always be unique. */
