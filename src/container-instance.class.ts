@@ -885,7 +885,7 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
-   * Gets a separate container instance for the given instance id.}
+   * Gets a separate container instance for the given instance id.
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
    *
