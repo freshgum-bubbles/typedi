@@ -20,6 +20,8 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  *   console.log('The dependency is optional.');
  * }
  * ```
+ * 
+ * @group Resolution Constraints
  *
  * @see {@link ResolutionConstraintFlag}
  *
@@ -51,6 +53,8 @@ export function Optional() {
  *   console.log('The dependency will not be resolved recursively.');
  * }
  * ```
+ * 
+ * @group Resolution Constraints
  *
  * @see {@link ResolutionConstraintFlag}
  *
