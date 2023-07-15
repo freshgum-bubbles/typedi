@@ -1,4 +1,5 @@
 import { ContainerInstance } from '../container-instance.class';
+import { HostContainer } from '../functions/host-container.function';
 import { Token } from '../token.class';
 
 /**
