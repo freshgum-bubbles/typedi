@@ -17,7 +17,7 @@ export interface ServiceDependencyOptions {
    * ])
    * export class RootService { }
    * ```
-   * 
+   *
    * @see {@link Optional}
    * @see {@link Many}
    * @see {@link SkipSelf}

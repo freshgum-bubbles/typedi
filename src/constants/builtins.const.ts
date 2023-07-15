@@ -1,7 +1,7 @@
 /**
  * A list of functions representing built-in types.
  * @ignore @internal
- * 
+ *
  * @privateRemarks
  * When these are used as dependencies for a service which does not
  * have a corresponding factory, TypeDI will throw an error.

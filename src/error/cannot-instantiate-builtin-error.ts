@@ -2,7 +2,7 @@ import { CannotInstantiateValueError } from './cannot-instantiate-value.error';
 
 /**
  * Thrown when DI encounters a service depending on a built-in type (Number, String) with no factory.
- * 
+ *
  * @group Errors
  */
 export class CannotInstantiateBuiltInError extends CannotInstantiateValueError {
