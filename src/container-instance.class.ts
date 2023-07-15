@@ -1280,6 +1280,8 @@ export class ContainerInstance implements Disposable {
  * as we are referencing a static variable instead of continuously
  * looking up a property.
  */
+null;
+
 export const { defaultContainer } = ContainerInstance;
 
 /**
