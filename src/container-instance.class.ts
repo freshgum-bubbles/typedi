@@ -719,6 +719,20 @@ export class ContainerInstance implements Disposable {
    *
    * @param identifierOrIdentifierArray The list of service identifiers to remove from the container.
    *
+   * @example
+   * Here's an example:
+   * ```ts
+   * const NAME = new Token<string>();
+   * 
+   * // Set a new identifier in the container:
+   * defaultContainer.setValue(NAME, 'Joanna');
+   * assert(defaultContainer.get(NAME) === 'Joanna');
+   * 
+   * // Now remove it, making the container forget it ever existed:
+   * defaultContainer.remove(NAME);
+   * assert(defaultContainer.getOrNull(NAME) === null);
+   * ```
+   * 
    * @returns The current `ContainerInstance` instance.
    *
    * @throws Error
