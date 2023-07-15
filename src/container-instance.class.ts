@@ -244,7 +244,7 @@ export class ContainerInstance implements Disposable {
    * If the identifier is found, a tuple is returned consisting of the following:
    *   1. The metadata for the given identifier, if found.
    *   2. The location from where the metadata was returned.
-   *   `ServiceIdentifierLocation.Parent` is returned if the identifier was found upstream.
+   *   {@link ServiceIdentifierLocation.Parent} is returned if the identifier was found upstream.
    *
    * If an identifier cannot be found, `null` is returned.
    *
@@ -488,6 +488,8 @@ export class ContainerInstance implements Disposable {
    * Used when service defined with multiple: true flag.
    *
    * @param identifier The identifier to resolve.
+   * 
+   * @see {@link ContainerInstance.getMany}
    *
    * @returns An array containing the service instances for the given identifier.
    * If none can be found, `null` is returned.
@@ -559,10 +561,10 @@ export class ContainerInstance implements Disposable {
    * _This is mainly for internal use._
    *
    * @param serviceOptions The options for the service to add to the container.
-   * @param precompiledDependencies A precompiled list of dependencies in `TypeWrapper` form for the given service.
+   * @param precompiledDependencies A precompiled list of dependencies in {@link TypeWrapper} form for the given service.
    *
    * @returns The identifier of the given service in the container.
-   * This can then be passed to `.get` to resolve the identifier.
+   * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
@@ -579,7 +581,7 @@ export class ContainerInstance implements Disposable {
    * @param serviceOptions The options for the service to add to the container.
    *
    * @returns The identifier of the given service in the container.
-   * This can then be passed to `.get` to resolve the identifier.
+   * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
@@ -715,7 +717,7 @@ export class ContainerInstance implements Disposable {
    * @param value The value to set the ID to.
    *
    * @returns The identifier of the given service in the container.
-   * This can then be passed to `.get` to resolve the identifier.
+   * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
    */
   public setValue<
     TServiceID extends string | Token<TValue>,
@@ -747,7 +749,7 @@ export class ContainerInstance implements Disposable {
    * assert(defaultContainer.getOrNull(NAME) === null);
    * ```
    * 
-   * @returns The current `ContainerInstance` instance.
+   * @returns The current {@link ContainerInstance} instance.
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
@@ -788,12 +790,13 @@ export class ContainerInstance implements Disposable {
    * ```
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  Defaults to the default container.
+   * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  
+   * Defaults to the default container.
    * @param options The options to supplement how the container is created.
    *
    * @see {@link CreateContainerOptions}
    *
-   * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
+   * @returns The newly-created {@link ContainerInstance}, or the pre-existing container with the same name
    * if one already exists.
    */
   public static of<TOptions extends CreateContainerOptions>(
@@ -889,8 +892,8 @@ export class ContainerInstance implements Disposable {
    * class MyService {}
    * ```
    *
-   * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
-   * if one already exists.
+   * @returns The newly-created {@link ContainerInstance}, or the pre-existing container 
+   * with the same name if one already exists.
    */
   public of<TOptions extends CreateContainerOptions>(
     containerId?: ContainerIdentifier,
@@ -907,8 +910,8 @@ export class ContainerInstance implements Disposable {
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
    *
-   * @returns The newly-created ContainerInstance, or the pre-existing container with the same name
-   * if one already exists.
+   * @returns The newly-created {@link ContainerInstance}, or the pre-existing container
+   * with the same name if one already exists.
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
@@ -1005,10 +1008,12 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
-   * Gets the value belonging to passed in `ServiceMetadata` instance.
+   * Gets the value belonging to passed in {@link ServiceMetadata} instance.
    *
-   * - if `serviceMetadata.value` is already set it is immediately returned
-   * - otherwise the requested type is resolved to the value saved to `serviceMetadata.value` and returned
+   * @remarks
+   * - If {@link ServiceMetadata.value | serviceMetadata.value} is present, it is immediately returned.
+   * - Alternatively, the requested type is resolved to the appropriate value,
+   * which is then saved to {@link ServiceMetadata.value | serviceMetadata.value} and returned.
    */
   private getServiceValue(serviceMetadata: ServiceMetadata<unknown>): any {
     let value: unknown = EMPTY_VALUE;
@@ -1093,9 +1098,9 @@ export class ContainerInstance implements Disposable {
   }
 
   /**
-   * Resolve a `Resolvable` object in the current container.
+   * Resolve a {@link Resolvable} object in the current container.
    *
-   * @param resolvable The resolvable to resolve.
+   * @param resolvable The {@link Resolvable} to resolve.
    *
    * @returns The resolved value of the item.
    */
@@ -1234,6 +1239,8 @@ export class ContainerInstance implements Disposable {
    * @experimental
    *
    * @param visitor The visitor to add to this container.
+   * 
+   * @see {@link ContainerTreeVisitor}
    *
    * @returns Whether the operation was successful.
    */
@@ -1247,6 +1254,9 @@ export class ContainerInstance implements Disposable {
    * @experimental
    *
    * @param visitor The visitor to remove from the container.
+   * 
+   * @see {@link ContainerTreeVisitor}
+   * 
    * @returns Whether the operation was successful.
    */
   public detachTreeVisitor(visitor: ContainerTreeVisitor) {
