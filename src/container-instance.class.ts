@@ -603,7 +603,7 @@ export class ContainerInstance implements Disposable {
      * If so, we can't reasonably allow this service to be set.
      */
     if (ALWAYS_RESOLVABLE.includes((serviceOptions as any).id as ServiceIdentifier)) {
-      throw new Error('Virtual identifiers can not be overriden.');
+      throw Error('Virtual identifiers can not be overriden.');
     }
 
     /**
@@ -849,7 +849,7 @@ export class ContainerInstance implements Disposable {
            */
           return null as unknown as ContainerInstance;
         } else if (onConflict === 'throw') {
-          throw new Error(`A container with the specified name ("${String(containerId)}") already exists.`);
+          throw Error(`A container with the specified name ("${String(containerId)}") already exists.`);
         }
       }
     } else {
@@ -857,7 +857,7 @@ export class ContainerInstance implements Disposable {
         /** As above: The cast here is correct. */
         return null as unknown as ContainerInstance;
       } else if (onFree === 'throw') {
-        throw new Error(`A container with the specified name ("${String(containerId)}) does not already exist.`);
+        throw Error(`A container with the specified name ("${String(containerId)}) does not already exist.`);
       }
       /**
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
