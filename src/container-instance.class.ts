@@ -485,6 +485,13 @@ export class ContainerInstance implements Disposable {
    * Gets all instances registered in the container of the given service identifier.
    * Used when service are defined with the `{ multiple: true }` option.
    *
+   * @example
+   * Here's an example:
+   * ```ts
+   * assert(container.getManyOrNull(UNKNOWN_TOKEN) === null);
+   * assert(Array.isArray(container.getManyOrNull(KNOWN_TOKEN)));
+   * ```
+   * 
    * @param identifier The identifier to resolve.
    * 
    * @see {@link ContainerInstance.getMany}
