@@ -17,7 +17,6 @@ import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const';
 import { Resolvable } from './interfaces/resolvable.interface';
 import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency';
 import { ResolutionConstraintFlag } from './types/resolution-constraint.type';
-import { AnyServiceDependency } from './interfaces/service-dependency.interface';
 import { HOST_CONTAINER } from './constants/host-container.const';
 import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface';
 import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
@@ -72,15 +71,15 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
 
 /**
  * An instance of a TypeDI container.
- * 
+ *
  * A container allows you to get, set, and modify dependencies in-place.
  * You can also attach individual services to a container, using them
  * to store services for later execution.
- * 
+ *
  * @example
  * ```ts
  * const container = defaultContainer.ofChild('my-new-container');
- * 
+ *
  * @Service({ container })
  * class MyService { }
  * ```
@@ -117,7 +116,7 @@ export class ContainerInstance implements Disposable {
    * These are conjoined into a container of individual visitors,
    * which implements the standard ContainerTreeVisitor interface,
    * and individual listeners can be added and removed at will.
-   * 
+   *
    * @see {@link ContainerTreeVisitor}
    * @see {@link VisitorCollection}
    */
@@ -450,13 +449,13 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets all instances registered in the container of the given service identifier.
    * Used when service are defined with the `{ multiple: true }` option.
-   * 
+   *
    * @example
    * ```ts
    * Container.set({ id: 'key', value: 1, dependencies: [ ], multiple: true });
    * Container.set({ id: 'key', value: 2, dependencies: [ ], multiple: true });
    * Container.set({ id: 'key', value: 3, dependencies: [ ], multiple: true });
-   * 
+   *
    * const [one, two, three] = Container.getMany('key');
    * ```
    *
@@ -491,9 +490,9 @@ export class ContainerInstance implements Disposable {
    * assert(container.getManyOrNull(UNKNOWN_TOKEN) === null);
    * assert(Array.isArray(container.getManyOrNull(KNOWN_TOKEN)));
    * ```
-   * 
+   *
    * @param identifier The identifier to resolve.
-   * 
+   *
    * @see {@link ContainerInstance.getMany}
    *
    * @returns An array containing the service instances for the given identifier.
@@ -705,7 +704,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Add a value to the container.
-   * 
+   *
    * @example
    * ```ts
    * // We can simplify this:
@@ -742,16 +741,16 @@ export class ContainerInstance implements Disposable {
    * Here's an example:
    * ```ts
    * const NAME = new Token<string>();
-   * 
+   *
    * // Set a new identifier in the container:
    * defaultContainer.setValue(NAME, 'Joanna');
    * assert(defaultContainer.get(NAME) === 'Joanna');
-   * 
+   *
    * // Now remove it, making the container forget it ever existed:
    * defaultContainer.remove(NAME);
    * assert(defaultContainer.getOrNull(NAME) === null);
    * ```
-   * 
+   *
    * @returns The current {@link ContainerInstance} instance.
    *
    * @throws Error
@@ -776,24 +775,24 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets a separate container instance for the given instance id.
    * Optionally, a parent can be passed, which will act as an upstream resolver for the container.
-   * 
+   *
    * @remarks This is functionally equivalent to {@link ContainerInstance.of}.
    * However, it allows container creation from a static interface.
-   * 
+   *
    * @example
    * ```ts
    * // Create a container which has the default container as its parent:
    * ContainerInstance.of('my-new-container');
-   * 
+   *
    * // Create a container without a parent:
    * ContainerInstance.of('my-new-container-without-a-parent', null);
-   * 
+   *
    * // Create a container with a separate container:
    * ContainerInstance.of('my-new-special-container', myOtherContainer);
    * ```
    *
    * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * @param parent The parent of the container, or null to explicitly signal that one should not be provided.  
+   * @param parent The parent of the container, or null to explicitly signal that one should not be provided.
    * Defaults to the default container.
    * @param options The options to supplement how the container is created.
    *
@@ -895,7 +894,7 @@ export class ContainerInstance implements Disposable {
    * class MyService {}
    * ```
    *
-   * @returns The newly-created {@link ContainerInstance}, or the pre-existing container 
+   * @returns The newly-created {@link ContainerInstance}, or the pre-existing container
    * with the same name if one already exists.
    */
   public of<TOptions extends CreateContainerOptions>(
@@ -964,7 +963,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Dispose the container, rendering it unable to perform any further injection or storage.
-   * 
+   *
    * @remarks
    * It is currently not advised to dispose of the default container.
    * This would result in resolution issues in your application.
@@ -1210,7 +1209,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Check if the given service is able to be destroyed and, if so, destroys it in-place.
    * @deprecated
-   * 
+   *
    * @remarks
    * If the service contains a method named `destroy`, it is called.
    * However, the value it returns is ignored.
@@ -1243,7 +1242,7 @@ export class ContainerInstance implements Disposable {
    * @experimental
    *
    * @param visitor The visitor to add to this container.
-   * 
+   *
    * @see {@link ContainerTreeVisitor}
    *
    * @returns Whether the operation was successful.
@@ -1258,9 +1257,9 @@ export class ContainerInstance implements Disposable {
    * @experimental
    *
    * @param visitor The visitor to remove from the container.
-   * 
+   *
    * @see {@link ContainerTreeVisitor}
-   * 
+   *
    * @returns Whether the operation was successful.
    */
   public detachTreeVisitor(visitor: ContainerTreeVisitor) {

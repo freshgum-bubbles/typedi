@@ -5,7 +5,7 @@ import { ServiceMetadata } from './service-metadata.interface';
 
 /**
  * A collection of options passed to {@link ContainerTreeVisitor.visitRetrieval}.
- * 
+ *
  * @group Tree Visitors
  */
 export interface VisitRetrievalOptions {

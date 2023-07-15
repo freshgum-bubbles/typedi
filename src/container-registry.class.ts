@@ -25,7 +25,7 @@ export class ContainerRegistry {
    * it doesn't need to be called manually!_
    *
    * @param container the container to add to the registry
-   * 
+   *
    * @throws ContainerRegistryError
    * This exception is thrown in the following scenarios:
    *   - If the item being registered is not a container.
@@ -47,8 +47,8 @@ export class ContainerRegistry {
    * Returns true if a container exists with the given ID or false otherwise.
    *
    * @param container the ID of the container
-   * 
-   * @returns Whether a container with the specified ID could be 
+   *
+   * @returns Whether a container with the specified ID could be
    * found in the registry.
    */
   public static hasContainer(id: ContainerIdentifier): boolean {
@@ -60,7 +60,7 @@ export class ContainerRegistry {
    * is registered with the given ID.
    *
    * @param container the ID of the container
-   * 
+   *
    * @throws ContainerRegistryError
    * This exception is thrown when a container with
    * the given ID does not exist in the registry.
@@ -84,13 +84,13 @@ export class ContainerRegistry {
    *   - any of the registered services threw an error during it's disposal
    *
    * @param container the container to remove from the registry
-   * 
+   *
    * @throws ContainerRegistryError
-   * This exception is thrown when a container with 
+   * This exception is thrown when a container with
    * the specified ID does not exist in the registry.
-   * 
+   *
    * @throws Error
-   * 
+   *
    */
   public static async removeContainer(container: ContainerInstance): Promise<void> {
     const registeredContainer = ContainerRegistry.containerMap.get(container.id);
