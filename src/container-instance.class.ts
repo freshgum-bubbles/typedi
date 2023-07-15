@@ -24,7 +24,6 @@ import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
 import { VisitorCollection } from './visitor-collection.class';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface';
 import { CreateContainerResult } from './types/create-container-result.type';
-import { throwError } from './utils/throw-error.util';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -215,7 +214,7 @@ export class ContainerInstance implements Disposable {
     const response = this.getOrNull<T>(identifier, recursive);
 
     if (response === null) {
-      throwError(new ServiceNotFoundError(identifier));
+      throw new ServiceNotFoundError(identifier);
     }
 
     return response as T;
@@ -425,7 +424,7 @@ export class ContainerInstance implements Disposable {
     /** This should never happen as multi services are masked with custom token in Container.set. */
     if (metadata && metadata.multiple === true) {
       /* istanbul ignore next */
-      throwError(new Error(`Cannot resolve multiple values for ${identifier.toString()} service!`));
+      throw Error(`Cannot resolve multiple values for ${identifier.toString()} service!`);
     }
 
     /** Otherwise it's returned from the current / parent container. */
@@ -464,7 +463,7 @@ export class ContainerInstance implements Disposable {
     const response = this.getManyOrNull(identifier, recursive);
 
     if (response === null) {
-      throwError(new ServiceNotFoundError(identifier));
+      throw new ServiceNotFoundError(identifier);
     }
 
     return response;
@@ -709,7 +708,7 @@ export class ContainerInstance implements Disposable {
     TValue extends TServiceID extends Token<infer U> ? U : unknown
   >(id: TServiceID, value: TValue) {
     if (typeof id !== 'string' && !(id instanceof Token)) {
-      throwError(new Error('The ID passed to setValue must either be a string or a Token.'));
+      throw Error('The ID passed to setValue must either be a string or a Token.');
     }
 
     return this.set({ id, value }, []);
@@ -924,7 +923,7 @@ export class ContainerInstance implements Disposable {
         this.multiServiceIds.clear();
         break;
       default:
-        throwError(new Error('Received invalid reset strategy.'));
+        throw Error('Received invalid reset strategy.');
     }
     return this;
   }
@@ -973,7 +972,7 @@ export class ContainerInstance implements Disposable {
   private throwIfDisposed() {
     if (this.disposed) {
       // TODO: Use custom error.
-      throwError(new Error('Cannot use container after it has been disposed.'));
+      throw Error('Cannot use container after it has been disposed.');
     }
   }
 
@@ -1002,7 +1001,7 @@ export class ContainerInstance implements Disposable {
 
     /** If both factory and type is missing, we cannot resolve the requested ID. */
     if (!factoryMeta && !serviceMetadata.type) {
-      throwError(new CannotInstantiateValueError(serviceMetadata.id));
+      throw new CannotInstantiateValueError(serviceMetadata.id);
     }
 
     /**
@@ -1042,7 +1041,7 @@ export class ContainerInstance implements Disposable {
 
     if (value === EMPTY_VALUE) {
       /** This branch should never execute, but better to be safe than sorry. */
-      throwError(new CannotInstantiateValueError(serviceMetadata.id));
+      throw new CannotInstantiateValueError(serviceMetadata.id);
     }
 
     return value;
@@ -1095,12 +1094,12 @@ export class ContainerInstance implements Disposable {
 
       /** SkipSelf() and Self() are incompatible. */
       if (isSkipSelf && isSelf) {
-        throwError(new Error('SkipSelf() and Self() cannot be used at the same time.'));
+        throw Error('SkipSelf() and Self() cannot be used at the same time.');
       }
 
       /** If SkipSelf is declared, make sure we actually *have* a parent. */
       if (isSkipSelf && !this.parent) {
-        throwError(new Error(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`));
+        throw Error(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`);
       }
 
       /**
@@ -1127,7 +1126,7 @@ export class ContainerInstance implements Disposable {
           return null;
         }
 
-        throwError(new ServiceNotFoundError(identifier));
+        throw new ServiceNotFoundError(identifier);
       }
 
       if (isMany) {
@@ -1157,11 +1156,11 @@ export class ContainerInstance implements Disposable {
     const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
 
     if (resolved == null) {
-      throwError(new Error(`The wrapped value could not be resolved.`));
+      throw Error(`The wrapped value could not be resolved.`);
     }
 
     if (guardBuiltIns && (BUILT_INS as unknown[]).includes(resolved)) {
-      throwError(new CannotInstantiateBuiltInError((resolved as Constructable<unknown>)?.name ?? resolved));
+      throw new CannotInstantiateBuiltInError((resolved as Constructable<unknown>)?.name ?? resolved);
     }
 
     /**
