@@ -1,6 +1,11 @@
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
-import { ServiceOptions } from '../interfaces/service-options.interface';
+import {
+  ServiceOptions,
+  ServiceOptionsWithDependencies,
+  ServiceOptionsWithoutDependencies,
+} from '../interfaces/service-options.interface';
 import { AnyConstructable } from '../types/any-constructable.type';
+import { Constructable } from '../types/constructable.type';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { Service } from './service.decorator';
 
@@ -66,7 +71,7 @@ export function JSService<T extends AnyConstructable>(
   constructor: T
 ): T;
 
-export function JSService<T extends AnyConstructable>(
+export function JSService<T extends Constructable<unknown>>(
   optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   dependenciesOrConstructor: AnyInjectIdentifier[] | T,
   maybeConstructor?: T
@@ -76,10 +81,10 @@ export function JSService<T extends AnyConstructable>(
   if (typeof dependenciesOrConstructor === 'function') {
     // eslint-disable-next-line
     constructor = dependenciesOrConstructor as T;
-    Service(optionsOrDependencies as ServiceOptions<T> & { dependencies: AnyInjectIdentifier[] })(constructor);
+    Service(optionsOrDependencies as ServiceOptionsWithDependencies<T>)(constructor);
   } else if (maybeConstructor) {
     constructor = maybeConstructor;
-    Service(optionsOrDependencies, dependenciesOrConstructor)(constructor);
+    Service(optionsOrDependencies as ServiceOptionsWithoutDependencies<T>, dependenciesOrConstructor)(constructor);
   }
 
   if (!constructor) {
