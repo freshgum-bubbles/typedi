@@ -2,6 +2,9 @@
   "name": "@typed-inject/injector",
   "version": "0.3.22-beta.2",
   "description": "Elegant Dependency Injection in JavaScript and TypeScript.",
+  "maintainers": [
+    "freshgum"
+  ],
   "author": "freshgum",
   "license": "MIT",
   "private": false,
