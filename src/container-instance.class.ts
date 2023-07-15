@@ -449,7 +449,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Gets all instances registered in the container of the given service identifier.
-   * Used when service defined with multiple: true flag.
+   * Used when service are defined with the `{ multiple: true }` option.
    * 
    * @example
    * ```ts
@@ -483,7 +483,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Gets all instances registered in the container of the given service identifier.
-   * Used when service defined with multiple: true flag.
+   * Used when service are defined with the `{ multiple: true }` option.
    *
    * @param identifier The identifier to resolve.
    * 
