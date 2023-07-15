@@ -42,6 +42,8 @@ import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.e
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
+ * @group Decorators
+ * 
  * @returns A decorator which is then used upon a class.
  */
 export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
@@ -75,6 +77,8 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * They must be valid identifiers in the container the service shall be executed under.
  * 
  * @see {@link ServiceOptions}
+ * 
+ * @group Decorators
  *
  * @returns A decorator which is then used upon a class.
  */
@@ -112,6 +116,8 @@ export function Service<T = unknown>(
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
+ * @group Decorators
+ * 
  * @returns A decorator which is then used upon a class.
  */
 export function Service(

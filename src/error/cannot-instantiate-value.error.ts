@@ -3,6 +3,8 @@ import { Token } from '../token.class';
 
 /**
  * Thrown when DI cannot inject value into property decorated by `@Inject` decorator.
+ * 
+ * @group Errors
  */
 export class CannotInstantiateValueError extends Error {
   public name = 'CannotInstantiateValueError';

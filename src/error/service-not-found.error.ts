@@ -3,6 +3,8 @@ import { Token } from '../token.class';
 
 /**
  * Thrown when requested service was not found.
+ * 
+ * @group Errors
  */
 export class ServiceNotFoundError extends Error {
   public name = 'ServiceNotFoundError';
