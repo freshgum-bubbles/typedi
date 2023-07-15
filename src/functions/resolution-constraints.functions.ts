@@ -22,6 +22,8 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  * ```
  * 
  * @see {@link ResolutionConstraintFlag}
+ * 
+ * @group Resolution Constraints
  *
  * @returns The resolution constraint bit-flag for Optional.
  */
@@ -51,6 +53,8 @@ export function Optional() {
  * ```
  * 
  * @see {@link ResolutionConstraintFlag}
+ * 
+ * @group Resolution Constraints
  *
  * @returns The resolution constraint bit-flag for Self.
  */
@@ -81,6 +85,8 @@ export function Self() {
  *
  * @see {@link ResolutionConstraintFlag}
  * 
+ * @group Resolution Constraints
+ * 
  * @returns The resolution constraint bit-flag for SkipSelf.
  */
 export function SkipSelf() {
@@ -109,6 +115,8 @@ export function SkipSelf() {
  * ```
  *
  * @see {@link ResolutionConstraintFlag}
+ * 
+ * @group Resolution Constraints
  * 
  * @returns The resolution constraint bit-flag for SkipSelf.
  */

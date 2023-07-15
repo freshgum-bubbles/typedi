@@ -25,6 +25,8 @@ import { ServiceIdentifier } from './types/service-identifier.type';
  * // which will be broadcast to all attached visitors.
  * collection.visitChildContainer(Container.ofChild('hello'));
  * ```
+ * 
+ * @group Tree Visitors
  */
 export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor, 'visitContainer'> {
   /** Whether the instance is disposed. */

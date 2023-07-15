@@ -1,6 +1,8 @@
 /**
  * A collection of bit-flags describing resolution constraints to append to a bitmask.
  * @experimental
+ * 
+ * @group Resolution Constraints
  */
 export const enum ResolutionConstraintFlag {
   /** 
@@ -37,6 +39,8 @@ export const enum ResolutionConstraintFlag {
  * A descriptor containing hints on how a certain identifier should be resolved
  * in the context of the container.
  * @experimental
+ * 
+ * @group Resolution Constraints
  */
 export interface ResolutionConstraintsDescriptor {
   /** Do not ascend the container tree to resolve this identifier. */
