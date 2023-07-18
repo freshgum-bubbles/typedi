@@ -26,6 +26,9 @@ dependencies:
   '@typed-inject/injector':
     specifier: ^0.3.21
     version: 0.3.21
+  '@uidotdev/usehooks':
+    specifier: ^2.0.1
+    version: 2.0.1(react-dom@17.0.2)(react@17.0.2)
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
@@ -3239,6 +3242,17 @@ packages:
     resolution: {integrity: sha512-6i0aC7jV6QzQB8ne1joVZ0eSFIstHsCrobmOtghM11yGlH0j43FKL2UhWdELkyps0zuf7qVTUVCCR+tgSlyLLw==}
     dependencies:
       '@types/yargs-parser': 21.0.0
+    dev: false
+
+  /@uidotdev/usehooks@2.0.1(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-rJXxE3Y8g9utRbOS9Pj9tIvrnOdaakHIhLbMxBlErV8HydnGD0DveD82aLBfVTh1hBp5IXqpeHpMrPE9WIT7vQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
     dev: false
 
   /@webassemblyjs/ast@1.11.6:
