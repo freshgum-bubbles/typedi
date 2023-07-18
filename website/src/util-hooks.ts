@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export function useForceRender() {
-  const [tempValue, setTempValue] = useState(null);
+  const [, setTempValue] = useState(null);
 
   function forceRender() {
     setTempValue({});

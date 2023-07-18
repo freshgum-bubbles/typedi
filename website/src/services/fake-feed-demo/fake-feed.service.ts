@@ -11,7 +11,7 @@ export class FeedService extends EventTarget {
 
   addPost(post: string) {
     this.posts.push({ username: this.username, post, id: ++nextPostId });
-    this.dispatchEvent(new CustomEvent('post-added'));
+    this.dispatchEvent(new CustomEvent('post-added') as Event);
   }
 }
 
