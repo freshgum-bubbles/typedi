@@ -122,7 +122,7 @@ export function Service<T extends ServiceWithDependencies<TDependencies>, TDepen
  * @returns A decorator which is then used upon a class.
  */
 export function Service<T extends ServiceWithDependencies<TDependencies>, TDependencies extends AnyServiceDependency[]>(
-  options: ServiceOptions<Constructable<unknown>> & { dependencies: AnyServiceDependency[] }
+  options: ServiceOptionsWithDependencies<Constructable<unknown>>
 ): (type: T) => void;
 
 export function Service<T extends ServiceWithDependencies<TDependencies>, TDependencies extends AnyServiceDependency[]>(
