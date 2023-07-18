@@ -52,3 +52,5 @@ playground.ts
 playground.js
 
 .docusaurus
+website/.docusaurus
+website/static/api-reference/
