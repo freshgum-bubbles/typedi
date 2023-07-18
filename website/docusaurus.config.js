@@ -75,6 +75,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -156,11 +157,6 @@ const config = {
           },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
-      },
-      docs: {
-        sidebar: {
-          autoCollapseCategories: false
-        }
       },
       prism: {
         theme: lightCodeTheme,
