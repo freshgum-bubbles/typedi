@@ -10,7 +10,12 @@ export { Lazy } from './functions/lazy.function';
 export { Many, Optional, Self, SkipSelf } from './functions/resolution-constraints.functions';
 
 export { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface';
-export { ContainerConflictDefinition, ContainerConflictStrategy, ContainerFreeStrategy, CreateContainerOptions } from './interfaces/create-container-options.interface';
+export {
+  ContainerConflictDefinition,
+  ContainerConflictStrategy,
+  ContainerFreeStrategy,
+  CreateContainerOptions,
+} from './interfaces/create-container-options.interface';
 export { ServiceMetadata } from './interfaces/service-metadata.interface';
 export {
   AnyServiceDependency,
