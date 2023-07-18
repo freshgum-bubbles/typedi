@@ -70,6 +70,7 @@
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-angular": "^17.6.6",
     "@rollup/plugin-commonjs": "^25.0.3",
+    "@mxssfd/typedoc-theme": "^1.1.2",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-terser": "^0.4.3",
     "@types/jest": "^29.5.3",

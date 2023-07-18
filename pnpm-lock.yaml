@@ -11,6 +11,9 @@ devDependencies:
   '@commitlint/config-angular':
     specifier: ^17.6.6
     version: 17.6.6
+  '@mxssfd/typedoc-theme':
+    specifier: ^1.1.2
+    version: 1.1.2(typedoc@0.24.8)
   '@rollup/plugin-commonjs':
     specifier: ^25.0.3
     version: 25.0.3(rollup@3.26.3)
@@ -3408,6 +3411,10 @@ packages:
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+    dev: true
+
+  /neo-async@2.6.2:
+    resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
   /node-int64@0.4.0:
