@@ -5,9 +5,10 @@ sidebar_position: 8
 # Eager Services
 
 Ordinarily, services aren't created until either:
-  - They're explicitly called via `Container.get`, or...
-  - A service which *is* called via `Container.get` uses the service as a dependency.
-  
+
+- They're explicitly called via `Container.get`, or...
+- A service which _is_ called via `Container.get` uses the service as a dependency.
+
 Therefore, if you need a way to start a service immediately, TypeDI provides a concept called Eager Services.
 
 :::caution
@@ -28,20 +29,19 @@ To create a service which is immediately run upon declaration, we can do the fol
 ```ts title="src/log.service.ts"
 import { Service } from '@typed-inject/injector';
 
-@Service({ eager: true }, [ ])
+@Service({ eager: true }, [])
 export class LogService {
-    constructor () {
-        this.log("LogService is ready!");
-    }
+  constructor() {
+    this.log('LogService is ready!');
+  }
 
-    public log (message: string) {
-        console.log(message);
-    }
+  public log(message: string) {
+    console.log(message);
+  }
 }
 ```
 
 Then, once `LogService` is imported, its constructor will immediately run and log the message to the console.
-
 
 ## The Dangers of `eager: true`
 
@@ -57,21 +57,21 @@ Consider the following (simplified) example:
 ```ts title="src/database.service.ts"
 import { Service } from '@typed-inject/injector';
 
-@Service({ eager: true }, [ ])
+@Service({ eager: true }, [])
 export class DatabaseService {
-    constructor () {
-        this.connect();
-    }
+  constructor() {
+    this.connect();
+  }
 
-    private connection: Connection;
+  private connection: Connection;
 
-    private async connect () {
-        // Connect to the database here...
-    }
+  private async connect() {
+    // Connect to the database here...
+  }
 
-    public async getValue (name: string): string {
-        return this.connection.getValue(name);
-    }
+  public async getValue(name: string): string {
+    return this.connection.getValue(name);
+  }
 }
 ```
 
@@ -84,21 +84,21 @@ Normally, to stub the database connection, you would do something like this:
 import { Service } from '@typed-inject/injector';
 import { DatabaseService } from '../src/database.service.ts'; // Oops!
 
-@Service({ id: DatabaseService }, [ ])
+@Service({ id: DatabaseService }, [])
 export class FakeDatabaseService implements DatabaseService {
-    private map = new Map<string, unknown>;
+  private map = new Map<string, unknown>();
 
-    private async connect () { }
+  private async connect() {}
 
-    public async getValue (name: string): string {
-        return this.map.get(name);
-    }
+  public async getValue(name: string): string {
+    return this.map.get(name);
+  }
 }
 
 // Test our app...
 ```
 
-Do you see the issue?  We've imported `DatabaseService` to get its ID (to replace with a stub),
+Do you see the issue? We've imported `DatabaseService` to get its ID (to replace with a stub),
 but by doing that, we've created a connection to the database!
 This means that, currently, we can't test the application without also creating a wasted database connection.
 

@@ -49,7 +49,7 @@ XXX
 
 [<sup>**API Reference**</sup>][container-ofchild-api-ref]
 
-The instance `ofChild` method can be used to create a container 
+The instance `ofChild` method can be used to create a container
 which is a child of the current. For example:
 
 ```ts
@@ -68,27 +68,29 @@ assert(newNewContainer.parent === newContainer);
 
 In each of the above methods, an options parameter [of type `CreateContainerOptions`][creation-opts-api-ref] can optionally be provided.
 These options dictate how TypeDI should handle certain situations, such as when...
-  - a container with the ID already exists *(a conflict)*
-  - a container with the ID does not exist *(free)*
+
+- a container with the ID already exists _(a conflict)_
+- a container with the ID does not exist _(free)_
 
 ### Dealing with conflicts
 
 In many situations, you'll want an operation to fail if it means
 it returns a container with the same ID, but with completely different characteristics.
 
-Consider the following *(incorrect)* example:
+Consider the following _(incorrect)_ example:
+
 ```ts
 // Create an orphaned container.
 ContainerInstance.of('my-container', null);
 
-// Create a child of the default container. 
+// Create a child of the default container.
 // highlight-error-comment-start
 Container.ofChild('my-container');
 // highlight-error-comment-end
 ```
 
 As the call to `ofChild` specifies an ID which already exists in the container registry,
-the existing (orphaned) container is returned.  In most cases, this *isn't* what you want.
+the existing (orphaned) container is returned. In most cases, this _isn't_ what you want.
 To remedy this, we can append a list of options to our `ofChild` call to fail if a
 container with the ID already exists.
 
@@ -98,7 +100,7 @@ ContainerInstance.of('my-container', null);
 
 // Create a child of the default container.
 Container.ofChild('my-container', {
-  onConflict: 'throw'
+  onConflict: 'throw',
 });
 ```
 
@@ -106,12 +108,13 @@ The above example will throw an error due to the conflicting container IDs.
 This is one of three [conflict strategies][conflictstrategy-api-ref] you can choose to resolve a conflict.
 
 The others are as follows:
-  - `'returnExisting'`: Return the existing container. This is the default.
-  - `'throw'`: Throw an error upon conflict.
-  - `'null'`: Return null upon conflict.`
+
+- `'returnExisting'`: Return the existing container. This is the default.
+- `'throw'`: Throw an error upon conflict.
+- `'null'`: Return null upon conflict.`
 
 A better solution would be to restrict the use of well-known string-based keys, replacing
-them with well-known instances of `Symbol`.  Symbols, even with the same name, will never collide.
+them with well-known instances of `Symbol`. Symbols, even with the same name, will never collide.
 
 Let's update our example above to make use of Symbols instead:
 
@@ -139,9 +142,9 @@ const VALUE_CONTAINER = Symbol('value');
 
 export const START_TIME = new Token<number>();
 
-function getValueContainer () {
+function getValueContainer() {
   const container = ContainerInstance.of(VALUE_CONTAINER, null, {
-    onConflict: 'null'
+    onConflict: 'null',
   });
 
   // If we've already created the container, the above call returns null.
@@ -156,7 +159,7 @@ function getValueContainer () {
 
 // ...
 
-function logEvents () {
+function logEvents() {
   // Get the time when the application started.
   const startTime = getValueContainer().get(START_TIME);
   // ...
@@ -170,7 +173,7 @@ In some cases, you may not want a container to be created if the ID isn't in use
 For argument's sake, let's say your application sets up a container with specific values.
 A good way to ensure the container is always instantiated correctly can be found below.
 
-Let's tweak our event-logging example above to incorporate the usage of *free strategies* instead.
+Let's tweak our event-logging example above to incorporate the usage of _free strategies_ instead.
 
 ```ts
 import { ContainerInstance, Token } from '@typed-inject/injector';
@@ -181,16 +184,16 @@ const VALUE_CONTAINER = Symbol('value');
 
 export const START_TIME = new Token<number>();
 
-function getValueContainer () {
+function getValueContainer() {
   // ...
 }
 
 // ...
 
-function logEvents () {
+function logEvents() {
   // Get the value container.
   const valueContainer = ContainerInstance.of(VALUE_CONTAINER, null, {
-    onFree: 'null'
+    onFree: 'null',
   });
 
   if (valueContainer === null) {
@@ -209,12 +212,13 @@ function logEvents () {
 In some cases, your definition of a conflict may differ from TypeDI's default, which
 checks whether another container with the same ID already exists.
 
-In this case, the library helpfully provides a way to define what a conflict *is*.
+In this case, the library helpfully provides a way to define what a conflict _is_.
 This is done through [conflict definitions][conflictdefinition-api-ref].
 
 Currently, there are two ways to define a conflict:
-  - `'rejectAll'`: This is the default.
-  - `'allowSameParent'`: Allow conflicts with containers with the same container to the one provided.
+
+- `'rejectAll'`: This is the default.
+- `'allowSameParent'`: Allow conflicts with containers with the same container to the one provided.
 
 :::note
 
@@ -224,7 +228,7 @@ by default, TypeDI will throw an error if a conflict arises.
 :::
 
 In the case of `allowSameParent`, if a conflict were to arise, TypeDI would check whether
-the parent of the conflicting container matches the one you expected.  If not, the strategy is executed.
+the parent of the conflicting container matches the one you expected. If not, the strategy is executed.
 
 Let's look at an example below:
 
@@ -237,7 +241,7 @@ Container.ofChild('my-new-container');
 // Do the same thing again.
 Container.ofChild('my-new-container', {
   onConflict: 'throw',
-  conflictDefinition: 'allowSameParent'
+  conflictDefinition: 'allowSameParent',
 });
 ```
 
@@ -250,17 +254,3 @@ Without the explicit conflict definition, the above call would throw.
 [container-of-api-ref]: pathname:///api-reference/classes/ContainerInstance.html#of
 [container-of-static-api-ref]: pathname:///api-reference/classes/ContainerInstance.html#of-2
 [container-ofchild-api-ref]: pathname:///api-reference/classes/ContainerInstance.html#ofChild
-
-
-
-
-
-
-
-
-
-
-
-
-
-
