@@ -83,10 +83,14 @@ export function JSService<T extends Constructable<unknown>>(
   if (typeof dependenciesOrConstructor === 'function') {
     // eslint-disable-next-line
     constructor = dependenciesOrConstructor as T;
-    Service(optionsOrDependencies as ServiceOptionsWithDependencies<T>)(constructor);
+
+    // @ts-ignore
+    Service(optionsOrDependencies)(constructor);
   } else if (maybeConstructor) {
     constructor = maybeConstructor;
-    Service(optionsOrDependencies as ServiceOptionsWithoutDependencies<T>, dependenciesOrConstructor)(constructor);
+
+    // @ts-ignore
+    Service(optionsOrDependencies, dependenciesOrConstructor)(constructor);
   }
 
   if (!constructor) {
