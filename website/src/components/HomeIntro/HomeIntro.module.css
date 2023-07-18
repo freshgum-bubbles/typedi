@@ -44,3 +44,39 @@
 .featureListItemDemo {
     
 }
+
+/**
+ We use some media queries below to control the experience on smaller devices.
+ At 1200px and under, we shrink the gap between the side-by-side code / example elements.
+ Then, for any smaller screens, we further reduce padding until we reach the absolute
+ minimum of what looks good.
+
+ For anything under 1050px, we make the side-by-side code / example elements display
+ as block elements, where the code comes first, and the example is below it.
+
+ Some work is required to ensure that the example doesn't consume the entire width of
+ the screen, as it does look stupid to have a mostly empty block using 90% of screen space.
+ They're a bit too tall, too.
+*/
+
+@media screen and (max-width: 1200px) {
+    .sideBySide {
+        gap: 10px;
+    }
+
+    .demoCodeBlock {
+        padding: 12.5px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .demoCodeBlock {
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .sideBySide {
+        flex-direction: column;
+    }
+}
