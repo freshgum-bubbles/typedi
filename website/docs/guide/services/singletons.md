@@ -27,7 +27,11 @@ We'd only want that web server to be created once, so we'd mark it as a singleto
 import { Service } from '@typed-inject/injector';
 import http from 'http'; // Node's HTTP module
 
-@Service({ singleton: true }, [ ])
+@Service({
+// highlight-revision-start
+    singleton: true
+// highlight-revision-end
+}, [ ])
 export class WebServerService {
     private server: http.Server;
     startServer () {
