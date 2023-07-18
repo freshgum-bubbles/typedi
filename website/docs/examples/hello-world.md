@@ -15,8 +15,8 @@ This will make sure you have a functioning environment to test TypeDI in.
 To run the examples below, you'll also want [ts-node](https://npmjs.org/ts-node) installed.
 This will let us run TypeScript code without having to transpile it beforehand.
 
-```sh
-$ npm install -g ts-node
+```bash npm2yarn
+npm install -g ts-node
 ```
 
 It's installed globally so it can be run from the command line, like `ts-node main.ts`.

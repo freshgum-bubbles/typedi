@@ -9,8 +9,8 @@ environment containing Node and NPM (or any other package manager).
 
 Then, you'll need to install TypeDI:
 
-```sh
-$ npm install @typed-inject/injector
+```bash npm2yarn
+npm install @typed-inject/injector
 ```
 
 **You're done!** Move on to the [Hello World!](./examples/hello-world) example to learn how to use TypeDI.
