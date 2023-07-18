@@ -1,13 +1,11 @@
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import {
   ServiceOptions,
-  ServiceOptionsWithDependencies,
-  ServiceOptionsWithoutDependencies,
 } from '../interfaces/service-options.interface';
 import { AnyConstructable } from '../types/any-constructable.type';
 import { Constructable } from '../types/constructable.type';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
-import { ServiceWithDependencies, UnpackDependencies } from '../types/typed-dependencies.type';
+import { ServiceWithDependencies } from '../types/typed-dependencies.type';
 import { Service } from './service.decorator';
 
 /**
