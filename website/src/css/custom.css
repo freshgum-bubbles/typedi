@@ -72,6 +72,5 @@
 }
 
 .sidebar_doc_incomplete {
-  /* opacity: 55%; */
-  display: none;
+  opacity: 55%;
 }
