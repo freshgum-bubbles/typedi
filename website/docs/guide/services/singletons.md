@@ -5,10 +5,10 @@ sidebar_position: 5
 # Singletons
 
 Sometimes, you'll want a service to only be created once.
-This might be when it has side-effects, such as creating a web server. 
+This might be when it has side-effects, such as creating a web server.
 
 TypeDI supports this use-case by allowing individual services to be marked as singletons.
-When they are, only one instance of them will *ever* be created over the lifetime of the application.
+When they are, only one instance of them will _ever_ be created over the lifetime of the application.
 
 :::tip
 
@@ -27,21 +27,24 @@ We'd only want that web server to be created once, so we'd mark it as a singleto
 import { Service } from '@typed-inject/injector';
 import http from 'http'; // Node's HTTP module
 
-@Service({
-// highlight-revision-start
-    singleton: true
-// highlight-revision-end
-}, [ ])
+@Service(
+  {
+    // highlight-revision-start
+    singleton: true,
+    // highlight-revision-end
+  },
+  []
+)
 export class WebServerService {
-    private server: http.Server;
-    startServer () {
-        this.server = http.createServer((request, response) => {
-            response.write("Hello world!");
-            response.end();
-        });
+  private server: http.Server;
+  startServer() {
+    this.server = http.createServer((request, response) => {
+      response.write('Hello world!');
+      response.end();
+    });
 
-        this.server.listen(3000);
-    }
+    this.server.listen(3000);
+  }
 }
 ```
 
@@ -53,14 +56,13 @@ import { WebServerService } from './webserver.service';
 
 @Service([WebServerService])
 export class RootService {
-    constructor (private webServer: WebServerService) { }
+  constructor(private webServer: WebServerService) {}
 
-    bootstrap () {
-        this.webServer.startServer();
-    }
+  bootstrap() {
+    this.webServer.startServer();
+  }
 }
 ```
-
 
 Now, any services which use the web-server as a dependency, regardless of if they
 are child containers, will always refer to that same web server instance.
@@ -73,8 +75,6 @@ This prevents multiple web servers from being started at once.
 In the case of our demo application, if multiple web server instances were to start,
 you would experience runtime errors as only one server can be hosted on a port at a time.
 
-On the contrary, TypeDI also supports [creating *multiple* instances of a service](./multiple-services.md).
+On the contrary, TypeDI also supports [creating _multiple_ instances of a service](./multiple-services.md).
 
 :::
-
-

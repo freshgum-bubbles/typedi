@@ -45,13 +45,13 @@ import { MESSAGE } from './message.token';
 @Service([MESSAGE])
 // highlight-revision-end
 export class LogService {
-    // highlight-revision-start
-    constructor (private message: string) { }
-    // highlight-revision-end
+  // highlight-revision-start
+  constructor(private message: string) {}
+  // highlight-revision-end
 
-    public log () {
-        console.log(this.message);
-    }
+  public log() {
+    console.log(this.message);
+  }
 }
 ```
 
@@ -75,7 +75,7 @@ import { LogService } from './log.service';
 import { MESSAGE } from './message.token';
 
 // highlight-revision-start
-Container.set({ id: MESSAGE, value: 'Hello World!', dependencies: [ ] });
+Container.set({ id: MESSAGE, value: 'Hello World!', dependencies: [] });
 // highlight-revision-end
 
 Container.get(LogService).log();

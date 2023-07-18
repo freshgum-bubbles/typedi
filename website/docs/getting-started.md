@@ -13,4 +13,4 @@ Then, you'll need to install TypeDI:
 $ npm install @typed-inject/injector
 ```
 
-__You're done!__ Move on to the [Hello World!](./examples/hello-world) example to learn how to use TypeDI.
+**You're done!** Move on to the [Hello World!](./examples/hello-world) example to learn how to use TypeDI.

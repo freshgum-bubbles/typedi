@@ -5,30 +5,36 @@ sidebar_position: 6
 # Usage in JavaScript
 
 TypeDI is primarily developed for use in TypeScript.
-However, to make it *easier* to make use of it in JavaScript, a `JSService` function is provided.
+However, to make it _easier_ to make use of it in JavaScript, a `JSService` function is provided.
 
 As an example of how to use it, let's tweak the logging service we made in the [Hello World! example](../../examples/hello-world.md):
 
 ```js title="src/log.service.js"
 import { JSService } from '@typed-inject/injector';
 
-export const LogService = JSService([ ], class LogService {
-    log (message) {
-        console.log(message);
+export const LogService = JSService(
+  [],
+  class LogService {
+    log(message) {
+      console.log(message);
     }
-});
+  }
+);
 ```
 
 ```ts title="src/root.service.js"
 import { Service } from '@typed-inject/injector';
 
-export const RootService = JSService([LogService], class RootService {
-    public constructor (private logger) { }
+export const RootService = JSService(
+  [LogService],
+  class RootService {
+    public constructor(private logger) {}
 
-    run () {
-        this.logger.log('Hello World!');
+    run() {
+      this.logger.log('Hello World!');
     }
-});
+  }
+);
 ```
 
 :::caution
@@ -58,9 +64,9 @@ const logService: LogService = new LogService();
 ```
 
 If you're type-checking JavaScript with TypeScript, that can quickly become a problem.
-That's where the `JSService` *type* comes in.
+That's where the `JSService` _type_ comes in.
 
-Cleverly, the `JSService` import is actually *two* imports: one for the function implementation, and another for a type.
+Cleverly, the `JSService` import is actually _two_ imports: one for the function implementation, and another for a type.
 The type allows you to wrap the service in the type to elide type errors, like so:
 
 ```ts title="src/example.ts"
@@ -73,7 +79,7 @@ const logService: JSService<typeof LogService> = new LogService();
 :::note
 
 Unfortunately, due to a limitation in TypeScript, it's not currently possible to export the equivalent `JSService`-wrapped
-type from a `.js` file.  See [microsoft/TypeScript#48104](https://github.com/microsoft/TypeScript/issues/48104).
+type from a `.js` file. See [microsoft/TypeScript#48104](https://github.com/microsoft/TypeScript/issues/48104).
 
 :::
 
@@ -88,11 +94,11 @@ As an example, let's change the `LogService` we made above to the following:
 ```js title="src/log.service.js"
 import { JSService } from '@typed-inject/injector';
 
-export const LogService = JSService([ ], function LogService () { });
+export const LogService = JSService([], function LogService() {});
 
 LogService.prototype.log = function (message) {
-    console.log(message);
-}
+  console.log(message);
+};
 ```
 
 We've now moved our methods outside of the main call to `JSService`.

@@ -12,8 +12,8 @@ components in isolation, by providing them with different values and
 implementations than would normally be present in your app.
 
 For instance, consider the implementation of the HTTP server in
-the previous example.  In testing, we may not want it to *actually*
-create a HTTP server, though we *would* want it to ensure it creates
+the previous example. In testing, we may not want it to _actually_
+create a HTTP server, though we _would_ want it to ensure it creates
 a HTTP server successfully.
 
 :::note
@@ -21,6 +21,3 @@ a HTTP server successfully.
 For the examples below, we'll be making use of [Jest](https://jestjs.io/).
 Tests are written in an easy-to-follow format.
 :::
-
-
-
