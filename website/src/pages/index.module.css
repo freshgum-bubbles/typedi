@@ -31,3 +31,12 @@
   margin-top: 45px;
   gap: 25px;
 }
+
+@media screen and (max-width: 450px) {
+  .buttons {
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+  }
+}
