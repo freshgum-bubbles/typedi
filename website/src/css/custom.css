@@ -10,16 +10,16 @@
   --ifm-color-primary-dark: #214067;
   --ifm-color-primary-darker: #243352;
   --ifm-color-primary-darkest: #212c3e;
-  --ifm-color-primary-light: #7e5fe4;
-  --ifm-color-primary-lighter: #8e6df8;
-  --ifm-color-primary-lightest: #9f82ff;
+  --ifm-color-primary-light: #ac92ff;
+  --ifm-color-primary-lighter: #a88eff;
+  --ifm-color-primary-lightest: #c9b9ff;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 
-  --ifm-background-color-emphasis: #aeaac1;
-  --ifm-background-color-emphasis-2: #b9b7c9;
-  --ifm-navbar-background-color: #a7a3bb!important;
-  --hero-background-color: #c6bbee!important;
+  --ifm-background-color-emphasis: #ffffff;
+  --ifm-background-color-emphasis-2: #ededed;
+  --ifm-navbar-background-color: rgb(208, 208, 208)!important;
+  --hero-background-color: #dfdfdf!important;
   --ifm-color-primary-light: #7e5fe4;
   --ifm-color-primary-lighter: #8e6df8;
   --ifm-color-primary-lightest: #9f82ff;
