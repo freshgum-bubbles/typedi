@@ -16,6 +16,7 @@ module.exports = {
         ]],
         'subject-empty': [2, 'never'],
         'subject-full-stop': [2, 'never'],
-        'scope-case': [2, 'always', ['lower-case', 'start-case']]
+        'scope-case': [2, 'always', ['lower-case', 'start-case']],
+        'subject-exclamation-mark': [0]
     }
 };
