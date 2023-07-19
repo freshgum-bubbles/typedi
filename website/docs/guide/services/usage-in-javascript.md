@@ -5,7 +5,7 @@ sidebar_position: 6
 # Usage in JavaScript
 
 TypeDI is primarily developed for use in TypeScript.
-However, to make it _easier_ to make use of it in JavaScript, a `JSService` function is provided.
+However, to make it _easier_ to make use of it in JavaScript, a [`JSService`][jsservice-api-ref] function is provided.
 
 As an example of how to use it, let's tweak the logging service we made in the [Hello World! example](../../examples/hello-world.md):
 
@@ -39,7 +39,7 @@ export const RootService = JSService(
 
 :::caution
 
-As with `Service`, don't forget to place any dependencies your service requires in the array.
+As with [`Service`][service-api-ref], don't forget to place any dependencies your service requires in the array.
 Otherwise, TypeDI won't know your service requires them, and won't pass them in as arguments.
 
 :::
@@ -113,3 +113,6 @@ As of currently, the methods in the above service are not automatically inferred
 TypeScript. Therefore, when used, they are of type `any`.
 
 :::
+
+[jsservice-api-ref]: pathname:///api-reference/functions/JSService-1.html
+[service-api-ref]: pathname:///api-reference/functions/Service.html
