@@ -22,6 +22,9 @@
     border-bottom: none;
 
     flex-grow: 1;
+
+    /* Clamp the maximum width to that of the element's parent. */
+    max-width: 100%;
 }
 
 .messageInput::placeholder {
