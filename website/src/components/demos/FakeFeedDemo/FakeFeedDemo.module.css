@@ -31,3 +31,9 @@
 .fakeFeedBottomRack {
 
 }
+
+@media screen and (max-width: 300px) {
+    .fakeFeedContent {
+        min-width: 0;
+    }
+}
