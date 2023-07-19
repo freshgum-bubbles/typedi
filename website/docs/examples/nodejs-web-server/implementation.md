@@ -12,10 +12,8 @@ The server would declare the following services:
 
 - `DatabaseService`, for handling connections to the app's database.
 - `WebServerService`, which would handle the instantiation and management of your web server.
-- `DiagnosticsService`, allowing for sending diagnostics to a central service.
 
 In this example, we're going to look at implementing that server.
-To simplify implementation, we'll be excluding the `DiagnosticsService` for now.
 
 :::tip
 
