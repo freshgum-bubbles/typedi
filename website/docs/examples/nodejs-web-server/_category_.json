@@ -1,5 +1,7 @@
 {
     "label": "NodeJS Web Server",
     "position": 2,
+    "collapsible": true,
+    "collapsed": true,
     "link": { "type": "doc", "id": "examples/nodejs-web-server/implementation" }
 }
