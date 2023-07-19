@@ -12,11 +12,6 @@ import clsx from 'clsx';
 import { FeedService } from '@site/src/services/fake-feed-demo/fake-feed.service';
 import { FEED_USERNAME } from '@site/src/services/fake-feed-demo/username.token';
 
-const posts: Post[] = [
-  { id: 0, username: 'freshgum', post: 'hello! :-)' },
-  { id: 1, username: 'freshgum', post: 'type something here!' },
-];
-
 if (!Container.has(POSTS)) {
   Container.set({
     id: POSTS,
