@@ -87,3 +87,15 @@ If we now run our code, we'll see the following:
 $ ts-node ./src/main.ts
 Hello World!
 ```
+
+:::tip Did you know...
+
+In TypeDI, tokens aren't treated specially. In fact, the implementation of `Token` is quite literally:
+
+```ts
+export class Token<T> {
+  constructor(public name?: string) {}
+}
+```
+
+:::
