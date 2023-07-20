@@ -23,6 +23,7 @@ export {
   ServiceDependencyOptions,
 } from './interfaces/service-dependency.interface';
 export { ServiceOptions } from './interfaces/service-options.interface';
+export { ContainerTreeVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface';
 
 export { Constructable } from './types/constructable.type';
 export { ContainerIdentifier } from './types/container-identifier.type';
