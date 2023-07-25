@@ -1117,15 +1117,15 @@ export class ContainerInstance implements Disposable {
       /**
        * For the individual bit flags, we don't care about the return from `&`.
        * All that matters is that, if it doesn't return 0, the flag is activated.
-       *
-       * Implementation note: as an optimisation, we use double negative to cast
-       * the result to boolean instead of an explicit `Boolean` call here.
-       * To clarify, the "!!" does the *exact* same thing as `Boolean`.
+       * 
+       * We also don't cast to boolean here, as 0 evaluates to "false",
+       * while anything nonzero evaluates to "true".
+       * This saves bytes in the final bundle.
        */
-      const isOptional = !!(constraints & ResolutionConstraintFlag.Optional);
-      const isSkipSelf = !!(constraints & ResolutionConstraintFlag.SkipSelf);
-      const isSelf = !!(constraints & ResolutionConstraintFlag.Self);
-      const isMany = !!(constraints & ResolutionConstraintFlag.Many);
+      const isOptional = constraints & ResolutionConstraintFlag.Optional;
+      const isSkipSelf = constraints & ResolutionConstraintFlag.SkipSelf;
+      const isSelf = constraints & ResolutionConstraintFlag.Self;
+      const isMany = constraints & ResolutionConstraintFlag.Many;
 
       /** SkipSelf() and Self() are incompatible. */
       if (isSkipSelf && isSelf) {
