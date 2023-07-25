@@ -1096,7 +1096,7 @@ export class ContainerInstance implements Disposable {
      * Therefore, it can be safely assumed that if the key is present, the correct
      * data will also be present.
      */
-    return dependencies.map(wrapper => this.resolveResolvable(wrapper));
+    return dependencies.map(wrapper => this.resolveResolvable(wrapper, guardBuiltIns));
   }
 
   /**
@@ -1106,8 +1106,8 @@ export class ContainerInstance implements Disposable {
    *
    * @returns The resolved value of the item.
    */
-  private resolveResolvable(resolvable: Resolvable): unknown {
-    const identifier = this.resolveTypeWrapper(resolvable.typeWrapper);
+  private resolveResolvable(resolvable: Resolvable, guardBuiltIns?: boolean): unknown {
+    const identifier = this.resolveTypeWrapper(resolvable.typeWrapper, guardBuiltIns);
 
     if (resolvable.constraints) {
       const { constraints } = resolvable;
