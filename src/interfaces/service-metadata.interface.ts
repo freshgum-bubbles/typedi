@@ -51,14 +51,6 @@ export interface ServiceMetadata<Type = unknown> {
    */
   eager: boolean;
 
-  /**
-   * Map of containers referencing this metadata. This is used when a container
-   * is inheriting it's parents definitions and values to track the lifecycle of
-   * the metadata. Namely, a service can be disposed only if it's only referenced
-   * by the container being disposed.
-   */
-  // referencedBy: Map<ContainerIdentifier, ContainerInstance>;
-
   // todo: if we use TypeWrapper here, expose it publicly?
   /**
    * The dependencies of the service's constructor.
