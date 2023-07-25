@@ -12,7 +12,7 @@ export class CannotInstantiateValueError extends Error {
   /** Normalized identifier name used in the error message. */
   private normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
 
-  get message(): string {
+  public get message(): string {
     return (
       `Cannot instantiate the requested value for the "${this.normalizedIdentifier}" identifier. ` +
       `The related metadata doesn't contain a factory or a type to instantiate.`
