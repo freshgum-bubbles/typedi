@@ -9,7 +9,7 @@ export interface Resolvable {
    * The constraints placed upon the resolution process of the dependency.
    * In most cases, this will be a bitmask.
    *
-   * @see {ResolutionConstraintFlag}.
+   * @see {@link ResolutionConstraintFlag}.
    */
   constraints?: number;
 
