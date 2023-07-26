@@ -5,14 +5,13 @@ import { ContainerIdentifier } from './types/container-identifier.type';
 /**
  * The container registry is responsible for holding the default and every
  * created container instance for later access.
- *
- * _Note: This class is for internal use and its API may break in minor or
- * patch releases without warning._
+ * @public
  */
 export class ContainerRegistry {
   /**
    * The list of all known container. Created containers are automatically added
    * to this list. Two container cannot be registered with the same ID.
+   * @internal
    *
    * This map doesn't contains the default container.
    */
