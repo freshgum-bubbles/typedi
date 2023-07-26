@@ -9,6 +9,7 @@ type ServiceMetadataWithoutDeps<T> = Omit<ServiceMetadata<T>, 'dependencies'>;
 /**
  * The public ServiceOptions is partial object of ServiceMetadata and either one
  * of the following is set: `type`, `factory`, `value` but not more than one.
+ * @public
  */
 export type ServiceOptions<T = unknown> = Partial<RequireExactlyOne<ServiceMetadataWithoutDeps<T>, OptionalKeys>> &
   Partial<Omit<ServiceMetadataWithoutDeps<T>, OptionalKeys>> & { dependencies?: AnyServiceDependency[] };
