@@ -150,6 +150,9 @@ export type ContainerConflictDefinition = 'rejectAll' | 'allowSameParent';
 /**
  * A set of options to supplement the container creation process.
  * @public
+ * 
+ * @see {@link ContainerInstance.of}
+ * @see {@link ContainerInstance.ofChild}
  */
 export interface CreateContainerOptions {
   /**
