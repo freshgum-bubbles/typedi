@@ -2,6 +2,7 @@ import { Token } from '../token.class';
 
 /**
  * Extract the type of a Token.
+ * @public
  *
  * @example
  * ```ts
