@@ -1,5 +1,6 @@
 /**
  * An error thrown from operations within the {@link ContainerRegistry}.
+ * @public
  *
  * @group Errors
  *
