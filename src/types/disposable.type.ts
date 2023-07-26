@@ -2,6 +2,7 @@
  * An object containing both a {@link Disposable.disposed | disposed} property,
  * alongside a {@link Disposable.dispose | dispose()} method, which allows for
  * disposal of the object.
+ * @beta
  */
 export interface Disposable {
   /** Whether the object has already been disposed. */
