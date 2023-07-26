@@ -46,6 +46,12 @@ export const enum ResolutionConstraintFlag {
  * A descriptor containing hints on how a certain identifier should be resolved
  * in the context of the container.
  * @experimental
+ * 
+ * @see {@link SelfFunction | Self}
+ * @see {@link SkipSelfFunction | SkipSelf}
+ * @see {@link OptionalFunction | Optional}
+ * @see {@link ManyFunction | Many}
+ * @see {@link ResolutionConstraintFlag}
  *
  * @group Resolution Constraints
  */
