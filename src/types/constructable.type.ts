@@ -1,5 +1,7 @@
 /**
  * Generic type for class definitions.
+ * @public
+ * 
  * Example usage:
  * ```
  * function createSomeInstance(myClassDefinition: Constructable<MyClass>) {
