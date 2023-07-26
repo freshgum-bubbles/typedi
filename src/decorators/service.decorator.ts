@@ -37,7 +37,7 @@ import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.e
  * }
  * ```
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
@@ -68,10 +68,10 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * }
  * ```
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
@@ -107,7 +107,7 @@ export function Service<T = unknown>(
  * }
  * ```
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  * The options must also contain the dependencies that the service requires.
  *

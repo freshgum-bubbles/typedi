@@ -135,8 +135,8 @@ export class ContainerInstance implements Disposable {
   /**
    * Create a {@link ContainerInstance}.
    *
-   * @param id The ID of the container to create.
-   * @param parent The parent of the container to create.
+   * @param id - The ID of the container to create.
+   * @param parent - The parent of the container to create.
    * The parent is used for resolving identifiers which are
    * not present in this container.
    */
@@ -152,7 +152,7 @@ export class ContainerInstance implements Disposable {
    * we tell the parent to search its tree recursively too.
    * If the container tree is substantial, this operation may affect performance.
    *
-   * @param identifier The identifier of the service to look up.
+   * @param identifier - The identifier of the service to look up.
    *
    * @returns Whether the identifier is present in the current container, or its parent.
    *
@@ -181,7 +181,7 @@ export class ContainerInstance implements Disposable {
    * we tell the parent to search its tree recursively too.
    * If the container tree is substantial, this operation may affect performance.
    *
-   * @param identifier The identifier of the service to look up.
+   * @param identifier - The identifier of the service to look up.
    *
    * @returns A {@link ServiceIdentifierLocation}.
    *  - If the identifier cannot be found, {@link ServiceIdentifierLocation.None | None}.
@@ -213,7 +213,7 @@ export class ContainerInstance implements Disposable {
    * (if present) is recursively searched until a match is found
    * (or the tree is exhausted).
    *
-   * @param identifier The identifier to get the value of.
+   * @param identifier - The identifier to get the value of.
    *
    * @returns The value of the identifier in the current scope.
    *
@@ -240,8 +240,8 @@ export class ContainerInstance implements Disposable {
   /**
    * Resolve the metadata for the given identifier.  Returns null if no metadata could be found.
    *
-   * @param identifier The identifier to resolve metadata for.
-   * @param recursive Whether the lookup operation is recursive.
+   * @param identifier - The identifier to resolve metadata for.
+   * @param recursive - Whether the lookup operation is recursive.
    *
    * @returns
    * If the identifier is found, a tuple is returned consisting of the following:
@@ -292,7 +292,7 @@ export class ContainerInstance implements Disposable {
    * Retrieves the service with given name or type from the service container.
    * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
    *
-   * @param identifier The identifier to get the value of.
+   * @param identifier - The identifier to get the value of.
    *
    * @returns The resolved value for the given metadata, or `null` if it could not be found.
    *
@@ -311,7 +311,7 @@ export class ContainerInstance implements Disposable {
    *
    * @see {@link ContainerInstance.getOrNull}
    *
-   * @param identifier The identifier to get the value of.
+   * @param identifier - The identifier to get the value of.
    *
    * @returns The resolved value for the given metadata, or the default value if it could not be found.
    *
@@ -482,7 +482,7 @@ export class ContainerInstance implements Disposable {
    * const [one, two, three] = Container.getMany('key');
    * ```
    *
-   * @param identifier The identifier to resolve.
+   * @param identifier - The identifier to resolve.
    *
    * @returns An array containing the service instances for the given
    * identifier.
@@ -518,7 +518,7 @@ export class ContainerInstance implements Disposable {
    * assert(Array.isArray(container.getManyOrNull(KNOWN_TOKEN)));
    * ```
    *
-   * @param identifier The identifier to resolve.
+   * @param identifier - The identifier to resolve.
    *
    * @see {@link ContainerInstance.getMany}
    *
@@ -542,7 +542,7 @@ export class ContainerInstance implements Disposable {
    * @see {@link ContainerInstance.getManyOrNull}
    * @see {@link ContainerInstance.getMany}
    *
-   * @param identifier The identifier to resolve.
+   * @param identifier - The identifier to resolve.
    *
    * @returns An array containing the service instances for the given identifier.
    * If none can be found, the default value is returned.
@@ -617,8 +617,8 @@ export class ContainerInstance implements Disposable {
    *
    * _This is mainly for internal use._
    *
-   * @param serviceOptions The options for the service to add to the container.
-   * @param precompiledDependencies A precompiled list of dependencies in {@link TypeWrapper} form for the given service.
+   * @param serviceOptions - The options for the service to add to the container.
+   * @param precompiledDependencies - A precompiled list of dependencies in {@link TypeWrapper} form for the given service.
    *
    * @returns The identifier of the given service in the container.
    * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
@@ -635,7 +635,7 @@ export class ContainerInstance implements Disposable {
    * Add a service to the container using the provided options, containing
    * all information about the new service including its dependencies.
    *
-   * @param serviceOptions The options for the service to add to the container.
+   * @param serviceOptions - The options for the service to add to the container.
    *
    * @returns The identifier of the given service in the container.
    * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
@@ -766,10 +766,10 @@ export class ContainerInstance implements Disposable {
    * Container.setValue('key', 'test');
    * ```
    *
-   * @param id The ID of the new value to set inside the container.
+   * @param id - The ID of the new value to set inside the container.
    * Must be either a string or a Token.
    *
-   * @param value The value to set the ID to.
+   * @param value - The value to set the ID to.
    *
    * @returns The identifier of the given service in the container.
    * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
@@ -788,7 +788,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Removes services with the given list of service identifiers.
    *
-   * @param identifierOrIdentifierArray The list of service identifiers to remove from the container.
+   * @param identifierOrIdentifierArray - The list of service identifiers to remove from the container.
    *
    * @example
    * Here's an example:
@@ -844,10 +844,10 @@ export class ContainerInstance implements Disposable {
    * ContainerInstance.of('my-new-special-container', myOtherContainer);
    * ```
    *
-   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
-   * @param parent The parent of the container, or null to explicitly signal that one should not be provided.
+   * @param containerId - The ID of the container to resolve or create.  Defaults to "default".
+   * @param parent - The parent of the container, or null to explicitly signal that one should not be provided.
    * Defaults to the default container.
-   * @param options The options to supplement how the container is created.
+   * @param options - The options to supplement how the container is created.
    *
    * @see {@link CreateContainerOptions}
    *
@@ -937,7 +937,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets a separate container instance for the given instance id.
    *
-   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * @param containerId - The ID of the container to resolve or create.  Defaults to "default".
    *
    * @example
    * ```
@@ -963,7 +963,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Create a registry with the specified ID, with this instance as its parent.
    *
-   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * @param containerId - The ID of the container to resolve or create.  Defaults to "default".
    *
    * @returns The newly-created {@link ContainerInstance}, or the pre-existing container
    * with the same name if one already exists.
@@ -1195,7 +1195,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Resolve a {@link Resolvable} object in the current container.
    *
-   * @param resolvable The {@link Resolvable} to resolve.
+   * @param resolvable - The {@link Resolvable} to resolve.
    *
    * @returns The resolved value of the item.
    */
@@ -1320,8 +1320,8 @@ export class ContainerInstance implements Disposable {
    * If the service contains a method named `destroy`, it is called.
    * However, the value it returns is ignored.
    *
-   * @param serviceMetadata the service metadata containing the instance to destroy
-   * @param force when true the service will be always destroyed even if it's cannot be re-created
+   * @param serviceMetadata - the service metadata containing the instance to destroy
+   * @param force - when true the service will be always destroyed even if it's cannot be re-created
    */
   private disposeServiceInstance(serviceMetadata: ServiceMetadata, force = false) {
     this[THROW_IF_DISPOSED]();
@@ -1347,7 +1347,7 @@ export class ContainerInstance implements Disposable {
    * Add a visitor to the container.
    * @experimental
    *
-   * @param visitor The visitor to add to this container.
+   * @param visitor - The visitor to add to this container.
    *
    * @see {@link ContainerTreeVisitor}
    *
@@ -1362,7 +1362,7 @@ export class ContainerInstance implements Disposable {
    * No-op if the visitor was never attached to the container.
    * @experimental
    *
-   * @param visitor The visitor to remove from the container.
+   * @param visitor - The visitor to remove from the container.
    *
    * @see {@link ContainerTreeVisitor}
    *

@@ -21,7 +21,7 @@
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 export class Token<T> {
   /**
-   * @param name Token name, optional and only used for debugging purposes.
+   * @param name - Token name, optional and only used for debugging purposes.
    */
   constructor(public name?: string) {}
 }

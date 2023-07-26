@@ -103,7 +103,7 @@ export interface ContainerTreeVisitor extends Disposable {
    * Visit a child container of the current service.
    * @experimental
    *
-   * @param child The newly-created child container of the current instance.
+   * @param child - The newly-created child container of the current instance.
    */
   visitChildContainer?(child: ContainerInstance): void;
 
@@ -112,7 +112,7 @@ export interface ContainerTreeVisitor extends Disposable {
    * This is only called if the visitor was attached to the default container.
    * @experimental
    *
-   * @param container The newly-created container.
+   * @param container - The newly-created container.
    */
   visitOrphanedContainer?(container: ContainerInstance): void;
 
@@ -121,7 +121,7 @@ export interface ContainerTreeVisitor extends Disposable {
    * This is called when a new service is added via `Container.set(...)`.
    * @experimental
    *
-   * @param serviceOptions The options of the new service.
+   * @param serviceOptions - The options of the new service.
    */
   visitNewService?(serviceOptions: ServiceMetadata<unknown>): void;
 
@@ -130,7 +130,7 @@ export interface ContainerTreeVisitor extends Disposable {
    * This is called as a result of `Container.acceptTreeVisitor(...)`.
    * @experimental
    *
-   * @param container The container to visit.
+   * @param container - The container to visit.
    *
    * @returns Whether the visitor can be attached to the container.
    * If `false` is returned, no notifications are sent from the provided container.
@@ -146,9 +146,9 @@ export interface ContainerTreeVisitor extends Disposable {
    * is always called in the event of service retrieval.
    * If the identifier can not be found, `visitUnavailableService` is then called.
    *
-   * @param identifier The identifier of the requested service.
+   * @param identifier - The identifier of the requested service.
    *
-   * @param options A set of options passed to the listener.
+   * @param options - A set of options passed to the listener.
    * Documented in {@link VisitRetrievalOptions}.
    */
   visitRetrieval?(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void;

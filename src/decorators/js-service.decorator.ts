@@ -15,11 +15,11 @@ import { Service } from './service.decorator';
  * By default, the service shall be registered upon the `defaultContainer` container.
  * @experimental
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
- * @param constructor The constructor of the service to inject.
+ * @param constructor - The constructor of the service to inject.
  *
  * @returns The constructor.
  */
@@ -31,14 +31,14 @@ export function JSService<T extends AnyConstructable>(dependencies: AnyServiceDe
  * By default, the service shall be registered upon the `defaultContainer` container.
  * @experimental
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
- * @param constructor The constructor of the service to inject.
+ * @param constructor - The constructor of the service to inject.
  *
  * @returns The constructor.
  */
@@ -54,7 +54,7 @@ export function JSService<T extends AnyConstructable>(
  * By default, the service shall be registered upon the `defaultContainer` container.
  * @experimental
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  * The options must also contain the dependencies that the service requires.
  *
@@ -62,7 +62,7 @@ export function JSService<T extends AnyConstructable>(
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
- * @param constructor The constructor of the service to inject.
+ * @param constructor - The constructor of the service to inject.
  *
  * @returns The constructor.
  */
