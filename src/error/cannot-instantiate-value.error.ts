@@ -2,8 +2,10 @@ import { ServiceIdentifier } from '../types/service-identifier.type';
 import { Token } from '../token.class';
 
 /**
- * Thrown when DI cannot inject value into property decorated by `@Inject` decorator.
- *
+ * This exception is thrown when a container is unable to instantiate a value.
+ * This could be due to the service missing a factory, value and type.
+ * Alternatively, it could be due to invalid dependencies of a service.
+ * 
  * @group Errors
  */
 export class CannotInstantiateValueError extends Error {
