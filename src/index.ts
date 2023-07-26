@@ -59,4 +59,4 @@ export { ContainerInstance } from './container-instance.class';
 export { Token } from './token.class';
 
 /** We export the default container under the Container alias. */
-export { defaultContainer as Container, defaultContainer as default } from './container-instance.class';
+export { defaultContainer as Container, defaultContainer as default, ServiceIdentifierLocation } from './container-instance.class';
