@@ -8,11 +8,11 @@ import { ServiceIdentifier } from './types/service-identifier.type';
  * A collection of individual visitor objects, combined into a collection.
  * This class implements the {@link ContainerTreeVisitor} interface
  * (modulo {@link ContainerTreeVisitor.visitContainer}).
- *
+ * @internal
+ * 
  * When an event is dispatched upon the collection, all attached
  * visitors will be notified in the order in which they were
  * added to the collection.
- * @experimental
  *
  * @example
  * ```ts
