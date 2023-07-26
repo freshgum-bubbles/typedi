@@ -2,6 +2,7 @@ import { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from '../ty
 
 /**
  * Construct a resolution constraint bitmask from the provided constraint descriptor.
+ * @private
  *
  * @param descriptor The descriptor containing resolution constraints for a given service.
  *
