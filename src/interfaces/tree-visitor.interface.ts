@@ -5,6 +5,7 @@ import { ServiceMetadata } from './service-metadata.interface';
 
 /**
  * A collection of options passed to {@link ContainerTreeVisitor.visitRetrieval}.
+ * @beta
  *
  * @group Tree Visitors
  */
@@ -37,8 +38,7 @@ export interface VisitRetrievalOptions {
 
 /**
  * A visitor for Container objects, which allows for extension of container functionality.
- * @experimental **This API is still being developed.  It will probably change.**
- *
+ * @beta
  *
  * To aid usage of this API, some noteworthy points can be found below.
  *
