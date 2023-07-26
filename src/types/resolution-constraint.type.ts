@@ -1,3 +1,10 @@
+import {
+  Self as SelfFunction,
+  SkipSelf as SkipSelfFunction,
+  Optional as OptionalFunction,
+  Many as ManyFunction
+} from '../functions/resolution-constraints.functions';
+
 /**
  * A collection of bit-flags describing resolution constraints to append to a bitmask.
  * @experimental
@@ -8,21 +15,21 @@ export const enum ResolutionConstraintFlag {
   /**
    * Do not ascend the container tree to resolve this identifier.
    *
-   * @inheritDoc Self
+   * @see {@link SelfFunction | Self}
    */
   Self = 0b1000,
 
   /**
    * Begin searching from the parent container to resolve this identifier.
    *
-   * @inheritDoc SkipSelf
+   * @see {@link SkipSelfFunction | SkipSelf}
    */
   SkipSelf = 0b0100,
 
   /**
    * If the identifier cannot be found, substitute it with `null`.
    *
-   * @inheritDoc Optional
+   * @see {@link OptionalFunction | Optional}
    */
   Optional = 0b0010,
 
@@ -30,7 +37,7 @@ export const enum ResolutionConstraintFlag {
    * Resolve multiple services for this identifier via `getMany`.
    * The returned array is then inserted as an argument at the specified index.
    *
-   * @inheritDoc Many
+   * @see {@link ManyFunction | Many}
    */
   Many = 0b0001,
 }
