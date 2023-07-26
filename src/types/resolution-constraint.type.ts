@@ -1,8 +1,8 @@
 import {
-  Self as SelfFunction,
-  SkipSelf as SkipSelfFunction,
-  Optional as OptionalFunction,
-  Many as ManyFunction
+  Self,
+  SkipSelf,
+  Optional ,
+  Many
 } from '../functions/resolution-constraints.functions';
 
 /**
@@ -15,21 +15,21 @@ export const enum ResolutionConstraintFlag {
   /**
    * Do not ascend the container tree to resolve this identifier.
    *
-   * @see {@link SelfFunction | Self}
+   * @see {@link (Self:function)}
    */
   Self = 0b1000,
 
   /**
    * Begin searching from the parent container to resolve this identifier.
    *
-   * @see {@link SkipSelfFunction | SkipSelf}
+   * @see {@link (SkipSelf:function)}
    */
   SkipSelf = 0b0100,
 
   /**
    * If the identifier cannot be found, substitute it with `null`.
    *
-   * @see {@link OptionalFunction | Optional}
+   * @see {@link (Optional:function)}
    */
   Optional = 0b0010,
 
@@ -37,7 +37,7 @@ export const enum ResolutionConstraintFlag {
    * Resolve multiple services for this identifier via `getMany`.
    * The returned array is then inserted as an argument at the specified index.
    *
-   * @see {@link ManyFunction | Many}
+   * @see {@link (Many:function)}
    */
   Many = 0b0001,
 }
@@ -47,10 +47,10 @@ export const enum ResolutionConstraintFlag {
  * in the context of the container.
  * @experimental
  * 
- * @see {@link SelfFunction | Self}
- * @see {@link SkipSelfFunction | SkipSelf}
- * @see {@link OptionalFunction | Optional}
- * @see {@link ManyFunction | Many}
+ * @see {@link (Self:function)}
+ * @see {@link (SkipSelf:function)}
+ * @see {@link (Optional:function)}
+ * @see {@link (Many:function)}
  * @see {@link ResolutionConstraintFlag}
  *
  * @group Resolution Constraints
