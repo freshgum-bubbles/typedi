@@ -1,5 +1,6 @@
 /**
  * The strategy to use when resetting a container.
+ * @public
  */
 export const enum ContainerResetStrategy {
   /**
