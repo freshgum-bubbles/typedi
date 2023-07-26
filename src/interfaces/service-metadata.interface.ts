@@ -30,6 +30,8 @@ export interface ServiceMetadata<Type = unknown> {
    * Factory function used to initialize this service.
    * Can be regular function ("createCar" for example),
    * or other service which produces this instance ([CarFactory, "createCar"] for example).
+   * 
+   * If any dependencies were declared, these are passed to the factory.
    */
   factory: [Constructable<unknown>, string] | CallableFunction | undefined;
 

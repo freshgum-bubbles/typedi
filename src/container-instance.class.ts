@@ -1052,7 +1052,8 @@ export class ContainerInstance implements Disposable {
         const [factoryServiceId, factoryServiceMethod] = factoryMeta;
 
         /** Try to get the factory from TypeDI first, if failed, fall back to simply initiating the class. */
-        const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId();
+        const parameters = this.getConstructorParameters(serviceMetadata, false);
+        const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId(...parameters);
         value = factoryInstance[factoryServiceMethod](this, serviceMetadata.id);
       } else {
         /** If only a simple function was provided we simply call it. */
