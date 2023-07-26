@@ -307,7 +307,7 @@ export class ContainerInstance implements Disposable {
    * Retrieves the service with given name or type from the service container.
    * If the identifier cannot be found, return the provided default value.
    *
-   * @typeParam U The type of the provided default value.
+   * @typeParam U - The type of the provided default value.
    *
    * @see {@link ContainerInstance.getOrNull}
    *
@@ -537,7 +537,7 @@ export class ContainerInstance implements Disposable {
    * or the default value if no instances could be found.
    * Used when service are defined with the `{ multiple: true }` option.
    *
-   * @typeParam U The type of the provided default value.
+   * @typeParam U - The type of the provided default value.
    *
    * @see {@link ContainerInstance.getManyOrNull}
    * @see {@link ContainerInstance.getMany}
