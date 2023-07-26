@@ -1386,6 +1386,11 @@ export class ContainerInstance implements Disposable {
  */
 null;
 
+/**
+ * A reference to the default container.
+ * By default, this is used to register services using the {@link Service} or {@link JSService} utilities.
+ * @public
+ */
 export const { defaultContainer } = ContainerInstance;
 
 /**
