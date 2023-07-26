@@ -5,6 +5,7 @@ import { Token } from '../token.class';
  * This exception is thrown when a container is unable to instantiate a value.
  * This could be due to the service missing a factory, value and type.
  * Alternatively, it could be due to invalid dependencies of a service.
+ * @public
  * 
  * @group Errors
  */
