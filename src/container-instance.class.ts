@@ -1045,19 +1045,56 @@ export class ContainerInstance implements Disposable {
      */
     if (factoryMeta) {
       /**
-       * If we received the factory in the [Constructable<Factory>, "functionName"] format, we need to create the
-       * factory first and then call the specified function on it.
+       * If a factory is provided, we pass it an array containing the service identifiers the
+       * service declared as its dependencies.
+       *
+       * One aspect of note, when compared to standard services, is that we treat built-in
+       * dependencies a bit differently: instead of throwing an error, the built-in constructor
+       * itself is passed to the factory function.
+       *
+       * As an example:
+       * ```ts
+       * @Service([Number, MyOtherService], {
+       *   factory: (container, id, [{ id: number }, { id: myOtherService }]) => {
+       *     assert(number === Number);
+       *     assert(myOtherService === MyOtherService);
+       *   }
+       * })
+       * class MyService { }
+       * ```
+       *
+       * Without a factory, this would cause an error, as TypeDI would be unable to resolve "Number".
+       * However, we assume that the factory knows the service's dependencies ahead of time, and
+       * therefore the declaration of a built-in dependency is just for type-checking.
+       * 
+       * The dependencies of the service are passed as objects (using C++ lingo, rvalues) that 
+       * include both the ID of the dependency alongside its declared constraints, if any.
+       * One important note is that the dependency *itself* is never resolved in the container.
+       */
+      const parameters = serviceMetadata.dependencies.map(resolvable => 
+          ({ id: this.resolveTypeWrapper(resolvable.typeWrapper), constraints: resolvable.constraints })
+      );
+
+      /**
+       * If we received the factory in the [Constructable<Factory>, "functionName"] format, 
+       * we need to create the factory first and then call the specified function on it.
+       * 
+       * One aspect of the implementation worthy of mention is that we pass a few arguments
+       * to the factory function (or method) declared.
+       * Currently, the arguments are as follows:
+       *   - A reference to the {@link ContainerInstance} that the service is running under.
+       *   - The {@link ServiceIdentifier} of the newly-created service.
+       *   - The declared dependencies of the service.
        */
       if (Array.isArray(factoryMeta)) {
         const [factoryServiceId, factoryServiceMethod] = factoryMeta;
 
         /** Try to get the factory from TypeDI first, if failed, fall back to simply initiating the class. */
-        const parameters = this.getConstructorParameters(serviceMetadata, false);
-        const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId(...parameters);
-        value = factoryInstance[factoryServiceMethod](this, serviceMetadata.id);
+        const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId();
+        value = factoryInstance[factoryServiceMethod](this, serviceMetadata.id, parameters);
       } else {
         /** If only a simple function was provided we simply call it. */
-        value = factoryMeta(this, serviceMetadata.id);
+        value = factoryMeta(this, serviceMetadata.id, parameters);
       }
     }
 
@@ -1066,6 +1103,14 @@ export class ContainerInstance implements Disposable {
      */
     if (!factoryMeta && serviceMetadata.type) {
       const constructableTargetType: Constructable<unknown> = serviceMetadata.type;
+
+      /**
+       * If no factory was provided, we resolve the parameters and set the
+       * `guardBuiltIns` parameter to `true`.  This makes the resolver throw
+       * if it encounters a reference to a built-in constructor.
+       * 
+       * @see {@link CannotInstantiateBuiltInError}
+       */
       const parameters = this.getConstructorParameters(serviceMetadata, true);
       value = new constructableTargetType(...parameters);
     }
@@ -1083,7 +1128,7 @@ export class ContainerInstance implements Disposable {
     return value;
   }
 
-  private getConstructorParameters<T>({ dependencies }: ServiceMetadata<T>, guardBuiltIns?: boolean): unknown[] {
+  private getConstructorParameters<T>({ dependencies }: ServiceMetadata<T>, guardBuiltIns: boolean): unknown[] {
     /**
      * Firstly, check if the metadata declares any dependencies.
      */
@@ -1107,8 +1152,25 @@ export class ContainerInstance implements Disposable {
    *
    * @returns The resolved value of the item.
    */
-  private resolveResolvable(resolvable: Resolvable, guardBuiltIns?: boolean): unknown {
-    const identifier = this.resolveTypeWrapper(resolvable.typeWrapper, guardBuiltIns);
+  private resolveResolvable(resolvable: Resolvable, guardBuiltIns: boolean): unknown {
+    const identifier = this.resolveTypeWrapper(resolvable.typeWrapper);
+
+    /**
+     * The type wrapper resolver doesn't check if the identifier
+     * is a built-in (Number, String, etc.).
+     */
+    if ((BUILT_INS as unknown[]).includes(identifier)) {
+      if (guardBuiltIns) {
+        throw new CannotInstantiateBuiltInError((identifier as Function).name);
+      }
+
+      /**
+       * If we're sure that it's a built-in and we've been told not to
+       * guard instantiation of built-ins, return the built-in constructor
+       * here as going any further would result in runtime errors.
+       */
+      return identifier;
+    }
 
     if (resolvable.constraints) {
       const { constraints } = resolvable;
@@ -1118,7 +1180,7 @@ export class ContainerInstance implements Disposable {
       /**
        * For the individual bit flags, we don't care about the return from `&`.
        * All that matters is that, if it doesn't return 0, the flag is activated.
-       * 
+       *
        * We also don't cast to boolean here, as 0 evaluates to "false",
        * while anything nonzero evaluates to "true".
        * This saves bytes in the final bundle.
@@ -1179,7 +1241,7 @@ export class ContainerInstance implements Disposable {
     return this.get(identifier);
   }
 
-  private resolveTypeWrapper(wrapper: TypeWrapper, guardBuiltIns = false): ServiceIdentifier {
+  private resolveTypeWrapper(wrapper: TypeWrapper): ServiceIdentifier {
     /**
      * Reminder: The type wrapper is either resolvable to:
      *   1. An eager type containing the id of the service, or...
@@ -1193,10 +1255,6 @@ export class ContainerInstance implements Disposable {
 
     if (resolved == null) {
       throw Error(`The wrapped value could not be resolved.`);
-    }
-
-    if (guardBuiltIns && (BUILT_INS as unknown[]).includes(resolved)) {
-      throw new CannotInstantiateBuiltInError((resolved as Constructable<unknown>)?.name ?? resolved);
     }
 
     /**
