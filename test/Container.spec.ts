@@ -46,6 +46,15 @@ describe('Container', function () {
 
       expect(Container.get(zero)).toBe(0);
     });
+
+    it('should not throw if the service\'s value is null', () => {
+      const NULL = new Token<null>();
+      Container.setValue(NULL, null);
+
+      expect(() => Container.get(NULL)).not.toThrow();
+      expect(() => Container.get(NULL, true)).not.toThrow();
+      expect(Container.get(NULL)).toBeNull();
+    });
   });
 
   describe('set', function () {
@@ -155,6 +164,16 @@ describe('Container', function () {
       for (const index of [0, 1, 2]) {
         expect(instances[index]).toBeInstanceOf(TestService);
       }
+    });
+
+    it('should not throw if the service\'s value is null', () => {
+      const NULL = new Token<null>();
+      Container.set({ id: NULL, value: null, multiple: true, dependencies: [ ] });
+      Container.set({ id: NULL, value: null, multiple: true, dependencies: [ ] });
+
+      expect(() => Container.getMany(NULL)).not.toThrow();
+      expect(() => Container.getMany(NULL, true)).not.toThrow();
+      expect(Container.getMany(NULL)).toMatchObject([null, null]);
     });
   });
 
