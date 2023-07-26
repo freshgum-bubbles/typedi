@@ -133,7 +133,7 @@ export class ContainerInstance implements Disposable {
   private isRetrievingPrivateToken = false;
 
   /**
-   * Create a ContainerInstance.
+   * Create a {@link ContainerInstance}.
    *
    * @param id The ID of the container to create.
    * @param parent The parent of the container to create.
