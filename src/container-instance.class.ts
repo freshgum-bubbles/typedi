@@ -224,9 +224,13 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public get<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T {
-    const response = this.getOrNull<T>(identifier, recursive);
+    /**
+     * Re-use the {@link EMPTY_VALUE} to avoid having to declare another symbol. 
+     * This is fine, as the method will never return this symbol a resolved value.
+     */
+    const response = this.getOrDefault<symbol, T>(identifier, EMPTY_VALUE, recursive);
 
-    if (response === null) {
+    if (response === EMPTY_VALUE) {
       throw new ServiceNotFoundError(identifier);
     }
 
@@ -296,6 +300,25 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T | null {
+    return this.getOrDefault<null, T>(identifier, null, recursive);
+  }
+
+  /**
+   * Retrieves the service with given name or type from the service container.
+   * If the identifier cannot be found, return the provided default value.
+   * 
+   * @typeParam U The type of the provided default value.
+   * 
+   * @see {@link ContainerInstance.getOrNull}
+   *
+   * @param identifier The identifier to get the value of.
+   *
+   * @returns The resolved value for the given metadata, or the default value if it could not be found.
+   *
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
+   */
+  protected getOrDefault<U, T = unknown>(identifier: ServiceIdentifier<T>, defaultValue: U, recursive = true): T | U {
     this[THROW_IF_DISPOSED]();
 
     /**
@@ -331,7 +354,7 @@ export class ContainerInstance implements Disposable {
         });
       }
 
-      return null;
+      return defaultValue;
     }
 
     /**
@@ -383,7 +406,7 @@ export class ContainerInstance implements Disposable {
        * We can safely assume it exists there.
        */
       if (newServiceMetadata.scope === 'singleton') {
-        return defaultContainer.getOrNull(identifier, recursive);
+        return defaultContainer.getOrDefault<U, T>(identifier, defaultValue, recursive);
       }
 
       /**
@@ -443,7 +466,7 @@ export class ContainerInstance implements Disposable {
       return this.getServiceValue(metadata);
     }
 
-    return null;
+    return defaultValue;
   }
 
   /**
@@ -471,9 +494,13 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public getMany<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T[] {
-    const response = this.getManyOrNull(identifier, recursive);
+    /**
+     * Re-use the {@link EMPTY_VALUE} to avoid having to declare another symbol. 
+     * This is fine, as the method will never return this symbol a resolved value.
+     */
+    const response = this.getManyOrDefault(identifier, EMPTY_VALUE, recursive);
 
-    if (response === null) {
+    if (response === EMPTY_VALUE) {
       throw new ServiceNotFoundError(identifier);
     }
 
@@ -502,6 +529,28 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public getManyOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T[] | null {
+    return this.getManyOrDefault<null, T>(identifier, null, recursive);
+  }
+
+  /**
+   * Gets all instances registered in the container of the given service identifier,
+   * or the default value if no instances could be found.
+   * Used when service are defined with the `{ multiple: true }` option.
+   * 
+   * @typeParam U The type of the provided default value.
+   *
+   * @see {@link ContainerInstance.getManyOrNull}
+   * @see {@link ContainerInstance.getMany}
+   *
+   * @param identifier The identifier to resolve.
+   *
+   * @returns An array containing the service instances for the given identifier.
+   * If none can be found, the default value is returned.
+   *
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
+   */
+  public getManyOrDefault<U, T = unknown>(identifier: ServiceIdentifier<T>, defaultValue: U, recursive = true): T[] | U {
     this[THROW_IF_DISPOSED]();
 
     let idMap: ManyServicesMetadata | void = undefined;
@@ -531,7 +580,7 @@ export class ContainerInstance implements Disposable {
 
     /** If no IDs could be found, return null. */
     if (!idMap) {
-      return null;
+      return defaultValue;
     }
 
     const isRetrievingSingleton = idMap.scope === 'singleton';
