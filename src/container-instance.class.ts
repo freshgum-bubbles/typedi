@@ -1179,13 +1179,6 @@ export class ContainerInstance implements Disposable {
 
   private getConstructorParameters<T>({ dependencies }: ServiceMetadata<T>, guardBuiltIns: boolean): unknown[] {
     /**
-     * Firstly, check if the metadata declares any dependencies.
-     */
-    if (dependencies.length === 0) {
-      return [];
-    }
-
-    /**
      * We do not type-check the identifiers array here as we are the only ones
      * aware of the reflective key.
      * Therefore, it can be safely assumed that if the key is present, the correct
