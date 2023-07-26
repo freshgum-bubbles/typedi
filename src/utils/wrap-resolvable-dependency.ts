@@ -4,6 +4,12 @@ import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
 import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util';
 
+/**
+ * Wrap a given dependency as a {@link Resolvable}, containing both
+ * its {@link TypeWrapper} representation, along with any constraints
+ * specified by the creator of the object.
+ * @private
+ */
 export function wrapDependencyAsResolvable(dependency: AnyServiceDependency): Resolvable {
   let constraints!: number | undefined;
   let typeWrapper!: TypeWrapper;
