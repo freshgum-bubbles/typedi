@@ -11,6 +11,6 @@ import { Token } from '../token.class';
  * ```
  *
  * @remarks
- * This implements <https://github.com/typestack/typedi/pull/1127>.
+ * This implements [typestack/typedi#1127](https://github.com/typestack/typedi/pull/1127).
  */
 export type ExtractToken<T> = T extends Token<infer U> ? U : never;
