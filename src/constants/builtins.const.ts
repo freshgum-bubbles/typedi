@@ -1,6 +1,6 @@
 /**
  * A list of functions representing built-in types.
- * @ignore @internal
+ * @internal
  *
  * @privateRemarks
  * When these are used as dependencies for a service which does not

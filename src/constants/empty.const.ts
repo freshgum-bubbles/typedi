@@ -1,5 +1,6 @@
 /**
  * Indicates that a service has not been initialized yet.
+ * @internal
  *
  * _Note: This value is for internal use only._
  */

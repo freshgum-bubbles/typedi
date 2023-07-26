@@ -6,6 +6,7 @@ import { Token } from '../token.class';
 /**
  * A special identifier which can be used to get the container
  * the service is currently being executed under.
+ * @internal
  *
  * @example
  * Here is an example:
