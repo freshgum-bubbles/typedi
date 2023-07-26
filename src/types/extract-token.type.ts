@@ -8,7 +8,7 @@ import { Token } from '../token.class';
  * const token = new Token<string>();
  * const value: ExtractToken<typeof token> = "Hello!";
  * ```
- * 
+ *
  * @remarks
  * This implements <https://github.com/typestack/typedi/pull/1127>.
  */

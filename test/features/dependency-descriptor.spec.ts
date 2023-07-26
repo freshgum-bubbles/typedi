@@ -1,10 +1,4 @@
-import {
-  Container,
-  Service,
-  ContainerInstance,
-  ServiceIdentifier,
-  Optional,
-} from '../../src/index';
+import { Container, Service, ContainerInstance, ServiceIdentifier, Optional } from '../../src/index';
 import { DependencyDescriptor } from '../../src/interfaces/dependency-descriptor.interface';
 
 describe('DependencyDescriptor', () => {

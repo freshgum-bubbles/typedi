@@ -47,7 +47,7 @@ describe('Container', function () {
       expect(Container.get(zero)).toBe(0);
     });
 
-    it('should not throw if the service\'s value is null', () => {
+    it("should not throw if the service's value is null", () => {
       const NULL = new Token<null>();
       Container.setValue(NULL, null);
 
@@ -166,10 +166,10 @@ describe('Container', function () {
       }
     });
 
-    it('should not throw if the service\'s value is null', () => {
+    it("should not throw if the service's value is null", () => {
       const NULL = new Token<null>();
-      Container.set({ id: NULL, value: null, multiple: true, dependencies: [ ] });
-      Container.set({ id: NULL, value: null, multiple: true, dependencies: [ ] });
+      Container.set({ id: NULL, value: null, multiple: true, dependencies: [] });
+      Container.set({ id: NULL, value: null, multiple: true, dependencies: [] });
 
       expect(() => Container.getMany(NULL)).not.toThrow();
       expect(() => Container.getMany(NULL, true)).not.toThrow();

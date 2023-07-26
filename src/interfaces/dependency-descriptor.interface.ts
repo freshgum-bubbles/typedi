@@ -1,15 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ResolutionConstraintFlag } from "../types/resolution-constraint.type";
-import { ServiceIdentifier } from "../types/service-identifier.type";
+import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
+import { ServiceIdentifier } from '../types/service-identifier.type';
 
 /**
  * A descriptor of a service declared as a dependency of another service.
  * @experimental
- * 
+ *
  * @remarks
  * Currently, this is only used to describe the dependencies of a service
  * to its corresponding factory function.
- * 
+ *
  * @example
  * ```ts
  * @Service([[AnotherService, Optional()]], {
@@ -22,13 +22,13 @@ import { ServiceIdentifier } from "../types/service-identifier.type";
  * ```
  */
 export interface DependencyDescriptor<T = unknown> {
-    /** The identifier of the declared dependency. */
-    id: ServiceIdentifier<T>;
+  /** The identifier of the declared dependency. */
+  id: ServiceIdentifier<T>;
 
-    /**
-     * The constraints of the given service, if any.
-     * 
-     * @see {@link ResolutionConstraintFlag}
-     */
-    constraints?: number;
+  /**
+   * The constraints of the given service, if any.
+   *
+   * @see {@link ResolutionConstraintFlag}
+   */
+  constraints?: number;
 }

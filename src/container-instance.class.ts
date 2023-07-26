@@ -225,7 +225,7 @@ export class ContainerInstance implements Disposable {
    */
   public get<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T {
     /**
-     * Re-use the {@link EMPTY_VALUE} to avoid having to declare another symbol. 
+     * Re-use the {@link EMPTY_VALUE} to avoid having to declare another symbol.
      * This is fine, as the method will never return this symbol a resolved value.
      */
     const response = this.getOrDefault<symbol, T>(identifier, EMPTY_VALUE, recursive);
@@ -306,9 +306,9 @@ export class ContainerInstance implements Disposable {
   /**
    * Retrieves the service with given name or type from the service container.
    * If the identifier cannot be found, return the provided default value.
-   * 
+   *
    * @typeParam U The type of the provided default value.
-   * 
+   *
    * @see {@link ContainerInstance.getOrNull}
    *
    * @param identifier The identifier to get the value of.
@@ -495,7 +495,7 @@ export class ContainerInstance implements Disposable {
    */
   public getMany<T = unknown>(identifier: ServiceIdentifier<T>, recursive?: boolean): T[] {
     /**
-     * Re-use the {@link EMPTY_VALUE} to avoid having to declare another symbol. 
+     * Re-use the {@link EMPTY_VALUE} to avoid having to declare another symbol.
      * This is fine, as the method will never return this symbol a resolved value.
      */
     const response = this.getManyOrDefault(identifier, EMPTY_VALUE, recursive);
@@ -536,7 +536,7 @@ export class ContainerInstance implements Disposable {
    * Gets all instances registered in the container of the given service identifier,
    * or the default value if no instances could be found.
    * Used when service are defined with the `{ multiple: true }` option.
-   * 
+   *
    * @typeParam U The type of the provided default value.
    *
    * @see {@link ContainerInstance.getManyOrNull}
@@ -550,7 +550,11 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public getManyOrDefault<U, T = unknown>(identifier: ServiceIdentifier<T>, defaultValue: U, recursive = true): T[] | U {
+  public getManyOrDefault<U, T = unknown>(
+    identifier: ServiceIdentifier<T>,
+    defaultValue: U,
+    recursive = true
+  ): T[] | U {
     this[THROW_IF_DISPOSED]();
 
     let idMap: ManyServicesMetadata | void = undefined;
@@ -1115,19 +1119,20 @@ export class ContainerInstance implements Disposable {
        * Without a factory, this would cause an error, as TypeDI would be unable to resolve "Number".
        * However, we assume that the factory knows the service's dependencies ahead of time, and
        * therefore the declaration of a built-in dependency is just for type-checking.
-       * 
-       * The dependencies of the service are passed as objects (using C++ lingo, rvalues) that 
+       *
+       * The dependencies of the service are passed as objects (using C++ lingo, rvalues) that
        * include both the ID of the dependency alongside its declared constraints, if any.
        * One important note is that the dependency *itself* is never resolved in the container.
        */
-      const parameters = serviceMetadata.dependencies.map(resolvable => 
-          ({ id: this.resolveTypeWrapper(resolvable.typeWrapper), constraints: resolvable.constraints })
-      );
+      const parameters = serviceMetadata.dependencies.map(resolvable => ({
+        id: this.resolveTypeWrapper(resolvable.typeWrapper),
+        constraints: resolvable.constraints,
+      }));
 
       /**
-       * If we received the factory in the [Constructable<Factory>, "functionName"] format, 
+       * If we received the factory in the [Constructable<Factory>, "functionName"] format,
        * we need to create the factory first and then call the specified function on it.
-       * 
+       *
        * One aspect of the implementation worthy of mention is that we pass a few arguments
        * to the factory function (or method) declared.
        * Currently, the arguments are as follows:
@@ -1157,7 +1162,7 @@ export class ContainerInstance implements Disposable {
        * If no factory was provided, we resolve the parameters and set the
        * `guardBuiltIns` parameter to `true`.  This makes the resolver throw
        * if it encounters a reference to a built-in constructor.
-       * 
+       *
        * @see {@link CannotInstantiateBuiltInError}
        */
       const parameters = this.getConstructorParameters(serviceMetadata, true);

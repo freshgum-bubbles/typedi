@@ -9,15 +9,15 @@ export interface Disposable {
 
   /**
    * Dispose the object.
-   * 
+   *
    * @returns Either void, or a promise which settles upon
    * completion of the disposal process.
-   * 
+   *
    * @throws Error
    * This exception may be thrown in the case of an error
    * encountered during the process of disposing the object.
    * The type of error thrown is unknown.
-   * 
+   *
    * @privateRemarks
    * As this is a semi-internal type which we cast objects to,
    * we have no control over the return type. Thus, the return
