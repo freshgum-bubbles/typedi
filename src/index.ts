@@ -25,6 +25,7 @@ export { Service } from './decorators/service.decorator';
 
 export * from './error/cannot-instantiate-builtin-error';
 export * from './error/cannot-instantiate-value.error';
+export * from './error/container-registry-error.error';
 export * from './error/service-not-found.error';
 
 export { HostContainer } from './functions/host-container.function';
