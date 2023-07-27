@@ -22,6 +22,7 @@ import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.e
  * Marks class as a service that can be injected using Container.
  * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
  * By default, the service shall be registered upon the `defaultContainer` container.
+ * @public
  *
  * @remarks
  * **This ia a TypeScript decorator.**
@@ -37,7 +38,7 @@ import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.e
  * }
  * ```
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
@@ -51,6 +52,7 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
+ * @public
  *
  * @remarks
  * **This ia a TypeScript decorator.**
@@ -68,10 +70,10 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * }
  * ```
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
@@ -90,6 +92,7 @@ export function Service<T = unknown>(
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
+ * @public
  *
  * @remarks
  * **This ia a TypeScript decorator.**
@@ -107,7 +110,7 @@ export function Service<T = unknown>(
  * }
  * ```
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  * The options must also contain the dependencies that the service requires.
  *
@@ -120,6 +123,8 @@ export function Service<T = unknown>(
  * @returns A decorator which is then used upon a class.
  */
 export function Service(options: ServiceOptionsWithDependencies<Constructable<unknown>>): ClassDecorator;
+
+/** @public */
 export function Service<T>(
   optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]

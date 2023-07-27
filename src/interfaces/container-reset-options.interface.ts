@@ -1,5 +1,6 @@
 /**
  * The strategy to use when resetting a container.
+ * @public
  */
 export const enum ContainerResetStrategy {
   /**
@@ -26,11 +27,16 @@ export const enum ContainerResetStrategy {
 
 /**
  * Options to pass when resetting a container.
+ * @public
  */
 export interface ContainerResetOptions {
   /**
    * The reset strategy to use.
    * @see {@link ContainerResetStrategy} for a list of possible options.
+   *
+   * @remarks
+   * While the use of {@link ContainerResetStrategy} is advised, backwards
+   * compatibility is provided for usage with a string-based strategy.
    */
   strategy: ContainerResetStrategy | 'resetValue' | 'resetServices';
 }

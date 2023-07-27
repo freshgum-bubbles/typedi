@@ -8,11 +8,11 @@ import { ServiceIdentifier } from './types/service-identifier.type';
  * A collection of individual visitor objects, combined into a collection.
  * This class implements the {@link ContainerTreeVisitor} interface
  * (modulo {@link ContainerTreeVisitor.visitContainer}).
- *
+ * @internal
+ * 
  * When an event is dispatched upon the collection, all attached
  * visitors will be notified in the order in which they were
  * added to the collection.
- * @experimental
  *
  * @example
  * ```ts
@@ -56,7 +56,7 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
    * Iterate the list of visitors, excluding any which have been disposed.
    * Does not perform any iteration if no visitors are present.
    *
-   * @param callback A function to call for each visitor in the collection.
+   * @param callback - A function to call for each visitor in the collection.
    */
   public forEach(callback: { (visitor: ContainerTreeVisitor): void }) {
     if (this.notifyVisitors) {
@@ -93,8 +93,8 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
    * Add a visitor to the collection.
    * @experimental
    *
-   * @param visitor The visitor to append to the collection.
-   * @param container The container to initialise the container on.
+   * @param visitor - The visitor to append to the collection.
+   * @param container - The container to initialise the container on.
    */
   addVisitor(visitor: ContainerTreeVisitor, container: ContainerInstance) {
     /** If the visitor is already present, do not add another. */
@@ -150,7 +150,7 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
    * if it was already present.
    * @experimental
    *
-   * @param visitor The visitor to remove from the collection.
+   * @param visitor - The visitor to remove from the collection.
    */
   removeVisitor(visitor: ContainerTreeVisitor) {
     const indexOfVisitor = this.visitors.indexOf(visitor);

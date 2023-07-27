@@ -1,9 +1,12 @@
 /**
  * Generic type for class definitions.
- * Example usage:
- * ```
+ * @public
+ * 
+ * @example
+ * Here is an example of how to use this type:
+ * ```ts
  * function createSomeInstance(myClassDefinition: Constructable<MyClass>) {
- *   return new myClassDefinition()
+ *   return new myClassDefinition();
  * }
  * ```
  */

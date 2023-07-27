@@ -5,6 +5,7 @@ import { HOST_CONTAINER } from '../constants/host-container.const';
  * the service is currently being executed under.
  * Optionally, combined with resolution contraints such as SkipSelf,
  * this could be used to attain a reference to parent containers.
+ * @public
  *
  * @example
  * An example of this can be found below:

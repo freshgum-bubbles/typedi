@@ -73,6 +73,7 @@ import { ContainerInstance } from '../container-instance.class';
 /**
  * A description of how TypeDI should react when a container
  * with the specified ID already exists in the registry.
+ * @public
  *
  * There are three possible values:
  *   - `throw`: Throw an error upon conflict.
@@ -113,6 +114,7 @@ export type ContainerConflictStrategy = 'throw' | 'null' | 'returnExisting';
 /**
  * A description of how TypeDI should react when a container
  * with the specified ID does not already exist in the registry.
+ * @public
  *
  * There are three possible values:
  *   - `throw`: Throw an error.
@@ -137,6 +139,7 @@ export type ContainerFreeStrategy = 'throw' | 'null' | 'returnNew';
 /**
  * A definition of what constitutes a conflict in the case of a pre-existing container
  * with the same ID as the one passed to a container creation method.
+ * @public
  *
  * There are two possible values:
  *   - `rejectAll`: If a container already exists, immediately reject it. **This is the default.**
@@ -146,6 +149,10 @@ export type ContainerConflictDefinition = 'rejectAll' | 'allowSameParent';
 
 /**
  * A set of options to supplement the container creation process.
+ * @public
+ * 
+ * @see {@link ContainerInstance.of}
+ * @see {@link ContainerInstance.ofChild}
  */
 export interface CreateContainerOptions {
   /**

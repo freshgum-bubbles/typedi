@@ -13,13 +13,13 @@ import { Service } from './service.decorator';
  * Marks class as a service that can be injected using Container.
  * Uses the default options, wherein the class can be passed to `.get` and an instance of it will be returned.
  * By default, the service shall be registered upon the `defaultContainer` container.
- * @experimental
+ * @public
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
- * @param constructor The constructor of the service to inject.
+ * @param constructor - The constructor of the service to inject.
  *
  * @returns The constructor.
  */
@@ -29,16 +29,16 @@ export function JSService<T extends AnyConstructable>(dependencies: AnyServiceDe
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
- * @experimental
+ * @public
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  *
- * @param dependencies The dependencies to provide upon initialisation of this service.
+ * @param dependencies - The dependencies to provide upon initialisation of this service.
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
- * @param constructor The constructor of the service to inject.
+ * @param constructor - The constructor of the service to inject.
  *
  * @returns The constructor.
  */
@@ -52,9 +52,9 @@ export function JSService<T extends AnyConstructable>(
  * Marks class as a service that can be injected using Container.
  * The options allow customization of how the service is injected.
  * By default, the service shall be registered upon the `defaultContainer` container.
- * @experimental
+ * @public
  *
- * @param options The options to use for initialisation of the service.
+ * @param options - The options to use for initialisation of the service.
  * Documentation for the options can be found in ServiceOptions.
  * The options must also contain the dependencies that the service requires.
  *
@@ -62,7 +62,7 @@ export function JSService<T extends AnyConstructable>(
  * These will be provided to the service as arguments to its constructor.
  * They must be valid identifiers in the container the service shall be executed under.
  *
- * @param constructor The constructor of the service to inject.
+ * @param constructor - The constructor of the service to inject.
  *
  * @returns The constructor.
  */
@@ -71,6 +71,7 @@ export function JSService<T extends AnyConstructable>(
   constructor: T
 ): T;
 
+/** @public */
 export function JSService<T extends Constructable<unknown>>(
   optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   dependenciesOrConstructor: AnyInjectIdentifier[] | T,

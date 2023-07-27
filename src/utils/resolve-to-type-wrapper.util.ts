@@ -8,9 +8,10 @@ import { isLazyReference } from './is-lazy-reference.util';
 /**
  * Helper function used in the injection-related decorators to resolve the received identifier to
  * an eager type when possible or to a lazy type when cyclic dependencies are possibly involved.
+ * @private
  *
- * @param typeOrIdentifier a service identifier or a function returning a type acting as service identifier or nothing
- * @param target the class definition of the target of the decorator
+ * @param typeOrIdentifier - a service identifier or a function returning a type acting as service identifier or nothing
+ * @param target - the class definition of the target of the decorator
  */
 export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): TypeWrapper {
   /**

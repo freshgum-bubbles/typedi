@@ -3,8 +3,8 @@ import { Constructable } from './constructable.type';
 import { AbstractConstructable } from './abstract-constructable.type';
 
 /**
- * Unique service identifier.
- * Can be some class type, or string id, or instance of Token.
+ * An identifier which can be stored as a key for a given service or value.
+ * @public
  */
 export type ServiceIdentifier<T = unknown> =
   | Constructable<T>

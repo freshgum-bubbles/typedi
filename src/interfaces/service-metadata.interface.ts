@@ -12,10 +12,9 @@ export interface ServiceMetadata<Type = unknown> {
   id: ServiceIdentifier;
 
   /**
-   * The injection scope for the service.
-   *   - a `singleton` service always will be created in the default container regardless of who registering it
-   *   - a `container` scoped service will be created once when requested from the given container
-   *   - a `transient` service will be created each time it is requested
+   * The injection scope of a given service within its container.
+   * 
+   * @see {@link ContainerScope}
    */
   scope: ContainerScope;
 
