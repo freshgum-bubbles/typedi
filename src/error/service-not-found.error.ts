@@ -2,7 +2,15 @@ import { ServiceIdentifier } from '../types/service-identifier.type';
 import { Token } from '../token.class';
 
 /**
- * Thrown when requested service was not found.
+ * Thrown when a container could not find the requested service.
+ * 
+ * @example
+ * Here is an example:
+ * ```ts
+ * const unknownToken = new Token<string>();
+ * Container.get(unknownToken);
+ * // A ServiceNotFoundError was thrown.
+ * ```
  *
  * @group Errors
  */
