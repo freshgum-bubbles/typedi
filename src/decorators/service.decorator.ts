@@ -168,12 +168,6 @@ export function Service<T>(
 
     if (!Array.isArray(optionsOrDependencies)) {
       metadata = { ...metadata, ...optionsOrDependencies };
-
-      /**
-       * Remove the decorators from the options forcibly.
-       * Otherwise, our type-wrapped dependencies passed to ContainerInstance.set are ignored.
-       */
-      delete (metadata as any).dependencies;
     }
 
     const wrappedDependencies = resolvedDependencies.map((dependency, index) =>
