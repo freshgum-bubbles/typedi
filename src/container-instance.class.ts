@@ -1213,6 +1213,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Resolve a {@link Resolvable} object in the current container.
+   * @internal
    *
    * @param resolvable - The {@link Resolvable} to resolve.
    *
