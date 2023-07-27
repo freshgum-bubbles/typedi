@@ -113,6 +113,7 @@ export class ContainerInstance implements Disposable {
   /**
    * The default global container. By default services are registered into this
    * container when registered via `Container.set()` or `@Service` decorator.
+   * @public
    */
   public static readonly defaultContainer = new ContainerInstance('default');
 
