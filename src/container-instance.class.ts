@@ -409,8 +409,8 @@ export class ContainerInstance implements Disposable {
       };
 
       /**
-       * Import it into the current container, and then recursively 
-       * call .getOrNull which takes the local path instead of 
+       * Import it into the current container, and then recursively
+       * call .getOrNull which takes the local path instead of
        * dealing with upstream metadata.
        */
       const newServiceID = this.set(newServiceMetadata, [...baseMetadata.dependencies]);
@@ -641,12 +641,12 @@ export class ContainerInstance implements Disposable {
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
-   * 
+   *
    * @throws {@link CannotInstantiateBuiltInError}
    * This exception is thrown if the service references a built-in type,
    * such as Number or String, without an accompanying factory.
    * These are considered invalid, as the container has no way to instantiate them.
-   * 
+   *
    * @throws {@link CannotInstantiateValueError}
    * This exception is thrown if a dependency of the service cannot be instantiated.
    * A `typeof` check on a dependency should always result in one of the following:

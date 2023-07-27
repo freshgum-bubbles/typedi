@@ -76,13 +76,13 @@ describe('Container', function () {
       Container.set({
         id: 'first.service',
         dependencies: [String],
-        factory: () => new TestService('first')
+        factory: () => new TestService('first'),
       });
 
       Container.set({
         id: 'second.service',
         dependencies: [String],
-        factory: () => new TestService('second')
+        factory: () => new TestService('second'),
       });
 
       expect(Container.get<TestService>('first.service').name).toBe('first');
@@ -115,7 +115,7 @@ describe('Container', function () {
       Container.set({
         id: TestToken,
         dependencies: [String],
-        factory: () => new TestService('first')
+        factory: () => new TestService('first'),
       });
 
       expect(Container.get(TestToken).name).toBe('first');
@@ -123,7 +123,7 @@ describe('Container', function () {
       Container.set({
         id: TestToken,
         dependencies: [String],
-        factory: () => new TestService('second')
+        factory: () => new TestService('second'),
       });
 
       expect(Container.get(TestToken).name).toBe('second');

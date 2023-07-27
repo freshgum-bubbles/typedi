@@ -33,7 +33,7 @@ export interface ServiceMetadata<Type = unknown> {
    * or other service which produces this instance ([CarFactory, "createCar"] for example).
    *
    * If any dependencies were declared, these are passed to the factory.
-   * 
+   *
    * @see {@link ServiceFactory}
    */
   factory?: [Constructable<unknown>, string] | ServiceFactory;

@@ -4,7 +4,7 @@ import { ServiceIdentifier } from './service-identifier.type';
 
 /**
  * A factory which creates an instance of a service.
- * 
+ *
  * @example
  * Here is an example:
  * ```ts
@@ -12,7 +12,7 @@ import { ServiceIdentifier } from './service-identifier.type';
  *   factory: () => new GreeterService('Joanna')
  * }, [String])
  * export class GreeterService {
- *   constructor (private subject: string) { } 
+ *   constructor (private subject: string) { }
  * }
  * ```
  */
