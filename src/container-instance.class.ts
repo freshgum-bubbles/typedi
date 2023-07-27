@@ -122,6 +122,7 @@ export class ContainerInstance implements Disposable {
    * These are conjoined into a container of individual visitors,
    * which implements the standard ContainerTreeVisitor interface,
    * and individual listeners can be added and removed at will.
+   * @internal
    *
    * @see {@link ContainerTreeVisitor}
    * @see {@link VisitorCollection}
