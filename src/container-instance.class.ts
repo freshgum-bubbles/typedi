@@ -1188,6 +1188,19 @@ export class ContainerInstance implements Disposable {
     return value;
   }
 
+  /**
+   * Get an array of parameters which can be passed to a constructor with
+   * the stated dependencies.  This is used when a factory is not provided.
+   * @internal
+   *
+   * @param metadata - The metadata of the service for which to construct arguments.
+   * @param guardBuiltIns - Whether references to built-ins within the dependencies array
+   * shall result in an error being thrown.
+   *
+   * @throws {@link CannotInstantiateBuiltInError}
+   * This exception is thrown if the `guardBuiltIns` parameter is set to `true`,
+   * and a built-in is referenced within the array of dependencies.
+   */
   private getConstructorParameters<T>({ dependencies }: ServiceMetadata<T>, guardBuiltIns: boolean): unknown[] {
     /**
      * We do not type-check the identifiers array here as we are the only ones
