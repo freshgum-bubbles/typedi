@@ -23,7 +23,6 @@ import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
 import { VisitorCollection } from './visitor-collection.class';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface';
 import { CreateContainerResult } from './types/create-container-result.type';
-import { formatClassName } from './utils/format-class-name';
 
 /**
  * A static variable containing "throwIfDisposed".
