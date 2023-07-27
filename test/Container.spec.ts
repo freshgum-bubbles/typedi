@@ -72,11 +72,18 @@ describe('Container', function () {
       class TestService {
         constructor(public name: string) {}
       }
-      const firstService = new TestService('first');
-      Container.set({ id: 'first.service', value: firstService, dependencies: [String] });
 
-      const secondService = new TestService('second');
-      Container.set({ id: 'second.service', value: secondService, dependencies: [String] });
+      Container.set({
+        id: 'first.service',
+        dependencies: [String],
+        factory: () => new TestService('first')
+      });
+
+      Container.set({
+        id: 'second.service',
+        dependencies: [String],
+        factory: () => new TestService('second')
+      });
 
       expect(Container.get<TestService>('first.service').name).toBe('first');
       expect(Container.get<TestService>('second.service').name).toBe('second');
@@ -105,15 +112,20 @@ describe('Container', function () {
       }
       const TestToken = new Token<TestService>();
 
-      const firstService = new TestService('first');
-      Container.set({ id: TestToken, value: firstService, dependencies: [String] });
-      expect(Container.get(TestToken)).toBe(firstService);
+      Container.set({
+        id: TestToken,
+        dependencies: [String],
+        factory: () => new TestService('first')
+      });
+
       expect(Container.get(TestToken).name).toBe('first');
 
-      const secondService = new TestService('second');
-      Container.set({ id: TestToken, value: secondService, dependencies: [String] });
+      Container.set({
+        id: TestToken,
+        dependencies: [String],
+        factory: () => new TestService('second')
+      });
 
-      expect(Container.get(TestToken)).toBe(secondService);
       expect(Container.get(TestToken).name).toBe('second');
     });
   });
