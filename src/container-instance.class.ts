@@ -43,9 +43,9 @@ import { CreateContainerResult } from './types/create-container-result.type';
 const THROW_IF_DISPOSED = 'throwIfDisposed';
 
 export const enum ServiceIdentifierLocation {
-  Local = 'local',
-  Parent = 'parent',
-  None = 'none',
+  Local = 0,
+  Parent,
+  None,
 }
 
 interface ManyServicesMetadata {
