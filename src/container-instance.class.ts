@@ -88,7 +88,10 @@ export class ContainerInstance implements Disposable {
   /** The ID of this container. This will always be unique. */
   public readonly id!: ContainerIdentifier;
 
-  /** Metadata for all registered services in this container. */
+  /**
+   * Metadata for all registered services in this container.
+   * @internal
+   */
   private readonly metadataMap: Map<ServiceIdentifier, ServiceMetadata<unknown>> = new Map();
 
   /**
