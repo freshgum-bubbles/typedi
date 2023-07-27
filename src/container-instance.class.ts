@@ -23,6 +23,7 @@ import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
 import { VisitorCollection } from './visitor-collection.class';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface';
 import { CreateContainerResult } from './types/create-container-result.type';
+import { formatClassName } from './utils/format-class-name';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -642,6 +643,19 @@ export class ContainerInstance implements Disposable {
    *
    * @throws Error
    * This exception is thrown if the container has been disposed.
+   * 
+   * @throws {@link CannotInstantiateBuiltInError}
+   * This exception is thrown if the service references a built-in type,
+   * such as Number or String, without an accompanying factory.
+   * These are considered invalid, as the container has no way to instantiate them.
+   * 
+   * @throws {@link CannotInstantiateValueError}
+   * This exception is thrown if a dependency of the service cannot be instantiated.
+   * A `typeof` check on a dependency should always result in one of the following:
+   *   - `"function"`: This would be for class or function-based services.
+   *   - `"string"`: Though discouraged, a string {@link ServiceIdentifier} can
+   *     be used to reference a given dependency in the container.
+   *   - `"object"`: This could be a {@link Token} or anything else.
    */
   public set<T = unknown>(serviceOptions: ServiceOptionsWithDependencies<T>): ServiceIdentifier;
   public set<T = unknown>(
@@ -687,7 +701,9 @@ export class ContainerInstance implements Disposable {
      */
     const dependencies: Resolvable[] =
       precompiledDependencies ??
-      (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map(wrapDependencyAsResolvable) ??
+      (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map((dependency, index) =>
+        wrapDependencyAsResolvable(dependency, serviceOptions, index)
+      ) ??
       [];
 
     const newMetadata: ServiceMetadata<T> = {

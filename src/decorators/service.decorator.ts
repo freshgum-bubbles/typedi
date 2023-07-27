@@ -154,8 +154,6 @@ export function Service<T>(
       throw Error('The dependencies provided were not able to be resolved.');
     }
 
-    const wrappedDependencies = resolvedDependencies.map(wrapDependencyAsResolvable);
-
     /**
      * A default list of options for this service.
      * These are used when the options are not explicitly provided to the function.
@@ -178,6 +176,10 @@ export function Service<T>(
       delete (metadata as any).dependencies;
     }
 
+    const wrappedDependencies = resolvedDependencies.map((dependency, index) =>
+      wrapDependencyAsResolvable(dependency, metadata, index)
+    );
+
     const { id, container } = metadata;
 
     /**
@@ -190,30 +192,6 @@ export function Service<T>(
         `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
       );
     }
-
-    /**
-     * Check any available eager types immediately, so we can quickly raise an error
-     * if they are invalid, instead of when the service is injected.
-     */
-    wrappedDependencies.forEach(({ typeWrapper }, index) => {
-      const { eagerType } = typeWrapper;
-
-      if (eagerType !== null) {
-        const type = typeof typeWrapper;
-
-        if (type !== 'function' && type !== 'object' && type !== 'string') {
-          throw new CannotInstantiateValueError(
-            `The identifier provided at index ${index} for service ${formatClassName(targetConstructor)} is invalid.`
-          );
-        } else if (metadata.factory == null && (BUILT_INS as unknown[]).includes(eagerType)) {
-          /**
-           * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
-           * without also holding a factory to manually create an instance of the constructor.
-           */
-          throw new CannotInstantiateBuiltInError((eagerType as Constructable<unknown>)?.name ?? eagerType);
-        }
-      }
-    });
 
     /**
      * The `.set(Omit<ServiceOptions<unknown>, "dependencies">, TypeWrapper[])` overload is used here.
