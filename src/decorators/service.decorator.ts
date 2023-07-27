@@ -12,11 +12,8 @@ import { ContainerInstance } from '../container-instance.class';
 import { formatClassName } from '../utils/format-class-name';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface';
 import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const';
-import { BUILT_INS } from '../constants/builtins.const';
-import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency';
-import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error';
 
 /**
  * Marks class as a service that can be injected using Container.
