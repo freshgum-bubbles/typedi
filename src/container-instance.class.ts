@@ -375,18 +375,25 @@ export class ContainerInstance implements Disposable {
      * <https://github.com/typestack/typedi/blob/8da3ef286299bca6bd7ddf4082268f422f700630/src/container-instance.class.ts#L94>
      */
     if (isUpstreamMetadata) {
+      /**
+       * If the service is a singleton, return it directly from the global container.
+       * We can safely assume it exists there.
+       *
+       * Note that we avoid caching singleton instances in the container.
+       */
+      if (baseMetadata.scope === 'singleton') {
+        return defaultContainer.getOrDefault<U, T>(identifier, defaultValue, recursive);
+      }
+
       let value: unknown;
 
       /**
        * If the type cannot be reconstructed  (i.e. it's a static value, possibly set via
        * {@link ContainerInstance.setValue}), do not erase the type in the new metadata.
-       *
-       * Furthermore, do not erase the value if the imported service is a singleton.
-       * This mirrors the behaviour of the prior implementation.
        */
       const isReconstructable = baseMetadata.factory != null || baseMetadata.type != null;
 
-      if (!isReconstructable || baseMetadata.scope === 'singleton') {
+      if (!isReconstructable) {
         value = baseMetadata.value;
       } else {
         value = EMPTY_VALUE;
@@ -402,17 +409,9 @@ export class ContainerInstance implements Disposable {
       };
 
       /**
-       * If the service is a singleton, return it directly from the global container.
-       * We can safely assume it exists there.
-       */
-      if (newServiceMetadata.scope === 'singleton') {
-        return defaultContainer.getOrDefault<U, T>(identifier, defaultValue, recursive);
-      }
-
-      /**
-       * If it's not a singleton, import it into the current container,
-       * and then recursively call .getOrNull which takes the local path
-       * instead of dealing with upstream metadata.
+       * Import it into the current container, and then recursively 
+       * call .getOrNull which takes the local path instead of 
+       * dealing with upstream metadata.
        */
       const newServiceID = this.set(newServiceMetadata, [...baseMetadata.dependencies]);
 
@@ -423,7 +422,7 @@ export class ContainerInstance implements Disposable {
        */
       this.isRetrievingPrivateToken = true;
 
-      const resolvedValue = this.getOrNull(newServiceID, recursive) as T;
+      const resolvedValue = this.getOrDefault<U, T>(newServiceID, defaultValue, recursive) as T;
 
       /** Reset the flag to its original value. */
       this.isRetrievingPrivateToken = false;
