@@ -1,7 +1,7 @@
 import {
   Self,
   SkipSelf,
-  Optional ,
+  Optional,
   Many
 } from '../functions/resolution-constraints.functions';
 
