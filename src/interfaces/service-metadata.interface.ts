@@ -1,6 +1,7 @@
 import { ContainerInstance } from '../container-instance.class';
 import { Constructable } from '../types/constructable.type';
 import { ContainerScope } from '../types/container-scope.type';
+import { ServiceFactory } from '../types/service-factory.type';
 import { ServiceIdentifier } from '../types/service-identifier.type';
 import { Resolvable } from './resolvable.interface';
 
@@ -32,8 +33,10 @@ export interface ServiceMetadata<Type = unknown> {
    * or other service which produces this instance ([CarFactory, "createCar"] for example).
    *
    * If any dependencies were declared, these are passed to the factory.
+   * 
+   * @see {@link ServiceFactory}
    */
-  factory: [Constructable<unknown>, string] | CallableFunction | undefined;
+  factory?: [Constructable<unknown>, string] | ServiceFactory;
 
   /**
    * Instance of the target class.
