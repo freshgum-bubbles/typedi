@@ -3,6 +3,7 @@ import { TypeWrapper } from '../types/type-wrapper.type';
 /**
  * An object containing an identifier, possibly with a strict set of constraints,
  * as defined in {@link ResolutionConstraintFlag}.
+ * @internal
  */
 export interface Resolvable {
   /**
