@@ -3,6 +3,7 @@ import { Token } from '../token.class';
 
 /**
  * Thrown when a container could not find the requested service.
+ * @public
  * 
  * @example
  * Here is an example:
