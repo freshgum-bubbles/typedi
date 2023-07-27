@@ -99,6 +99,7 @@ export class ContainerInstance implements Disposable {
    * with a generated token and the mapping between the original ID and the
    * generated one is stored here. This is handled like this to allow simplifying
    * the inner workings of the service instance.
+   * @internal
    */
   private readonly multiServiceIds: Map<ServiceIdentifier, ManyServicesMetadata> = new Map();
 
