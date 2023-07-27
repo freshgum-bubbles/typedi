@@ -56,6 +56,7 @@ export { ServiceIdentifier } from './types/service-identifier.type';
 export { LazyReference } from './types/lazy-reference.type';
 export { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from './types/resolution-constraint.type';
 
+export { ContainerRegistry } from './container-registry.class';
 export { ContainerInstance } from './container-instance.class';
 export { Token } from './token.class';
 
