@@ -84,7 +84,7 @@
     "rollup": "^3.26.3",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "type-fest": "^4.0.0",
+    "type-fest": "^4.1.0",
     "typescript": "^5.1.6"
   }
 }
