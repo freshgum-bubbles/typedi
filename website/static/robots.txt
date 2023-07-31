@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /docs/meta/contributing
-Disallow: /docs/meta/code-of-conduct
-Disallow: /docs/meta/license
