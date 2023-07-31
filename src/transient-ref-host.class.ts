@@ -1,6 +1,6 @@
 import { ServiceIdentifier } from "../dist/injector";
 import { ContainerInstance } from "./container-instance.class";
-import { InferServiceType } from "./types/infer-service-type.type";
+import { InferServiceType } from "./types/infer-service-type.type.mjs";
 
 /**
  * A helper object for managing instances of transient services.
