@@ -1,3 +1,15 @@
+/**
+ * We need some imports to make it easier for API Extractor to resolve
+ * references to symbols referenced in TSDoc tags.
+ * 
+ * The ESLint ignore here is justified, as the TypeScript compiler
+ * does not flag it as an error (as it seems to scan TSDoc for references).
+ */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Service } from './decorators/service.decorator';
+import { JSService } from './decorators/js-service.decorator';
+/* eslint-enable @typescript-eslint/no-unused-vars */
+
 import { ContainerRegistry } from './container-registry.class';
 import { ServiceNotFoundError } from './error/service-not-found.error';
 import { CannotInstantiateValueError } from './error/cannot-instantiate-value.error';
@@ -113,7 +125,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * The default global container. By default services are registered into this
-   * container when registered via `Container.set()` or `@Service` decorator.
+   * container when registered via `Container.set()` or {@link Service} decorator.
    * @public
    */
   public static readonly defaultContainer = new ContainerInstance('default');
