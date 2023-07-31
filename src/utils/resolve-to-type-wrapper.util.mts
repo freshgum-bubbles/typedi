@@ -1,10 +1,8 @@
+import { TYPE_WRAPPER } from '../constants/type-wrapper.const.mjs';
 import { Token } from '../token.class.mjs';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
-import { LazyReference } from '../types/lazy-reference.type.mjs';
-import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
 import { TypeWrapper } from '../types/type-wrapper.type.mjs';
-import { isInjectedFactory } from './is-inject-identifier.util.mjs';
-import { isLazyReference } from './is-lazy-reference.util.mjs';
+import { isTypeWrapper } from './is-type-wrapper.util.mjs';
 
 /**
  * Helper function used in the injection-related decorators to resolve the received identifier to
@@ -27,19 +25,20 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
   const inputType = typeof typeOrIdentifier;
 
   /** If requested type is explicitly set via a string ID or token, we set it explicitly. */
-  if (typeOrIdentifier && (inputType === 'string' || inputType === 'function' || typeOrIdentifier instanceof Token)) {
-    typeWrapper = {
-      eagerType: typeOrIdentifier as ServiceIdentifier,
-      lazyType: () => typeOrIdentifier as ServiceIdentifier,
-      isFactory: false,
-    };
-  } else if (typeof typeOrIdentifier === 'object' && isInjectedFactory(typeOrIdentifier)) {
-    /** If requested type is an injected factory, we set it explicitly. */
-    typeWrapper = { eagerType: null, factory: typeOrIdentifier, isFactory: true };
-  } else if (typeOrIdentifier && isLazyReference(typeOrIdentifier as object)) {
-    /** If requested type is explicitly set via a LazyReference, we set it explicitly. */
-    /** We set eagerType to null, preventing the raising of the CannotInjectValueError in decorators.  */
-    typeWrapper = { eagerType: null, lazyType: () => (typeOrIdentifier as LazyReference<any>).get(), isFactory: false };
+  if (
+    typeOrIdentifier &&
+    (typeof typeOrIdentifier === 'string' ||
+      typeOrIdentifier instanceof Token ||
+      typeof typeOrIdentifier === 'function')
+  ) {
+    typeWrapper = { $$$: TYPE_WRAPPER, eagerType: typeOrIdentifier, lazyType: () => typeOrIdentifier };
+  } else if (typeof typeOrIdentifier === 'object' && isTypeWrapper(typeOrIdentifier)) {
+    /**
+     * Any arguments which are type-wrappers shouldn't be modified; instead, they should
+     * be directly passed to the caller.
+     * This allows for functions such as {@link Lazy} and {@link TransientRef} to function.
+     */
+    return typeOrIdentifier;
   }
 
   return typeWrapper;

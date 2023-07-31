@@ -15,7 +15,7 @@ import { EMPTY_VALUE } from './constants/empty.const.mjs';
 import { ContainerIdentifier } from './types/container-identifier.type.mjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ContainerScope } from './types/container-scope.type.mjs';
-import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type.mjs';
+import { TypeWrapper } from './types/type-wrapper.type.mjs';
 import { Disposable } from './types/disposable.type.mjs';
 import { BUILT_INS } from './constants/builtins.const.mjs';
 import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error.mjs';
@@ -1349,7 +1349,7 @@ export class ContainerInstance implements Disposable {
      * Therefore, it can be safely assumed that if the key is present, the correct
      * data will also be present.
      */
-    return dependencies.map(wrapper => this.resolveResolvable(wrapper, guardBuiltIns));
+    return dependencies.map(resolvable => this.resolveResolvable(resolvable, guardBuiltIns));
   }
 
   /**
@@ -1360,6 +1360,8 @@ export class ContainerInstance implements Disposable {
    * @returns The resolved value of the item.
    */
   private resolveResolvable(resolvable: Resolvable, guardBuiltIns: boolean): unknown {
+    const { typeWrapper } = resolvable;
+
     const identifier = this.resolveTypeWrapper(resolvable.typeWrapper);
 
     /**
@@ -1434,6 +1436,11 @@ export class ContainerInstance implements Disposable {
         throw new ServiceNotFoundError(identifier);
       }
 
+      // todo: this probably means we need to check many: true in Lazy
+      if ('unpack' in typeWrapper) {
+        return typeWrapper.unpack!(targetContainer, constraints);
+      }
+
       if (isMany) {
         /** If we're in isMany mode, resolve the identifier via `getMany`. */
         resolvedIdentifier = targetContainer.getMany(identifier, recursive);
@@ -1458,8 +1465,12 @@ export class ContainerInstance implements Disposable {
      */
     /** ESLint removes the cast, which causes a compilation error: */
     // eslint-disable-next-line
-    const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
+    const resolved = wrapper.eagerType ?? (wrapper as TypeWrapper).lazyType?.();
 
+    /**
+     * This should never be hit unless the caller has elided TypeScript
+     * and hand-crafted a TypeWrapper, which is not recommended.
+    */
     /* istanbul ignore next */
     if (resolved == null) {
       throw Error(`The wrapped value could not be resolved.`);
