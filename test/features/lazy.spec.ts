@@ -26,16 +26,13 @@ describe('Lazy()', function () {
 
   it('should be compatible with resolution constraints', () => {
     const LOCATION = new Token<Location>();
-    
+
     enum Location {
       Parent,
-      Child
+      Child,
     }
 
-    @Service([
-      [Lazy(() => LOCATION), SkipSelf()],
-      Lazy(() => LOCATION)
-    ])
+    @Service([[Lazy(() => LOCATION), SkipSelf()], Lazy(() => LOCATION)])
     class MyService {
       constructor(public skipSelfLocation: Location, public selfLocation: Location) {}
     }

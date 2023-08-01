@@ -31,7 +31,11 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
       typeOrIdentifier instanceof Token ||
       typeof typeOrIdentifier === 'function')
   ) {
-    typeWrapper = { [TYPE_WRAPPER]: TypeWrapperStamp.Generic, eagerType: typeOrIdentifier, lazyType: () => typeOrIdentifier };
+    typeWrapper = {
+      [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
+      eagerType: typeOrIdentifier,
+      lazyType: () => typeOrIdentifier,
+    };
   } else if (typeof typeOrIdentifier === 'object' && isTypeWrapper(typeOrIdentifier)) {
     /**
      * Any arguments which are type-wrappers shouldn't be modified; instead, they should

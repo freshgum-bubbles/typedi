@@ -5,12 +5,15 @@ import { ResolutionConstraintFlag } from './resolution-constraint.type.mjs';
 import { ServiceIdentifier } from './service-identifier.type.mjs';
 import { TYPE_WRAPPER } from '../constants/type-wrapper.const.mjs';
 
-export interface TypeWrapper<TIdentifier extends ServiceIdentifier = ServiceIdentifier, TInstance = InferServiceType<TIdentifier>> {
+export interface TypeWrapper<
+  TIdentifier extends ServiceIdentifier = ServiceIdentifier,
+  TInstance = InferServiceType<TIdentifier>
+> {
   /**
-   * The {@link TYPE_WRAPPER} symbol acts as a stamp to allow us to duck-type checks 
-   * for TypeWrapper objects instead of checking each member (lazyType, eagerType, etc.), 
+   * The {@link TYPE_WRAPPER} symbol acts as a stamp to allow us to duck-type checks
+   * for TypeWrapper objects instead of checking each member (lazyType, eagerType, etc.),
    * which would cause drops in runtime performance.
-   * 
+   *
    * We use the number 1 because it saves a few bytes in the bundle.
    * When we check this property, we don't really care about its value, we just care
    * that it exists.
