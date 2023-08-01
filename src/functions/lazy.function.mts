@@ -14,6 +14,6 @@ export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferSer
   return {
     [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
     lazyType: fn,
-    unpack: container => container.get(fn()) as unknown as TInstance,
+    unpack: container => container.get(fn()) as TInstance,
   };
 }
