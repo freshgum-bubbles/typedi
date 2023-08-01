@@ -1,20 +1,21 @@
+import { TypeWrapperStamp } from '../constants/type-wrapper.const.mjs';
 import { ContainerInstance } from '../container-instance.class.mjs';
 import { InferServiceType } from './infer-service-type.type.mjs';
 import { ResolutionConstraintFlag } from './resolution-constraint.type.mjs';
 import { ServiceIdentifier } from './service-identifier.type.mjs';
+import { TYPE_WRAPPER } from '../constants/type-wrapper.const.mjs';
 
 export interface TypeWrapper<TIdentifier extends ServiceIdentifier = ServiceIdentifier, TInstance = InferServiceType<TIdentifier>> {
   /**
-   * Choose a really random identifier that pretty much nobody is going to use.
-   * We need to do this as, if we don't, {@link isTypeWrapper} might return true
-   * for values which aren't actually of type TypeWrapper.
+   * The {@link TYPE_WRAPPER} symbol acts as a stamp to allow us to duck-type checks 
+   * for TypeWrapper objects instead of checking each member (lazyType, eagerType, etc.), 
+   * which would cause drops in runtime performance.
    * 
-   * The "symbol" referenced here is {@link TYPE_WRAPPER}, which acts as
-   * a stamp to allow us to duck-type checks for TypeWrapper objects instead of
-   * checking each member (lazyType, eagerType, etc.), which would cause drops
-   * in runtime performance.
+   * We use the number 1 because it saves a few bytes in the bundle.
+   * When we check this property, we don't really care about its value, we just care
+   * that it exists.
    */
-  readonly $$$: symbol;
+  readonly [TYPE_WRAPPER]: TypeWrapperStamp.Generic;
 
   eagerType?: ServiceIdentifier | undefined;
   lazyType: () => TIdentifier;
