@@ -92,6 +92,17 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      announcementBar: {
+        // Not really sure what the ID does here, but guessing it's just for the DOM.
+        id: 'global_announcement',
+
+        // Add in a disclaimer about the documentation being alpha.
+        content: 'This documentation is mostly complete, though lacking in some areas. Any incomplete sections are greyed out.',
+
+        // We want to make sure people don't accidentally close it.
+        isCloseable: false
+      },
+
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
