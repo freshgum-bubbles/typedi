@@ -43,6 +43,12 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+/** Custom styles for the announcement bar. */
+#__docusaurus > div[role="banner"] {
+  background-color: var(--ifm-background-color-emphasis-2);
+  color: unset;
+}
+
 /** 
  * CSS for highlighting errors in Markdown.
  * See: <https://docusaurus.io/docs/markdown-features/code-blocks#custom-magic-comments>
