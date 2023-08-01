@@ -1438,6 +1438,12 @@ export class ContainerInstance implements Disposable {
 
       // todo: this probably means we need to check many: true in Lazy
       if ('unpack' in typeWrapper) {
+        /**
+         * We use a non-null assertion here because using the nullish operator
+         * would induce additional runtime cost. As we've done the `in` check
+         * above, we don't need to guard access to this member.
+         */
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return typeWrapper.unpack!(targetContainer, constraints);
       }
 
