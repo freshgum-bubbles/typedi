@@ -1,4 +1,4 @@
-import { TYPE_WRAPPER } from "../constants/type-wrapper.const.mjs";
+import { TYPE_WRAPPER, TypeWrapperStamp } from "../constants/type-wrapper.const.mjs";
 import { ServiceIdentifier } from "../index.mjs";
 import { InferServiceType } from "../types/infer-service-type.type.mjs";
 import { TypeWrapper } from "../types/type-wrapper.type.mjs";
@@ -12,7 +12,7 @@ export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferSer
   fn: () => TIdentifier
 ): TypeWrapper<TIdentifier, TInstance> {
   return {
-    $$$: TYPE_WRAPPER,
+    [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
     lazyType: fn,
     unpack: container => container.get(fn()) as unknown as TInstance,
   };
