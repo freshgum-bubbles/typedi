@@ -98,7 +98,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * For a variant which instead returns null if the ID cannot be found, use {@link TransientRefHost.createOrNull}.
      */
     create (): TInstance {
-        return this.container.get(this.id) as unknown as TInstance;
+        return this.container.get(this.id)  as TInstance;
     }
 
     /**
@@ -117,6 +117,6 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * For a variant which throws an error if the ID cannot be found, use {@link TransientRefHost.create}.
      */
     createOrNull (): TInstance | null {
-        return this.container.getOrNull(this.id) as unknown as TInstance;
+        return this.container.getOrNull(this.id)  as TInstance;
     }
 }
