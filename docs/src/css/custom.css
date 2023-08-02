@@ -77,6 +77,11 @@
   border-left: 3px solid #0073ff62;
 }
 
-.sidebar_doc_incomplete {
+/* Only show incomplete pages in development. */
+[data-environment="development"] .sidebar_doc_incomplete {
   opacity: 55%;
+}
+
+[data-environment="production"] .sidebar_doc_incomplete {
+  display: none;
 }
