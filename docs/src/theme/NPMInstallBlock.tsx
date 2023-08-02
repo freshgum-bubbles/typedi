@@ -55,7 +55,7 @@ const packageManagers: PackageManager[] = [
   },
 ];
 
-export function NPMInstallBlock(props: Props) {
+export default function NPMInstallBlock(props: Props) {
   function renderPackageManager(packageManager: PackageManager) {
     const { storageKey, format, name } = packageManager;
     const formattedCommand = format(props);
