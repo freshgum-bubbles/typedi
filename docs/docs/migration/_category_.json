@@ -1,4 +1,5 @@
 {
     "label": "Migration",
-    "position": 4
+    "position": 4,
+    "className": "sidebar_doc_incomplete"
   }
