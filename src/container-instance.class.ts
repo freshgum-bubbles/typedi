@@ -668,7 +668,7 @@ export class ContainerInstance implements Disposable {
      * If so, we can't reasonably allow this service to be set.
      */
     if (ALWAYS_RESOLVABLE.includes((serviceOptions as any).id as ServiceIdentifier)) {
-      throw Error('Virtual identifiers can not be overriden.');
+      throw Error('Virtual identifiers can not be overridden.');
     }
 
     /**
@@ -907,7 +907,7 @@ export class ContainerInstance implements Disposable {
             false;
 
       if (!containerMatches) {
-        /** Note: 'returnExisting' is deliberarely ignored here, as that is the default logic. */
+        /** Note: 'returnExisting' is deliberately ignored here, as that is the default logic. */
         if (onConflict === 'null') {
           /**
            * The cast here is correct.
