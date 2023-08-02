@@ -28,6 +28,14 @@ const config = {
   tagline: 'Elegant Dependency Injection in JavaScript and TypeScript.',
   favicon: 'img/favicon.ico',
 
+  staticDirectories: [
+    // "static"
+  ],
+
+  "clientModules": [
+    
+  ],
+
   markdown: {
     mermaid: true
   },
