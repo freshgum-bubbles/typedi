@@ -29,7 +29,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   staticDirectories: [
-    // "static"
+    "static"
   ],
 
   "clientModules": [
