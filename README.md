@@ -1,6 +1,6 @@
 # TypeDI<sup>++</sup>
 
-![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@typed-inject/injector) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)](https://64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app/) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
+![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)](https://64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app/) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
 _Elegant Dependency Injection in JavaScript and TypeScript._
 
@@ -16,7 +16,7 @@ _Elegant Dependency Injection in JavaScript and TypeScript._
 _Dependency Injection in 23 lines:_
 
 ```ts
-import { Service, Container } from '@typed-inject/injector';
+import { Service, Container } from '@freshgum/typedi';
 
 // Make a service that logs a message to the console.
 @Service([])

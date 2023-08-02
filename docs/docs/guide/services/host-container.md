@@ -30,7 +30,7 @@ The HostContainer function returns a Token which, when passed to a DI container,
 resolves to the container itself. This means that the returned Token from `HostContainer` can also be passed to `Container.get`.
 
 ```ts
-import { ContainerInstance, HostContainer, Service } from '@typed-inject/injector';
+import { ContainerInstance, HostContainer, Service } from '@freshgum/typedi';
 
 @Service([
   // highlight-revision-start

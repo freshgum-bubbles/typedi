@@ -10,7 +10,7 @@ However, to make it _easier_ to make use of it in JavaScript, a [`JSService`][js
 As an example of how to use it, let's tweak the logging service we made in the [Hello World! example](../../examples/hello-world.md):
 
 ```js title="src/log.service.js"
-import { JSService } from '@typed-inject/injector';
+import { JSService } from '@freshgum/typedi';
 
 export const LogService = JSService(
   [],
@@ -23,7 +23,7 @@ export const LogService = JSService(
 ```
 
 ```ts title="src/root.service.js"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 
 export const RootService = JSService(
   [LogService],
@@ -70,7 +70,7 @@ Cleverly, the `JSService` import is actually _two_ imports: one for the function
 The type allows you to wrap the service in the type to elide type errors, like so:
 
 ```ts title="src/example.ts"
-import { JSService } from '@typed-inject/injector';
+import { JSService } from '@freshgum/typedi';
 import { LogService } from './log.service';
 
 const logService: JSService<typeof LogService> = new LogService();
@@ -92,7 +92,7 @@ This lets us take advantage of TypeDI in ES5 environments without any transpilat
 As an example, let's change the `LogService` we made above to the following:
 
 ```js title="src/log.service.js"
-import { JSService } from '@typed-inject/injector';
+import { JSService } from '@freshgum/typedi';
 
 export const LogService = JSService([], function LogService() {});
 

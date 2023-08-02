@@ -1,4 +1,4 @@
-import { Optional, Service } from '@typed-inject/injector';
+import { Optional, Service } from '@freshgum/typedi';
 import { GREETING_USERNAME } from './username.token';
 
 export class GreetingService {

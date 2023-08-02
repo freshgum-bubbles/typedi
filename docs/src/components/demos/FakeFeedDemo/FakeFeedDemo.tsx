@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { POSTS, Post } from '@site/src/services/fake-feed-demo/posts.token';
 import { useService } from '@site/src/typedi-hooks';
 import { useForceRender } from '@site/src/util-hooks';
-import Container from '@typed-inject/injector';
+import Container from '@freshgum/typedi';
 
 import styles from './FakeFeedDemo.module.css';
 import { FakePost } from './FakePost/FakePost';

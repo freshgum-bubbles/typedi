@@ -103,7 +103,7 @@ Let's explore how we could make use of `Optional` in an example service, which
 requests an identifier from the container that may not exist.
 
 ```ts title="src/configuration-reader.service.ts"
-import { Service, Optional } from '@typed-inject/injector';
+import { Service, Optional } from '@freshgum/typedi';
 import { APP_TOKEN } from './configuration'; // Where APP_TOKEN is a Token<string>.
 
 @Service([
@@ -161,7 +161,7 @@ Each page contains a dark mode button which, when clicked,
 toggles the "dark-mode" class on the `<body>` element.
 
 ```ts title="src/dom-node.token.ts"
-import { Token } from '@typed-inject/injector';
+import { Token } from '@freshgum/typedi';
 
 export const DOM_NODE = new Token<HTMLElement>(`\
 The current DOM node. In services for individual pages,
@@ -171,7 +171,7 @@ In the root, this will be set to the body of the document.
 ```
 
 ```ts title="src/page.service.ts"
-import { Service, SkipSelf } from '@typed-inject/injector';
+import { Service, SkipSelf } from '@freshgum/typedi';
 import { STORAGE } from './storage.token';
 
 @Service([
@@ -190,7 +190,7 @@ export class PageService {
 ```
 
 ```ts title="src/root.service.ts"
-import { ContainerInstance, Service, HostContainer } from '@typed-inject/injector';
+import { ContainerInstance, Service, HostContainer } from '@freshgum/typedi';
 import { PageService } from './page.service';
 import { route } from 'my-router'; // Placeholder for your router :-)
 

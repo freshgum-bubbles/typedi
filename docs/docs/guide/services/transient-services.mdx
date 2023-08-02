@@ -28,7 +28,7 @@ To demonstrate how transient services, let's create a simple example: a performa
 The timing API should correspond with one set of marks alongside a final measurement.
 
 ```ts title="src/timer.service.ts"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 
 @Service({ transient: true }, [ ])
 export class TimerService {
@@ -51,7 +51,7 @@ Now, we'll make use of this timing API in our page service,
 a fictional service which is responsible for rendering pages.
 
 ```ts title="src/page.service.ts"
-import { Service, HostContainer } from '@typed-inject/injector';
+import { Service, HostContainer } from '@freshgum/typedi';
 import { TimerService } from './timer.service';
 
 @Service([

@@ -1,5 +1,5 @@
 import { GREETING_USERNAME } from '@site/src/services/username-demo/username.token';
-import Container from '@typed-inject/injector';
+import Container from '@freshgum/typedi';
 import React, { useMemo, useRef } from 'react';
 import { useState } from 'react';
 
