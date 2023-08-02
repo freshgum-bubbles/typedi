@@ -549,7 +549,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public getManyOrDefault<U, T = unknown>(
+  protected getManyOrDefault<U, T = unknown>(
     identifier: ServiceIdentifier<T>,
     defaultValue: U,
     recursive = true
