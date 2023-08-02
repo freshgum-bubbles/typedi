@@ -1,4 +1,4 @@
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 import { POSTS, Post } from './posts.token';
 import { FEED_USERNAME } from './username.token';
 

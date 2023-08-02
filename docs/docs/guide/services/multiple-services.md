@@ -46,7 +46,7 @@ To store each user, we'd also want a [Token](../tokens/introduction) that we can
 Let's do this below.
 
 ```ts title="src/app.ts"
-import { Container } from '@typed-inject/injector';
+import { Container } from '@freshgum/typedi';
 import { User } from './user.class';
 
 export const USER = new Token<User>();

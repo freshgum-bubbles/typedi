@@ -14,7 +14,7 @@ then register it as an ordinary container.
 In practice, this looks like the following:
 
 ```ts
-import { ContainerInstance, ContainerRegistry, ServiceIdentifier, ContainerIdentifier } from '@typed-inject/injector';
+import { ContainerInstance, ContainerRegistry, ServiceIdentifier, ContainerIdentifier } from '@freshgum/typedi';
 
 export class MyContainerInstance {
   public constructor(id: ContainerIdentifier, parent?: ContainerInstance) {

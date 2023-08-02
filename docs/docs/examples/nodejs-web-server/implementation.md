@@ -37,7 +37,7 @@ To start, let's create a `webserver.service.ts` which contains the logic for dep
 responding to requests, and closing the server.
 
 ```ts title="src/webserver.service.ts"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 import http, { Server, IncomingMessage, ServerResponse } from 'http'; // Node's HTTP module.
 
 @Service([])
@@ -95,7 +95,7 @@ as little as possible outside it.
 :::
 
 ```ts title="src/root.service.ts"
-import { Service, Container } from '@typed-inject/injector';
+import { Service, Container } from '@freshgum/typedi';
 import { WebServerService } from './webserver.service';
 
 @Service([WebServerService])
@@ -140,7 +140,7 @@ To make it easier to migrate to an out-of-process database like SQLite later on,
 make the APIs for reading and writing data asynchronous.
 
 ```ts title="src/database.service.ts"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 
 @Service([ ])
 export const DatabaseService {

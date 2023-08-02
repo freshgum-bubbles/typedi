@@ -1,5 +1,5 @@
 {
-  "name": "@typed-inject/injector",
+  "name": "@freshgum/typedi",
   "version": "0.3.22-beta.4",
   "description": "Elegant Dependency Injection in JavaScript and TypeScript.",
   "maintainers": [

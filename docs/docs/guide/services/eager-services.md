@@ -27,7 +27,7 @@ For more information on why eager services are discouraged, [see the section bel
 To create a service which is immediately run upon declaration, we can do the following:
 
 ```ts title="src/log.service.ts"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 
 @Service({ eager: true }, [])
 export class LogService {
@@ -55,7 +55,7 @@ create a dangerous precedent for the API, and overall make it much harder to tes
 Consider the following (simplified) example:
 
 ```ts title="src/database.service.ts"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 
 @Service({ eager: true }, [])
 export class DatabaseService {
@@ -81,7 +81,7 @@ how would we import it to get the ID to replace?
 Normally, to stub the database connection, you would do something like this:
 
 ```ts title="spec/app.service.ts"
-import { Service } from '@typed-inject/injector';
+import { Service } from '@freshgum/typedi';
 import { DatabaseService } from '../src/database.service.ts'; // Oops!
 
 @Service({ id: DatabaseService }, [])

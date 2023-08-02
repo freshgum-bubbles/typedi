@@ -26,7 +26,7 @@ will be demonstrated below.
 The static `of` method can be used to create both orphaned and child containers, like so:
 
 ```ts
-import { ContainerInstance, Container } from '@typed-inject/injector';
+import { ContainerInstance, Container } from '@freshgum/typedi';
 
 // Create an orphaned container:
 ContainerInstance.of('my-new-container', null);
@@ -53,7 +53,7 @@ The instance `ofChild` method can be used to create a container
 which is a child of the current. For example:
 
 ```ts
-import { Container } from '@typed-inject/injector';
+import { Container } from '@freshgum/typedi';
 
 // Create a child of the default container:
 const newContainer = Container.ofChild('my-new-container');
@@ -134,7 +134,7 @@ ContainerInstance.of(MY_SECOND_CONTAINER);
 Consider the following example:
 
 ```ts
-import { ContainerInstance, Token } from '@typed-inject/injector';
+import { ContainerInstance, Token } from '@freshgum/typedi';
 
 // Keep the container ID local, so other packages have to use
 // our function below to create the container.
@@ -176,7 +176,7 @@ A good way to ensure the container is always instantiated correctly can be found
 Let's tweak our event-logging example above to incorporate the usage of _free strategies_ instead.
 
 ```ts
-import { ContainerInstance, Token } from '@typed-inject/injector';
+import { ContainerInstance, Token } from '@freshgum/typedi';
 
 // Keep the container ID local, so other packages have to use
 // our function below to create the container.
@@ -233,7 +233,7 @@ the parent of the conflicting container matches the one you expected. If not, th
 Let's look at an example below:
 
 ```ts
-import { Container } from '@typed-inject/injector';
+import { Container } from '@freshgum/typedi';
 
 // Create a child container of the default container.
 Container.ofChild('my-new-container');

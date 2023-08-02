@@ -1,4 +1,4 @@
-import { Token } from '@typed-inject/injector';
+import { Token } from '@freshgum/typedi';
 
 export interface Post {
   id: number;

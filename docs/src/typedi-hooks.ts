@@ -1,4 +1,4 @@
-import { Container, ServiceIdentifier, ContainerIdentifier } from '@typed-inject/injector';
+import { Container, ServiceIdentifier, ContainerIdentifier } from '@freshgum/typedi';
 import { useMemo } from 'react';
 
 export function useService<T>(id: ServiceIdentifier, container = Container) {

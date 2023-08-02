@@ -55,7 +55,7 @@ Let's explore how our [Hello World!](../../examples/hello-world) example could b
 service to a different container.
 
 ```ts title="src/log.service.ts"
-import { Service, Container } from '@typed-inject/injector';
+import { Service, Container } from '@freshgum/typedi';
 
 // highlight-revision-start
 export const container = Container.ofChild('my-new-container');
@@ -79,7 +79,7 @@ instructions on how & why the service should be initialised. In our case, we onl
 As we've now moved the `LogService` to a different container, the following will no longer work:
 
 ```ts title="src/main.ts"
-import { Container } from '@typed-inject/injector';
+import { Container } from '@freshgum/typedi';
 import { LogService } from './log.service';
 
 // highlight-next-line-error
@@ -96,7 +96,7 @@ This is because containers don't search _upwards_. This is covered in [the Conta
 Instead, what we have to do is use our newly-created container to find the service. Let's update our code above.
 
 ```ts title="src/main.ts"
-import { Container } from '@typed-inject/injector';
+import { Container } from '@freshgum/typedi';
 // highlight-revision-start
 import { LogService, container } from './log.service';
 // highlight-revision-end
