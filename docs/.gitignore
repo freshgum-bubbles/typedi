@@ -20,4 +20,4 @@ yarn-debug.log*
 yarn-error.log*
 
 
-/static
+/static/api-reference
