@@ -47,7 +47,8 @@
     "prepare": "husky install",
     "prepublishOnly": "npm test && npm run build:cjs && npm run build:umd && npm run build:types",
     "website:start": "pushd website && npm run start && popd",
-    "website:build": "pushd website && npm run build && popd"
+    "website:build": "pushd website && npm run build && popd",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "husky": {
     "hooks": {
