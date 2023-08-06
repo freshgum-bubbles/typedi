@@ -4462,4 +4462,4 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-publishDirectory: ./build/
+publishDirectory: ./
