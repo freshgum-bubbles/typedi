@@ -40,9 +40,9 @@ fi
 # Make sure we're working with the most up-to-date version of develop.
 git fetch origin $DEVELOP_BRANCH_NAME
 
-# The "theirs" part automatically resolves merge conflicts by accepting the changes from develop.
+# The "ours" part automatically resolves merge conflicts by accepting the changes from develop.
 # Remember that, in this context, we're in the master branch, so "theirs" refers to the develop branch.
-git merge -s recursive -X theirs origin/$DEVELOP_BRANCH_NAME
+git rebase origin/$DEVELOP_BRANCH_NAME -s ours
 
 # Unstage the package.json file, so we can commit it into a separate commit.
 # This makes it easier to delineate releases in the commit log.
