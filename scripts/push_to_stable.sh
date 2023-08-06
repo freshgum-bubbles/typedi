@@ -4,13 +4,13 @@ CURRENT_DEVELOP_NPM_VERSION=$(cat package.json | jq '.version')
 
 # Ensure the script isn't being run from the stable branch.
 # We wouldn't want to release stable to stable.
-if [[ "$CURRENT_BRANCH" -eq "stable" ]]; then
+if [[ "$CURRENT_BRANCH" == "master" ]]; then
     echo "This script cannot be run from the stable branch."
     exit 1
 fi
 
 # Also ensure we're not running from an alternate branch.
-if [[ "$CURRENT_BRANCH" -ne "develop" ]]; then
+if [[ "$CURRENT_BRANCH" != "develop" ]]; then
     echo "This script cannot be run from a fork. Please checkout the develop branch and try again."
     exit 1
 fi
@@ -18,7 +18,7 @@ fi
 # Now, time to push to stable.
 git checkout $STABLE_BRANCH_NAME
 
-if [[ "$?" -ne "0" ]]; then
+if [[ "$?" != "0" ]]; then
     echo "Git checkout to stable failed. This may be because of an unclean working tree."
     exit 1
 fi
@@ -27,7 +27,7 @@ CURRENT_STABLE_NPM_VERSION=$(cat package.json | jq '.version')
 
 # Make sure the NPM version has been incremented, as otherwise NPM will refuse
 # to push the package to the registry.
-if [[ "$CURRENT_STABLE_NPM_VERSION" -eq "$CURRENT_DEVELOP_NPM_VERSION" ]]; then
+if [[ "$CURRENT_STABLE_NPM_VERSION" == "$CURRENT_DEVELOP_NPM_VERSION" ]]; then
     echo "The NPM version in the develop branch has not been updated."
 
     # Go back to the develop branch.
