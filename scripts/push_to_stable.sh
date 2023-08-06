@@ -39,7 +39,14 @@ fi
 # Make sure we're working with the most up-to-date version of develop.
 git fetch origin develop
 
+# Unstage the package.json file, so we can commit it into a separate commit.
+# This makes it easier to delineate releases in the commit log.
+git reset -- package.json
+git reset -- pnpm-lock.yaml
+
 # The "-Xtheirs" part automatically resolves merge conflicts by accepting the changes from develop.
 # Remember that, in this context, we're in the master branch, so "theirs" refers to the develop branch.
-git merge --squash origin/develop --message "merge: Release $CURRENT_DEVELOP_NPM_VERSION as stable" -Xtheirs
+git merge -Xtheirs
+
+git commit -m "release(npm): release TypeDI v$CURRENT_DEVELOP_NPM_VERSION"
 
