@@ -4,7 +4,7 @@ CURRENT_DEVELOP_NPM_VERSION=$(cat package.json | jq '.version')
 
 # Ensure the script isn't being run from the stable branch.
 # We wouldn't want to release stable to stable.
-if [[ "$CURRENT_BRANCH" == "master" ]]; then
+if [[ "$CURRENT_BRANCH" == "$STABLE_BRANCH_NAME" ]]; then
     echo "This script cannot be run from the stable branch."
     exit 1
 fi
