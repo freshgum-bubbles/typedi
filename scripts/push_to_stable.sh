@@ -51,3 +51,4 @@ git merge -Xtheirs
 
 git commit -m "release(npm): release TypeDI v$CURRENT_DEVELOP_NPM_VERSION"
 
+git checkout $DEVELOP_BRANCH_NAME
