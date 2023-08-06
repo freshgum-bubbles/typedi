@@ -9,13 +9,10 @@
   "license": "MIT",
   "private": false,
   "sideEffects": false,
-  "main": "./cjs/index.js",
-  "module": "./esm5/index.js",
-  "es2015": "./esm2015/index.js",
-  "typings": "./types/index.d.ts",
-  "publishConfig": {
-    "directory": "./build/"
-  },
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm5/index.js",
+  "es2015": "./build/esm2015/index.js",
+  "typings": "./build/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/freshgum-bubbles/typedi.git"
