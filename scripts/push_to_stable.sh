@@ -45,9 +45,9 @@ git fetch origin $DEVELOP_BRANCH_NAME
 git reset -- package.json
 git reset -- pnpm-lock.yaml
 
-# The "-Xtheirs" part automatically resolves merge conflicts by accepting the changes from develop.
+# The "theirs" part automatically resolves merge conflicts by accepting the changes from develop.
 # Remember that, in this context, we're in the master branch, so "theirs" refers to the develop branch.
-git merge -Xtheirs
+git rebase origin/$DEVELOP_BRANCH_NAME -X theirs
 
 git commit -m "release(npm): release TypeDI v$CURRENT_DEVELOP_NPM_VERSION"
 
