@@ -1,4 +1,5 @@
 CURRENT_BRANCH=$(git branch --show-current)
+DEVELOP_BRANCH_NAME="develop"
 STABLE_BRANCH_NAME="master"
 CURRENT_DEVELOP_NPM_VERSION=$(cat package.json | jq '.version')
 
@@ -10,7 +11,7 @@ if [[ "$CURRENT_BRANCH" == "$STABLE_BRANCH_NAME" ]]; then
 fi
 
 # Also ensure we're not running from an alternate branch.
-if [[ "$CURRENT_BRANCH" != "develop" ]]; then
+if [[ "$CURRENT_BRANCH" != "$DEVELOP_BRANCH_NAME" ]]; then
     echo "This script cannot be run from a fork. Please checkout the develop branch and try again."
     exit 1
 fi
@@ -31,13 +32,13 @@ if [[ "$CURRENT_STABLE_NPM_VERSION" == "$CURRENT_DEVELOP_NPM_VERSION" ]]; then
     echo "The NPM version in the develop branch has not been updated."
 
     # Go back to the develop branch.
-    git checkout develop
+    git checkout $DEVELOP_BRANCH_NAME
 
     exit 1
 fi
 
 # Make sure we're working with the most up-to-date version of develop.
-git fetch origin develop
+git fetch origin $DEVELOP_BRANCH_NAME
 
 # Unstage the package.json file, so we can commit it into a separate commit.
 # This makes it easier to delineate releases in the commit log.
