@@ -65,7 +65,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.6",
+    "@commitlint/cli": "^17.6.7",
     "@commitlint/config-angular": "^17.6.6",
     "@mxssfd/typedoc-theme": "^1.1.2",
     "@rollup/plugin-commonjs": "^25.0.3",
