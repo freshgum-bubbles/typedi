@@ -23,6 +23,9 @@ devDependencies:
   '@rollup/plugin-terser':
     specifier: ^0.4.3
     version: 0.4.3(rollup@3.26.3)
+  '@types/deepmerge':
+    specifier: ^2.2.0
+    version: 2.2.0
   '@types/jest':
     specifier: ^29.5.3
     version: 29.5.3
@@ -38,6 +41,9 @@ devDependencies:
   auto-changelog:
     specifier: ^2.4.0
     version: 2.4.0
+  deepmerge:
+    specifier: ^4.3.1
+    version: 4.3.1
   eslint:
     specifier: ^8.45.0
     version: 8.45.0
@@ -1129,6 +1135,13 @@ packages:
     resolution: {integrity: sha512-MitHFXnhtgwsGZWtT68URpOvLN4EREih1u3QtQiN4VdAxWKRVvGCSvw/Qth0M0Qq3pJpnGOu5JaM/ydK7OGbqg==}
     dependencies:
       '@babel/types': 7.22.5
+    dev: true
+
+  /@types/deepmerge@2.2.0:
+    resolution: {integrity: sha512-FEQYDHh6+Q+QXKSrIY46m+/lAmAj/bk4KpLaam+hArmzaVpMBHLcfwOH2Q2UOkWM7XsdY9PmZpGyPAjh/JRGhQ==}
+    deprecated: This is a stub types definition. deepmerge provides its own type definitions, so you do not need this installed.
+    dependencies:
+      deepmerge: 4.3.1
     dev: true
 
   /@types/estree@1.0.1:
