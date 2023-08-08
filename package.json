@@ -48,12 +48,35 @@
     "prepublishOnly": "npm test && npm run build:cjs && npm run build:umd && npm run build:types",
     "website:start": "pushd website && npm run start && popd",
     "website:build": "pushd website && npm run build && popd",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "version": "auto-changelog --starting-date 2023-08-03 --template ./scripts/changelog.hbs --commit-limit 5000 -p && git add CHANGELOG.md"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "commit-msg": "pnpm exec commitlint --edit ${1}"
+    }
+  },
+  "auto-changelog": {
+    "ignoreCommitPattern": "^build\\(deps|(deps-)?dev\\): bump",
+    "replaceText": {
+      "([bB]reaking:)": "",
+      "([bB]reaking change:)": "",
+      "(^[fF]eat:)": "",
+      "(^[fF]eat\\()": "\\(",
+      "(^[fF]ix:)": "",
+      "(^[fF]ix\\()": "\\(",
+      "(^[cC]hore:)": "",
+      "(^[cC]hore\\()": "\\(",
+      "(^[dD]ocs:)": "",
+      "(^[dD]ocs\\()": "\\(",
+      "(^[rR]efactor:)": "",
+      "(^[rR]efactor\\()": "\\(",
+      "(^[tT]est:)": "",
+      "(^[tT]est\\()": "\\(",
+      "(^[sS]tyle:)": "",
+      "(^[sS]tyle\\()": "\\(",
+      "(^[pP]erf:)": "",
+      "(^[pP]erf\\()": "\\("
     }
   },
   "lint-staged": {
