@@ -1368,6 +1368,8 @@ export class ContainerInstance implements Disposable {
    * @returns Whether the operation was successful.
    */
   public acceptTreeVisitor(visitor: ContainerTreeVisitor) {
+    this[THROW_IF_DISPOSED]();
+
     return this.visitor.addVisitor(visitor, this);
   }
 
@@ -1383,6 +1385,8 @@ export class ContainerInstance implements Disposable {
    * @returns Whether the operation was successful.
    */
   public detachTreeVisitor(visitor: ContainerTreeVisitor) {
+    this[THROW_IF_DISPOSED]();
+    
     return this.visitor.removeVisitor(visitor);
   }
 
