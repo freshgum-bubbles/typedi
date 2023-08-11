@@ -1386,7 +1386,7 @@ export class ContainerInstance implements Disposable {
    */
   public detachTreeVisitor(visitor: ContainerTreeVisitor) {
     this[THROW_IF_DISPOSED]();
-    
+
     return this.visitor.removeVisitor(visitor);
   }
 

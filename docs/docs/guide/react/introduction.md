@@ -9,7 +9,7 @@ A set of bindings have been created to simplify usage of TypeDI within React app
 :::warning
 
 The React hooks are currently in beta, and the API surface could
-change at any time.  They may also contain bugs.
+change at any time. They may also contain bugs.
 
 If you wish to use them in a production application, please consider locking
 the package version used to prevent future updates from making unexpected changes.
@@ -17,10 +17,11 @@ the package version used to prevent future updates from making unexpected change
 :::
 
 These bindings consist of the following hooks:
-  - `useService`
-  - `useServiceOrNull`
-  - `useContainer`
-  - `useTreeVisitor`
+
+- `useService`
+- `useServiceOrNull`
+- `useContainer`
+- `useTreeVisitor`
 
 ## `useService`
 
