@@ -1314,6 +1314,7 @@ export class ContainerInstance implements Disposable {
     // eslint-disable-next-line
     const resolved = wrapper.eagerType ?? (wrapper as GenericTypeWrapper).lazyType?.();
 
+    /* istanbul ignore next */
     if (resolved == null) {
       throw Error(`The wrapped value could not be resolved.`);
     }
