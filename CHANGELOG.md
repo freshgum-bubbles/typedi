@@ -1,14 +1,14 @@
 ## Changelog
 
-### [v0.3.22-beta.5](https://github.com/freshgum-bubbles/typedi/compare/v0.10.0...v0.3.22-beta.5)
+### [v0.3.22-beta.4](https://github.com/freshgum-bubbles/typedi/compare/v0.10.0...v0.3.22-beta.4)
 
-- \(build): Update all dependencies.
-- Merge V1 API into Stable
--  update javscript getting started docs to work with latest version of TypeDI
--  adjust circular dependency handling docs for constructor injection
--  inject the right value in sub-class constructor params
--  rename ContainerIdentifer to ContainerIdentifier
--  fixed typo in the docs: changed "it's" to "its"
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/1a9ba821aef86c88787d39cc7dddcde5ec9db428">Merge pull request #13 from freshgum-bubbles/update-dependencies</a>
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/e3221bfaf056ae59adf832b5bde665c1e3aaadc8">Merge pull request #1 from freshgum-bubbles/develop-v1-api</a>
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/6ec8ac243fe5223ae50ecb1d638be673079e86a3"> update javscript getting started docs to work with latest version of TypeDI (#691)</a>
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/35c39df30ff7f8d989a73a029bc94f76094bafbe"> adjust circular dependency handling docs for constructor injection (#673)</a>
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/9540cd92fde4dcd3317db82c2bde1b5eccda1e87"> inject the right value in sub-class constructor params (#305)</a>
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/23d8b1520490e6dfbd9748b38f9eb4011e464473"> rename ContainerIdentifer to ContainerIdentifier (#559)</a>
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/48f54b4f205d9ebb7fa1ab810b276bfb67a45331"> fixed typo in the docs: changed "it's" to "its" (#279)</a>
 
 #### Breaking Changes ⚠️
 
@@ -87,7 +87,6 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/49a8b9c4fd0fcf238a3cc6aa933c613d20edb475">\(utils): Add formatClassName utility</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/a5deada665b991f6524d99c3bf74986c0ca67980">\(scripts): fix merge conflicts from release script</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/ef264bad7ef11264cd9ab4e2a9bce131dbc13230">\(ContainerInstance): make disposed public</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/d198dd0e03107b2fbaa04b217d569c0feff66316">\(scripts): auto re-checkout develop branch</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/8d9a190ab0010e40da13570ba0f2d920129d9b73">\(index): export ExtractToken type</a> <sup>@freshgum-bubbles</sup> 
 
 #### Fixes
@@ -118,8 +117,6 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/1ffd0b8cb9fd90724f347910934d309ccb92880c">\(website): adjust position of hero buttons on mobile</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/a72ed0ac1a512fe2e9ce5f3851ffa4b1bd386233">\(website): update styling & make diagrams smaller</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/a62971215b696aa987077a05fa1112e26c7f79ed">\(ContainerInstance): prevent overriding virtual tokens</a> <sup>@freshgum-bubbles</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/b7db767e83e3a4ab79138e367f3600f2481f7749">\(scripts): revert to a good ol' rebase</a> <sup>@freshgum</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/e5e3596531bb4c71bb99aaac7646f48d7c606457">\(scripts): use simpler test constructs</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/dbe4b210e981a0679d036cf886b4147d0b917623">\(constraints): Fix incorrect TSDoc link syntax</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/7233dca8fc37196f998d86f40df29ba1bbfd3b87">\(ContainerInstance): remove dead code</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/b4bf1a6acf6a006df956a67a62ba9d0b2b9af9d9">\(ContainerInstance): make .has read recursive correctly</a> <sup>@exascape</sup> 
@@ -130,8 +127,6 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/ef48c88a2451c1aed6a60f60381fa0e2f3bca7a4">\(ContainerInstance): ensure setValue values are correct</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/5e5c50e5537a0871a773d749ed352b81175146bc">\(scripts): update PNPM build dir & publish script</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/3a65ea965ad3c5b40ea662a413ecb03764525f22"> remove unneeded Promise.resolve call</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/60fd2fb3d74c12de1489baa3b645503f3794d3d1">\(scripts): fix release script rebases</a> <sup>@freshgum</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/30b1392227a2ee2e26b4b7889a00f9ec3cb198a0">\(scripts): use rebase instead of merge</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/cf636c4b463a6ead67052263164ac8c625c1fb9d">\(website): update TSConfig to allow decorators</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/78ebfcad956201727fc8b9361a6028d800beff1d">\(website): update category positions</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/f0d60c5f48024ce3ad4124bdf9bba2f874f3a070">\(website): add Containers category.json</a> <sup>@exascape</sup> 
@@ -194,13 +189,13 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/b59b301d1632616ba74cdd86aee36e76a53cba6f">\(npm): update dependencies</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/72b0a08ab428337834836516dac49751245315ff">\(npm): update project dependencies</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/9dcbcda2b1a253eac75b814d2a33cb057c13a87d">\(npm): update dependencies</a> <sup>@freshgum-bubbles</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/58e07801103266685b7ec8bcfd66d9ee5d4aaa13">\(npm): clear CHANGELOG.md file</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/16db9660c57d77ee1f73219115481761a0defabc">\(ci): update CI workflow</a> <sup>@exascape</sup> 
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/c9acbf967eefafa80a6ccf616e25117db297cd25">\(npm): update Changelog template</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/e8c6e735e85cd1b51987241084731f53406c0e05">\(*): rename package to @freshgum/typedi</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/5d4a54f1f6e2e6e305289ed9677f2a3557a836d2">\(ci): enable CodeQL</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/67bdafb9513eeb1bcf38addf52da0b8eec446fd2"> Remove unnecessary dependency (concurrently)</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/fa1e372e197ff19dd8b045b156ca3a0d24adc553">\(build): Update all dependencies</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/d8b171c6230cb9ef0710c603eb79b8d010037acb">\(npm): install auto-changelog</a> <sup>@freshgum</sup> 
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/8aea517d15efcf3cdd1ec68bbae2ecdd5c1cf264">\(npm): install auto-changelog</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/adaef24fd2bcd88de2839694cd59f089702b3639">\(build): Replace Rollup Terser plugin</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/377be501a759bd4fb42cb00088206bfe83dcc651">\(npm): fix lockfile</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/a9a29cada3db1c113cdbd671c2152706bbbf3ad4">\(style): remove TSLint</a> <sup>@freshgum</sup> 
@@ -210,6 +205,7 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/3a6b0a999660dce599a28e43861d61e009453e7c"> update workflows to be spec-compliant</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/0364164b6c4664ec583da7dc85f5c8ad87a5bf6e">\(npm): update PNPM lockfile</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/7510152882451b3707e43e0fdb3a7e33118b1911"> update dependabot.yml</a> <sup>@exascape</sup> 
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/91995f77a0746d53abb7e468d9dc0d0dc66a4a37">\(npm): update auto-changelog config</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/56ab45ef8ef01084151a3fabbd507ca712934017">\(npm): remove npm2yarn dependency</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/75e55d515b4b032d5cd586e1fa868cea3fa5334c"> Update CI workflow to use PM workflow</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/50ce1919f50580cef3d7c044baa54d6914c82ab9">\(git): add commitlint configuration</a> <sup>@exascape</sup> 
@@ -222,14 +218,11 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/c80c85c40aed7e98ff968342eafbb0295616287f">\(npm): update paths to build/</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/bf87b1b6fb37ef54cbd63fd6a5c471aafba619f6">\(docs): update TypeDoc configuration</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/ed8c7f17486824548b9ac76f5d60d123d3305b79">\(ci): use PNPM install instead</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/7dea1a121a0dbde40dfbc2217fffe8a9c5b46d68">\(scripts): stop squashing release commits</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/3099b0c1969dc286280caa7b99d7718c445e01aa">\(npm): prevent useless files being packaged</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/7098dd6a10b5144e103e6971a05ce212d8d1999b">\(npm): add type-fest</a> <sup>@freshgum-bubbles</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/c4e63bdf55715fc164457616196647f128725235">\(scripts): use [[ instead of [</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/6bec4ee66fb59592504962797431e5de71d4a133">\(npm): update project dependencies</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/02fe6176d69e424dd707f0f0027baae1e6c7cf31">\(ci): update PNPM to 8.6.1</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/7af9c52e2d6f0b647cae7306e7d92d4bdfc96d59"> update path to PM workflow</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/f422de4ce97baacad15b0de11a2043903029a6b1">\(scripts): prefer use of variables</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/d27dad3d4c76ec437262d0129a635268ea9329d5">\(npm): fix lockfile</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/c1d294acd5aa1a226465269651098a574ca5cb03">\(ci): add TODO comment regarding clean-up</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/2c681ba234e6fe6f0dc68018bbeee36aee989551">\(ci): fix commitlint job</a> <sup>@exascape</sup> 
@@ -251,7 +244,7 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/f2c3c8edcc67431d0512e7b714a68fa63995203a">\(TypeScript): change prod target</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/6b6ee5bf8e28638cf46ba0caab6f3dd27d90c5b1"> Update package.json metadata</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/1f403c72ffcd5a665ac2be59d8e876b819b6a0b8">\(TypeScript): Update library target to ESNext</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/1e0a0ff3a74ea8d904f80c29bd864ed99659d040">\(npm): add auto-changelog to version script</a> <sup>@freshgum</sup> 
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/0a202715ec26c4a9bdeb3669f4373c02f4208202">\(npm): add auto-changelog to version script</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/cd20c15a942d200cb46382fc03402e3570f78fc5">\(website): add /static directory to gitignore</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/80a03124e964898fecbc2189a76fa20efde85469">\(npm): add TypeDoc & website scripts</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/9c37653c993833e18c9a1f7beb17ac7c9baeb04b">\(npm): move rollup build to dedicated command</a> <sup>@freshgum-bubbles</sup> 
@@ -261,7 +254,6 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/b99e2bcbb6b17f21e8b9e55404e1b783375200ec">\(style): Fix ContainerInstance ESLint comment</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/a7509b21c11fb24b83a707f599b153827c4f5d27"> Move coverage testing to separate task</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/f337c6b2f09a05df4d706478aba6a8b5b5fd9237">\(TypeScript): disable source map inlining</a> <sup>@exascape</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/e9cb297ab4f7acb54739a9d5d5c5e2d0fab54a80">\(npm): release TypeDI 0.3.22-beta.5</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/d15d8e7bba9a35574b536bfc6acd3b8b3c3b99a2">\(docs): stop git-ignoring static/</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/f16cc078f0da039e0ad137a0e6aee07c095bb389">\(website): exclude website from global TSConfig</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/c961703e0f7c6fe96c3a99395b04b1603f25ce02">\(npm): add ESM5 build to Rollup build</a> <sup>@freshgum-bubbles</sup> 
@@ -402,7 +394,6 @@
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/e68d34c5a11c6e7c34e380b092da4b0454dbd01b">\(website): de-focus incomplete docs in sidebar</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/5303386a6d68b80fe9538ba6fff9d2994f6f8702">\(service): remove unused imports</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/301c5a966a11ee270c6d42e221cbd78bca788f6a">\(*): add .editorconfig</a> <sup>@freshgum-bubbles</sup> 
-- <a href="https://github.com/freshgum-bubbles/typedi/commit/c17fecdc5cbb53f606877a110524c382f695cfff">\(scripts): use variable instead of magic string</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/6a377a8c91621d6a4eba5ffaf8e45db280f3aef4">\(website): collapse NodeJS example by default</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/ee1d301605195a890172e2e62904f51de1ad1a45">\(website): remove trailing comma</a> <sup>@freshgum-bubbles</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/27b10f65ded683c595cf414fb01f5a41615cc3c9">\(website): update TSConfig</a> <sup>@exascape</sup> 
@@ -427,6 +418,7 @@
 #### Documentation
 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/a4191c5cca3c4a6d1bf71913ee346d1837a36958">\(website): add initial Docusaurus website</a> <sup>@exascape</sup> 
+- <a href="https://github.com/freshgum-bubbles/typedi/commit/348d96f89bf4e9e91b7ebbc63c129627dfb8179c">\(npm): generate CHANGELOG</a> <sup>@freshgum</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/2c3b398d08c2103b4a25bac2fb5db8fbc3a51bea">\(website): remove Docusaurus docs</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/eb1a4c2366eb110fbab21a4ce04c504b7cdaba38">\(website): add refined RC page</a> <sup>@exascape</sup> 
 - <a href="https://github.com/freshgum-bubbles/typedi/commit/39d94b2d3bf33cf4f9399d714690f211969b4477">\(website): add incomplete NodeJS example</a> <sup>@exascape</sup> 
