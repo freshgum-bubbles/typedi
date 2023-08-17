@@ -24,7 +24,7 @@
  * 
  * This symbol denotes that the specified identifier could not be found in the
  * context of a given container.  If that container has a parent, this means
- * that its parent (or its parent, etc.) was not able to find the identifier.
+ * that its parent (and its parent, etc.) was not able to find the identifier.
  * 
  * @remarks
  * This is a constant enumerable.
