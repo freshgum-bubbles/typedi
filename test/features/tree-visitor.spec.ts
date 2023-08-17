@@ -7,7 +7,7 @@ import {
   Token,
 } from '../../src/index';
 import { ContainerTreeVisitor, VisitRetrievalOptions } from '../../src/interfaces/tree-visitor.interface';
-import { ServiceIdentifierLocation } from '../../src/container-instance.class';
+import { ServiceIdentifierLocation } from '../../src/types/service-identifier-location.type';
 
 describe('Tree Visitors', () => {
   interface VisitorMock extends ContainerTreeVisitor {
