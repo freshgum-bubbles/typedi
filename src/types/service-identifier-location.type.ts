@@ -15,28 +15,74 @@
  */
 export const enum ServiceIdentifierLocation {
   /**
-   * In the context of a given container, "local" denotes that the specified
-   * identifier can be resolved inside said container, without any hierarchical
-   * lookups in the container's parent chain.
+   * The specified identifier was found directly in the context of the container.
+   * Its container may have it, but due to its presence locally, the parent tree
+   * has not been searched.
+   *
+   * @example
+   * Here is an example of a local resolution:
+   * ```ts
+   * const NAME = new Token<string>();
+   * Container.set(NAME, 'Joanna');
+   *
+   * Container.getIdentifierLocation(NAME);
+   * // -> Local
+   * ```
    */
   Local = 0,
 
   /**
-   * This symbol denotes that the container was not able to find a definition
-   * for the identifier locally, but its parent was.  In this context, it is
-   * important to remember that the use of the word "parent" does not necessarily
-   * mean that the container's direct parent has it -- in fact, it may mean...
+   * The container was not able to find a definition for the identifier locally,
+   * but its parent was.
    *
-   *   1. The parent was able to resolve the identifier directly.
-   *   2. The parent searched its parent, and continued until the identifier
-   *      was found in the hierarchical tree of parents.
+   * @remarks
+   * In this context, it is important to remember that the use of the word "parent"
+   * does not necessarily mean that the container's direct parent has it.
+   * It could mean that the parent *does*, or that a container in the parent hierarchy
+   * was able to resolve the identifier.
+   *
+   * @example
+   * Here is an example where the direct parent of a container resolves the identifier:
+   * ```ts
+   * const NAME = new Token<string>();
+   * const myContainer = Container.ofChild(Symbol());
+   *
+   * Container.set(NAME, 'Joanna');
+   *
+   * myContainer.getIdentifierLocation(NAME);
+   * // -> Parent
+   * ```
+   *
+   * @example
+   * Here is an example where a container in the hierarchy chain resolve the identifier:
+   * ```ts
+   * const NAME = new Token<string>();
+   *
+   * // Create a child of the default container, and then create a child of that.
+   * const myContainer = Container
+   *   .ofChild(Symbol())
+   *   .ofChild(Symbol());
+   *
+   * Container.set(NAME, 'Joanna');
+   *
+   * myContainer.getIdentifierLocation(NAME);
+   * // -> Parent
+   * ```
    */
   Parent,
 
   /**
-   * This symbol denotes that the specified identifier could not be found in the
-   * context of a given container.  If that container has a parent, this means
-   * that its parent (and its parent, etc.) was not able to find the identifier.
+   * The specified identifier could not be found in the context of the container,
+   * or any container in the container's parent hierarchy.
+   * 
+   * @example
+   * Here is an example wherein this value would be emitted:
+   * ```ts
+   * const NAME = new Token<string>();
+   * 
+   * Container.getIdentifierLocation(NAME);
+   * // -> None
+   * ```
    */
   None,
 }
