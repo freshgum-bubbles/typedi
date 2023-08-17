@@ -23,6 +23,7 @@ import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface';
 import { VisitorCollection } from './visitor-collection.class';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface';
 import { CreateContainerResult } from './types/create-container-result.type';
+import { ServiceIdentifierLocation } from './types/service-identifier-location.type';
 
 /**
  * A static variable containing "throwIfDisposed".
@@ -41,12 +42,6 @@ import { CreateContainerResult } from './types/create-container-result.type';
  * The former version reduces the bundle size, as the variable name can be mangled safely.
  */
 const THROW_IF_DISPOSED = 'throwIfDisposed';
-
-export const enum ServiceIdentifierLocation {
-  Local = 0,
-  Parent,
-  None,
-}
 
 interface ManyServicesMetadata {
   tokens: Token<unknown>[];
