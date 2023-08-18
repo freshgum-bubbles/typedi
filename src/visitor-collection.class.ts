@@ -28,7 +28,7 @@ import { ServiceIdentifier } from './types/service-identifier.type';
  *
  * @group Tree Visitors
  */
-export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor, 'visitContainer'> {
+export class VisitorCollection implements Disposable {
   /** Whether the instance is disposed. */
   public disposed = false;
 
@@ -58,12 +58,12 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
    *
    * @param callback A function to call for each visitor in the collection.
    */
-  public forEach(callback: { (visitor: ContainerTreeVisitor): void }) {
+  public forEachVisitor(callback: { (visitor: ContainerTreeVisitor): void }) {
     if (this.notifyVisitors) {
       this.visitors.forEach(visitor => {
         /** If the visitor has been disposed since the last iteration, free it from the store. */
         if (visitor.disposed) {
-          this.removeVisitor(visitor);
+          this.removeVisitorFromCollection(visitor);
           return;
         }
 
@@ -73,20 +73,20 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
     }
   }
 
-  visitChildContainer(child: ContainerInstance): void {
-    this.forEach(visitor => visitor.visitChildContainer?.(child));
+  notifyChildContainerVisited(child: ContainerInstance): void {
+    this.forEachVisitor(visitor => visitor.visitChildContainer?.(child));
   }
 
-  visitOrphanedContainer(container: ContainerInstance): void {
-    this.forEach(visitor => visitor.visitOrphanedContainer?.(container));
+  notifyOrphanedContainerVisited(container: ContainerInstance): void {
+    this.forEachVisitor(visitor => visitor.visitOrphanedContainer?.(container));
   }
 
-  visitNewService(serviceOptions: ServiceMetadata<unknown>): void {
-    this.forEach(visitor => visitor.visitNewService?.(serviceOptions));
+  notifyNewServiceVisited(serviceOptions: ServiceMetadata<unknown>): void {
+    this.forEachVisitor(visitor => visitor.visitNewService?.(serviceOptions));
   }
 
-  visitRetrieval(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
-    this.forEach(visitor => visitor.visitRetrieval?.(identifier, options));
+  notifyRetrievalVisited(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
+    this.forEachVisitor(visitor => visitor.visitRetrieval?.(identifier, options));
   }
 
   /**
@@ -96,7 +96,7 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
    * @param visitor The visitor to append to the collection.
    * @param container The container to initialise the container on.
    */
-  addVisitor(visitor: ContainerTreeVisitor, container: ContainerInstance) {
+  addVisitorToCollection(visitor: ContainerTreeVisitor, container: ContainerInstance) {
     /** If the visitor is already present, do not add another. */
     if (this.visitors.includes(visitor)) {
       return false;
@@ -138,7 +138,7 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
      * should not be attached to the given container, immediately remove it.
      */
     if (!isAllowedToAttachVisitor) {
-      this.removeVisitor(visitor);
+      this.removeVisitorFromCollection(visitor);
       return false;
     }
 
@@ -152,7 +152,7 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
    *
    * @param visitor The visitor to remove from the collection.
    */
-  removeVisitor(visitor: ContainerTreeVisitor) {
+  removeVisitorFromCollection(visitor: ContainerTreeVisitor) {
     const indexOfVisitor = this.visitors.indexOf(visitor);
 
     if (indexOfVisitor === -1) {
@@ -212,6 +212,6 @@ export class VisitorCollection implements Disposable, Omit<ContainerTreeVisitor,
 
     /** Notify all containers of disposal. */
     // eslint-disable-next-line @typescript-eslint/no-misused-promises -- who cares??
-    this.forEach(visitor => visitor.dispose());
+    this.forEachVisitor(visitor => visitor.dispose());
   }
 }

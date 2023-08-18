@@ -316,7 +316,7 @@ export class ContainerInstance implements Disposable {
      */
     if (identifier === HOST_CONTAINER) {
       if (notifyVisitors) {
-        this.visitor.visitRetrieval(identifier, {
+        this.visitor.notifyRetrievalVisited(identifier, {
           ...partialVisitRetrievalOptions,
           location: ServiceIdentifierLocation.Local,
         });
@@ -330,7 +330,7 @@ export class ContainerInstance implements Disposable {
     if (maybeResolvedMetadata === null) {
       if (notifyVisitors) {
         /** Notify our listeners that the identifier wasn't found. */
-        this.visitor.visitRetrieval(identifier, {
+        this.visitor.notifyRetrievalVisited(identifier, {
           ...partialVisitRetrievalOptions,
           location: ServiceIdentifierLocation.None,
         });
@@ -409,7 +409,7 @@ export class ContainerInstance implements Disposable {
       /** Reset the flag to its original value. */
       this.isRetrievingPrivateToken = false;
 
-      this.visitor.visitRetrieval(identifier, {
+      this.visitor.notifyRetrievalVisited(identifier, {
         ...partialVisitRetrievalOptions,
         location: ServiceIdentifierLocation.Parent,
       });
@@ -423,7 +423,7 @@ export class ContainerInstance implements Disposable {
      * set the {@link ContainerInstance.isRetrievingPrivateToken} flag.
      */
     if (notifyVisitors) {
-      this.visitor.visitRetrieval(identifier, {
+      this.visitor.notifyRetrievalVisited(identifier, {
         ...partialVisitRetrievalOptions,
         location,
       });
@@ -557,7 +557,7 @@ export class ContainerInstance implements Disposable {
     }
 
     /** Notify listeners we have retrieved a service. */
-    this.visitor.visitRetrieval(identifier, {
+    this.visitor.notifyRetrievalVisited(identifier, {
       recursive,
       many: true,
       location,
@@ -708,7 +708,7 @@ export class ContainerInstance implements Disposable {
       dependencies: dependencies as unknown as TypeWrapper[],
     };
 
-    this.visitor.visitNewService(newMetadata);
+    this.visitor.notifyNewServiceVisited(newMetadata);
 
     /** If the incoming metadata is marked as multiple we mask the ID and continue saving as single value. */
     if (newMetadata.multiple) {
@@ -920,7 +920,7 @@ export class ContainerInstance implements Disposable {
          * the default container are notified of the new orphaned service here.
          * _Note: Orphaned container notifications are only sent for newly-created containers, not duplicate .of calls._
          */
-        defaultContainer.visitor.visitOrphanedContainer(container);
+        defaultContainer.visitor.notifyOrphanedContainerVisited(container);
       }
 
       // todo: move this into ContainerInstance ctor
@@ -976,7 +976,7 @@ export class ContainerInstance implements Disposable {
     const newContainer = ContainerInstance.of(containerId, this, options);
 
     if (newContainer) {
-      this.visitor.visitChildContainer(newContainer);
+      this.visitor.notifyChildContainerVisited(newContainer);
     }
 
     return newContainer;
@@ -1353,7 +1353,7 @@ export class ContainerInstance implements Disposable {
   public acceptTreeVisitor(visitor: ContainerTreeVisitor) {
     this.throwIfDisposed();
 
-    return this.visitor.addVisitor(visitor, this);
+    return this.visitor.addVisitorToCollection(visitor, this);
   }
 
   /**
@@ -1370,7 +1370,7 @@ export class ContainerInstance implements Disposable {
   public detachTreeVisitor(visitor: ContainerTreeVisitor) {
     this.throwIfDisposed();
 
-    return this.visitor.removeVisitor(visitor);
+    return this.visitor.removeVisitorFromCollection(visitor);
   }
 
   /** Iterate over each service in the container. */
