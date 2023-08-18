@@ -193,8 +193,12 @@ export class ContainerInstance implements Disposable {
       return ServiceIdentifierLocation.Local;
     }
 
-    // If we have a parent container, see if that has the identifier.
-    // todo: should we always use true here?
+    /**
+     * If we have a parent, check if that has the identifier.
+     * Note that our usage of "parent" here doesn't necessarily mean that the identifier
+     * comes from the parent itself; if the parent can't find it, it'll walk the hierarchy
+     * until it either exhausts the tree, resulting in None, or Parent.
+     */
     if (this.parent && this.parent.has(identifier, true)) {
       return ServiceIdentifierLocation.Parent;
     }
