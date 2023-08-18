@@ -29,9 +29,7 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  *
  * @returns The resolution constraint bit-flag for Optional.
  */
-export function Optional() {
-  return ResolutionConstraintFlag.Optional;
-}
+export const Optional = () => ResolutionConstraintFlag.Optional;
 
 /**
  * Do not ascend the container tree to resolve this identifier.
@@ -62,9 +60,7 @@ export function Optional() {
  *
  * @returns The resolution constraint bit-flag for Self.
  */
-export function Self() {
-  return ResolutionConstraintFlag.Self;
-}
+export const Self = () => ResolutionConstraintFlag.Self;
 
 /**
  * Begin searching from the parent container to resolve this identifier.
@@ -93,9 +89,7 @@ export function Self() {
  *
  * @returns The resolution constraint bit-flag for SkipSelf.
  */
-export function SkipSelf() {
-  return ResolutionConstraintFlag.SkipSelf;
-}
+export const SkipSelf = () => ResolutionConstraintFlag.SkipSelf;
 
 /**
  * Resolve multiple services for this identifier via `getMany`.
@@ -124,6 +118,4 @@ export function SkipSelf() {
  *
  * @returns The resolution constraint bit-flag for SkipSelf.
  */
-export function Many() {
-  return ResolutionConstraintFlag.Many;
-}
+export const Many = () => ResolutionConstraintFlag.Many;
