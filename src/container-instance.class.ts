@@ -24,6 +24,7 @@ import { VisitorCollection } from './visitor-collection.class';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface';
 import { CreateContainerResult } from './types/create-container-result.type';
 import { ServiceIdentifierLocation } from './types/service-identifier-location.type';
+import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const';
 
 interface ManyServicesMetadata {
   tokens: Token<unknown>[];
@@ -897,7 +898,7 @@ export class ContainerInstance implements Disposable {
            */
           return null as unknown as ContainerInstance;
         } else if (onConflict === 'throw') {
-          throw Error(`A container with the specified name ("${String(containerId)}") already exists.`);
+          throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${String(containerId)}") already exists.`);
         }
       }
     } else {
@@ -905,7 +906,7 @@ export class ContainerInstance implements Disposable {
         /** As above: The cast here is correct. */
         return null as unknown as ContainerInstance;
       } else if (onFree === 'throw') {
-        throw Error(`A container with the specified name ("${String(containerId)}) does not already exist.`);
+        throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${String(containerId)}) does not already exist.`);
       }
       /**
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
