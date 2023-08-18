@@ -77,11 +77,11 @@ Example Definitions
   {{/if}}
 
   {{#each merges}}
-    - {{#if commit.breaking}}**Breaking change:** {{/if}}<a href="{{commit.href}}">{{commit.subject}}</a>{{#each fixes}}{{/each}}
+    - {{#if commit.breaking}}**Breaking change:** {{/if}}{{message}}
   {{/each}}
 
   {{#each fixes}}
-    - {{#if commit.breaking}}**Breaking change:** {{/if}}<a href="{{commit.href}}">{{commit.subject}}</a>{{#each fixes}}{{/each}}
+    - {{#if commit.breaking}}**Breaking change:** {{/if}}{{commit.subject}}{{#each fixes}}{{/each}}
   {{/each}}
 
 
