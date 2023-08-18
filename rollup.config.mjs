@@ -51,7 +51,10 @@ const TERSER_OPTIONS = {
   }
 };
 
-/** @type {import('@rollup/plugin-terser').Options} */
+/** 
+ * @type {import('@rollup/plugin-terser').Options} 
+ * A set of Terser options for ES6 builds of TypeDI.
+ */
 const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
   compress: {
     module: true
