@@ -129,8 +129,9 @@ export function Service<T>(
 
     /** A list of dependencies resolved from the arguments provided to the function. */
     let resolvedDependencies!: AnyServiceDependency[];
+    const optionsOrDependenciesIsArray = Array.isArray(optionsOrDependencies);
 
-    if (Array.isArray(optionsOrDependencies)) {
+    if (optionsOrDependenciesIsArray) {
       /**
        * If our first argument is an array, then the user has not specified any options,
        * and has instead filled the slot with a list of dependencies.
@@ -163,7 +164,7 @@ export function Service<T>(
       container: ContainerInstance.defaultContainer,
     };
 
-    if (!Array.isArray(optionsOrDependencies)) {
+    if (!optionsOrDependenciesIsArray) {
       metadata = { ...metadata, ...optionsOrDependencies };
     }
 
