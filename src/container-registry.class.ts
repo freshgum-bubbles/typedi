@@ -1,3 +1,4 @@
+import { __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID } from './constants/strings.const';
 import { ContainerInstance } from './container-instance.class';
 import { ContainerRegistryError } from './error/container-registry-error.error';
 import { ContainerIdentifier } from './types/container-identifier.type';
@@ -69,7 +70,7 @@ export class ContainerRegistry {
     const registeredContainer = this.containerMap.get(id);
 
     if (registeredContainer === undefined) {
-      throw new ContainerRegistryError('No container is registered with the given ID.');
+      throw new ContainerRegistryError(__NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID);
     }
 
     return registeredContainer;
@@ -96,7 +97,7 @@ export class ContainerRegistry {
     const registeredContainer = ContainerRegistry.containerMap.get(container.id);
 
     if (registeredContainer === undefined) {
-      throw new ContainerRegistryError('No container is registered with the given ID.');
+      throw new ContainerRegistryError(__NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID);
     }
 
     /** We remove the container first. */
