@@ -712,7 +712,8 @@ export class ContainerInstance implements Disposable {
 
     /** If the incoming metadata is marked as multiple we mask the ID and continue saving as single value. */
     if (newMetadata.multiple) {
-      const maskedToken = new Token(`MultiMaskToken-${newMetadata.id.toString()}`);
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      const maskedToken = new Token(`MultiMaskToken-${newMetadata.id}`);
       const existingMultiGroup = this.multiServiceIds.get(newMetadata.id);
 
       if (existingMultiGroup) {
