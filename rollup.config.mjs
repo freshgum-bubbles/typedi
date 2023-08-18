@@ -32,7 +32,7 @@ const PROPERTIES_TO_MANGLE = [
 ];
 
 /** @type {import('@rollup/plugin-terser').Options} */
-const terserOptions = {
+const TERSER_OPTIONS = {
   compress: {
     defaults: true,
     keep_fargs: false,
@@ -52,7 +52,7 @@ const terserOptions = {
 };
 
 /** @type {import('@rollup/plugin-terser').Options} */
-const mjsTerserOptions = mergeObjects(terserOptions, {
+const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
   compress: {
     module: true
   }  
@@ -72,7 +72,7 @@ export default {
       format: 'umd',
       file: 'build/bundles/typedi.umd.min.js',
       sourcemap: true,
-      plugins: [terser(terserOptions)],
+      plugins: [terser(TERSER_OPTIONS)],
     },
     {
       format: 'es',
@@ -83,7 +83,7 @@ export default {
       format: 'es',
       file: 'build/bundles/typedi.min.mjs',
       sourcemap: true,
-      plugins: [terser(mjsTerserOptions)],
+      plugins: [terser(MJS_TERSER_OPTIONS)],
     }
   ],
   plugins: [commonjs(), nodeResolve()],
