@@ -1,5 +1,6 @@
-import { ContainerInstance, ServiceIdentifierLocation } from '../container-instance.class';
+import { ContainerInstance } from '../container-instance.class';
 import { Disposable } from '../types/disposable.type';
+import { ServiceIdentifierLocation } from '../types/service-identifier-location.type';
 import { ServiceIdentifier } from '../types/service-identifier.type';
 import { ServiceMetadata } from './service-metadata.interface';
 
