@@ -25,24 +25,6 @@ import { CreateContainerOptions } from './interfaces/create-container-options.in
 import { CreateContainerResult } from './types/create-container-result.type';
 import { ServiceIdentifierLocation } from './types/service-identifier-location.type';
 
-/**
- * A static variable containing "throwIfDisposed".
- *
- * @example
- * ```ts
- * this[THROW_IF_DISPOSED]();
- * ```
- *
- * This is done instead of:
- *
- * ```ts
- * this.throwIfDisposed();
- * ```
- *
- * The former version reduces the bundle size, as the variable name can be mangled safely.
- */
-const THROW_IF_DISPOSED = 'throwIfDisposed';
-
 interface ManyServicesMetadata {
   tokens: Token<unknown>[];
   scope: ContainerScope;
@@ -155,7 +137,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     if (ALWAYS_RESOLVABLE.includes(identifier)) {
       return true;
@@ -187,7 +169,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>): ServiceIdentifierLocation {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     if (this.metadataMap.has(identifier) || this.multiServiceIds.has(identifier)) {
       return ServiceIdentifierLocation.Local;
@@ -257,7 +239,7 @@ export class ContainerInstance implements Disposable {
     identifier: ServiceIdentifier<T>,
     recursive: boolean
   ): readonly [ServiceMetadata<T>, ServiceIdentifierLocation] | null {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     /**
      * Firstly, ascertain the location of the identifier.
@@ -318,7 +300,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   protected getOrDefault<U, T = unknown>(identifier: ServiceIdentifier<T>, defaultValue: U, recursive = true): T | U {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     /**
      * Use the internal flag as a guide to whether we should
@@ -553,7 +535,7 @@ export class ContainerInstance implements Disposable {
     defaultValue: U,
     recursive = true
   ): T[] | U {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     let idMap: ManyServicesMetadata | void = undefined;
     let location: ServiceIdentifierLocation = ServiceIdentifierLocation.None;
@@ -823,7 +805,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public remove(identifierOrIdentifierArray: ServiceIdentifier | ServiceIdentifier[]): this {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
     if (Array.isArray(identifierOrIdentifierArray)) {
       identifierOrIdentifierArray.forEach(id => this.remove(id));
     } else {
@@ -988,7 +970,7 @@ export class ContainerInstance implements Disposable {
     containerId?: ContainerIdentifier,
     options?: TOptions
   ): CreateContainerResult<TOptions> {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     const newContainer = ContainerInstance.of(containerId, this, options);
 
@@ -1010,7 +992,7 @@ export class ContainerInstance implements Disposable {
       strategy: ContainerResetStrategy.ResetValue,
     }
   ): this {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     switch (options.strategy) {
       case ContainerResetStrategy.ResetValue:
@@ -1057,7 +1039,7 @@ export class ContainerInstance implements Disposable {
    */
   public async dispose(): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/require-await
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     this.reset({ strategy: 'resetServices' });
 
@@ -1338,7 +1320,7 @@ export class ContainerInstance implements Disposable {
    * @param force when true the service will be always destroyed even if it's cannot be re-created
    */
   private disposeServiceInstance(serviceMetadata: ServiceMetadata, force = false) {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     /** We reset value only if we can re-create it (aka type or factory exists). */
     const shouldResetValue = force || !!serviceMetadata.type || !!serviceMetadata.factory;
@@ -1368,7 +1350,7 @@ export class ContainerInstance implements Disposable {
    * @returns Whether the operation was successful.
    */
   public acceptTreeVisitor(visitor: ContainerTreeVisitor) {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     return this.visitor.addVisitor(visitor, this);
   }
@@ -1385,7 +1367,7 @@ export class ContainerInstance implements Disposable {
    * @returns Whether the operation was successful.
    */
   public detachTreeVisitor(visitor: ContainerTreeVisitor) {
-    this[THROW_IF_DISPOSED]();
+    this.throwIfDisposed();
 
     return this.visitor.removeVisitor(visitor);
   }
