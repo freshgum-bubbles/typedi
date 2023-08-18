@@ -17,6 +17,4 @@ import { HOST_CONTAINER } from '../constants/host-container.const';
  * }
  * ```
  */
-export function HostContainer() {
-  return HOST_CONTAINER;
-}
+export const HostContainer = () => HOST_CONTAINER;
