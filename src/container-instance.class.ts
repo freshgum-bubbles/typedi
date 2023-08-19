@@ -5,7 +5,7 @@ import { Token } from './token.class';
 import { Constructable } from './types/constructable.type';
 import { ServiceIdentifier } from './types/service-identifier.type';
 import { ServiceMetadata } from './interfaces/service-metadata.interface';
-import { ServiceOptions, ServiceOptionsWithDependencies } from './interfaces/service-options.interface';
+import { ServiceOptions, ServiceOptionsWithDependencies, ServiceOptionsWithoutTypeOrDependencies } from './interfaces/service-options.interface';
 import { EMPTY_VALUE } from './constants/empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { ContainerScope } from './types/container-scope.type';
@@ -638,6 +638,36 @@ export class ContainerInstance implements Disposable {
    *   - `"object"`: This could be a {@link Token} or anything else.
    */
   public set<T = unknown>(serviceOptions: ServiceOptionsWithDependencies<T>): ServiceIdentifier;
+
+  /**
+   * Add a service to the container, without providing any dependencies which would
+   * normally be required when initialising a service with a class-based {@link ServiceOptions.type | .type} member.
+   * 
+   * @param serviceOptions The options for the service to add to the container.
+   * These options are expected to omit both the {@link ServiceOptions.type | .type}
+   * and {@link ServiceOptions.dependencies | .dependencies} members.
+   *
+   * @returns The identifier of the given service in the container.
+   * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
+   *
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
+   *
+   * @throws {@link CannotInstantiateBuiltInError}
+   * This exception is thrown if the service references a built-in type,
+   * such as Number or String, without an accompanying factory.
+   * These are considered invalid, as the container has no way to instantiate them.
+   *
+   * @throws {@link CannotInstantiateValueError}
+   * This exception is thrown if a dependency of the service cannot be instantiated.
+   * A `typeof` check on a dependency should always result in one of the following:
+   *   - `"function"`: This would be for class or function-based services.
+   *   - `"string"`: Though discouraged, a string {@link ServiceIdentifier} can
+   *     be used to reference a given dependency in the container.
+   *   - `"object"`: This could be a {@link Token} or anything else.
+   */
+  public set<T = unknown>(serviceOptions: ServiceOptionsWithoutTypeOrDependencies<T>): ServiceIdentifier;
+
   public set<T = unknown>(
     serviceOptions: ServiceOptions<T> | Omit<ServiceOptions<T>, 'dependencies'>,
     precompiledDependencies?: Resolvable[]
