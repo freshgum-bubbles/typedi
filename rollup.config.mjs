@@ -52,6 +52,21 @@ const TERSER_OPTIONS = {
 };
 
 /** 
+ * @type {Partial<import('rollup').OutputOptions>} 
+ * A partial set of options for all Rollup output declarations.
+ */
+const DEFAULT_ROLLUP_OUTPUT_OPTIONS = {
+  sourcemap: true
+};
+
+/**
+ * @param {import('rollup').OutputOptions} options The options to merge with defaults.
+ */
+function createOutput (options) {
+  return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
+}
+
+/** 
  * @type {import('@rollup/plugin-terser').Options} 
  * A set of Terser options for ES6 builds of TypeDI.
  */
@@ -68,26 +83,22 @@ export default {
       name: 'TypeDI',
       format: 'umd',
       file: 'build/bundles/typedi.umd.js',
-      sourcemap: true,
     },
     {
       name: 'TypeDI',
       format: 'umd',
       file: 'build/bundles/typedi.umd.min.js',
-      sourcemap: true,
       plugins: [terser(TERSER_OPTIONS)],
     },
     {
       format: 'es',
       file: 'build/bundles/typedi.mjs',
-      sourcemap: true,
     },
     {
       format: 'es',
       file: 'build/bundles/typedi.min.mjs',
-      sourcemap: true,
       plugins: [terser(MJS_TERSER_OPTIONS)],
-    }
-  ],
+    },
+  ].map(createOutput),
   plugins: [commonjs(), nodeResolve()],
 };
