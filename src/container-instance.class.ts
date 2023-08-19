@@ -5,7 +5,11 @@ import { Token } from './token.class';
 import { Constructable } from './types/constructable.type';
 import { ServiceIdentifier } from './types/service-identifier.type';
 import { ServiceMetadata } from './interfaces/service-metadata.interface';
-import { ServiceOptions, ServiceOptionsWithDependencies, ServiceOptionsWithoutTypeOrDependencies } from './interfaces/service-options.interface';
+import {
+  ServiceOptions,
+  ServiceOptionsWithDependencies,
+  ServiceOptionsWithoutTypeOrDependencies,
+} from './interfaces/service-options.interface';
 import { EMPTY_VALUE } from './constants/empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
 import { ContainerScope } from './types/container-scope.type';
@@ -642,7 +646,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Add a service to the container, without providing any dependencies which would
    * normally be required when initialising a service with a class-based {@link ServiceOptions.type | .type} member.
-   * 
+   *
    * @param serviceOptions The options for the service to add to the container.
    * These options are expected to omit both the {@link ServiceOptions.type | .type}
    * and {@link ServiceOptions.dependencies | .dependencies} members.
