@@ -313,6 +313,10 @@ export class ContainerInstance implements Disposable {
      */
     const notifyVisitors = !this.isRetrievingPrivateToken;
 
+    /**
+     * Keep a partial object containing some of the options to pass to visitors,
+     * so we don't have to declare the same values in multiple code-paths.
+     */
     const partialVisitRetrievalOptions = { recursive, many: false } as const;
 
     /**
@@ -1086,6 +1090,19 @@ export class ContainerInstance implements Disposable {
     this.visitor.dispose();
   }
 
+  /**
+   * Throw if the instance has been disposed.
+   * @internal
+   * 
+   * @remarks
+   * This is used to prevent operations from being performed on the container
+   * once it has entered a disposed state.
+   * 
+   * @remarks
+   * Due to its extensive usage throughout container methods, this method name
+   * is mangled in minified builds.  As such, the existence of this method should
+   * not be assumed by consumers of the private interface.
+   */
   private throwIfDisposed() {
     if (this.disposed) {
       // TODO: Use custom error.
