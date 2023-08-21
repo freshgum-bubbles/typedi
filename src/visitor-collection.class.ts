@@ -215,7 +215,7 @@ export class VisitorCollection implements Disposable {
     return defaultContainer.acceptTreeVisitor(proxyVisitor);
   }
 
-  public dispose() {
+  public async dispose() {
     /** Prevent duplicate calls to dispose. */
     if (this.disposed) {
       return;
@@ -223,8 +223,7 @@ export class VisitorCollection implements Disposable {
 
     this.disposed = true;
 
-    /** Notify all containers of disposal. */
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- who cares??
-    this.forEachVisitor(visitor => visitor.dispose());
+    /** Return a mega-promise of all the visitors' disposal results. */
+    await Promise.all(this.visitors.map(visitor => visitor.dispose()));
   }
 }
