@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Container, Service } from '../../../src/index';
 
 describe('Github Issues', function () {
