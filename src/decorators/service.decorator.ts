@@ -123,8 +123,7 @@ export function Service<T>(
 ): ClassDecorator {
   return targetConstructor => {
     if (optionsOrDependencies == null || targetConstructor == null) {
-      // todo: more info in these error messages!!!
-      throw Error('The required configuration was not passed.');
+      throw Error('The @Service decorator was not used correctly.');
     }
 
     /** A list of dependencies resolved from the arguments provided to the function. */
