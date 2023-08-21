@@ -184,7 +184,11 @@ export class VisitorCollection implements Disposable {
       },
 
       dispose() {
-        /** Should we forward the dispose upstream here? */
+        /**
+         * We don't forward the disposal of this proxy visitor upstream, as doing so may cause
+         * unintended consequences.  For all purposes, this visitor is invisible to the upstream
+         * one, and so any state it encounters should be kept at bay.
+         */
         this.disposed = true;
       },
 
@@ -196,6 +200,14 @@ export class VisitorCollection implements Disposable {
       },
 
       visitContainer(container: ContainerInstance) {
+        /**
+         * The check here is just for redundancy.  It ensures that, in the event of attachment
+         * to a non-default container, this visitor would immediately become unmounted.
+         *
+         * This is done to be 100% sure that the visitor is launched in the correct container.
+         * One instance where this could be useful is if the visitors of the default container
+         * are blindly copied to another container.
+         */
         return container === defaultContainer;
       },
     };
