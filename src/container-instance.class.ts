@@ -148,7 +148,7 @@ export class ContainerInstance implements Disposable {
       return true;
     }
 
-    const location = this.getIdentifierLocation(identifier);
+    const location = this.getIdentifierLocation(identifier, recursive);
 
     if (recursive && location === ServiceIdentifierLocation.Parent) {
       return true;
@@ -173,7 +173,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>): ServiceIdentifierLocation {
+  protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): ServiceIdentifierLocation {
     this.throwIfDisposed();
 
     if (this.metadataMap.has(identifier) || this.multiServiceIds.has(identifier)) {
@@ -186,7 +186,7 @@ export class ContainerInstance implements Disposable {
      * comes from the parent itself; if the parent can't find it, it'll walk the hierarchy
      * until it either exhausts the tree, resulting in None, or Parent.
      */
-    if (this.parent && this.parent.has(identifier, true)) {
+    if (recursive && this.parent && this.parent.has(identifier, true)) {
       return ServiceIdentifierLocation.Parent;
     }
 
