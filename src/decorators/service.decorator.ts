@@ -175,9 +175,20 @@ export function Service<T>(
     const { id, container } = metadata;
 
     /**
-     * If the target is already registered, `@Service` has been called twice on the same constructor.
-     * Throw an error, as not doing so would raise ambiguity regarding the implementation.
-     * This is most likely user error, as the function should __never__ be called twice.
+     * If the target is already registered, `@Service` may have been called twice on the same class.
+     * Alternatively, the consumer may be trying to override a well-known key in the container.
+     *
+     * Not throwing here may lead to confusion as, in the case of duplicate calls to `@Service` referencing
+     * the same identifier, the "winning" implementation which is *actually* used may be unclear.
+     *
+     * We disable recursiveness in the check here to allow for sub-containers to override well-known
+     * IDs in parent containers.  This makes it easier to immutably extend containers in-place, and
+     * then run the services within those parent containers in a modified environment.
+     *
+     * One final note: It's also very important to ensure that the duplication checks are *not* performed
+     * if the `multiple` bit is set to true.  In that case, we'd very much want it to function like an
+     * ordinary `Container.set` call, wherein the same operation would result in this service being added
+     * to an internal array of values for the specified identifier.
      */
     if (container.has(id, false) && !metadata.multiple) {
       throw Error(
