@@ -156,7 +156,7 @@ export function Service<T>(
      * These are used when the options are not explicitly provided to the function.
      * However, if options are passed, these are merged in as defaults.
      */
-    let metadata: Omit<ServiceMetadata<T>, 'dependencies'> & { container: ContainerInstance } = {
+    const metadata: Omit<ServiceMetadata<T>, 'dependencies'> & { container: ContainerInstance } = {
       id: targetConstructor,
       type: targetConstructor as unknown as Constructable<T>,
       ...SERVICE_METADATA_DEFAULTS,
@@ -164,7 +164,7 @@ export function Service<T>(
     };
 
     if (!optionsOrDependenciesIsArray) {
-      metadata = { ...metadata, ...optionsOrDependencies };
+      Object.assign(metadata, optionsOrDependencies);
     }
 
     const wrappedDependencies = resolvedDependencies.map((dependency, index) =>
