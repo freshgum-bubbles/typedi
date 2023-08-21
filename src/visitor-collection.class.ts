@@ -1,6 +1,6 @@
 import { ContainerInstance, defaultContainer } from './container-instance.class';
 import { ServiceMetadata } from './interfaces/service-metadata.interface';
-import { ContainerTreeVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface';
+import { ContainerTreeVisitor, ContainerTreeVisitorWithOrphanedContainerVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface';
 import { Disposable } from './types/disposable.type';
 import { ServiceIdentifier } from './types/service-identifier.type';
 
@@ -108,7 +108,7 @@ export class VisitorCollection implements Disposable {
        * Therefore, we need to create a proxy that forwards this event from the
        * default container to this visitor.
        */
-      VisitorCollection.forwardOrphanedContainerEvents(visitor);
+      VisitorCollection.forwardOrphanedContainerEvents(visitor as ContainerTreeVisitorWithOrphanedContainerVisitor);
     }
 
     this.visitors.push(visitor);
@@ -177,7 +177,7 @@ export class VisitorCollection implements Disposable {
    * This is used when a visitor implements the {@link ContainerTreeVisitor.visitOrphanedContainer}
    * handler, but the visitor was attached to a non-default container instance.
    */
-  protected static forwardOrphanedContainerEvents(upstreamVisitor: ContainerTreeVisitor) {
+  protected static forwardOrphanedContainerEvents(upstreamVisitor: ContainerTreeVisitorWithOrphanedContainerVisitor) {
     const proxyVisitor: ContainerTreeVisitor = {
       get disposed() {
         return upstreamVisitor.disposed;
@@ -190,7 +190,8 @@ export class VisitorCollection implements Disposable {
 
       visitOrphanedContainer(container: ContainerInstance) {
         if (!this.disposed) {
-          upstreamVisitor.visitOrphanedContainer?.(container);
+          /** Proxy the call to the upstream visitor. */
+          upstreamVisitor.visitOrphanedContainer(container);
         }
       },
 

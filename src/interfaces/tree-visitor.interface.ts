@@ -1,3 +1,4 @@
+import { SetRequired } from 'type-fest';
 import { ContainerInstance } from '../container-instance.class';
 import { Disposable } from '../types/disposable.type';
 import { ServiceIdentifierLocation } from '../types/service-identifier-location.type';
@@ -154,3 +155,5 @@ export interface ContainerTreeVisitor extends Disposable {
    */
   visitRetrieval?(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void;
 }
+
+export type ContainerTreeVisitorWithOrphanedContainerVisitor = SetRequired<ContainerTreeVisitor, 'visitOrphanedContainer'>;
