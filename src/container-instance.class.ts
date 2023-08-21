@@ -806,6 +806,9 @@ export class ContainerInstance implements Disposable {
    *
    * @returns The identifier of the given service in the container.
    * This can then be passed to {@link ContainerInstance.get | .get} to resolve the identifier.
+   * 
+   * @throws Error
+   * This exception is thrown if the container has been disposed.
    */
   public setValue<
     TServiceID extends string | Token<TValue>,
