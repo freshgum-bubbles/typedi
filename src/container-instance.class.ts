@@ -773,11 +773,6 @@ export class ContainerInstance implements Disposable {
       newMetadata.multiple = false;
     }
 
-    // todo: sort this out
-    // I've removed the legacy "extend service if it already exists"
-    // behaviour for now.
-    // const existingMetadata = this.metadataMap.get(newMetadata.id);
-
     /** This service hasn't been registered yet, so we register it. */
     this.metadataMap.set(newMetadata.id, newMetadata);
 
