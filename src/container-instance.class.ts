@@ -57,6 +57,8 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
  * A container allows you to get, set, and modify dependencies in-place.
  * You can also attach individual services to a container, using them
  * to store services for later execution.
+ * 
+ * @see https://typedi.js.org/docs/guide/containers/introduction
  *
  * @example
  * ```ts
