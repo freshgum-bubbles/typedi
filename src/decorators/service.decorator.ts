@@ -179,7 +179,7 @@ export function Service<T>(
      * Throw an error, as not doing so would raise ambiguity regarding the implementation.
      * This is most likely user error, as the function should __never__ be called twice.
      */
-    if (container.has(id) && !metadata.multiple) {
+    if (container.has(id, false) && !metadata.multiple) {
       throw Error(
         `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
       );
