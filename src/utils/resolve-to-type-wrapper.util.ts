@@ -1,6 +1,7 @@
 import { Token } from '../token.class';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type';
 import { LazyReference } from '../types/lazy-reference.type';
+import { ServiceIdentifier } from '../types/service-identifier.type';
 import { TypeWrapper } from '../types/type-wrapper.type';
 import { isInjectedFactory } from './is-inject-identifier.util';
 import { isLazyReference } from './is-lazy-reference.util';
@@ -23,15 +24,18 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
    * ?  - the eagerType is checked when decorator is running and an error is raised if an unknown type is encountered
    */
   let typeWrapper!: TypeWrapper;
+  const inputType = typeof typeOrIdentifier;
 
   /** If requested type is explicitly set via a string ID or token, we set it explicitly. */
   if (
     typeOrIdentifier &&
-    (typeof typeOrIdentifier === 'string' ||
-      typeOrIdentifier instanceof Token ||
-      typeof typeOrIdentifier === 'function')
+    (inputType === 'string' || inputType === 'function' || typeOrIdentifier instanceof Token)
   ) {
-    typeWrapper = { eagerType: typeOrIdentifier, lazyType: () => typeOrIdentifier, isFactory: false };
+    typeWrapper = {
+      eagerType: typeOrIdentifier as ServiceIdentifier,
+      lazyType: () => typeOrIdentifier as ServiceIdentifier,
+      isFactory: false,
+    };
   } else if (typeof typeOrIdentifier === 'object' && isInjectedFactory(typeOrIdentifier)) {
     /** If requested type is an injected factory, we set it explicitly. */
     typeWrapper = { eagerType: null, factory: typeOrIdentifier, isFactory: true };
