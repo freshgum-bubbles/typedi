@@ -24,7 +24,8 @@
     "di-container",
     "typescript",
     "typescript-di",
-    "dependency-injection"
+    "dependency-injection",
+    "typescript"
   ],
   "scripts": {
     "build": "npm run build:cjs",
