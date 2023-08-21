@@ -1093,11 +1093,11 @@ export class ContainerInstance implements Disposable {
   /**
    * Throw if the instance has been disposed.
    * @internal
-   * 
+   *
    * @remarks
    * This is used to prevent operations from being performed on the container
    * once it has entered a disposed state.
-   * 
+   *
    * @remarks
    * Due to its extensive usage throughout container methods, this method name
    * is mangled in minified builds.  As such, the existence of this method should

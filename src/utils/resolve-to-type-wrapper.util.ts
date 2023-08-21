@@ -27,10 +27,7 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
   const inputType = typeof typeOrIdentifier;
 
   /** If requested type is explicitly set via a string ID or token, we set it explicitly. */
-  if (
-    typeOrIdentifier &&
-    (inputType === 'string' || inputType === 'function' || typeOrIdentifier instanceof Token)
-  ) {
+  if (typeOrIdentifier && (inputType === 'string' || inputType === 'function' || typeOrIdentifier instanceof Token)) {
     typeWrapper = {
       eagerType: typeOrIdentifier as ServiceIdentifier,
       lazyType: () => typeOrIdentifier as ServiceIdentifier,

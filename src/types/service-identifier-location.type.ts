@@ -74,12 +74,12 @@ export const enum ServiceIdentifierLocation {
   /**
    * The specified identifier could not be found in the context of the container,
    * or any container in the container's parent hierarchy.
-   * 
+   *
    * @example
    * Here is an example wherein this value would be emitted:
    * ```ts
    * const NAME = new Token<string>();
-   * 
+   *
    * Container.getIdentifierLocation(NAME);
    * // -> None
    * ```
