@@ -181,7 +181,7 @@ export function Service<T>(
      * the same identifier, the "winning" implementation which is *actually* used may be unclear.
      *
      * We disable recursiveness in the check here to allow for sub-containers to override well-known
-     * IDs in parent containers.  
+     * IDs in parent containers.
      * This makes it easier to immutably extend containers in-place by way of sub-containers.
      *
      * One final note: It's also very important to ensure that the duplication checks are *not* performed

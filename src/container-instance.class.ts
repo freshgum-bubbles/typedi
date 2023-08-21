@@ -173,7 +173,10 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  protected getIdentifierLocation<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): ServiceIdentifierLocation {
+  protected getIdentifierLocation<T = unknown>(
+    identifier: ServiceIdentifier<T>,
+    recursive = true
+  ): ServiceIdentifierLocation {
     this.throwIfDisposed();
 
     if (this.metadataMap.has(identifier) || this.multiServiceIds.has(identifier)) {
