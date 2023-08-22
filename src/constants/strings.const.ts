@@ -8,8 +8,8 @@
  * size of the bundle.  For instance, consider the following (minified) code:
  *
  * ```ts
- * throw Error(`A container with the specified name ("${String(t)}") already exists.`)}}
- * throw Error(`A container with the specified name ("${String(t)}) does not already exist.`)
+ * throw Error(`A container with the specified name ("${String(t)}") already exists.`);
+ * throw Error(`A container with the specified name ("${String(t)}) does not already exist.`);
  * ```
  *
  * As can clearly be seen, the string "A container with the specified name" is used twice here,
