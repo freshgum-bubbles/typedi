@@ -27,14 +27,15 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
   /** If requested type is explicitly set via a string ID or token, we set it explicitly. */
   if (
     typeOrIdentifier &&
-    (typeof typeOrIdentifier === 'string' ||
+    (inputType === 'string' ||
       typeOrIdentifier instanceof Token ||
-      typeof typeOrIdentifier === 'function')
+      inputType === 'function')
   ) {
     typeWrapper = {
       [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
-      eagerType: typeOrIdentifier,
-      lazyType: () => typeOrIdentifier,
+      /** We have to use 'as any' casts here due to moving the "typeof" checks to a constant. */
+      eagerType: typeOrIdentifier as any,
+      lazyType: () => typeOrIdentifier as any,
     };
   } else if (typeof typeOrIdentifier === 'object' && isTypeWrapper(typeOrIdentifier)) {
     /**
