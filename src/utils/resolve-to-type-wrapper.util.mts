@@ -37,13 +37,13 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
       eagerType: typeOrIdentifier as any,
       lazyType: () => typeOrIdentifier as any,
     };
-  } else if (typeof typeOrIdentifier === 'object' && isTypeWrapper(typeOrIdentifier)) {
+  } else if (inputType === 'object' && isTypeWrapper(typeOrIdentifier as object)) {
     /**
      * Any arguments which are type-wrappers shouldn't be modified; instead, they should
      * be directly passed to the caller.
      * This allows for functions such as {@link Lazy} and {@link TransientRef} to function.
      */
-    return typeOrIdentifier;
+    return typeOrIdentifier as TypeWrapper;
   }
 
   return typeWrapper;
