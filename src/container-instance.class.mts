@@ -1381,9 +1381,28 @@ export class ContainerInstance implements Disposable {
       return identifier;
     }
 
-    if (resolvable.constraints) {
-      const { constraints } = resolvable;
+    const { constraints } = resolvable;
 
+    /**
+     * We now have to deal with a special type of TypeWrapper, called an un-packable one.
+     * These ones are able to completely bypass the ordinary parameter resolution process,
+     * allowing them to supply custom values to a service upon construction.
+     * 
+     * Such examples of this can be seen in {@link TransientRef}, or {@link Lazy}.
+     */
+    const isTypeWrapperUnpackable = 'unpack' in typeWrapper;
+
+    if (isTypeWrapperUnpackable && !constraints) {
+      /**
+       * We use a non-null assertion here because using the nullish operator
+       * would induce additional runtime cost. As we've done the `in` check
+       * above, we don't need to guard access to this member.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return typeWrapper.unpack!(this, ResolutionConstraintFlag.None);
+    }
+
+    if (constraints) {
       let resolvedIdentifier!: unknown;
 
       /**
@@ -1415,6 +1434,11 @@ export class ContainerInstance implements Disposable {
        */
       const targetContainer = isSkipSelf ? (this.parent as ContainerInstance) : this;
 
+      if (isTypeWrapperUnpackable) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return typeWrapper.unpack!(targetContainer, constraints);
+      }
+
       /** If Self() is used, do not use recursion. */
       const recursive = !isSelf ?? undefined;
 
@@ -1434,17 +1458,6 @@ export class ContainerInstance implements Disposable {
         }
 
         throw new ServiceNotFoundError(identifier);
-      }
-
-      // todo: this probably means we need to check many: true in Lazy
-      if ('unpack' in typeWrapper) {
-        /**
-         * We use a non-null assertion here because using the nullish operator
-         * would induce additional runtime cost. As we've done the `in` check
-         * above, we don't need to guard access to this member.
-         */
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return typeWrapper.unpack!(targetContainer, constraints);
       }
 
       if (isMany) {
