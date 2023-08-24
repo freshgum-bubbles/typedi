@@ -59,12 +59,19 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
   protected container: ContainerInstance;
 
   /**
+   * The constraints to use when resolving the specified identifier.
+   * @internal
+   */
+  protected constraints: number;
+
+  /**
    * Create an instance of a {@link TransientRefInstance}.
    * @internal
    */
-  public constructor(id: TIdentifier, container: ContainerInstance) {
+  public constructor(id: TIdentifier, container: ContainerInstance, constraints: number) {
     this.id = id;
     this.container = container;
+    this.constraints = constraints;
   }
 
   /**
