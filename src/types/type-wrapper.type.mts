@@ -36,6 +36,7 @@ export interface TypeWrapper<
    * 
    * @param constraints The constraints for this dependency, as specified
    * by the author of the service.
+   * If no constraints were specified, this defaults to {@link ResolutionConstraintFlag.None}.
    * 
    * @remarks
    * The presence of this method denotes an extractable TypeWrapper, which provides
