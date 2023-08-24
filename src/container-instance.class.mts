@@ -1388,6 +1388,10 @@ export class ContainerInstance implements Disposable {
      * These ones are able to completely bypass the ordinary parameter resolution process,
      * allowing them to supply custom values to a service upon construction.
      * 
+     * As can be seen below, an un-packable TypeWrapper is able to either completely
+     * disregard the Resolution Constraints used, or cater to them in unique, domain-specific
+     * ways.
+     * 
      * Such examples of this can be seen in {@link TransientRef}, or {@link Lazy}.
      */
     const isTypeWrapperUnpackable = 'unpack' in typeWrapper;
