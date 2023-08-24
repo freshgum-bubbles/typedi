@@ -1399,86 +1399,121 @@ export class ContainerInstance implements Disposable {
      */
     const isTypeWrapperUnpackable = 'unpack' in typeWrapper;
 
-    if (isTypeWrapperUnpackable && !constraints) {
+    if (isTypeWrapperUnpackable) {
       /**
        * We use a non-null assertion here because using the nullish operator
        * would induce additional runtime cost. As we've done the `in` check
        * above, we don't need to guard access to this member.
        */
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return typeWrapper.unpack!(this, ResolutionConstraintFlag.None);
+      return typeWrapper.unpack!(this, constraints ?? ResolutionConstraintFlag.None);
     }
 
     if (constraints) {
-      let resolvedIdentifier!: unknown;
-
       /**
-       * For the individual bit flags, we don't care about the return from `&`.
-       * All that matters is that, if it doesn't return 0, the flag is activated.
-       *
-       * We also don't cast to boolean here, as 0 evaluates to "false",
-       * while anything nonzero evaluates to "true".
-       * This saves bytes in the final bundle.
+       * If the type-wrapper is not un-packable, we continue with the usual behaviour,
+       * wherein the container itself resolves the value of the identifier, taking all
+       * specified constraints into account in the process of resolution.
        */
-      const isOptional = constraints & ResolutionConstraintFlag.Optional;
-      const isSkipSelf = constraints & ResolutionConstraintFlag.SkipSelf;
-      const isSelf = constraints & ResolutionConstraintFlag.Self;
-      const isMany = constraints & ResolutionConstraintFlag.Many;
-
-      /** SkipSelf() and Self() are incompatible. */
-      if (isSkipSelf && isSelf) {
-        throw Error('SkipSelf() and Self() cannot be used at the same time.');
-      }
-
-      /** If SkipSelf is declared, make sure we actually *have* a parent. */
-      if (isSkipSelf && !this.parent) {
-        throw Error(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`);
-      }
-
-      /**
-       * If SkipSelf() is provided, use the parent container for lookups instead.
-       * If not, we use the current container.
-       */
-      const targetContainer = isSkipSelf ? (this.parent as ContainerInstance) : this;
-
-      if (isTypeWrapperUnpackable) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return typeWrapper.unpack!(targetContainer, constraints);
-      }
-
-      /** If Self() is used, do not use recursion. */
-      const recursive = !isSelf ?? undefined;
-
-      /**
-       * Set up some state registers for various flag configurations.
-       */
-      const identifierIsPresent = targetContainer.has(identifier, recursive);
-
-      /**
-       * Straight away, check if optional was declared.
-       * If it was not and the symbol was not found, throw an error.
-       * However, if it *was*, simply return `null` as expected.
-       */
-      if (!identifierIsPresent) {
-        if (isOptional) {
-          return null;
-        }
-
-        throw new ServiceNotFoundError(identifier);
-      }
-
-      if (isMany) {
-        /** If we're in isMany mode, resolve the identifier via `getMany`. */
-        resolvedIdentifier = targetContainer.getMany(identifier, recursive);
-      } else {
-        resolvedIdentifier = targetContainer.get(identifier, recursive);
-      }
-
-      return resolvedIdentifier;
+      return this.resolveConstrainedIdentifier(identifier, constraints);
     }
 
     /** If no constraints were found, fallback to default behaviour. */
     return this.get(identifier);
+  }
+
+  /**
+   * Resolve an identifier within the context of the current container,
+   * alongside a specific set of resolution constraints specified by the end-user.
+   * 
+   * @param identifier The identifier to resolve.
+   * 
+   * @param constraints The constraints to take into consideration
+   * while resolving the specified identifier.
+   * 
+   * @remarks
+   * If {@link SkipSelf} is specified, the parent of this container is used to resolve the identifier.
+   * 
+   * @remarks
+   * In the case of {@link Optional}, if the identifier cannot be found,
+   * "null" is returned instead.  This is in-line with the specification.
+   * 
+   * @returns The result of resolving the value within the current container.
+   * 
+   * @see {@link ResolutionConstraintFlag}
+   * 
+   * @throws {@link ServiceNotFoundError}
+   * This exception is thrown if an invalid identifier is provided, and the
+   * {@link Optional} flag has not been provided.
+   * 
+   * @throws Error
+   * This exception is thrown if the {@link SkipSelf} constraint has been specified,
+   * but the current container does not have a parent.
+   * 
+   * @throws Error
+   * This exception is thrown if {@link SkipSelf} and {@link Self} are used at the same time.
+   */
+  protected resolveConstrainedIdentifier (identifier: ServiceIdentifier, constraints: number) {
+    let resolvedIdentifier!: unknown;
+
+    /**
+     * For the individual bit flags, we don't care about the return from `&`.
+     * All that matters is that, if it doesn't return 0, the flag is activated.
+     *
+     * We also don't cast to boolean here, as 0 evaluates to "false",
+     * while anything nonzero evaluates to "true".
+     * This saves bytes in the final bundle.
+     */
+    const isOptional = constraints & ResolutionConstraintFlag.Optional;
+    const isSkipSelf = constraints & ResolutionConstraintFlag.SkipSelf;
+    const isSelf = constraints & ResolutionConstraintFlag.Self;
+    const isMany = constraints & ResolutionConstraintFlag.Many;
+
+    /** SkipSelf() and Self() are incompatible. */
+    if (isSkipSelf && isSelf) {
+      throw Error('SkipSelf() and Self() cannot be used at the same time.');
+    }
+
+    /** If SkipSelf is declared, make sure we actually *have* a parent. */
+    if (isSkipSelf && !this.parent) {
+      throw Error(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`);
+    }
+
+    /**
+     * If SkipSelf() is provided, use the parent container for lookups instead.
+     * If not, we use the current container.
+     */
+    const targetContainer = isSkipSelf ? (this.parent as ContainerInstance) : this;
+
+    /** If Self() is used, do not use recursion. */
+    const recursive = !isSelf ?? undefined;
+
+    /**
+     * Set up some state registers for various flag configurations.
+     */
+    const identifierIsPresent = targetContainer.has(identifier, recursive);
+
+    /**
+     * Straight away, check if optional was declared.
+     * If it was not and the symbol was not found, throw an error.
+     * However, if it *was*, simply return `null` as expected.
+     */
+    if (!identifierIsPresent) {
+      if (isOptional) {
+        return null;
+      }
+
+      throw new ServiceNotFoundError(identifier);
+    }
+
+    if (isMany) {
+      /** If we're in isMany mode, resolve the identifier via `getMany`. */
+      resolvedIdentifier = targetContainer.getMany(identifier, recursive);
+    } else {
+      resolvedIdentifier = targetContainer.get(identifier, recursive);
+    }
+
+    return resolvedIdentifier;
   }
 
   private resolveTypeWrapper(wrapper: TypeWrapper): ServiceIdentifier {
