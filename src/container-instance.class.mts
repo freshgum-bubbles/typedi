@@ -1384,34 +1384,34 @@ export class ContainerInstance implements Disposable {
     const { constraints } = resolvable;
 
     /**
-     * We now have to deal with a special type of TypeWrapper, called an un-packable one.
+     * We now have to deal with a special type of TypeWrapper, called an extractable one.
      * These ones are able to completely bypass the ordinary parameter resolution process,
      * allowing them to supply custom values to a service upon construction.
      * 
-     * As can be seen below, an un-packable TypeWrapper is able to either completely
+     * As can be seen below, an extractable TypeWrapper is able to either completely
      * disregard the Resolution Constraints used, or cater to them in unique, domain-specific
      * ways.
      * 
-     * It should also be noted that, in the case of an un-packable TypeWrapper,
+     * It should also be noted that, in the case of an extractable TypeWrapper,
      * the specified constraints are not validated.
      * 
      * Such examples of this can be seen in {@link TransientRef}, or {@link Lazy}.
      */
-    const isTypeWrapperUnpackable = 'unpack' in typeWrapper;
+    const isTypeWrapperExtractable = 'extract' in typeWrapper;
 
-    if (isTypeWrapperUnpackable) {
+    if (isTypeWrapperExtractable) {
       /**
        * We use a non-null assertion here because using the nullish operator
        * would induce additional runtime cost. As we've done the `in` check
        * above, we don't need to guard access to this member.
        */
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return typeWrapper.unpack!(this, constraints ?? ResolutionConstraintFlag.None);
+      return typeWrapper.extract!(this, constraints ?? ResolutionConstraintFlag.None);
     }
 
     if (constraints) {
       /**
-       * If the type-wrapper is not un-packable, we continue with the usual behaviour,
+       * If the type-wrapper is not extractable, we continue with the usual behaviour,
        * wherein the container itself resolves the value of the identifier, taking all
        * specified constraints into account in the process of resolution.
        */

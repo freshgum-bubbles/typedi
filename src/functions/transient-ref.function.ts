@@ -11,6 +11,6 @@ export function TransientRef<TIdentifier extends ServiceIdentifier, TInstance = 
     [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
     eagerType: subject,
     lazyType: () => subject,
-    unpack: container => new TransientRefHost(subject, container),
+    extract: container => new TransientRefHost(subject, container),
   };
 }
