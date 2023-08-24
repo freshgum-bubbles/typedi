@@ -12,7 +12,7 @@
   "sideEffects": false,
   "main": "./build/cjs/index.js",
   "module": "./build/esm5/index.js",
-  "es2015": "./build/esm2015/index.js",
+  "es2015": "./build/esm5/index.js",
   "typings": "./build/types/index.d.ts",
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
   "scripts": {
     "build": "npm run build:cjs",
     "build:clean": "rimraf build",
-    "build:es2015": "tsc --project tsconfig.prod.esm2015.json",
     "build:esm5": "tsc --project tsconfig.prod.esm5.json",
     "build:cjs": "tsc --project tsconfig.prod.cjs.json",
     "build:rollup": "npm run build:esm5 && rollup --config rollup.config.mjs",
