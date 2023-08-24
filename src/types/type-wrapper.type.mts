@@ -38,7 +38,7 @@ export interface TypeWrapper<
    * by the author of the service.
    * 
    * @remarks
-   * The presence of this method denotes an un-wrappable TypeWrapper, which provides
+   * The presence of this method denotes an extractable TypeWrapper, which provides
    * customised handling for the resolution of a service's dependency.
    * It is allowed to return any value.
    * 
@@ -51,5 +51,5 @@ export interface TypeWrapper<
    * A value which will be injected into the constructor of the service at the location
    * specified by the author of the service.
    */
-  unpack?: (container: ContainerInstance, constraints: ResolutionConstraintFlag) => TInstance;
+  extract?: (container: ContainerInstance, constraints: ResolutionConstraintFlag) => TInstance;
 }
