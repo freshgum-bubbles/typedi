@@ -14,6 +14,7 @@
   "module": "./build/esm5/index.js",
   "es2015": "./build/esm5/index.js",
   "typings": "./build/types/index.d.ts",
+  "unpkg": "./bundles/typedi.umd.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/freshgum-bubbles/typedi.git"
