@@ -1392,6 +1392,9 @@ export class ContainerInstance implements Disposable {
      * disregard the Resolution Constraints used, or cater to them in unique, domain-specific
      * ways.
      * 
+     * It should also be noted that, in the case of an un-packable TypeWrapper,
+     * the specified constraints are not validated.
+     * 
      * Such examples of this can be seen in {@link TransientRef}, or {@link Lazy}.
      */
     const isTypeWrapperUnpackable = 'unpack' in typeWrapper;
