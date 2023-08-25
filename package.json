@@ -19,6 +19,9 @@
     "type": "git",
     "url": "https://github.com/freshgum-bubbles/typedi.git"
   },
+  "engines": {
+    "node": "v15.3.0"
+  },
   "tags": [
     "di",
     "container",
