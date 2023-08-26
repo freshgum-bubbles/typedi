@@ -1142,10 +1142,10 @@ export class ContainerInstance implements Disposable {
 
     switch (options.strategy) {
       case ContainerResetStrategy.ResetValue:
-        this.metadataMap.forEach(service => this.disposeServiceInstance(service));
+        [...this.resetValuesLazily()];
         break;
       case ContainerResetStrategy.ResetServices:
-        this.metadataMap.forEach(service => this.disposeServiceInstance(service));
+        this.reset();
         this.metadataMap.clear();
         this.multiServiceIds.clear();
         break;
@@ -1153,6 +1153,39 @@ export class ContainerInstance implements Disposable {
         throw NativeError('Received invalid reset strategy.');
     }
     return this;
+  }
+
+  /**
+   * Reset all values in the container.
+   * 
+   * @param force Whether to forcibly dispose non-reconstructable services,
+   * which do not have a factory or class constructor to allow for future
+   * re-initialization.  By default, this is `false`.
+   * 
+   * @remarks
+   * This method returns an iterator which, for each iteration,
+   * disposes of one service in the container.
+   * Once the iterator is exhausted, all services in 
+   * the container have been disposed.
+   * 
+   * @remarks
+   * This method is equivalent to calling {@link ContainerInstance.reset}
+   * with the {@link ContainerResetStrategy.ResetValue} strategy.
+   * The values for each service are erased, although they are not
+   * removed from internal stores.  This means they can be constructed
+   * again at a later point.
+   * 
+   * @returns
+   * An iterator which, for each iteration, disposes of a new service
+   * in the container.  Each iteration returns both the ID of the disposed
+   * service, alongside either a `Promise<void>` signifying the status of
+   * the service's disposal, or `void` if its disposal method does not exist,
+   * or did not return a `Promise<void>`.
+   */
+  public *resetValuesLazily (force?: boolean) {
+    for (const [id, metadata] of this.metadataMap.entries()) {
+      yield { id, status: this.disposeServiceInstance(metadata, force) };
+    }
   }
 
   /**
