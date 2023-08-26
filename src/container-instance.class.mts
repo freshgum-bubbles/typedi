@@ -35,6 +35,8 @@ import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
+import { DISPOSE } from './constants/dispose.const.mjs';
+import { ObjectWithDISymbolDispose, ObjectWithSymbolDispose, ObjectWithSymbolAsyncDispose, ObjectWithDisposeMethod } from './types/disposable-objects.type.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -1558,17 +1560,45 @@ export class ContainerInstance implements Disposable {
     /** We reset value only if we can re-create it (aka type or factory exists). */
     const shouldResetValue = force || !!type || !!factory;
 
-    if (shouldResetValue) {
-      /** If we wound a function named destroy we call it without any params. */
-      if (typeof (value as Record<string, unknown>)?.['dispose'] === 'function') {
-        try {
-          (value as { dispose: CallableFunction }).dispose();
-        } catch (error) {
-          /** We simply ignore the errors from the destroy function. */
-        }
-      }
+    if (typeof value !== 'object' || value === null || !shouldResetValue) {
+      return;
+    }
 
-      serviceMetadata.value = EMPTY_VALUE;
+    /**
+     * In order of priority, we check for the existence of the following properties:
+     *   1. TypeDI's own {@link DISPOSE} constant.
+     *      This acts as an override for the usual {@link Symbol.dispose} logic.
+     *   2. {@link Symbol.dispose}.
+     *   3. {@link Symbol.asyncDispose}.
+     *   4. For backwards compatibility, we maintain support for an ordinary dispose method.
+     *      However, this remnant is not ideal, as it may result in unexpected behaviour.
+     * 
+     * 
+     * One important distinction from the previous behaviour, however, is that this
+     * method no longer swallows promises from calls to a service's disposal method.
+     * (This is, quite frankly, an absolutely terrible idea.)
+     * 
+     * This allows the caller of the `reset`/`remove` calls to actually handle errors,
+     * instead of hoping that the service in question's disposal method won't throw
+     * any unexpected errors.
+     * 
+     * One aspect of note is that now, a call to `remove` or `reset` will result in a
+     * `Promise`, which may be rejected.  This is a worthy breakage, as the previous
+     * behaviour of returning nothing means we have a safe migration path to the new
+     * behaviour.  Furthermore, it is a required change, as future revisions of Node
+     * will quit the process in the case of an uncaught rejected promise.
+     */
+    const disposeMethod = (
+      (value as ObjectWithDISymbolDispose)[DISPOSE] ?? 
+      (value as ObjectWithSymbolDispose)[Symbol.dispose] ?? 
+      (value as ObjectWithSymbolAsyncDispose)[Symbol.asyncDispose] ?? 
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      (value as ObjectWithDisposeMethod).dispose
+    );
+
+    if (disposeMethod && shouldResetValue) {
+      /** We make sure to set `this` to the value to prevent breakages. */
+      return disposeMethod.call(value);
     }
   }
 
