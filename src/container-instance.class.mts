@@ -1557,7 +1557,30 @@ export class ContainerInstance implements Disposable {
     this.throwIfDisposed();
 
     const { value, type, factory } = serviceMetadata;
-    /** We reset value only if we can re-create it (aka type or factory exists). */
+
+    /** 
+     * We reset value only if we can re-create it (aka type or factory exists).
+     * 
+     * If a factory or a type (a class constructor) exists for a service, it's
+     * internally referred to as a constructable service, which essentially means
+     * that the service's value can be discarded and, in theory, a new instance
+     * of the service can be created by either the type or the factory.
+     * 
+     * As an example, a non-reconstructable object would be a string.
+     * For example:
+     * 
+     * ```ts
+     * const NAME = new Token<string>();
+     * Container.set({ id: NAME, value: 'Joanna' });
+     * ```
+     * 
+     * The above would be non-reconstructable, as if we disposed of `NAME`'s value
+     * in the container, we would have no way of getting it back.
+     * 
+     * Therefore, to prevent the unwanted disposal of non-reconstructable services,
+     * we enforce a check here: we either require the `force` parameter to be passed,
+     * or we require that the service is reconstructable.
+     */
     const shouldResetValue = force || !!type || !!factory;
 
     if (typeof value !== 'object' || value === null || !shouldResetValue) {
