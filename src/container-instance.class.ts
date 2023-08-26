@@ -551,6 +551,68 @@ export class ContainerInstance implements Disposable {
   ): T[] | U {
     this.throwIfDisposed();
 
+    /**
+     * # An explanation of `multiple: true` semantics
+     * 
+     * Internally, we store IDs set with `{ multiple: true }` as objects containing anonymous tokens
+     * which are then stored in the usual metadata map.  For every many-to-one value stored with the
+     * flag gets its own token, and that token is then added to an object which is stored in the
+     * "multiServiceIds" Map, with the public identifier used as a key."
+     * 
+     * To demonstrate this, let's provide an example:
+     * 
+     * ```ts
+     * const NAME = new Token<string>();
+     * 
+     * Container.set({ id: NAME, multiple: true, value: 1 });
+     * Container.set({ id: NAME, multiple: true, value: 2 });
+     * ```
+     * 
+     * *Internally, this code will result in the following:*
+     *  
+     * The container checks if the identifier (which, in this case, is `NAME`) is present
+     * in the {@link ContainerInstance.multiServiceIds} Map.  If it is not, an object is
+     * created with the following properties:
+     * 
+     * ```ts
+     * interface ManyServicesMetadata {
+     *   scope: ContainerScope;
+     *   tokens: Token<unknown>[];
+     * }
+     * ```
+     * 
+     * This object is then stored in the {@link Container.multiServiceIds} Map, with the key
+     * being the identifier passed to {@link Container.set} by the user.  In the above example,
+     * the identifier would be the `NAME` token.
+     * 
+     * 1. The `scope` property is a {@link ContainerScope}.
+     *    It tells {@link ContainerInstance.getManyOrDefault} how to resolve the identifier.
+     * 2. The `tokens` property is explained below.
+     *
+     * For each call to {@link ContainerInstance.set} with `multiple: true`, a new {@link Token} is created.
+     * This would then be passed to {@link ContainerInstance.set}, much like an ordinary call to set a new value.
+     * 
+     * The new {@link Token} is then bound to a value.
+     * In the case of the above example, the value is the number 1.
+     * 
+     * Once the token has been bound, it is then added to the array of tokens
+     * inside the {@link ManyServicesMetadata} object referenced above.
+     *
+     * ---
+     * 
+     * In the presence of new features, this deceptively simplistic design has required some 
+     * specialized support to accomplish correctly.  
+     * 
+     * For example, in the case of the {@link ContainerTreeVisitor} API, 
+     * a flag ({@link ContainerInstance.isRetrievingPrivateToken} was required to prevent callers 
+     * being notified of the retrieval of anonymous tokens to retrieve values required by a call
+     * to {@link ContainerInstance.getMany} (or its counterparts).
+     * 
+     * Furthermore, this design has one implicit side-effect: the scope of all values associated 
+     * with a single identifier must be equal.  For example, you would not be able to set one
+     * value as a singleton, and have another as a transient service -- in the current API,
+     * this would not be possible.
+     */
     let idMap: ManyServicesMetadata | void = undefined;
     let location: ServiceIdentifierLocation = ServiceIdentifierLocation.None;
 
