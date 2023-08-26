@@ -1152,7 +1152,7 @@ export class ContainerInstance implements Disposable {
     (this as any).disposed = true;
 
     /** Also dispose visitors. */
-    this.visitor.dispose();
+    return this.visitor.dispose();
   }
 
   /**
