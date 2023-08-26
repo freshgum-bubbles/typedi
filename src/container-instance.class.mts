@@ -1573,6 +1573,14 @@ export class ContainerInstance implements Disposable {
      *   4. For backwards compatibility, we maintain support for an ordinary dispose method.
      *      However, this remnant is not ideal, as it may result in unexpected behaviour.
      * 
+     * For the uninitiated, both {@link Symbol.dispose} and {@link Symbol.asyncDispose}
+     * are parts of the newly-created (as of 2023) Explicit Resource Management proposal:
+     * <https://tc39.es/proposal-explicit-resource-management/>.
+     * 
+     * As a result, we ensure that they exist in the environment before checking for
+     * their existence on the target value.  If the checks below did not exist, if
+     * `Symbol.dispose` evaluated to `undefined`, we would be searching for an 
+     * `undefined` property on the target value, which is unwanted behaviour.
      * 
      * One important distinction from the previous behaviour, however, is that this
      * method no longer swallows promises from calls to a service's disposal method.
@@ -1592,6 +1600,8 @@ export class ContainerInstance implements Disposable {
       (value as ObjectWithDISymbolDispose)[DISPOSE] ?? 
       (value as ObjectWithSymbolDispose)[Symbol.dispose] ?? 
       (value as ObjectWithSymbolAsyncDispose)[Symbol.asyncDispose] ?? 
+      (Symbol.dispose && (value as ObjectWithSymbolDispose)[Symbol.dispose]) ?? 
+      (Symbol.asyncDispose && (value as ObjectWithSymbolAsyncDispose)[Symbol.asyncDispose]) ?? 
       // eslint-disable-next-line @typescript-eslint/unbound-method
       (value as ObjectWithDisposeMethod).dispose
     );
