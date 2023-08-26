@@ -1629,7 +1629,7 @@ export class ContainerInstance implements Disposable {
       (value as ObjectWithDisposeMethod).dispose
     );
 
-    if (disposeMethod && shouldResetValue) {
+    if (disposeMethod) {
       /** We make sure to set `this` to the value to prevent breakages. */
       return disposeMethod.call(value);
     }
