@@ -1583,7 +1583,7 @@ export class ContainerInstance implements Disposable {
      */
     const shouldResetValue = force || !!type || !!factory;
 
-    if (typeof value !== 'object' || value === null || !shouldResetValue) {
+    if (!shouldResetValue || typeof value !== 'object' || value === null) {
       return;
     }
 
