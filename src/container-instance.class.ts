@@ -1450,14 +1450,15 @@ export class ContainerInstance implements Disposable {
   private disposeServiceInstance(serviceMetadata: ServiceMetadata, force = false) {
     this.throwIfDisposed();
 
+    const { value, type, factory } = serviceMetadata;
     /** We reset value only if we can re-create it (aka type or factory exists). */
-    const shouldResetValue = force || !!serviceMetadata.type || !!serviceMetadata.factory;
+    const shouldResetValue = force || !!type || !!factory;
 
     if (shouldResetValue) {
       /** If we wound a function named destroy we call it without any params. */
-      if (typeof (serviceMetadata?.value as Record<string, unknown>)['dispose'] === 'function') {
+      if (typeof (value as Record<string, unknown>)?.['dispose'] === 'function') {
         try {
-          (serviceMetadata.value as { dispose: CallableFunction }).dispose();
+          (value as { dispose: CallableFunction }).dispose();
         } catch (error) {
           /** We simply ignore the errors from the destroy function. */
         }
