@@ -156,4 +156,7 @@ export interface ContainerTreeVisitor extends Disposable {
   visitRetrieval?(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void;
 }
 
-export type ContainerTreeVisitorWithOrphanedContainerVisitor = SetRequired<ContainerTreeVisitor, 'visitOrphanedContainer'>;
+export type ContainerTreeVisitorWithOrphanedContainerVisitor = SetRequired<
+  ContainerTreeVisitor,
+  'visitOrphanedContainer'
+>;
