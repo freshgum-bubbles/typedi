@@ -1,3 +1,5 @@
+export { DISPOSE as OnDispose } from './constants/dispose.const.mjs';
+
 export { JSService } from './decorators/js-service.decorator.mjs';
 export { Service } from './decorators/service.decorator.mjs';
 
@@ -29,6 +31,13 @@ export { ContainerTreeVisitor, VisitRetrievalOptions } from './interfaces/tree-v
 export { Constructable } from './types/constructable.type.mjs';
 export { ContainerIdentifier } from './types/container-identifier.type.mjs';
 export { ContainerScope } from './types/container-scope.type.mjs';
+export {
+  AnyDisposableObject,
+  ObjectWithDISymbolDispose,
+  ObjectWithDisposeMethod,
+  ObjectWithSymbolAsyncDispose,
+  ObjectWithSymbolDispose
+} from './types/disposable-objects.type.mjs';
 export { ExtractToken } from './types/extract-token.type.mjs';
 export { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
 export { ServiceIdentifier } from './types/service-identifier.type.mjs';
