@@ -42,7 +42,9 @@ export interface ObjectWithDISymbolDispose {
  * although the {@link Disposable.disposed | disposed}
  * member is not explicitly required in this rendition.
  */
-export type ObjectWithDisposeMethod = Pick<Disposable, 'dispose'>;
+export interface ObjectWithDisposeMethod {
+    dispose(): Promise<void> | void;
+}
 
 /**
  * An object implementing any of the 4 disposal methods supported by the container:
