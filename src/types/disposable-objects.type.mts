@@ -14,3 +14,9 @@ export interface ObjectWithDISymbolDispose {
 }
 
 export type ObjectWithDisposeMethod = Pick<Disposable, 'dispose'>;
+
+export type AnyDisposableObject =
+    | ObjectWithSymbolDispose
+    | ObjectWithSymbolAsyncDispose
+    | ObjectWithDISymbolDispose
+    | ObjectWithDisposeMethod;
