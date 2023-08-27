@@ -1,7 +1,23 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
+import licensePlugin from 'rollup-plugin-license';
 import mergeObjects from 'deepmerge';
+import { fileURLToPath } from 'url';
+import assert from 'assert';
+import path from 'path';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const BUILD_PREAMBLE_PATH = './scripts/build/bundle-preamble.js';
+const BUILD_PREAMBLE = fs.readFileSync(BUILD_PREAMBLE_PATH, 'utf8').toString();
+assert(BUILD_PREAMBLE, `The bundle preamble was not found in ${BUILD_PREAMBLE_PATH}`);
+
+const LICENSE_PATH = './LICENSE';
+const LICENSE_TEXT = fs.readFileSync(LICENSE_PATH, 'utf8').toString();
+assert(LICENSE_TEXT, 'The license file (named LICENSE) could not be found in the root directory.');
 
 /**
  * A list of properties in the codebase to mangle.
@@ -76,6 +92,27 @@ const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
   }  
 });
 
+/** @param {import('rollup').OutputOptions} output */
+function transformRollupOutputItem (output) {
+  if (!output.plugins) {
+    output.plugins = [ ];
+  }
+
+  if (!output.file?.includes('.min')) {
+    output.plugins.push(licensePlugin({
+      banner: {
+        commentStyle: 'none',
+        content: BUILD_PREAMBLE,
+        data: {
+          licenseText: LICENSE_TEXT
+        }
+      }
+    }));
+  }
+
+  return output;
+}
+
 export default {
   input: 'build/esm5/index.js',
   output: [
@@ -99,6 +136,6 @@ export default {
       file: 'build/bundles/typedi.min.mjs',
       plugins: [terser(MJS_TERSER_OPTIONS)],
     },
-  ].map(createOutput),
+  ].map(createOutput).map(transformRollupOutputItem),
   plugins: [commonjs(), nodeResolve()],
 };
