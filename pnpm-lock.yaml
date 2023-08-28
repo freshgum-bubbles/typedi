@@ -88,10 +88,10 @@ devDependencies:
     version: 0.24.8(typescript@5.1.6)
   typedoc-github-wiki-theme:
     specifier: ^1.1.0
-    version: 1.1.0(typedoc-plugin-markdown@3.15.4)(typedoc@0.24.8)
+    version: 1.1.0(typedoc-plugin-markdown@3.16.0)(typedoc@0.24.8)
   typedoc-plugin-markdown:
-    specifier: ^3.15.4
-    version: 3.15.4(typedoc@0.24.8)
+    specifier: ^3.16.0
+    version: 3.16.0(typedoc@0.24.8)
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -4294,18 +4294,18 @@ packages:
     engines: {node: '>=16'}
     dev: true
 
-  /typedoc-github-wiki-theme@1.1.0(typedoc-plugin-markdown@3.15.4)(typedoc@0.24.8):
+  /typedoc-github-wiki-theme@1.1.0(typedoc-plugin-markdown@3.16.0)(typedoc@0.24.8):
     resolution: {integrity: sha512-VyFmz8ZV2j/qEsCjD5EtR6FgZsCoy64Zr6SS9kCTcq7zx69Cx4UJBx8Ga/naxqs08TDggE6myIfODY6awwAGcA==}
     peerDependencies:
       typedoc: '>=0.24.0'
       typedoc-plugin-markdown: '>=3.15.0'
     dependencies:
       typedoc: 0.24.8(typescript@5.1.6)
-      typedoc-plugin-markdown: 3.15.4(typedoc@0.24.8)
+      typedoc-plugin-markdown: 3.16.0(typedoc@0.24.8)
     dev: true
 
-  /typedoc-plugin-markdown@3.15.4(typedoc@0.24.8):
-    resolution: {integrity: sha512-KpjFL/NDrQAbY147oIoOgob2vAdEchsMcTVd6+e6H2lC1l5xhi48bhP/fMJI7qYQ8th5nubervgqw51z7gY66A==}
+  /typedoc-plugin-markdown@3.16.0(typedoc@0.24.8):
+    resolution: {integrity: sha512-eeiC78fDNGFwemPIHiwRC+mEC7W5jwt3fceUev2gJ2nFnXpVHo8eRrpC9BLWZDee6ehnz/sPmNjizbXwpfaTBw==}
     peerDependencies:
       typedoc: '>=0.24.0'
     dependencies:
