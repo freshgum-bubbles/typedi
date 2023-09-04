@@ -3,7 +3,7 @@ import {
   ServiceOptions,
   ServiceOptionsWithDependencies,
   ServiceOptionsWithoutDependencies,
-} from '../interfaces/service-options.interface.mts';
+} from '../interfaces/service-options.interface.mjs';
 import { AnyConstructable } from '../types/any-constructable.type.mjs';
 import { Constructable } from '../types/constructable.type.mjs';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
