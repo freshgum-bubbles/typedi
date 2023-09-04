@@ -34,8 +34,10 @@
   "scripts": {
     "build": "npm run build:cjs",
     "build:clean": "rimraf build",
-    "build:esm5": "tsc --project tsconfig.prod.esm5.json",
-    "build:cjs": "tsc --project tsconfig.prod.cjs.json",
+    "build:clean-esm5": "rimraf ./build/esm5",
+    "build:clean-cjs": "rimraf ./build/cjs",
+    "build:esm5": "npm run build:clean-esm5 && tsc --project tsconfig.prod.esm5.json",
+    "build:cjs": "npm run build:clean-cjs && tsc --project tsconfig.prod.cjs.json",
     "build:rollup": "npm run build:esm5 && rollup --config rollup.config.mjs",
     "build:umd": "npm run build:esm5",
     "build:types": "tsc --project tsconfig.prod.types.json",
