@@ -1,8 +1,8 @@
-import { ContainerInstance, defaultContainer } from './container-instance.class.mts';
-import { ServiceMetadata } from './interfaces/service-metadata.interface.mts';
-import { ContainerTreeVisitor, ContainerTreeVisitorWithOrphanedContainerVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface.mts';
-import { Disposable } from './types/disposable.type.mts';
-import { ServiceIdentifier } from './types/service-identifier.type.mts';
+import { ContainerInstance, defaultContainer } from './container-instance.class.mjs';
+import { ServiceMetadata } from './interfaces/service-metadata.interface.mjs';
+import { ContainerTreeVisitor, ContainerTreeVisitorWithOrphanedContainerVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface.mjs';
+import { Disposable } from './types/disposable.type.mjs';
+import { ServiceIdentifier } from './types/service-identifier.type.mjs';
 
 /**
  * A collection of individual visitor objects, combined into a collection.

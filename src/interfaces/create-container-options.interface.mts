@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ContainerInstance } from '../container-instance.class.mts';
+import { ContainerInstance } from '../container-instance.class.mjs';
 
 /**
  * @fileoverview

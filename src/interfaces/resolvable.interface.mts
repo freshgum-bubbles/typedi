@@ -1,4 +1,4 @@
-import { TypeWrapper } from '../types/type-wrapper.type.mts';
+import { TypeWrapper } from '../types/type-wrapper.type.mjs';
 
 /**
  * An object containing an identifier, possibly with a strict set of constraints,

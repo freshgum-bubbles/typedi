@@ -1,9 +1,9 @@
-import { ContainerInstance } from '../container-instance.class.mts';
-import { Constructable } from '../types/constructable.type.mts';
-import { ContainerScope } from '../types/container-scope.type.mts';
-import { ServiceFactory } from '../types/service-factory.type.mts';
-import { ServiceIdentifier } from '../types/service-identifier.type.mts';
-import { Resolvable } from './resolvable.interface.mts';
+import { ContainerInstance } from '../container-instance.class.mjs';
+import { Constructable } from '../types/constructable.type.mjs';
+import { ContainerScope } from '../types/container-scope.type.mjs';
+import { ServiceFactory } from '../types/service-factory.type.mjs';
+import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
+import { Resolvable } from './resolvable.interface.mjs';
 
 /**
  * Service metadata is used to initialize service and store its state.

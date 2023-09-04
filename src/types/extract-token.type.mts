@@ -1,4 +1,4 @@
-import { Token } from '../token.class.mts';
+import { Token } from '../token.class.mjs';
 
 /**
  * Extract the type of a Token.

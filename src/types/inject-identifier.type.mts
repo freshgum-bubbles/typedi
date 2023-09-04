@@ -1,7 +1,7 @@
-import { ContainerInstance } from '../container-instance.class.mts';
-import { INJECTED_FACTORY } from '../constants/type-stamps.const.mts';
-import { LazyReference } from './lazy-reference.type.mts';
-import { ServiceIdentifier } from './service-identifier.type.mts';
+import { ContainerInstance } from '../container-instance.class.mjs';
+import { INJECTED_FACTORY } from '../constants/type-stamps.const.mjs';
+import { LazyReference } from './lazy-reference.type.mjs';
+import { ServiceIdentifier } from './service-identifier.type.mjs';
 
 export type InjectedFactoryGet<TReturn> = (container: ContainerInstance) => TReturn;
 

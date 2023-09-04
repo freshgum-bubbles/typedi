@@ -1,5 +1,5 @@
-import { PickRequired } from '../types/pick-required.type.mts';
-import { ServiceOptions } from './service-options.interface.mts';
+import { PickRequired } from '../types/pick-required.type.mjs';
+import { ServiceOptions } from './service-options.interface.mjs';
 
 /**
  * A variant of {@link ServiceOptions} with the dependencies property required.

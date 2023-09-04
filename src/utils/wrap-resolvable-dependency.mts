@@ -1,14 +1,14 @@
-import { BUILT_INS } from '../constants/builtins.const.mts';
-import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error.mts';
-import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error.mts';
-import { Resolvable } from '../interfaces/resolvable.interface.mts';
-import { AnyServiceDependency, DependencyPairWithConfiguration } from '../interfaces/service-dependency.interface.mts';
-import { ServiceOptionsWithoutDependencies } from '../interfaces/service-options.interface.mts';
-import { Constructable } from '../types/constructable.type.mts';
-import { AnyInjectIdentifier } from '../types/inject-identifier.type.mts';
-import { TypeWrapper } from '../types/type-wrapper.type.mts';
-import { formatClassName } from './format-class-name.mts';
-import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util.mts';
+import { BUILT_INS } from '../constants/builtins.const.mjs';
+import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error.mjs';
+import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error.mjs';
+import { Resolvable } from '../interfaces/resolvable.interface.mjs';
+import { AnyServiceDependency, DependencyPairWithConfiguration } from '../interfaces/service-dependency.interface.mjs';
+import { ServiceOptionsWithoutDependencies } from '../interfaces/service-options.interface.mjs';
+import { Constructable } from '../types/constructable.type.mjs';
+import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
+import { TypeWrapper } from '../types/type-wrapper.type.mjs';
+import { formatClassName } from './format-class-name.mjs';
+import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util.mjs';
 
 export function wrapDependencyAsResolvable(
   dependency: AnyServiceDependency,

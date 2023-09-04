@@ -1,7 +1,7 @@
-import { ContainerInstance } from '../container-instance.class.mts';
+import { ContainerInstance } from '../container-instance.class.mjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HostContainer } from '../functions/host-container.function.mts';
-import { Token } from '../token.class.mts';
+import { HostContainer } from '../functions/host-container.function.mjs';
+import { Token } from '../token.class.mjs';
 
 /**
  * A special identifier which can be used to get the container

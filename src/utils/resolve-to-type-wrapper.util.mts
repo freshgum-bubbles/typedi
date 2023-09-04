@@ -1,10 +1,10 @@
-import { Token } from '../token.class.mts';
-import { AnyInjectIdentifier } from '../types/inject-identifier.type.mts';
-import { LazyReference } from '../types/lazy-reference.type.mts';
-import { ServiceIdentifier } from '../types/service-identifier.type.mts';
-import { TypeWrapper } from '../types/type-wrapper.type.mts';
-import { isInjectedFactory } from './is-inject-identifier.util.mts';
-import { isLazyReference } from './is-lazy-reference.util.mts';
+import { Token } from '../token.class.mjs';
+import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
+import { LazyReference } from '../types/lazy-reference.type.mjs';
+import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
+import { TypeWrapper } from '../types/type-wrapper.type.mjs';
+import { isInjectedFactory } from './is-inject-identifier.util.mjs';
+import { isLazyReference } from './is-lazy-reference.util.mjs';
 
 /**
  * Helper function used in the injection-related decorators to resolve the received identifier to

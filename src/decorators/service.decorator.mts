@@ -6,14 +6,14 @@
  * passes the normalized metadata to the container.
  * The main service logic is hosted by the {@link ContainerInstance} class.
  */
-import { ServiceOptions, ServiceOptionsWithDependencies } from '../interfaces/service-options.interface.mts';
-import { Constructable } from '../types/constructable.type.mts';
-import { ContainerInstance } from '../container-instance.class.mts';
-import { formatClassName } from '../utils/format-class-name.mts';
-import { ServiceMetadata } from '../interfaces/service-metadata.interface.mts';
-import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const.mts';
-import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mts';
-import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mts';
+import { ServiceOptions, ServiceOptionsWithDependencies } from '../interfaces/service-options.interface.mjs';
+import { Constructable } from '../types/constructable.type.mjs';
+import { ContainerInstance } from '../container-instance.class.mjs';
+import { formatClassName } from '../utils/format-class-name.mjs';
+import { ServiceMetadata } from '../interfaces/service-metadata.interface.mjs';
+import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const.mjs';
+import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
+import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.

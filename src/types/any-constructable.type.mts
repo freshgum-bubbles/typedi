@@ -1,5 +1,5 @@
-import { AbstractConstructable } from './abstract-constructable.type.mts';
-import { Constructable } from './constructable.type.mts';
+import { AbstractConstructable } from './abstract-constructable.type.mjs';
+import { Constructable } from './constructable.type.mjs';
 
 /**
  * A type matching any form of constructable.

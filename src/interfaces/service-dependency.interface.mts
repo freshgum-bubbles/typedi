@@ -1,4 +1,4 @@
-import { AnyInjectIdentifier } from '../types/inject-identifier.type.mts';
+import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
 
 /**
  * A set of configuration options for a dependency of a service.

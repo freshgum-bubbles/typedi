@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ResolutionConstraintFlag } from '../types/resolution-constraint.type.mts';
-import { ServiceIdentifier } from '../types/service-identifier.type.mts';
+import { ResolutionConstraintFlag } from '../types/resolution-constraint.type.mjs';
+import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
 
 /**
  * A descriptor of a service declared as a dependency of another service.
