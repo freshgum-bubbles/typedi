@@ -9,7 +9,7 @@ import {
   ServiceOptions,
   ServiceOptionsWithDependencies,
   ServiceOptionsWithoutTypeOrDependencies,
-} from './interfaces/service-options.interface.mts';
+} from './interfaces/service-options.interface.mjs';
 import { EMPTY_VALUE } from './constants/empty.const.mjs';
 import { ContainerIdentifier } from './types/container-identifier.type.mjs';
 import { ContainerScope } from './types/container-scope.type.mjs';
