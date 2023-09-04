@@ -22,7 +22,9 @@
     "strictPropertyInitialization": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
-    "stripInternal": true
+    "stripInternal": true,
+
+    "allowImportingTsExtensions": true
   },
   "exclude": ["build", "node_modules", "sample", "**/*.spec.ts", "test/**", "docs", "website/**", "dist"]
 }
