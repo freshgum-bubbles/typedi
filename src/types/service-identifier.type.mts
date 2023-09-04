@@ -1,6 +1,6 @@
-import { Token } from '../token.class.mts';
-import { Constructable } from './constructable.type.mts';
-import { AbstractConstructable } from './abstract-constructable.type.mts';
+import { Token } from '../token.class.mjs';
+import { Constructable } from './constructable.type.mjs';
+import { AbstractConstructable } from './abstract-constructable.type.mjs';
 
 /**
  * Unique service identifier.

@@ -1,4 +1,4 @@
-import { CannotInstantiateValueError } from './cannot-instantiate-value.error.mts';
+import { CannotInstantiateValueError } from './cannot-instantiate-value.error.mjs';
 
 /**
  * Thrown when DI encounters a service depending on a built-in type (Number, String) with no factory.

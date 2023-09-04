@@ -1,9 +1,9 @@
-import { SetRequired } from 'type-fest.mts';
-import { ContainerInstance } from '../container-instance.class.mts';
-import { Disposable } from '../types/disposable.type.mts';
-import { ServiceIdentifierLocation } from '../types/service-identifier-location.type.mts';
-import { ServiceIdentifier } from '../types/service-identifier.type.mts';
-import { ServiceMetadata } from './service-metadata.interface.mts';
+import { SetRequired } from 'type-fest.mjs';
+import { ContainerInstance } from '../container-instance.class.mjs';
+import { Disposable } from '../types/disposable.type.mjs';
+import { ServiceIdentifierLocation } from '../types/service-identifier-location.type.mjs';
+import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
+import { ServiceMetadata } from './service-metadata.interface.mjs';
 
 /**
  * A collection of options passed to {@link ContainerTreeVisitor.visitRetrieval}.

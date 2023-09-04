@@ -1,4 +1,4 @@
-import { EMPTY_VALUE } from './empty.const.mts';
+import { EMPTY_VALUE } from './empty.const.mjs';
 
 /**
  * An object containing default values for services.

@@ -1,5 +1,5 @@
-import { LAZY_REFERENCE } from '../constants/type-stamps.const.mts';
-import { LazyReference } from '../types/lazy-reference.type.mts';
+import { LAZY_REFERENCE } from '../constants/type-stamps.const.mjs';
+import { LazyReference } from '../types/lazy-reference.type.mjs';
 
 /**
  * Create a lazy reference to a value.

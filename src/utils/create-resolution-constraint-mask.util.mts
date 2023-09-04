@@ -1,4 +1,4 @@
-import { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from '../types/resolution-constraint.type.mts';
+import { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from '../types/resolution-constraint.type.mjs';
 
 /**
  * Construct a resolution constraint bitmask from the provided constraint descriptor.

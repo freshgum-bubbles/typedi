@@ -1,4 +1,4 @@
-import { ResolutionConstraintFlag } from '../types/resolution-constraint.type.mts';
+import { ResolutionConstraintFlag } from '../types/resolution-constraint.type.mjs';
 
 /**
  * If the identifier cannot be found, substitute it with `null`.

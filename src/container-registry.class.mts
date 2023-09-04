@@ -1,7 +1,7 @@
-import { __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID } from './constants/strings.const.mts';
-import { ContainerInstance } from './container-instance.class.mts';
-import { ContainerRegistryError } from './error/container-registry-error.error.mts';
-import { ContainerIdentifier } from './types/container-identifier.type.mts';
+import { __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID } from './constants/strings.const.mjs';
+import { ContainerInstance } from './container-instance.class.mjs';
+import { ContainerRegistryError } from './error/container-registry-error.error.mjs';
+import { ContainerIdentifier } from './types/container-identifier.type.mjs';
 
 /**
  * The container registry is responsible for holding the default and every

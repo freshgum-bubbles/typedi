@@ -1,35 +1,35 @@
-import { ContainerRegistry } from './container-registry.class.mts';
-import { ServiceNotFoundError } from './error/service-not-found.error.mts';
-import { CannotInstantiateValueError } from './error/cannot-instantiate-value.error.mts';
-import { Token } from './token.class.mts';
-import { Constructable } from './types/constructable.type.mts';
-import { ServiceIdentifier } from './types/service-identifier.type.mts';
-import { ServiceMetadata } from './interfaces/service-metadata.interface.mts';
+import { ContainerRegistry } from './container-registry.class.mjs';
+import { ServiceNotFoundError } from './error/service-not-found.error.mjs';
+import { CannotInstantiateValueError } from './error/cannot-instantiate-value.error.mjs';
+import { Token } from './token.class.mjs';
+import { Constructable } from './types/constructable.type.mjs';
+import { ServiceIdentifier } from './types/service-identifier.type.mjs';
+import { ServiceMetadata } from './interfaces/service-metadata.interface.mjs';
 import {
   ServiceOptions,
   ServiceOptionsWithDependencies,
   ServiceOptionsWithoutTypeOrDependencies,
 } from './interfaces/service-options.interface.mts';
-import { EMPTY_VALUE } from './constants/empty.const.mts';
-import { ContainerIdentifier } from './types/container-identifier.type.mts';
-import { ContainerScope } from './types/container-scope.type.mts';
-import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type.mts';
-import { Disposable } from './types/disposable.type.mts';
-import { BUILT_INS } from './constants/builtins.const.mts';
-import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error.mts';
-import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const.mts';
-import { Resolvable } from './interfaces/resolvable.interface.mts';
-import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency.mts';
-import { ResolutionConstraintFlag } from './types/resolution-constraint.type.mts';
-import { HOST_CONTAINER } from './constants/host-container.const.mts';
-import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface.mts';
-import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface.mts';
-import { VisitorCollection } from './visitor-collection.class.mts';
-import { CreateContainerOptions } from './interfaces/create-container-options.interface.mts';
-import { CreateContainerResult } from './types/create-container-result.type.mts';
-import { ServiceIdentifierLocation } from './types/service-identifier-location.type.mts';
-import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const.mts';
-import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mts';
+import { EMPTY_VALUE } from './constants/empty.const.mjs';
+import { ContainerIdentifier } from './types/container-identifier.type.mjs';
+import { ContainerScope } from './types/container-scope.type.mjs';
+import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type.mjs';
+import { Disposable } from './types/disposable.type.mjs';
+import { BUILT_INS } from './constants/builtins.const.mjs';
+import { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error.mjs';
+import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const.mjs';
+import { Resolvable } from './interfaces/resolvable.interface.mjs';
+import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency.mjs';
+import { ResolutionConstraintFlag } from './types/resolution-constraint.type.mjs';
+import { HOST_CONTAINER } from './constants/host-container.const.mjs';
+import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface.mjs';
+import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface.mjs';
+import { VisitorCollection } from './visitor-collection.class.mjs';
+import { CreateContainerOptions } from './interfaces/create-container-options.interface.mjs';
+import { CreateContainerResult } from './types/create-container-result.type.mjs';
+import { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
+import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const.mjs';
+import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
 
 interface ManyServicesMetadata {
   tokens: Token<unknown>[];

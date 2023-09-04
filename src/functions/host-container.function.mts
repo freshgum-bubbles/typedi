@@ -1,4 +1,4 @@
-import { HOST_CONTAINER } from '../constants/host-container.const.mts';
+import { HOST_CONTAINER } from '../constants/host-container.const.mjs';
 
 /**
  * A special identifier which can be used to get the container

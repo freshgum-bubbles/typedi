@@ -1,5 +1,5 @@
-import { InjectedFactory } from './inject-identifier.type.mts';
-import { ServiceIdentifier } from './service-identifier.type.mts';
+import { InjectedFactory } from './inject-identifier.type.mjs';
+import { ServiceIdentifier } from './service-identifier.type.mjs';
 
 export interface GenericTypeWrapper {
   eagerType: ServiceIdentifier | null;
