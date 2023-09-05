@@ -1,6 +1,6 @@
 import { ServiceMetadata } from './service-metadata.interface.mjs';
 import { AnyServiceDependency } from './service-dependency.interface.mjs';
-import { RequireExactlyOne, SetRequired } from 'type-fest.mjs';
+import { RequireExactlyOne, SetRequired } from 'type-fest';
 
 type OptionalKeys = 'type' | 'factory' | 'value';
 
