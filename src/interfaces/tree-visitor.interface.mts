@@ -1,4 +1,4 @@
-import { SetRequired } from 'type-fest.mjs';
+import { SetRequired } from 'type-fest';
 import { ContainerInstance } from '../container-instance.class.mjs';
 import { Disposable } from '../types/disposable.type.mjs';
 import { ServiceIdentifierLocation } from '../types/service-identifier-location.type.mjs';
