@@ -29,11 +29,8 @@ import { CreateContainerOptions } from './interfaces/create-container-options.in
 import { CreateContainerResult } from './types/create-container-result.type';
 import { ServiceIdentifierLocation } from './types/service-identifier-location.type';
 import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const';
-
-interface ManyServicesMetadata {
-  tokens: Token<unknown>[];
-  scope: ContainerScope;
-}
+import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type';
+import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -616,23 +613,7 @@ export class ContainerInstance implements Disposable {
      * value as a singleton, and have another as a transient service -- in the current API,
      * this would not be possible.
      */
-    let idMap: ManyServicesMetadata | void = undefined;
-    let location: ServiceIdentifierLocation = ServiceIdentifierLocation.None;
-
-    if (!this.multiServiceIds.has(identifier)) {
-      /** If this container has no knowledge of the identifier, then we check the parent (if we have one). */
-      if (recursive && this.parent && this.parent.multiServiceIds.has(identifier)) {
-        /** It looks like it does! Let's use that instead. */
-        idMap = this.parent.multiServiceIds.get(identifier) as ManyServicesMetadata;
-        location = ServiceIdentifierLocation.Parent;
-      }
-    } else {
-      idMap = this.multiServiceIds.get(identifier);
-
-      if (idMap) {
-        location = ServiceIdentifierLocation.Local;
-      }
-    }
+    const [location, idMap] = this.resolveMultiID(identifier, recursive);
 
     /** Notify listeners we have retrieved a service. */
     this.visitor.notifyRetrievalVisited(identifier, {
@@ -668,6 +649,30 @@ export class ContainerInstance implements Disposable {
     targetContainer.isRetrievingPrivateToken = false;
 
     return mapped;
+  }
+
+  /**
+   * Recursively check the presence of a multi-service identifier in the container hierarchy.
+   * 
+   * @param id The ID to lookup in the container hierarchy.
+   * @param recursive Whether the operation will be performed recursively.
+   * If this is set to `false`, the identifier will only be looked up in the context
+   * of this container, regardless of whether the parent has the identifier.
+   */
+  private resolveMultiID (id: ServiceIdentifier, recursive = true): MultiIDLookupResponse {
+    if (this.multiServiceIds.has(id)) {
+      return [ServiceIdentifierLocation.Local, this.multiServiceIds.get(id) as ManyServicesMetadata];
+    }
+
+    if (recursive && this.parent) {
+      const [location, value] = this.parent.resolveMultiID(id);
+
+      if (location !== ServiceIdentifierLocation.None) {
+        return [ServiceIdentifierLocation.Parent, value];
+      }
+    }
+
+    return [ServiceIdentifierLocation.None, null];
   }
 
   /**
