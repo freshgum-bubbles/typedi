@@ -54,3 +54,6 @@ playground.js
 .docusaurus
 website/.docusaurus
 website/static/api-reference/
+
+# Keep build directory
+!build/.gitkeep
