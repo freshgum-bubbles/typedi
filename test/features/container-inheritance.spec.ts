@@ -1,4 +1,5 @@
 import { Container, Token } from '../../src/index';
+import { createArrayOfNumbers } from '../utils/create-array-of-numbers.util';
 
 describe('Child Containers', () => {
   function createDeepContainerTree(levels: number, root = Container) {
@@ -11,18 +12,6 @@ describe('Child Containers', () => {
     }
 
     return container;
-  }
-
-  function createArrayOfNumbers(end: number) {
-    const numbers: number[] = [];
-    let index = 0;
-
-    while (index <= end) {
-      numbers.push(index);
-      index++;
-    }
-
-    return numbers;
   }
 
   describe('Container Inheritance', () => {
