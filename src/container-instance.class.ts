@@ -658,6 +658,31 @@ export class ContainerInstance implements Disposable {
    * @param recursive Whether the operation will be performed recursively.
    * If this is set to `false`, the identifier will only be looked up in the context
    * of this container, regardless of whether the parent has the identifier.
+   * 
+   * @returns A tuple, with the first element specifying the location of the identifier
+   * (or {@link ServiceIdentifierLocation.None | None} if it wasn't found), with the
+   * second element being the value associated with the specified identifier.
+   * 
+   * @example
+   * ```ts
+   * // Create a new container, as a child of a child of the default container.
+   * const myContainer = Container.ofChild(Symbol()).ofChild(Symbol());
+   * const MY_SERVICE = new Token<MyService>();
+   * 
+   * // Add a service to the default container, as a value of the MY_SERVICE group.
+   * @Service({ container: myContainer, id: MY_SERVICE, multiple: true }, [ ])
+   * class MyService { }
+   * 
+   * // Add another service to the default container, as a value of the MY_SERVICE group.
+   * Container.set({ id: MY_SERVICE, multiple: true, value: Symbol() });
+   * 
+   * // Get the multi-IDs from the child container.
+   * const [myService, mySymbol] = myContainer.getMany(MY_SERVICE);
+   * ```
+   * 
+   * @remarks
+   * This replaces the previous implementation, which did not implement proper recursion,
+   * as it only inherited from the direct container of a parent.
    */
   private resolveMultiID (id: ServiceIdentifier, recursive = true): MultiIDLookupResponse {
     if (this.multiServiceIds.has(id)) {
