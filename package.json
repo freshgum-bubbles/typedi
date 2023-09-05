@@ -32,7 +32,7 @@
     "typescript"
   ],
   "scripts": {
-    "build": "npm run build:cjs",
+    "build": "npm run build:cjs && npm run build:rollup && npm run build:umd",
     "build:clean": "rimraf build",
     "build:clean-esm5": "rimraf ./build/esm5",
     "build:clean-cjs": "rimraf ./build/cjs",
