@@ -77,7 +77,7 @@ const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
 });
 
 export default {
-  input: 'build/esm5/index.js',
+  input: 'build/esm5/index.mjs',
   output: [
     {
       name: 'TypeDI',
