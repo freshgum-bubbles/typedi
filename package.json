@@ -19,6 +19,12 @@
     "type": "git",
     "url": "https://github.com/freshgum-bubbles/typedi.git"
   },
+  "exports": {
+    ".": {
+      "types": "./build/esm5/container-instance.class.mjs",
+      "import": "./build/esm5/container-instance.class.d.mts"
+    }
+  },
   "engines": {
     "node": ">=v15.3.0"
   },
