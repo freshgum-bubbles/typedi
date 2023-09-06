@@ -5,6 +5,10 @@
     "strict": false,
     "sourceMap": false,
     "removeComments": true,
+    "paths": {
+      "internal:typedi": ["./src/index.mjs"],
+      "internal:typedi/*": ["./src/*"]
+    }
   },
   "exclude": ["node_modules"]
 }
