@@ -16,6 +16,7 @@ export {
   ContainerFreeStrategy,
   CreateContainerOptions,
 } from './interfaces/create-container-options.interface.mjs';
+export { DependencyDescriptor } from './interfaces/dependency-descriptor.interface.mjs';
 export { ServiceMetadata } from './interfaces/service-metadata.interface.mjs';
 export {
   AnyServiceDependency,
@@ -29,6 +30,7 @@ export { Constructable } from './types/constructable.type.mjs';
 export { ContainerIdentifier } from './types/container-identifier.type.mjs';
 export { ContainerScope } from './types/container-scope.type.mjs';
 export { ExtractToken } from './types/extract-token.type.mjs';
+export { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
 export { ServiceIdentifier } from './types/service-identifier.type.mjs';
 export { LazyReference } from './types/lazy-reference.type.mjs';
 export { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from './types/resolution-constraint.type.mjs';
