@@ -7,5 +7,9 @@ module.exports = {
     '^.+\\.tsx?$': ['ts-jest', {
       tsconfig: 'tsconfig.json'
     }]
+  },
+  moduleNameMapper: {
+    '^internal\\:typedi$': '<rootDir>/src/index.mts',
+    '^internal\\:typedi/(.+)': '<rootDir>/src/$1'
   }
 };
