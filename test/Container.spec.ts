@@ -1,10 +1,6 @@
-import 'reflect-metadata';
-import { Container, ContainerInstance, ServiceIdentifier, ServiceMetadata } from '../src/index';
-import { Service } from '../src/decorators/service.decorator';
-import { Token } from '../src/token.class';
-import { ServiceNotFoundError } from '../src/error/service-not-found.error';
-import { ContainerRegistry } from '../src/container-registry.class';
-import { Disposable } from '../src/types/disposable.type';
+import { Container, ContainerInstance, ServiceIdentifier, ServiceMetadata, Service, Token, ServiceNotFoundError } from 'internal:typedi';
+import { Disposable } from 'internal:typedi/types/disposable.type.mjs';
+import { ContainerRegistry } from 'internal:typedi/container-registry.class.mjs';
 
 describe('Container', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

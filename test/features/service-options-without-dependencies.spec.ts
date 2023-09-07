@@ -1,4 +1,4 @@
-import { Container, Token } from '../../src/index';
+import { Container, Token } from 'internal:typedi';
 
 describe('Container.set without dependencies', () => {
   it('should provide the appropriate overload and function correctly', () => {

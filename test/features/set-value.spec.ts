@@ -1,4 +1,4 @@
-import { Container, ContainerInstance, Token } from '../../src/index';
+import { Container, ContainerInstance, Token } from 'internal:typedi';
 
 describe('Container.setValue', function () {
   /**

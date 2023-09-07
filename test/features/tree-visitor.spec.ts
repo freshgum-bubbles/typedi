@@ -1,13 +1,12 @@
 import {
   Container,
   ContainerInstance,
-  HostContainer,
   ServiceIdentifier,
   ServiceMetadata,
   Token,
-} from '../../src/index';
-import { ContainerTreeVisitor, VisitRetrievalOptions } from '../../src/interfaces/tree-visitor.interface';
-import { ServiceIdentifierLocation } from '../../src/types/service-identifier-location.type';
+  ContainerTreeVisitor,
+  VisitRetrievalOptions
+} from 'internal:typedi';
 
 describe('Tree Visitors', () => {
   interface VisitorMock extends ContainerTreeVisitor {

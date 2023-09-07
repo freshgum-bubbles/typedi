@@ -1,4 +1,4 @@
-import { Container, Token } from '../../src/index';
+import { Container, Token } from 'internal:typedi';
 import { createArrayOfNumbers } from '../utils/create-array-of-numbers.util';
 import { createDeepContainerTree } from '../utils/create-deep-container-tree.util';
 

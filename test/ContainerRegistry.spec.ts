@@ -1,5 +1,5 @@
-import { ContainerInstance, Container } from '../src/index';
-import { ContainerRegistry } from '../src/container-registry.class';
+import { ContainerInstance, Container } from 'internal:typedi';
+import { ContainerRegistry } from 'internal:typedi/container-registry.class.mjs';
 
 describe('ContainerRegistry', () => {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

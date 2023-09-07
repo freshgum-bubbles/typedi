@@ -1,7 +1,4 @@
-import 'reflect-metadata';
-import { Container } from '../../../src/index';
-import { Service } from '../../../src/decorators/service.decorator';
-import { ServiceNotFoundError } from '../../../src/error/service-not-found.error';
+import { Container, Service, ServiceNotFoundError } from 'internal:typedi';
 
 describe('Github Issues', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
