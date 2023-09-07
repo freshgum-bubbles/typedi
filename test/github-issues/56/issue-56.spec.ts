@@ -1,6 +1,4 @@
-import 'reflect-metadata';
-import { Container } from '../../../src/index';
-import { Service } from '../../../src/decorators/service.decorator';
+import { Container, Service } from 'internal:typedi';
 
 describe('github issues > #56 extended class is being overwritten', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

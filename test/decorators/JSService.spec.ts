@@ -1,6 +1,5 @@
-import Container, { Optional } from '../../src/index';
-import { JSService } from '../../src/decorators/js-service.decorator';
-import { AnyConstructable } from '../../src/types/any-constructable.type';
+import Container, { Optional, JSService } from 'internal:typedi';
+import { AnyConstructable } from 'internal:typedi/types/any-constructable.type.mjs';
 
 describe('JSService decorator', () => {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

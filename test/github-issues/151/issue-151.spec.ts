@@ -1,5 +1,4 @@
-import 'reflect-metadata';
-import { Container, Service } from '../../../src/index';
+import { Container, Service } from 'internal:typedi';
 
 describe('Github Issues', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

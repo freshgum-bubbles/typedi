@@ -1,5 +1,5 @@
-import { Container, Service, ContainerInstance, ServiceIdentifier, Optional } from '../../src/index';
-import { DependencyDescriptor } from '../../src/interfaces/dependency-descriptor.interface';
+import { Container, Service, ContainerInstance, ServiceIdentifier, Optional } from 'internal:typedi';
+import { DependencyDescriptor } from 'internal:typedi/interfaces/dependency-descriptor.interface.mjs';
 
 describe('DependencyDescriptor', () => {
   it('should be passed to factory functions to describe dependencies', () => {

@@ -1,7 +1,4 @@
-import 'reflect-metadata';
-import { Container } from '../../../src/index';
-import { Service } from '../../../src/decorators/service.decorator';
-import { Token } from '../../../src/token.class';
+import { Container, Service, Token } from 'internal:typedi';
 
 describe("github issues > #48 Token service iDs in global container aren't inherited by scoped containers", function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

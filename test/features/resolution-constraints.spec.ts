@@ -1,13 +1,13 @@
 import {
   Container,
   ContainerInstance,
+  Service,
   Many,
   Optional,
   Self,
   SkipSelf,
   ResolutionConstraintFlag,
-} from '../../src/index';
-import { Service } from '../../src/decorators/service.decorator';
+} from 'internal:typedi';
 
 describe('Resolution Constraints', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

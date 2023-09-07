@@ -1,6 +1,4 @@
-import { Container, HostContainer, Token, Service, ContainerInstance } from '../../src/index';
-import { defaultContainer } from '../../src/container-instance.class';
-import { ContainerConflictDefinition } from '../../src/interfaces/create-container-options.interface';
+import { Container, ContainerInstance, ContainerConflictDefinition } from 'internal:typedi';
 
 const getID = () => Symbol('test');
 
@@ -11,17 +9,17 @@ describe('Container creation options', () => {
     ContainerInstance.of(id, null);
 
     expect(() => {
-      defaultContainer.ofChild(id, { onConflict: 'throw' });
+      Container.ofChild(id, { onConflict: 'throw' });
     }).toThrow();
   });
 
   it('should allow conflicts if "allowSameParent" is set and the parents match', () => {
     const id = getID();
-    let container1 = defaultContainer.ofChild(id);
+    let container1 = Container.ofChild(id);
     let container2!: ContainerInstance;
 
     expect(() => {
-      container2 = defaultContainer.ofChild(id, { conflictDefinition: 'allowSameParent' });
+      container2 = Container.ofChild(id, { conflictDefinition: 'allowSameParent' });
     }).not.toThrow();
 
     expect(container1).toStrictEqual(container2);
@@ -31,7 +29,7 @@ describe('Container creation options', () => {
     const id = getID();
 
     expect(() => {
-      defaultContainer.ofChild(id, {
+      Container.ofChild(id, {
         onConflict: 'throw',
         conflictDefinition: 'rejectAll',
       });
@@ -44,7 +42,7 @@ describe('Container creation options', () => {
       const id = getID();
 
       expect(() => {
-        defaultContainer.of(id);
+        Container.of(id);
         ContainerInstance.of(id, null, { conflictDefinition: conflictDefinition as ContainerConflictDefinition });
       }).toThrow();
     }
@@ -54,7 +52,7 @@ describe('Container creation options', () => {
     const id = getID();
 
     expect(() => {
-      defaultContainer.of(id);
+      Container.of(id);
       ContainerInstance.of(id, null, { conflictDefinition: 'allowSameParent' });
     }).toThrow();
   });
@@ -63,7 +61,7 @@ describe('Container creation options', () => {
     const id = getID();
 
     expect(() => {
-      defaultContainer.of(id, { onConflict: 'throw' });
+      Container.of(id, { onConflict: 'throw' });
     }).not.toThrow();
   });
 
@@ -72,7 +70,7 @@ describe('Container creation options', () => {
 
     expect(() => {
       ContainerInstance.of(id, null);
-      defaultContainer.ofChild(id);
+      Container.ofChild(id);
     }).not.toThrow();
   });
 
@@ -82,7 +80,7 @@ describe('Container creation options', () => {
     expect(() => {
       // todo: add more expect()s here
       ContainerInstance.of(id, null);
-      defaultContainer.ofChild(id, { onConflict: 'returnExisting' });
+      Container.ofChild(id, { onConflict: 'returnExisting' });
     }).not.toThrow();
   });
 
@@ -90,12 +88,12 @@ describe('Container creation options', () => {
     const id = getID();
 
     ContainerInstance.of(id, null);
-    expect(defaultContainer.ofChild(id, { onConflict: 'null' })).toBeNull();
+    expect(Container.ofChild(id, { onConflict: 'null' })).toBeNull();
   });
 
   it('should not return null if the strategy is null and a container does not already exist', () => {
     const id = getID();
-    const child = defaultContainer.ofChild(id, { onConflict: 'null' });
+    const child = Container.ofChild(id, { onConflict: 'null' });
 
     expect(child).not.toBeNull();
     expect(child!.id).toStrictEqual(id);
@@ -105,17 +103,17 @@ describe('Container creation options', () => {
   describe('onFree', () => {
     it('should throw if set to "throw" and a container with the ID does not exist', () => {
       const id = getID();
-      expect(() => defaultContainer.of(id, { onFree: 'throw' })).toThrow();
+      expect(() => Container.of(id, { onFree: 'throw' })).toThrow();
     });
 
     it('should return null if set to "null" and a container with the ID does not exist', () => {
       const id = getID();
-      expect(defaultContainer.of(id, { onFree: 'null' })).toBeNull();
+      expect(Container.of(id, { onFree: 'null' })).toBeNull();
     });
 
     it('should use default behaviour if set to "returnNew"', () => {
       const id = getID();
-      const child = defaultContainer.of(id, { onFree: 'returnNew' });
+      const child = Container.of(id, { onFree: 'returnNew' });
 
       expect(child).not.toBeNull();
       expect(child.id).toStrictEqual(id);

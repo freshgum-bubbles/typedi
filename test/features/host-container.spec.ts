@@ -1,4 +1,4 @@
-import { Container, HostContainer, Token, Service, ContainerInstance } from '../../src/index';
+import { Container, HostContainer, Token, Service, ContainerInstance } from 'internal:typedi';
 
 describe('HostContainer', function () {
   it('returns a token', function () {

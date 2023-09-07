@@ -1,7 +1,4 @@
-import 'reflect-metadata';
-import { Container } from '../../../src/index';
-import { Service } from '../../../src/decorators/service.decorator';
-import { Token } from '../../../src/token.class';
+import { Container, Service, Token } from 'internal:typedi';
 
 describe('github issues > #53 Token-based services are cached in the Global container even when fetched via a subcontainer', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

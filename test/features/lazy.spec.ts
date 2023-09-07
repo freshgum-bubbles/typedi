@@ -1,14 +1,4 @@
-import {
-  Container,
-  ContainerInstance,
-  Many,
-  Optional,
-  Self,
-  SkipSelf,
-  ResolutionConstraintFlag,
-  Lazy,
-  Service,
-} from '../../src/index';
+import { Container, Lazy, Service } from 'internal:typedi';
 
 describe('Lazy()', function () {
   let emptyFunction = () => {};
