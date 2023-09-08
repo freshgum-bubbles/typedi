@@ -5,7 +5,10 @@ import { FEED_USERNAME } from './username.token';
 let nextPostId = 0;
 
 export class FeedService extends EventTarget {
-  constructor(private username: string, private posts: Post[]) {
+  constructor(
+    private username: string,
+    private posts: Post[]
+  ) {
     super();
   }
 

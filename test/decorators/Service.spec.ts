@@ -31,7 +31,10 @@ describe('Service Decorator', function () {
     class SecondTestService {}
     @Service([TestService, SecondTestService])
     class TestServiceWithParameters {
-      constructor(public testClass: TestService, public secondTest: SecondTestService) {}
+      constructor(
+        public testClass: TestService,
+        public secondTest: SecondTestService
+      ) {}
     }
     expect(Container.get(TestServiceWithParameters)).toBeInstanceOf(TestServiceWithParameters);
     expect(Container.get(TestServiceWithParameters).testClass).toBeInstanceOf(TestService);
@@ -50,7 +53,10 @@ describe('Service Decorator', function () {
 
     @Service({ factory: createCar }, [String, Engine])
     class Car {
-      constructor(public name: string, public engine: Engine) {}
+      constructor(
+        public name: string,
+        public engine: Engine
+      ) {}
     }
 
     expect(Container.get(Car).name).toBe('BMW');
@@ -75,7 +81,10 @@ describe('Service Decorator', function () {
     @Service({ factory: [CarFactory, 'createCar'] }, [String, Engine])
     class Car {
       name: string;
-      constructor(name: string, public engine: Engine) {
+      constructor(
+        name: string,
+        public engine: Engine
+      ) {
         this.name = name;
       }
     }

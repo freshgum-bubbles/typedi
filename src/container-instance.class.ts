@@ -124,7 +124,10 @@ export class ContainerInstance implements Disposable {
    * The parent is used for resolving identifiers which are
    * not present in this container.
    */
-  protected constructor(id: ContainerIdentifier, public readonly parent?: ContainerInstance) {
+  protected constructor(
+    id: ContainerIdentifier,
+    public readonly parent?: ContainerInstance
+  ) {
     this.id = id;
   }
 
@@ -876,7 +879,7 @@ export class ContainerInstance implements Disposable {
    */
   public setValue<
     TServiceID extends string | Token<TValue>,
-    TValue extends TServiceID extends Token<infer U> ? U : unknown
+    TValue extends TServiceID extends Token<infer U> ? U : unknown,
   >(id: TServiceID, value: TValue) {
     if (typeof id !== 'string' && !(id instanceof Token)) {
       throw Error('The ID passed to setValue must either be a string or a Token.');

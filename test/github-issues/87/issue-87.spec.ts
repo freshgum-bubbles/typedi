@@ -15,7 +15,10 @@ describe('Github Issues', function () {
 
     @Service([InjectedClassA, InjectedClassB])
     class MyClass {
-      constructor(private injectedClassA: InjectedClassA, private injectedClassB: InjectedClassB) {}
+      constructor(
+        private injectedClassA: InjectedClassA,
+        private injectedClassB: InjectedClassB
+      ) {}
     }
 
     expect(() => Container.get(MyClass)).toThrow(ServiceNotFoundError);
