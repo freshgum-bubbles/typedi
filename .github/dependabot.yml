@@ -6,6 +6,7 @@ updates:
   # Even though the package ecosystem is marked as NPM below,
   # Dependabot still makes use of PNPM internally.
 - package-ecosystem: npm
+  target-branch: "develop"
   directory: "/"
   schedule:
     interval: weekly
