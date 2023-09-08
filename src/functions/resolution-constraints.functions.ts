@@ -21,6 +21,23 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  * }
  * ```
  *
+ * @example
+ * Here is an example of this constraint as part of a service declaration:
+ * ```ts
+ * const NAME = new Token<string>();
+ * 
+ * @Service([
+ *   [NAME, Optional()]
+ * ])
+ * class MyService {
+ *   constructor (private name: string | null) {
+ *     // If "NAME" isn't provided in the container the service is run under,
+ *     // it will be substituted with null.  Note that the container may not
+ *     // be the exact one it was declared under, but a descendent.
+ *   }
+ * }
+ * ```
+ * 
  * @group Resolution Constraints
  *
  * @see {@link ResolutionConstraintFlag}
@@ -52,6 +69,29 @@ export const Optional = () => ResolutionConstraintFlag.Optional;
  * }
  * ```
  *
+ * @example
+ * Here is an example of this constraint as part of a service declaration:
+ * ```ts
+ * const NAME = new Token<string>('name');
+ * const childContainer = Container.ofChild(Symbol());
+ * 
+ * @Service({ container: childContainer }, [
+ *   [NAME, Self()]
+ * ])
+ * class MyService {
+ *   constructor (private name: string) { }
+ * }
+ * 
+ * Container.set({ id: NAME, value: 'Joanna' });
+ * 
+ * childContainer.get(MyService);
+ * // -> throws ServiceNotFoundError(Token<name>)
+ * ```
+ * 
+ * @remarks
+ * It is advised to combine this with {@link Optional}, as the usage of this
+ * constraint may mean that the identifier cannot be resolved.
+ * 
  * @group Resolution Constraints
  *
  * @see {@link ResolutionConstraintFlag}
@@ -81,6 +121,28 @@ export const Self = () => ResolutionConstraintFlag.Self;
  * if (constraintBitMask & ResolutionConstraintFlag.Self) {
  *   console.log('The dependency will be resolved recursively from the parent.');
  * }
+ * ```
+ * 
+ * @example
+ * Here is an example of this constraint as part of a service declaration:
+ * ```ts
+ * const NAME = new Token<string>('name');
+ * const childContainer = Container.ofChild(Symbol());
+ * 
+ * @Service({ container: childContainer }, [
+ *   [NAME, SkipSelf()]
+ * ])
+ * class MyService {
+ *   constructor (private name: string) {
+ *     // In this example, $name would evaluate to Joanna instead
+ *     // of Mike.  This is due to the SkipSelf decorator.
+ *   }
+ * }
+ * 
+ * childContainer.set({ id: NAME, value: 'Mike' });
+ * Container.set({ id: NAME, value: 'Joanna' });
+ * 
+ * childContainer.get(MyService);
  * ```
  *
  * @see {@link ResolutionConstraintFlag}
