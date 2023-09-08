@@ -25,7 +25,7 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  * Here is an example of this constraint as part of a service declaration:
  * ```ts
  * const NAME = new Token<string>();
- * 
+ *
  * @Service([
  *   [NAME, Optional()]
  * ])
@@ -37,7 +37,7 @@ import { ResolutionConstraintFlag } from '../types/resolution-constraint.type';
  *   }
  * }
  * ```
- * 
+ *
  * @group Resolution Constraints
  *
  * @see {@link ResolutionConstraintFlag}
@@ -74,24 +74,24 @@ export const Optional = () => ResolutionConstraintFlag.Optional;
  * ```ts
  * const NAME = new Token<string>('name');
  * const childContainer = Container.ofChild(Symbol());
- * 
+ *
  * @Service({ container: childContainer }, [
  *   [NAME, Self()]
  * ])
  * class MyService {
  *   constructor (private name: string) { }
  * }
- * 
+ *
  * Container.set({ id: NAME, value: 'Joanna' });
- * 
+ *
  * childContainer.get(MyService);
  * // -> throws ServiceNotFoundError(Token<name>)
  * ```
- * 
+ *
  * @remarks
  * It is advised to combine this with {@link Optional}, as the usage of this
  * constraint may mean that the identifier cannot be resolved.
- * 
+ *
  * @group Resolution Constraints
  *
  * @see {@link ResolutionConstraintFlag}
@@ -122,13 +122,13 @@ export const Self = () => ResolutionConstraintFlag.Self;
  *   console.log('The dependency will be resolved recursively from the parent.');
  * }
  * ```
- * 
+ *
  * @example
  * Here is an example of this constraint as part of a service declaration:
  * ```ts
  * const NAME = new Token<string>('name');
  * const childContainer = Container.ofChild(Symbol());
- * 
+ *
  * @Service({ container: childContainer }, [
  *   [NAME, SkipSelf()]
  * ])
@@ -138,10 +138,10 @@ export const Self = () => ResolutionConstraintFlag.Self;
  *     // of Mike.  This is due to the SkipSelf decorator.
  *   }
  * }
- * 
+ *
  * childContainer.set({ id: NAME, value: 'Mike' });
  * Container.set({ id: NAME, value: 'Joanna' });
- * 
+ *
  * childContainer.get(MyService);
  * ```
  *
