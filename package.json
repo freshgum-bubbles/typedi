@@ -96,9 +96,7 @@
     "typedoc": "^0.24.8",
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-markdown": "^3.16.0",
-    "typescript": "^5.1.6"
-  },
-  "dependencies": {
+    "typescript": "^5.1.6",
     "@changesets/cli": "^2.26.2"
   }
 }
