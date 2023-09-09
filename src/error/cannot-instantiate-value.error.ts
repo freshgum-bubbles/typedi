@@ -7,10 +7,10 @@ import { Token } from '../token.class';
  * @group Errors
  */
 export class CannotInstantiateValueError extends Error {
-  public name = 'CannotInstantiateValueError';
+  public readonly name = 'CannotInstantiateValueError';
 
   /** Normalized identifier name used in the error message. */
-  private normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
+  private readonly normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
 
   public get message(): string {
     return (

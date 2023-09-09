@@ -7,10 +7,10 @@ import { Token } from '../token.class';
  * @group Errors
  */
 export class ServiceNotFoundError extends Error {
-  public name = 'ServiceNotFoundError';
+  public readonly name = 'ServiceNotFoundError';
 
   /** Normalized identifier name used in the error message. */
-  private normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
+  private readonly normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
 
   get message(): string {
     return (
