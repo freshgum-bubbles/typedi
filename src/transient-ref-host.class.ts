@@ -1,4 +1,6 @@
 import { ContainerInstance } from "./container-instance.class.mjs";
+import { ServiceNotFoundError } from "./error/service-not-found.error.mjs";
+import { ServiceMetadata } from "./interfaces/service-metadata.interface.mjs";
 import { InferServiceType } from "./types/infer-service-type.type.mjs";
 import { ServiceIdentifier } from "./types/service-identifier.type.mjs";
 
@@ -72,6 +74,36 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
     this.id = id;
     this.container = container;
     this.constraints = constraints;
+
+    /** 
+     * We need to grab a reference to the identifier in the container's internal metadata map
+     * to do a few checks, such as whether the identifier exists, and whether it's transient.
+     * 
+     * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
+     */
+    const { metadataMap } = container as unknown as { metadataMap: ContainerInstance['metadataMap'] };
+
+    /**
+     * The {@link TransientRef} function does not ensure that the identifier exists.
+     * 
+     * To simplify the implementation and ensure this check is performed from potential future call-sites,
+     * we do it here instead.
+     */
+    if (!metadataMap.has(id)) {
+      throw new ServiceNotFoundError(id);
+    }
+
+    /**
+     * The implementation throws in the case of a non-transient identifier being bound as not
+     * doing so may cause confusion for end-users, e.g. if they're expecting *every* value from here
+     * to be unique, and they've mistakenly bound it to an identifier with non-transient metadata.
+     * 
+     * In theory, they *could* instantiate this, remove the identifier, and re-bind it to
+     * non-transient metadata -- however, this seems like a very rare edge-case.
+     */
+    if ((metadataMap.get(id) as unknown as ServiceMetadata<unknown>).scope !== 'transient') {
+      throw new Error('The provided identifier was not bound to a transient service.');
+    }
   }
 
   /**
