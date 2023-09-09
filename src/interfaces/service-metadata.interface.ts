@@ -36,7 +36,7 @@ export interface ServiceMetadata<Type = unknown> {
    *
    * @see {@link ServiceFactory}
    */
-  factory?: [Constructable<unknown>, string] | ServiceFactory;
+  factory?: [factoryClass: Constructable<unknown>, methodName: string] | ServiceFactory;
 
   /**
    * Instance of the target class.
