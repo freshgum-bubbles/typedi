@@ -101,7 +101,6 @@ export class ContainerRegistry {
       throw new ContainerRegistryError(__NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID);
     }
 
-    /** We remove the container first. */
     ContainerRegistry.containerMap.delete(container.id);
 
     /** We dispose all registered classes in the container. */
