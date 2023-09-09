@@ -1,8 +1,8 @@
-import { ContainerInstance } from "./container-instance.class.mjs";
-import { ServiceNotFoundError } from "./error/service-not-found.error.mjs";
-import { ServiceMetadata } from "./interfaces/service-metadata.interface.mjs";
-import { InferServiceType } from "./types/infer-service-type.type.mjs";
-import { ServiceIdentifier } from "./types/service-identifier.type.mjs";
+import { ContainerInstance } from "../container-instance.class.mjs";
+import { ServiceNotFoundError } from "../error/service-not-found.error.mjs";
+import { ServiceMetadata } from "../interfaces/service-metadata.interface.mjs";
+import { InferServiceType } from "../types/infer-service-type.type.mjs";
+import { ServiceIdentifier } from "../types/service-identifier.type.mjs";
 
 /**
  * A helper object for managing instances of transient services.
