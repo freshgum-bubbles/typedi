@@ -2,7 +2,7 @@
 
 This folder contains additional functionality for `@freshgum/typedi`.
 
-While these features are useful, they are not included in the main package exports -- this is due to them not being required for the majority of users.  
+While these features are useful, they are not included in the main package exports -- this is due to them not being required for the majority of users.
 
 Instead, they are packaged here and can be imported like so:
 
@@ -10,9 +10,9 @@ Instead, they are packaged here and can be imported like so:
 import { Feature } from '@freshgum/typedi/contrib/feature';
 ```
 
-## *"Why not `features/`?"*
+## _"Why not `features/`?"_
 
-The term "features" is already used in other parts of the project.  For instance, [the test directory](../../test/) contains a features directory, which tests functionality added to the core project as a result of the fork.
+The term "features" is already used in other parts of the project. For instance, [the test directory](../../test/) contains a features directory, which tests functionality added to the core project as a result of the fork.
 
 Therefore, be aware that, unlike many other projects, **files here are not guaranteed to be written by external contributors** -- they are also subject to the same maintenance and [testing](../../test/contrib/) as the package's core functionality.
 
