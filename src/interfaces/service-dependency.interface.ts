@@ -31,8 +31,8 @@ export interface ServiceDependencyOptions {
  * A tuple containing a service identifier, along with a set of options for said dependency.
  */
 export type DependencyPairWithConfiguration =
-  | readonly [AnyInjectIdentifier, number]
-  | readonly [AnyInjectIdentifier, ServiceDependencyOptions];
+  | readonly [identifier: AnyInjectIdentifier, resolutionConstraints: number]
+  | readonly [identifier: AnyInjectIdentifier, dependencyOptions: ServiceDependencyOptions];
 
 /**
  * In the context of the Service decorator, any item in the dependencies array can either
