@@ -7,7 +7,7 @@ import { TypedService } from '../../src/contrib/typed-service.decorator';
  */
 describe.each([
   { name: 'TypedService', decorator: TypedService },
-  { name: 'Service', decorator: Service }
+  { name: 'Service', decorator: Service },
 ])('$name decorator', ({ decorator: baseDecorator }) => {
   /** Casting here avoids a compilation error. */
   const decorator = baseDecorator as typeof Service;
