@@ -27,7 +27,7 @@ export class ContainerRegistry {
    *
    * @param container the container to add to the registry
    *
-   * @throws ContainerRegistryError
+   * @throws {@link ContainerRegistryError}
    * This exception is thrown in the following scenarios:
    *   - If the item being registered is not a container.
    *   - A container with the same ID already exists in the registry.
@@ -62,7 +62,7 @@ export class ContainerRegistry {
    *
    * @param container the ID of the container
    *
-   * @throws ContainerRegistryError
+   * @throws {@link ContainerRegistryError}
    * This exception is thrown when a container with
    * the given ID does not exist in the registry.
    */
@@ -86,7 +86,7 @@ export class ContainerRegistry {
    *
    * @param container the container to remove from the registry
    *
-   * @throws ContainerRegistryError
+   * @throws {@link ContainerRegistryError}
    * This exception is thrown when a container with
    * the specified ID does not exist in the registry.
    *
