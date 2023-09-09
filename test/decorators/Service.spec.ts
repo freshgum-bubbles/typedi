@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container, ContainerInstance, Service, Token } from 'internal:typedi';
 import { WrappedESServiceDecorator } from '../contrib/es/test-utils/es-service-decorator-wrapper.util';
+import { TypedService } from 'internal:typedi/contrib/typed-service.decorator';
 
 // To ensure conformance between different Service implementations,
 // we wrap some decorators here with stubs which pass them quasi-values.
@@ -16,6 +17,16 @@ interface DecoratorTestScenario {
   description: string;
   name: string;
 }
+/**
+ * We duplicate the Service test suite for both the {@link Service} and {@link TypedService}
+ * decorators to ensure that they have the *exact* same mechanics, quirks and functionality.
+ */
+describe.each([
+  { name: 'TypedService', decorator: TypedService },
+  { name: 'Service', decorator: Service },
+])('$name decorator', ({ decorator: baseDecorator }) => {
+  /** Casting here avoids a compilation error. */
+  const decorator = baseDecorator as typeof Service;
 
 const DECORATORS_TO_TEST: DecoratorTestScenario[] = [
   { decorator: Service, description: 'main, non-ES', name: 'Service' },
