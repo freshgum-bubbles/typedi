@@ -7,7 +7,7 @@ import { TYPE_WRAPPER } from '../constants/type-wrapper.const.mjs';
 
 export interface TypeWrapper<
   TIdentifier extends ServiceIdentifier = ServiceIdentifier,
-  TInstance = InferServiceType<TIdentifier>
+  TInstance = InferServiceType<TIdentifier>,
 > {
   /**
    * The {@link TYPE_WRAPPER} symbol acts as a stamp to allow us to duck-type checks
@@ -26,28 +26,28 @@ export interface TypeWrapper<
   /**
    * Resolve a customised value, which will be injected into the constructor
    * of a service upon its initialisation.
-   * 
+   *
    * This method is called when a service, which has been authored with this TypeWrapper
    * in its list of dependencies, is created by a {@link ContainerInstance}.
-   * 
+   *
    * @param container The container from which the service is being constructed.
    * The presence of the {@link SkipSelf} resolution constraint does not affect
    * the value of this parameter.
-   * 
+   *
    * @param constraints The constraints for this dependency, as specified
    * by the author of the service.
    * If no constraints were specified, this defaults to {@link ResolutionConstraintFlag.None}.
-   * 
+   *
    * @remarks
    * The presence of this method denotes an extractable TypeWrapper, which provides
    * customised handling for the resolution of a service's dependency.
    * It is allowed to return any value.
-   * 
+   *
    * @remarks
    * This function is not required to respect the constraints passed to it; however,
    * it is generally recommended that, in the presence of ignored constraints, an error
    * or warning message is thrown to minimize runtime confusion.
-   * 
+   *
    * @returns
    * A value which will be injected into the constructor of the service at the location
    * specified by the author of the service.

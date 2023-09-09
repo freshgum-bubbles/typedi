@@ -1387,14 +1387,14 @@ export class ContainerInstance implements Disposable {
      * We now have to deal with a special type of TypeWrapper, called an extractable one.
      * These ones are able to completely bypass the ordinary parameter resolution process,
      * allowing them to supply custom values to a service upon construction.
-     * 
+     *
      * As can be seen below, an extractable TypeWrapper is able to either completely
      * disregard the Resolution Constraints used, or cater to them in unique, domain-specific
      * ways.
-     * 
+     *
      * It should also be noted that, in the case of an extractable TypeWrapper,
      * the specified constraints are not validated.
-     * 
+     *
      * Such examples of this can be seen in {@link TransientRef}, or {@link Lazy}.
      */
     const isTypeWrapperExtractable = 'extract' in typeWrapper;
@@ -1425,35 +1425,35 @@ export class ContainerInstance implements Disposable {
   /**
    * Resolve an identifier within the context of the current container,
    * alongside a specific set of resolution constraints specified by the end-user.
-   * 
+   *
    * @param identifier The identifier to resolve.
-   * 
+   *
    * @param constraints The constraints to take into consideration
    * while resolving the specified identifier.
-   * 
+   *
    * @remarks
    * If {@link SkipSelf} is specified, the parent of this container is used to resolve the identifier.
-   * 
+   *
    * @remarks
    * In the case of {@link Optional}, if the identifier cannot be found,
    * "null" is returned instead.  This is in-line with the specification.
-   * 
+   *
    * @returns The result of resolving the value within the current container.
-   * 
+   *
    * @see {@link ResolutionConstraintFlag}
-   * 
+   *
    * @throws {@link ServiceNotFoundError}
    * This exception is thrown if an invalid identifier is provided, and the
    * {@link Optional} flag has not been provided.
-   * 
+   *
    * @throws Error
    * This exception is thrown if the {@link SkipSelf} constraint has been specified,
    * but the current container does not have a parent.
-   * 
+   *
    * @throws Error
    * This exception is thrown if {@link SkipSelf} and {@link Self} are used at the same time.
    */
-  protected resolveConstrainedIdentifier (identifier: ServiceIdentifier, constraints: number) {
+  protected resolveConstrainedIdentifier(identifier: ServiceIdentifier, constraints: number) {
     let resolvedIdentifier!: unknown;
 
     /**
@@ -1531,7 +1531,7 @@ export class ContainerInstance implements Disposable {
     /**
      * This should never be hit unless the caller has elided TypeScript
      * and hand-crafted a TypeWrapper, which is not recommended.
-    */
+     */
     /* istanbul ignore next */
     if (resolved == null) {
       throw Error(`The wrapped value could not be resolved.`);

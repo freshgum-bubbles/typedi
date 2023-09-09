@@ -34,7 +34,10 @@ describe('Lazy()', function () {
 
     @Service([[Lazy(() => LOCATION), SkipSelf()], Lazy(() => LOCATION)])
     class MyService {
-      constructor(public skipSelfLocation: Location, public selfLocation: Location) {}
+      constructor(
+        public skipSelfLocation: Location,
+        public selfLocation: Location
+      ) {}
     }
 
     Container.setValue(LOCATION, Location.Parent);

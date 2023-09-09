@@ -25,12 +25,7 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
   const inputType = typeof typeOrIdentifier;
 
   /** If requested type is explicitly set via a string ID or token, we set it explicitly. */
-  if (
-    typeOrIdentifier &&
-    (inputType === 'string' ||
-      typeOrIdentifier instanceof Token ||
-      inputType === 'function')
-  ) {
+  if (typeOrIdentifier && (inputType === 'string' || typeOrIdentifier instanceof Token || inputType === 'function')) {
     typeWrapper = {
       [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
       /** We have to use 'as any' casts here due to moving the "typeof" checks to a constant. */

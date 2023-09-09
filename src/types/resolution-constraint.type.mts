@@ -9,7 +9,7 @@ export const enum ResolutionConstraintFlag {
    * A state wherein no constraints have been specified.
    */
   None = 0b0000,
-  
+
   /**
    * Do not ascend the container tree to resolve this identifier.
    *
