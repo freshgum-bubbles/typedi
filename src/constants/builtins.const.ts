@@ -10,4 +10,4 @@
  * instantiated.
  * Furthermore, they won't resolve in the context of the container.
  */
-export const BUILT_INS = [String, Object, Boolean, Symbol, Array, Number];
+export const BUILT_INS: readonly Function[] = [String, Object, Boolean, Symbol, Array, Number];
