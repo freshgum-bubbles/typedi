@@ -19,5 +19,5 @@
     "noImplicitAny": true,
     "stripInternal": true
   },
-  "exclude": ["build", "node_modules", "sample", "**/*.spec.ts", "test/**", "docs"]
+  "exclude": ["build", "node_modules", "sample", "**/*.spec.ts", "test/**", "docs", "dist"]
 }
