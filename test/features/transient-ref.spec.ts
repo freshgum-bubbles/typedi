@@ -1,6 +1,7 @@
-import { Container, Service, ServiceIdentifier, TransientRef } from '../../src/index';
+import { Container, Service, ServiceIdentifier, ServiceNotFoundError, Token, TransientRef } from '../../src/index';
 import { TransientRefHost } from '../../src/transient-ref-host.class';
 import { TYPE_WRAPPER, TypeWrapperStamp } from '../../src/constants/type-wrapper.const';
+import { ignore } from '../utilities/ignore.function';
 
 describe('Transient References', () => {
   describe('TransientRef', () => {
@@ -69,6 +70,54 @@ describe('Transient References', () => {
     // TODO: this is an important consideration
     it.skip('should work correctly with resolution constraints', () => {
 
+    });
+
+    describe('Non-transient identifier handling', () => {
+      const NAME = new Token<string>();
+
+      function setNameValue () {
+        Container.set({ id: NAME, value: 'Joanna' });
+      }
+
+      function runScenario () {
+        @Service([
+          TransientRef(NAME)
+        ])
+        class MyService { }
+
+        return MyService;
+      }
+
+      it('should not initially throw if given a non-transient identifier', () => {
+        setNameValue();
+        expect(runScenario).not.toThrowError();
+      });
+
+      it('should throw if given a non-transient identifier and the class is initialized', () => {
+        setNameValue();
+        expect(() => {
+          Container.get(runScenario());
+        }).toThrowError(Error);
+      });
+    });
+
+    describe.skip('Non-present identifier handling', () => {
+      const NAME = new Token<string>();
+
+      function runScenario () {
+        @Service([
+          TransientRef(NAME)
+        ])
+        class MyService { }
+
+        return MyService;
+      }
+
+      it('should not initially throw if given a non-present identifier', () => {
+
+      });
+
+      it('should throw if given a non-p', () => { });
     });
   });
 });
