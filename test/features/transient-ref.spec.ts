@@ -9,26 +9,26 @@ describe('Transient References', () => {
     });
 
     // Create a temporary service and bind it to the Container just so we can pass it to TransientRef.
-    @Service([ ])
-    class ServiceInContainerWhichShouldNotBeUsed { }
+    @Service([])
+    class ServiceInContainerWhichShouldNotBeUsed {}
 
-    class ServiceNotInContainerWithShouldNotBeUsed { }
+    class ServiceNotInContainerWithShouldNotBeUsed {}
 
     it.each([
       { id: Symbol(), name: 'a symbol' },
       { id: 'string', name: 'a string' },
       { id: ServiceInContainerWhichShouldNotBeUsed, name: 'an existent service' },
-      { id: ServiceNotInContainerWithShouldNotBeUsed, name: 'a non-existent service' }
-    ])('shouldn\'t fail where the input is $name', ({ id }) => {
+      { id: ServiceNotInContainerWithShouldNotBeUsed, name: 'a non-existent service' },
+    ])("shouldn't fail where the input is $name", ({ id }) => {
       expect(() => TransientRef(id as ServiceIdentifier)).not.toThrow();
     });
 
     it('should return a TypeWrapper with a valid stamp', () => {
-      class A { }
+      class A {}
 
       const ref = TransientRef(A);
       expect(ref).toMatchObject({ [TYPE_WRAPPER]: TypeWrapperStamp.Generic });
-    })
+    });
 
     it('should be usable as a Service dependency', () => {
       let instanceIndex = 0;
@@ -38,28 +38,22 @@ describe('Transient References', () => {
         index = ++instanceIndex;
       }
 
-      @Service([
-        TransientRef(MyTransientService)
-      ])
+      @Service([TransientRef(MyTransientService)])
       class MyService {
-        constructor (public receivedValue: unknown) {}
+        constructor(public receivedValue: unknown) {}
       }
 
       const myService = Container.get(MyService);
       expect(myService.receivedValue).toBeInstanceOf(TransientRefHost);
 
       const transientRefHost = myService.receivedValue as TransientRefHost<typeof MyTransientService>;
-      
-      const instances = [
-        transientRefHost.create(),
-        transientRefHost.create(),
-        transientRefHost.create()
-      ];
+
+      const instances = [transientRefHost.create(), transientRefHost.create(), transientRefHost.create()];
 
       const [instance1, instance2, instance3] = instances;
 
       for (const item of instances) {
-        expect(item).toBeInstanceOf(MyTransientService); 
+        expect(item).toBeInstanceOf(MyTransientService);
       }
 
       expect(instance1.index).not.toStrictEqual(instance2.index);
@@ -67,22 +61,18 @@ describe('Transient References', () => {
     });
 
     // TODO: this is an important consideration
-    it.skip('should work correctly with resolution constraints', () => {
-
-    });
+    it.skip('should work correctly with resolution constraints', () => {});
 
     describe('Non-transient identifier handling', () => {
       const NAME = new Token<string>();
 
-      function setNameValue () {
+      function setNameValue() {
         Container.set({ id: NAME, value: 'Joanna' });
       }
 
-      function runScenario () {
-        @Service([
-          TransientRef(NAME)
-        ])
-        class MyService { }
+      function runScenario() {
+        @Service([TransientRef(NAME)])
+        class MyService {}
 
         return MyService;
       }
@@ -103,20 +93,16 @@ describe('Transient References', () => {
     describe.skip('Non-present identifier handling', () => {
       const NAME = new Token<string>();
 
-      function runScenario () {
-        @Service([
-          TransientRef(NAME)
-        ])
-        class MyService { }
+      function runScenario() {
+        @Service([TransientRef(NAME)])
+        class MyService {}
 
         return MyService;
       }
 
-      it('should not initially throw if given a non-present identifier', () => {
+      it('should not initially throw if given a non-present identifier', () => {});
 
-      });
-
-      it('should throw if given a non-p', () => { });
+      it('should throw if given a non-p', () => {});
     });
   });
 });

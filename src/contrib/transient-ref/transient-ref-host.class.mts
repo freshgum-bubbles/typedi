@@ -75,17 +75,17 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
     this.container = container;
     this.constraints = constraints;
 
-    /** 
+    /**
      * We need to grab a reference to the identifier in the container's internal metadata map
      * to do a few checks, such as whether the identifier exists, and whether it's transient.
-     * 
+     *
      * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
      */
     const { metadataMap } = container as unknown as { metadataMap: ContainerInstance['metadataMap'] };
 
     /**
      * The {@link TransientRef} function does not ensure that the identifier exists.
-     * 
+     *
      * To simplify the implementation and ensure this check is performed from potential future call-sites,
      * we do it here instead.
      */
@@ -97,7 +97,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * The implementation throws in the case of a non-transient identifier being bound as not
      * doing so may cause confusion for end-users, e.g. if they're expecting *every* value from here
      * to be unique, and they've mistakenly bound it to an identifier with non-transient metadata.
-     * 
+     *
      * In theory, they *could* instantiate this, remove the identifier, and re-bind it to
      * non-transient metadata -- however, this seems like a very rare edge-case.
      */
