@@ -1,8 +1,8 @@
-import { TYPE_WRAPPER, TypeWrapperStamp } from '../constants/type-wrapper.const.mjs';
+import { TYPE_WRAPPER, TypeWrapperStamp } from '../../constants/type-wrapper.const.mjs';
 import { TransientRefHost } from './transient-ref-host.class.mjs';
-import { InferServiceType } from '../types/infer-service-type.type.mjs';
-import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
-import { TypeWrapper } from '../types/type-wrapper.type.mjs';
+import { InferServiceType } from '../../types/infer-service-type.type.mjs';
+import { ServiceIdentifier } from '../../types/service-identifier.type.mjs';
+import { TypeWrapper } from '../../types/type-wrapper.type.mjs';
 
 export function TransientRef<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>>(
   subject: TIdentifier
