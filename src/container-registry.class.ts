@@ -91,7 +91,8 @@ export class ContainerRegistry {
    * the specified ID does not exist in the registry.
    *
    * @throws Error
-   *
+   * This error may be thrown as a result of disposing the container.
+   * It can be caught asynchronously.
    */
   public static async removeContainer(container: ContainerInstance): Promise<void> {
     const registeredContainer = ContainerRegistry.containerMap.get(container.id);
