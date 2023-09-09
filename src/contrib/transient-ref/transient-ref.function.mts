@@ -4,6 +4,29 @@ import { InferServiceType } from '../../types/infer-service-type.type.mjs';
 import { ServiceIdentifier } from '../../types/service-identifier.type.mjs';
 import { TypeWrapper } from '../../types/type-wrapper.type.mjs';
 
+/**
+ * Create a host which allows for referencing transient services.
+ * 
+ * @example
+ * ```ts
+ * import { Service } from '@freshgum/inject';
+ * import { TransientRef } from '@freshgum/inject/contrib/transient-ref';
+ * 
+ * @Service({ scope: 'transient' }, [ ])
+ * class MyTransientService { }
+ * 
+ * @Service([
+ *     TransientRef(MyTransientService)
+ * ])
+ * class MyService {
+ *     constructor (private myTransient: TransientRef<MyTransientService>) {
+ *         assert(myTransient.create() !== myTransient.create());
+ *     }   
+ * }
+ * ```
+ * 
+ * @see {@link TransientRefHost}
+ */
 export function TransientRef<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>>(
   subject: TIdentifier
 ): TypeWrapper<TIdentifier, TransientRefHost<TIdentifier, TInstance>> {
@@ -15,3 +38,28 @@ export function TransientRef<TIdentifier extends ServiceIdentifier, TInstance = 
     extract: (container, constraints) => new TransientRefHost(subject, container, constraints),
   };
 }
+
+/**
+ * Create a host which allows for referencing transient services.
+ * 
+ * @example
+ * ```ts
+ * import { Service } from '@freshgum/inject';
+ * import { TransientRef } from '@freshgum/inject/contrib/transient-ref';
+ * 
+ * @Service({ scope: 'transient' }, [ ])
+ * class MyTransientService { }
+ * 
+ * @Service([
+ *     TransientRef(MyTransientService)
+ * ])
+ * class MyService {
+ *     constructor (private myTransient: TransientRef<MyTransientService>) {
+ *         assert(myTransient.create() !== myTransient.create());
+ *     }   
+ * }
+ * ```
+ * 
+ * @see {@link TransientRefHost}
+ */
+export type TransientRef<TIdentifier extends ServiceIdentifier> = TransientRefHost<TIdentifier>;
