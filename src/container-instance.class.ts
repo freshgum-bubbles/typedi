@@ -472,9 +472,9 @@ export class ContainerInstance implements Disposable {
    *
    * @example
    * ```ts
-   * Container.set({ id: 'key', value: 1, dependencies: [ ], multiple: true });
-   * Container.set({ id: 'key', value: 2, dependencies: [ ], multiple: true });
-   * Container.set({ id: 'key', value: 3, dependencies: [ ], multiple: true });
+   * Container.set({ id: 'key', value: 1, multiple: true });
+   * Container.set({ id: 'key', value: 2, multiple: true });
+   * Container.set({ id: 'key', value: 3, multiple: true });
    *
    * const [one, two, three] = Container.getMany('key');
    * ```
