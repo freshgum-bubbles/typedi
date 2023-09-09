@@ -6,5 +6,5 @@
  * @see {@link ContainerRegistry}
  */
 export class ContainerRegistryError extends Error {
-  name = 'ContainerRegistryError';
+  readonly name = 'ContainerRegistryError';
 }
