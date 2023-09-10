@@ -1,5 +1,5 @@
 import { ServiceIdentifier } from '../types/service-identifier.type';
-import { Token } from '../token.class';
+import { normalizeIdentifier } from '../utils/normalize-identifier.util';
 
 /**
  * Thrown when DI cannot inject value into property decorated by `@Inject` decorator.
@@ -10,7 +10,7 @@ export class CannotInstantiateValueError extends Error {
   public readonly name = 'CannotInstantiateValueError';
 
   /** Normalized identifier name used in the error message. */
-  private readonly normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
+  private readonly normalizedIdentifier: string;
 
   public get message(): string {
     return (
@@ -21,14 +21,6 @@ export class CannotInstantiateValueError extends Error {
 
   constructor(identifier: ServiceIdentifier) {
     super();
-
-    // TODO: Extract this to a helper function and share between this and NotFoundError.
-    if (typeof identifier === 'string') {
-      this.normalizedIdentifier = identifier;
-    } else if (identifier instanceof Token) {
-      this.normalizedIdentifier = `Token<${identifier.name || 'UNSET_NAME'}>`;
-    } else if (identifier && (identifier.name || identifier.prototype?.name)) {
-      this.normalizedIdentifier = `MaybeConstructable<${identifier.name ?? identifier.prototype.name}>`;
-    }
+    this.normalizedIdentifier = normalizeIdentifier(identifier);
   }
 }

@@ -1,5 +1,5 @@
 import { ServiceIdentifier } from '../types/service-identifier.type';
-import { Token } from '../token.class';
+import { normalizeIdentifier } from '../utils/normalize-identifier.util';
 
 /**
  * Thrown when requested service was not found.
@@ -10,7 +10,7 @@ export class ServiceNotFoundError extends Error {
   public readonly name = 'ServiceNotFoundError';
 
   /** Normalized identifier name used in the error message. */
-  private readonly normalizedIdentifier: string = '<UNKNOWN_IDENTIFIER>';
+  private readonly normalizedIdentifier: string;
 
   get message(): string {
     return (
@@ -21,15 +21,6 @@ export class ServiceNotFoundError extends Error {
 
   constructor(identifier: ServiceIdentifier) {
     super();
-
-    if (typeof identifier === 'string') {
-      this.normalizedIdentifier = identifier;
-    } else if (identifier instanceof Token) {
-      this.normalizedIdentifier = `Token<${identifier.name || 'UNSET_NAME'}>`;
-    } else if (identifier && (identifier.name || identifier.prototype?.name)) {
-      this.normalizedIdentifier = `MaybeConstructable<${
-        identifier.name ?? (identifier.prototype as { name: string })?.name
-      }>`;
-    }
+    this.normalizedIdentifier = normalizeIdentifier(identifier);
   }
 }
