@@ -51,6 +51,11 @@ export interface ServiceMetadata<Type = unknown> {
   /**
    * Indicates whether a new instance should be created as soon as the class is registered.
    * By default the registered classes are only instantiated when they are requested from the container.
+   * 
+   * @remarks
+   * **Usage of this option is discouraged**, as it makes code harder to test and more complex to understand.
+   * In the context of something like a database service, it may be wiser to provide an initializer method
+   * which can then be called from your root service.
    *
    * _Note: This option is ignored for transient services._
    */
