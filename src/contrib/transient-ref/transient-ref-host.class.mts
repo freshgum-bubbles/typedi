@@ -1,7 +1,6 @@
 import { ServiceIdentifier } from '../../types/service-identifier.type.mjs';
 import { ContainerInstance } from '../../container-instance.class.mjs';
 import { InferServiceType } from '../../types/infer-service-type.type.mjs';
-import { ServiceMetadata } from '../../interfaces/service-metadata.interface.mjs';
 import { ServiceNotFoundError } from '../../error/service-not-found.error.mjs';
 import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type.mjs';
 import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
@@ -14,8 +13,12 @@ type ContainerInstanceResolveConstrainedIdentifier = {
   resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
 };
 
+type ContainerInstanceMultiServiceIds = {
+  multiServiceIds: ContainerInstance['multiServiceIds']
+};
+
 /** A helper to access private {@link ContainerInstance} methods. @ignore */
-type ContainerInstanceWithPrivates = ContainerInstanceMetadataMap & ContainerInstanceResolveConstrainedIdentifier;
+type ContainerInstanceWithPrivates = ContainerInstanceMetadataMap & ContainerInstanceResolveConstrainedIdentifier & ContainerInstanceMultiServiceIds;
 
 /**
  * A helper object for managing instances of transient services.
@@ -94,20 +97,26 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      *
      * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
      */
-    const { metadataMap } = resolveConstrainedContainer(
+    const { metadataMap, multiServiceIds } = resolveConstrainedContainer(
       constraints,
       container
     ) as unknown as ContainerInstanceWithPrivates;
 
+    const isManyConstrained = constraints & ResolutionConstraintFlag.Many;
+    const isServiceFound = isManyConstrained ? multiServiceIds.has(id) : metadataMap.has(id);
+    
     /**
      * The {@link TransientRef} function does not ensure that the identifier exists.
-     *
-     * To simplify the implementation and ensure this check is performed from potential future call-sites,
-     * we do it here instead.
-     */
-    if (!metadataMap.has(id)) {
-      throw new ServiceNotFoundError(id);
+    *
+    * To simplify the implementation and ensure this check is performed from potential future call-sites,
+    * we do it here instead.
+    */
+   if (!isServiceFound) {
+     throw new ServiceNotFoundError(id);
     }
+    
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { scope } = (isManyConstrained ? multiServiceIds.get(id) : metadataMap.get(id))!;
 
     /**
      * The implementation throws in the case of a non-transient identifier being bound as not
@@ -117,7 +126,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * In theory, they *could* instantiate this, remove the identifier, and re-bind it to
      * non-transient metadata -- however, this seems like a very rare edge-case.
      */
-    if ((metadataMap.get(id) as unknown as ServiceMetadata<unknown>).scope !== 'transient') {
+    if (scope !== 'transient') {
       throw new Error('The provided identifier was not bound to a transient service.');
     }
   }
