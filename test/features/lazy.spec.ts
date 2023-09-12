@@ -28,8 +28,8 @@ describe('Lazy()', function () {
     const LOCATION = new Token<Location>();
 
     enum Location {
-      Parent,
-      Child,
+      Parent = 'parent',
+      Child = 'child',
     }
 
     @Service([[Lazy(() => LOCATION), SkipSelf()], Lazy(() => LOCATION)])
