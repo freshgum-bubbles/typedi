@@ -1,5 +1,6 @@
-import { Container, Service, ServiceIdentifier, ServiceNotFoundError, Token, TransientRef } from '../../src/index.mjs';
-import { TransientRefHost } from '../contrib/transient-ref/transient-ref-host.class.mjs';
+import { Container, Service, ServiceIdentifier, Token } from '../../src/index.mjs';
+import { TransientRef } from '../../src/contrib/transient-ref/transient-ref.function.mjs';
+import { TransientRefHost } from '../../src/contrib/transient-ref/transient-ref-host.class.mjs';
 import { TYPE_WRAPPER, TypeWrapperStamp } from '../../src/constants/type-wrapper.const.mjs';
 
 describe('Transient References', () => {
