@@ -14,11 +14,13 @@ type ContainerInstanceResolveConstrainedIdentifier = {
 };
 
 type ContainerInstanceMultiServiceIds = {
-  multiServiceIds: ContainerInstance['multiServiceIds']
+  multiServiceIds: ContainerInstance['multiServiceIds'];
 };
 
 /** A helper to access private {@link ContainerInstance} methods. @ignore */
-type ContainerInstanceWithPrivates = ContainerInstanceMetadataMap & ContainerInstanceResolveConstrainedIdentifier & ContainerInstanceMultiServiceIds;
+type ContainerInstanceWithPrivates = ContainerInstanceMetadataMap &
+  ContainerInstanceResolveConstrainedIdentifier &
+  ContainerInstanceMultiServiceIds;
 
 /**
  * A helper object for managing instances of transient services.
@@ -104,17 +106,17 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
 
     const isManyConstrained = constraints & ResolutionConstraintFlag.Many;
     const isServiceFound = isManyConstrained ? multiServiceIds.has(id) : metadataMap.has(id);
-    
+
     /**
      * The {@link TransientRef} function does not ensure that the identifier exists.
-    *
-    * To simplify the implementation and ensure this check is performed from potential future call-sites,
-    * we do it here instead.
-    */
-   if (!isServiceFound) {
-     throw new ServiceNotFoundError(id);
+     *
+     * To simplify the implementation and ensure this check is performed from potential future call-sites,
+     * we do it here instead.
+     */
+    if (!isServiceFound) {
+      throw new ServiceNotFoundError(id);
     }
-    
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const { scope } = (isManyConstrained ? multiServiceIds.get(id) : metadataMap.get(id))!;
 
