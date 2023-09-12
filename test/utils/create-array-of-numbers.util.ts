@@ -1,7 +1,7 @@
 /**
  * Create an array of numbers from 0, with the end denoting the final number
  * in the array.
- * 
+ *
  * @example
  * Here is an example:
  * ```ts
@@ -10,13 +10,13 @@
  * ```
  */
 export function createArrayOfNumbers(end: number) {
-    const numbers: number[] = [];
-    let index = 0;
+  const numbers: number[] = [];
+  let index = 0;
 
-    while (index <= end) {
-      numbers.push(index);
-      index++;
-    }
+  while (index <= end) {
+    numbers.push(index);
+    index++;
+  }
 
-    return numbers;
+  return numbers;
 }
