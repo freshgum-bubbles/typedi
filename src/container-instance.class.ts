@@ -12,6 +12,7 @@ import {
 } from './interfaces/service-options.interface';
 import { EMPTY_VALUE } from './constants/empty.const';
 import { ContainerIdentifier } from './types/container-identifier.type';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ContainerScope } from './types/container-scope.type';
 import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type';
 import { Disposable } from './types/disposable.type';
