@@ -18,7 +18,7 @@ export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferSer
     /**
      * Because extractable type-wrappers are able to completely override the resolution process,
      * we need to ensure that we resolve the constrained identifier directly in the container.
-     * 
+     *
      * To do this, the previous constraint resolution method was modularized, with the core resolution
      * process extracted into a new method.  This lets us call it from type-wrappers.
      */
