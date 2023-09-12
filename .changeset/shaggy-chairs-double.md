@@ -12,15 +12,13 @@ As a quick example of the syntax:
 import { Service } from '@freshgum/inject';
 import { TransientRef } from '@freshgum/inject/contrib/transient-ref';
 
-@Service({ scope: 'transient' }, [ ])
-class MyTransientService { }
+@Service({ scope: 'transient' }, [])
+class MyTransientService {}
 
-@Service([
-    TransientRef(MyTransientService)
-])
+@Service([TransientRef(MyTransientService)])
 class MyService {
-    constructor (private myTransient: TransientRef<MyTransientService>) {
-        assert(myTransient.create() !== myTransient.create());
-    }   
+  constructor(private myTransient: TransientRef<MyTransientService>) {
+    assert(myTransient.create() !== myTransient.create());
+  }
 }
 ```
