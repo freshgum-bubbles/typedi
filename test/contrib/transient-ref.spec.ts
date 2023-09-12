@@ -95,16 +95,14 @@ describe('Transient References', () => {
 
     describe('Resolution Constraint Handling', () => {
       it('should respect SkipSelf', () => {
-        const NAME = new Token<string>();  
+        const NAME = new Token<string>();
         const childContainer = Container.ofChild(Symbol());
 
-        @Service({ container: childContainer }, [
-          [TransientRef(NAME), SkipSelf()]
-        ])
+        @Service({ container: childContainer }, [[TransientRef(NAME), SkipSelf()]])
         class MyService {
-          constructor (public receivedValue: TransientRefHost<string>) { }
+          constructor(public receivedValue: TransientRefHost<string>) {}
         }
-        
+
         childContainer.set({ id: NAME, value: 'Joanna', scope: 'transient' });
         Container.set({ id: NAME, value: 'Roxy', scope: 'transient' });
 
@@ -116,13 +114,11 @@ describe('Transient References', () => {
         const NAME = new Token<string>();
         const childContainer = Container.ofChild(Symbol());
 
-        @Service({ container: childContainer }, [
-          [TransientRef(NAME), Self()]
-        ])
+        @Service({ container: childContainer }, [[TransientRef(NAME), Self()]])
         class MyService {
-          constructor (public receivedValue: TransientRefHost<string>) { }
+          constructor(public receivedValue: TransientRefHost<string>) {}
         }
-        
+
         Container.set({ id: NAME, value: 'Roxy', scope: 'transient' });
         expect(() => childContainer.get(MyService)).toThrowError(ServiceNotFoundError);
       });
@@ -130,14 +126,12 @@ describe('Transient References', () => {
       it('should respect Many', () => {
         const childContainer = Container.ofChild(Symbol());
         const NAME = new Token<string>();
-        
-        @Service({ container: childContainer }, [
-          [TransientRef(NAME), Many()]
-        ])
+
+        @Service({ container: childContainer }, [[TransientRef(NAME), Many()]])
         class MyService {
-          constructor (public receivedValue: TransientRefHost<string>) { }
+          constructor(public receivedValue: TransientRefHost<string>) {}
         }
-        
+
         /** Names deliberately placed *after* declaration to ensure presence isn't checked at function call. */
         const names = ['Roxy', 'Ricky', 'Donald'];
         names.forEach(name => Container.set({ id: NAME, value: name, scope: 'transient', multiple: true }));
@@ -149,7 +143,6 @@ describe('Transient References', () => {
       // it('should remove Optional() for .create', () => {
 
       // });
-
     });
   });
 });
