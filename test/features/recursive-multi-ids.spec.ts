@@ -3,7 +3,6 @@ import { createArrayOfNumbers } from "../utils/create-array-of-numbers.util";
 import { createDeepContainerTree } from "../utils/create-deep-container-tree.util";
 
 describe('Container.getMany', () => {
-    
     beforeEach(() => Container.reset({ strategy: 'resetServices' }));
     const names = ['Joanna', 'Sylvia', 'Michelle'];
     const NAME = new Token<string>();
