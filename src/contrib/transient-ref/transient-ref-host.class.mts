@@ -1,8 +1,21 @@
-import { ContainerInstance } from "../../container-instance.class.mjs";
-import { ServiceNotFoundError } from "../../error/service-not-found.error.mjs";
-import { ServiceMetadata } from "../../interfaces/service-metadata.interface.mjs";
-import { InferServiceType } from "../../types/infer-service-type.type.mjs";
-import { ServiceIdentifier } from "../../types/service-identifier.type.mjs";
+import { ServiceIdentifier } from '../../types/service-identifier.type.mjs';
+import { ContainerInstance } from '../../container-instance.class.mjs';
+import { InferServiceType } from '../../types/infer-service-type.type.mjs';
+import { ServiceMetadata } from '../../interfaces/service-metadata.interface.mjs';
+import { ServiceNotFoundError } from '../../error/service-not-found.error.mjs';
+import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type.mjs';
+import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
+
+/** @ignore */
+type ContainerInstanceMetadataMap = { metadataMap: ContainerInstance['metadataMap'] };
+
+/** @ignore */
+type ContainerInstanceResolveConstrainedIdentifier = {
+  resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
+};
+
+/** A helper to access private {@link ContainerInstance} methods. @ignore */
+type ContainerInstanceWithPrivates = ContainerInstanceMetadataMap & ContainerInstanceResolveConstrainedIdentifier;
 
 /**
  * A helper object for managing instances of transient services.
@@ -81,7 +94,10 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      *
      * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
      */
-    const { metadataMap } = container as unknown as { metadataMap: ContainerInstance['metadataMap'] };
+    const { metadataMap } = resolveConstrainedContainer(
+      constraints,
+      container
+    ) as unknown as ContainerInstanceWithPrivates;
 
     /**
      * The {@link TransientRef} function does not ensure that the identifier exists.
@@ -106,6 +122,14 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
     }
   }
 
+  private resolve(constraintMask = 0): TInstance {
+    /** Use the same hack in the constructor to access the private class member. */
+    return (this.container as unknown as ContainerInstanceWithPrivates).resolveConstrainedIdentifier(
+      this.id,
+      this.constraints | constraintMask
+    ) as TInstance;
+  }
+
   /**
    * Create a new instance of the transient service attached to this reference.
    * @public
@@ -114,6 +138,10 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * Once a transient service is created, the caller is responsible for managing its lifetime.
    * If its originating container is disposed, any stored instances will still be available.
    * See the documentation in {@link TransientRefHost} for more examples and a solution.
+   *
+   * @remarks
+   * If the {@link Optional} constraint was provided to the host constructor
+   * (or {@link TransientRef}), it will be removed for this operation.
    *
    * @example
    * Here is an example:
@@ -137,7 +165,11 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * For a variant which instead returns null if the ID cannot be found, use {@link TransientRefHost.createOrNull}.
    */
   create(): TInstance {
-    return this.container.get(this.id) as TInstance;
+    /**
+     * Remove the {@link Optional} flag from the constraints.
+     * This ensures that {@link TransientRefHost.create} does not return null.
+     */
+    return this.resolve(this.constraints & ~ResolutionConstraintFlag.Optional);
   }
 
   /**
@@ -156,6 +188,6 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * For a variant which throws an error if the ID cannot be found, use {@link TransientRefHost.create}.
    */
   createOrNull(): TInstance | null {
-    return this.container.getOrNull(this.id) as TInstance;
+    return this.resolve(ResolutionConstraintFlag.Optional);
   }
 }
