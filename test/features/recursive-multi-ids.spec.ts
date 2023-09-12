@@ -5,13 +5,11 @@ import { createDeepContainerTree } from "../utils/create-deep-container-tree.uti
 describe('Container.getMany', () => {
     beforeEach(() => Container.reset({ strategy: 'resetServices' }));
     const names = ['Joanna', 'Sylvia', 'Michelle'];
-    const NAME = new Token<string>();
+    const NAMES = new Token<string>();
 
     function applyNamesToContainer (container: ContainerInstance, partialOpts?: Partial<ServiceOptions>) {
-        names.forEach(name => container.set({ id: NAME, value: name, multiple: true, ...(partialOpts ?? {}) }));
-
         for (const name of names) {
-            const baseOpts = { id: NAME, value: name, multiple: true } as const;
+            const baseOpts = { id: NAMES, value: name, multiple: true } as const;
 
             if (partialOpts) {
                 Object.assign(baseOpts, partialOpts);
@@ -25,19 +23,24 @@ describe('Container.getMany', () => {
         const childContainer = Container.ofChild(Symbol());
         applyNamesToContainer(childContainer, { scope: 'singleton' });
 
-        expect(childContainer.getMany(NAME)).toEqual(names);
+        expect(childContainer.getMany(NAMES)).toEqual(names);
     });
 
-    it('imports values from the default container when the scope is "singleton", and the container is orphaned', () => {
+    it('does not import values from the default container when the scope is "singleton", and the container is orphaned', () => {
         const orphanedContainer = ContainerInstance.of(Symbol(), null);
         applyNamesToContainer(orphanedContainer, { scope: 'singleton' });
 
-        expect(orphanedContainer.getMany(NAME)).toEqual(names);
+        expect(() => orphanedContainer.getMany(NAMES)).toThrowError();
+        expect(Container.getMany(NAMES)).toMatchObject(names);
     });
     
     it.each(createArrayOfNumbers(15))('should deeply inherit services where depth is %i', number => {
         applyNamesToContainer(Container);
-        const deepChildContainer = createDeepContainerTree(number);
-        expect(deepChildContainer.getManyOrNull(NAME)).toEqual(names);
+        const deepChildContainer = createDeepContainerTree(number, Container);
+        expect(deepChildContainer.getManyOrNull(NAMES)).toEqual(names);
+    });
+
+    it('deals with transient services correctly', () => {
+
     });
 });
