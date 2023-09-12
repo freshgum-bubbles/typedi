@@ -4,23 +4,15 @@ import { InferServiceType } from '../../types/infer-service-type.type.mjs';
 import { ServiceNotFoundError } from '../../error/service-not-found.error.mjs';
 import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type.mjs';
 import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
-
-/** @ignore */
-type ContainerInstanceMetadataMap = { metadataMap: ContainerInstance['metadataMap'] };
-
-/** @ignore */
-type ContainerInstanceResolveConstrainedIdentifier = {
-  resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
-};
-
-type ContainerInstanceMultiServiceIds = {
-  multiServiceIds: ContainerInstance['multiServiceIds'];
-};
+import { ContainerScope } from '../../types/container-scope.type.mjs';
+import { ServiceIdentifierLocation } from '../../types/service-identifier-location.type.mjs';
 
 /** A helper to access private {@link ContainerInstance} methods. @ignore */
-type ContainerInstanceWithPrivates = ContainerInstanceMetadataMap &
-  ContainerInstanceResolveConstrainedIdentifier &
-  ContainerInstanceMultiServiceIds;
+type ContainerInternals = {
+  metadataMap: ContainerInstance['metadataMap'];
+  resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
+  resolveMultiID: ContainerInstance['resolveMultiID']
+}
 
 /**
  * A helper object for managing instances of transient services.
@@ -99,13 +91,21 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      *
      * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
      */
-    const { metadataMap, multiServiceIds } = resolveConstrainedContainer(
+    const targetContainer = resolveConstrainedContainer(
       constraints,
       container
-    ) as unknown as ContainerInstanceWithPrivates;
+    );
+    const { metadataMap } = targetContainer as unknown as ContainerInternals;
 
     const isManyConstrained = constraints & ResolutionConstraintFlag.Many;
-    const isServiceFound = isManyConstrained ? multiServiceIds.has(id) : metadataMap.has(id);
+    let isServiceFound: boolean;
+
+    if (isManyConstrained) {
+      const [location] = (targetContainer as unknown as ContainerInternals).resolveMultiID(id);
+      isServiceFound = location !== ServiceIdentifierLocation.None;
+    } else {
+      isServiceFound = metadataMap.has(id);
+    }
 
     /**
      * The {@link TransientRef} function does not ensure that the identifier exists.
@@ -117,8 +117,11 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
       throw new ServiceNotFoundError(id);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { scope } = (isManyConstrained ? multiServiceIds.get(id) : metadataMap.get(id))!;
+    let scope: ContainerScope | null = null;
+
+    if (!isManyConstrained) {
+      scope = metadataMap.get(id)!.scope;
+    }
 
     /**
      * The implementation throws in the case of a non-transient identifier being bound as not
@@ -128,14 +131,14 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * In theory, they *could* instantiate this, remove the identifier, and re-bind it to
      * non-transient metadata -- however, this seems like a very rare edge-case.
      */
-    if (scope !== 'transient') {
+    if (scope !== 'transient' && scope !== null) {
       throw new Error('The provided identifier was not bound to a transient service.');
     }
   }
 
   private resolve(constraintMask = 0): TInstance {
     /** Use the same hack in the constructor to access the private class member. */
-    return (this.container as unknown as ContainerInstanceWithPrivates).resolveConstrainedIdentifier(
+    return (this.container as unknown as ContainerInternals).resolveConstrainedIdentifier(
       this.id,
       this.constraints | constraintMask
     ) as TInstance;
