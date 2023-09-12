@@ -1,5 +1,5 @@
 import { TYPE_WRAPPER, TypeWrapperStamp } from "../constants/type-wrapper.const.mjs";
-import { ServiceIdentifier } from "../index.mjs";
+import { ContainerInstance, ServiceIdentifier } from "../index.mjs";
 import { InferServiceType } from "../types/infer-service-type.type.mjs";
 import { TypeWrapper } from "../types/type-wrapper.type.mjs";
 
@@ -14,6 +14,17 @@ export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferSer
   return {
     [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
     lazyType: fn,
-    extract: container => container.get(fn()) as TInstance,
+
+    /**
+     * Because extractable type-wrappers are able to completely override the resolution process,
+     * we need to ensure that we resolve the constrained identifier directly in the container.
+     * 
+     * To do this, the previous constraint resolution method was modularized, with the core resolution
+     * process extracted into a new method.  This lets us call it from type-wrappers.
+     */
+    extract: (container, constraints) =>
+      (
+        container as unknown as { resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'] }
+      ).resolveConstrainedIdentifier(fn(), constraints) as TInstance,
   };
 }
