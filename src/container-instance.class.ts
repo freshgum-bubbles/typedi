@@ -628,26 +628,20 @@ export class ContainerInstance implements Disposable {
       return defaultValue;
     }
 
-    const isRetrievingSingleton = idMap.scope === 'singleton';
-    const targetContainer = isRetrievingSingleton ? defaultContainer : this;
-
     /**
      * Prevent {@link ContainerInstance.getOrNull} from notifying
      * visitors that we are retrieving a masked token.
      */
-    targetContainer.isRetrievingPrivateToken = true;
+    this.isRetrievingPrivateToken = true;
 
     /**
      * If the service is registered as a singleton, we load it from the global container.
      * Otherwise, the local registry is used.
      */
-    const subject = (generatedId: Token<unknown>) =>
-      targetContainer.get<T>(generatedId, targetContainer === defaultContainer ? undefined : recursive);
-
-    const mapped = idMap.tokens.map(subject);
+    const mapped = idMap.tokens.map((generatedId: Token<unknown>) => this.get<T>(generatedId, recursive));
 
     /** Restore the flag we set above to its original value. */
-    targetContainer.isRetrievingPrivateToken = false;
+    this.isRetrievingPrivateToken = false;
 
     return mapped;
   }
@@ -865,7 +859,7 @@ export class ContainerInstance implements Disposable {
       if (existingMultiGroup) {
         existingMultiGroup.tokens.push(maskedToken);
       } else {
-        this.multiServiceIds.set(newMetadata.id, { scope: newMetadata.scope, tokens: [maskedToken] });
+        this.multiServiceIds.set(newMetadata.id, { tokens: [maskedToken] });
       }
 
       /**
