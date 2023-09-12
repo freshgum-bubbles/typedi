@@ -697,6 +697,13 @@ export class ContainerInstance implements Disposable {
       }
     }
 
+    /**
+     * Implementation note: To match the behaviour of normal identifiers, we don't check
+     * the default container here -- that is done through the regular search above.
+     * 
+     * Therefore, if a container sets a singleton variable, and is an orphan, it won't
+     * have any knowledge of it.
+     */
     return [ServiceIdentifierLocation.None, null];
   }
 
