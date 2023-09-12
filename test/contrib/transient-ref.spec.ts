@@ -1,4 +1,4 @@
-import { Container, Service, ServiceIdentifier, SkipSelf, Token } from '../../src/index.mjs';
+import { Container, Many, Self, Service, ServiceIdentifier, SkipSelf, Token } from '../../src/index.mjs';
 import { TransientRef } from '../../src/contrib/transient-ref/transient-ref.function.mjs';
 import { TransientRefHost } from '../../src/contrib/transient-ref/transient-ref-host.class.mjs';
 import { TYPE_WRAPPER, TypeWrapperStamp } from '../../src/constants/type-wrapper.const.mjs';
@@ -65,18 +65,20 @@ describe('Transient References', () => {
     it.skip('should work correctly with resolution constraints', () => {});
 
     describe('Non-transient identifier handling', () => {
-      const NAME = new Token<string>();
+      // #region Name Scenario
+      const SCENARIO_NAME = new Token<string>();
 
       function setNameValue() {
-        Container.set({ id: NAME, value: 'Joanna' });
+        Container.set({ id: SCENARIO_NAME, value: 'Joanna' });
       }
 
       function runScenario() {
-        @Service([TransientRef(NAME)])
+        @Service([TransientRef(SCENARIO_NAME)])
         class MyService {}
 
         return MyService;
       }
+      // #endregion
 
       it('should not initially throw if given a non-transient identifier', () => {
         setNameValue();
@@ -92,9 +94,8 @@ describe('Transient References', () => {
     });
 
     describe('Resolution Constraint Handling', () => {
-      const NAME = new Token<string>();
-      
       it('should respect SkipSelf', () => {
+        const NAME = new Token<string>();  
         const childContainer = Container.ofChild(Symbol());
 
         @Service({ container: childContainer }, [
@@ -111,15 +112,39 @@ describe('Transient References', () => {
         expect(childContainer.get(MyService).receivedValue.create()).toStrictEqual('Roxy');
       });
 
-      // it('should respect Self', () => {
+      it('should respect Self', () => {
+        const NAME = new Token<string>();
+        const childContainer = Container.ofChild(Symbol());
 
-      // });
+        @Service({ container: childContainer }, [
+          [TransientRef(NAME), Self()]
+        ])
+        class MyService {
+          constructor (public receivedValue: TransientRefHost<string>) { }
+        }
+        
+        Container.set({ id: NAME, value: 'Roxy', scope: 'transient' });
+        expect(() => childContainer.get(MyService)).toThrowError(ServiceNotFoundError);
+      });
 
-      // it('should respect Many', () => {
+      it('should respect Many', () => {
+        const childContainer = Container.ofChild(Symbol());
+        const NAME = new Token<string>();
+        
+        @Service({ container: childContainer }, [
+          [TransientRef(NAME), Many()]
+        ])
+        class MyService {
+          constructor (public receivedValue: TransientRefHost<string>) { }
+        }
+        
+        /** Names deliberately placed *after* declaration to ensure presence isn't checked at function call. */
+        const names = ['Roxy', 'Ricky', 'Donald'];
+        names.forEach(name => Container.set({ id: NAME, value: name, scope: 'transient', multiple: true }));
 
-      // });
-
-      // it('should respect ')
+        expect(() => childContainer.get(MyService)).not.toThrowError();
+        expect(childContainer.get(MyService).receivedValue.create()).toMatchObject(names);
+      });
 
       // it('should remove Optional() for .create', () => {
 
