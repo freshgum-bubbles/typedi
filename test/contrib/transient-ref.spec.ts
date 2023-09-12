@@ -1,4 +1,4 @@
-import { Container, Service, ServiceIdentifier, Token } from '../../src/index.mjs';
+import { Container, Service, ServiceIdentifier, SkipSelf, Token } from '../../src/index.mjs';
 import { TransientRef } from '../../src/contrib/transient-ref/transient-ref.function.mjs';
 import { TransientRefHost } from '../../src/contrib/transient-ref/transient-ref-host.class.mjs';
 import { TYPE_WRAPPER, TypeWrapperStamp } from '../../src/constants/type-wrapper.const.mjs';
@@ -91,19 +91,40 @@ describe('Transient References', () => {
       });
     });
 
-    describe.skip('Non-present identifier handling', () => {
+    describe('Resolution Constraint Handling', () => {
       const NAME = new Token<string>();
+      
+      it('should respect SkipSelf', () => {
+        const childContainer = Container.ofChild(Symbol());
 
-      function runScenario() {
-        @Service([TransientRef(NAME)])
-        class MyService {}
+        @Service({ container: childContainer }, [
+          [TransientRef(NAME), SkipSelf()]
+        ])
+        class MyService {
+          constructor (public receivedValue: TransientRefHost<string>) { }
+        }
+        
+        childContainer.set({ id: NAME, value: 'Joanna', scope: 'transient' });
+        Container.set({ id: NAME, value: 'Roxy', scope: 'transient' });
 
-        return MyService;
-      }
+        expect(() => childContainer.get(MyService)).not.toThrowError();
+        expect(childContainer.get(MyService).receivedValue.create()).toStrictEqual('Roxy');
+      });
 
-      it('should not initially throw if given a non-present identifier', () => {});
+      // it('should respect Self', () => {
 
-      it('should throw if given a non-p', () => {});
+      // });
+
+      // it('should respect Many', () => {
+
+      // });
+
+      // it('should respect ')
+
+      // it('should remove Optional() for .create', () => {
+
+      // });
+
     });
   });
 });
