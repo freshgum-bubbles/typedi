@@ -11,8 +11,8 @@ import { ServiceIdentifierLocation } from '../../types/service-identifier-locati
 type ContainerInternals = {
   metadataMap: ContainerInstance['metadataMap'];
   resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
-  resolveMultiID: ContainerInstance['resolveMultiID']
-}
+  resolveMultiID: ContainerInstance['resolveMultiID'];
+};
 
 /**
  * A helper object for managing instances of transient services.
@@ -91,10 +91,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      *
      * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
      */
-    const targetContainer = resolveConstrainedContainer(
-      constraints,
-      container
-    );
+    const targetContainer = resolveConstrainedContainer(constraints, container);
     const { metadataMap } = targetContainer as unknown as ContainerInternals;
 
     const isManyConstrained = constraints & ResolutionConstraintFlag.Many;
