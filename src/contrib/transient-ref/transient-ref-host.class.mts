@@ -117,6 +117,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
     let scope: ContainerScope | null = null;
 
     if (!isManyConstrained) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       scope = metadataMap.get(id)!.scope;
     }
 
