@@ -15,7 +15,6 @@ jobs:
       - run: pnpm run prettier:check
       - run: pnpm run lint:check
       - run: pnpm run test:ci
-      - run: pnpm run build:es2015
       - run: pnpm run build:esm5
       - run: pnpm run build:cjs
       - run: pnpm run build:umd
