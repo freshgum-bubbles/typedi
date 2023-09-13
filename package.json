@@ -21,8 +21,9 @@
   },
   "exports": {
     ".": {
-      "types": "./build/esm5/container-instance.class.mjs",
-      "import": "./build/esm5/container-instance.class.d.mts"
+      "types": "./build/esm5/index.mjs",
+      "import": "./build/esm5/index.d.mts",
+      "bun": "./src/index.mts"
     }
   },
   "engines": {
