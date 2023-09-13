@@ -1,7 +1,7 @@
-import { Token } from '../token.class';
-import { AbstractConstructable } from './abstract-constructable.type';
-import { Constructable } from './constructable.type';
-import { ServiceIdentifier } from './service-identifier.type';
+import { Token } from '../token.class.mjs';
+import { AbstractConstructable } from './abstract-constructable.type.mjs';
+import { Constructable } from './constructable.type.mjs';
+import { ServiceIdentifier } from './service-identifier.type.mjs';
 
 /**
  * A list of class-based types which are inferrable from usage.
