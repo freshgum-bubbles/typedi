@@ -5,7 +5,7 @@ import {
   ServiceMetadata,
   Token,
   ContainerTreeVisitor,
-  VisitRetrievalOptions
+  VisitRetrievalOptions,
 } from 'internal:typedi';
 
 describe('Tree Visitors', () => {

@@ -1,4 +1,12 @@
-import { Container, ContainerInstance, ServiceIdentifier, ServiceMetadata, Service, Token, ServiceNotFoundError } from 'internal:typedi';
+import {
+  Container,
+  ContainerInstance,
+  ServiceIdentifier,
+  ServiceMetadata,
+  Service,
+  Token,
+  ServiceNotFoundError,
+} from 'internal:typedi';
 import { Disposable } from 'internal:typedi/types/disposable.type.mjs';
 import { ContainerRegistry } from 'internal:typedi/container-registry.class.mjs';
 
