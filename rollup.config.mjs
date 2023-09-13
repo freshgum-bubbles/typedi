@@ -6,9 +6,9 @@ import mergeObjects from 'deepmerge';
 /**
  * A list of properties in the codebase to mangle.
  * In this case, "mangling" refers to the minification of the names in the final bundle.
- * 
+ *
  * The addition of members to this array should be done very cautiously.
- * 
+ *
  * WARNING: DO NOT ADD ANY MEMBERS OF PUBLICLY-EXPORTED CLASSES / OBJECTS HERE!!!
  * A special exception is made for `ContainerInstance.throwIfDisposed`, which is
  * marked as private and can easily be replicated.
@@ -28,7 +28,7 @@ const PROPERTIES_TO_MANGLE = [
   'anyVisitorsPresent',
   'forEachVisitor',
   'addVisitorToCollection',
-  'removeVisitorFromCollection'
+  'removeVisitorFromCollection',
 ];
 
 /** @type {import('@rollup/plugin-terser').Options} */
@@ -37,43 +37,43 @@ const TERSER_OPTIONS = {
     defaults: true,
     keep_fargs: false,
     passes: 3,
-    unsafe_symbols: true
+    unsafe_symbols: true,
   },
   format: {
     ecma: 6,
     ie8: false,
-    comments: false
+    comments: false,
   },
   mangle: {
     properties: {
-      regex: new RegExp(PROPERTIES_TO_MANGLE.join('|'))
-    }
-  }
+      regex: new RegExp(PROPERTIES_TO_MANGLE.join('|')),
+    },
+  },
 };
 
-/** 
- * @type {Partial<import('rollup').OutputOptions>} 
+/**
+ * @type {Partial<import('rollup').OutputOptions>}
  * A partial set of options for all Rollup output declarations.
  */
 const DEFAULT_ROLLUP_OUTPUT_OPTIONS = {
-  sourcemap: true
+  sourcemap: true,
 };
 
 /**
  * @param {import('rollup').OutputOptions} options The options to merge with defaults.
  */
-function createOutput (options) {
+function createOutput(options) {
   return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
 }
 
-/** 
- * @type {import('@rollup/plugin-terser').Options} 
+/**
+ * @type {import('@rollup/plugin-terser').Options}
  * A set of Terser options for ES6 builds of TypeDI.
  */
 const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
   compress: {
-    module: true
-  }  
+    module: true,
+  },
 });
 
 export default {

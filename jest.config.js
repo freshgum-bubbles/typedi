@@ -5,11 +5,14 @@ const configuration = {
   maxWorkers: 4,
   collectCoverageFrom: ['src/**/*.ts', '!src/**/index.ts', '!src/**/*.interface.ts', '!src/**/*.type.ts'],
   transform: {
-    '^.+\\.(m?[tj]sx?)$': ['ts-jest', {
-      tsconfig: 'tsconfig.spec.json'
-    }]
+    '^.+\\.(m?[tj]sx?)$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.spec.json',
+      },
+    ],
   },
-  resolver: '<rootDir>/scripts/testing/jest-module-resolver.cjs'
+  resolver: '<rootDir>/scripts/testing/jest-module-resolver.cjs',
 };
 
 module.exports = configuration;
