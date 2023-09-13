@@ -6,6 +6,7 @@ import {
   Token,
   ContainerTreeVisitor,
   VisitRetrievalOptions,
+  ServiceIdentifierLocation,
 } from 'internal:typedi';
 
 describe('Tree Visitors', () => {

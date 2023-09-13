@@ -1,4 +1,4 @@
-import { Container } from '../../src/index';
+import { Container } from 'internal:typedi';
 
 /**
  * Create a deep container hierarchy consisting of X levels.
