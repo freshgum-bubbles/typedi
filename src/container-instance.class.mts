@@ -12,6 +12,7 @@ import {
 } from './interfaces/service-options.interface.mjs';
 import { EMPTY_VALUE } from './constants/empty.const.mjs';
 import { ContainerIdentifier } from './types/container-identifier.type.mjs';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ContainerScope } from './types/container-scope.type.mjs';
 import { GenericTypeWrapper, TypeWrapper } from './types/type-wrapper.type.mjs';
 import { Disposable } from './types/disposable.type.mjs';
@@ -30,11 +31,7 @@ import { CreateContainerResult } from './types/create-container-result.type.mjs'
 import { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
 import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const.mjs';
 import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
-
-interface ManyServicesMetadata {
-  tokens: Token<unknown>[];
-  scope: ContainerScope;
-}
+import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
