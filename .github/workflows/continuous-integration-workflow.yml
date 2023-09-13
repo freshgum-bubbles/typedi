@@ -100,7 +100,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
-      - run: pnpm run build:es2015
       - run: pnpm run build:esm5
       - run: pnpm run build:cjs
       - run: pnpm run build:umd
