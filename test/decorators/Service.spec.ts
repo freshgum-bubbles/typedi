@@ -1,6 +1,4 @@
-import { Container, ContainerInstance } from 'internal:typedi';
-import { Service } from 'internal:typedi/decorators/service.decorator';.mjs
-import { Token } from 'internal:typedi/token.class';.mjs
+import { Container, ContainerInstance, Service, Token } from 'internal:typedi';
 
 describe('Service Decorator', function () {
   beforeEach(() => Container.reset({ strategy: 'resetServices' }));
