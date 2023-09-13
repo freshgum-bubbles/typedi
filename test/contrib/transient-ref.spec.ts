@@ -1,4 +1,13 @@
-import { Container, Many, Self, Service, ServiceIdentifier, SkipSelf, Token } from '../../src/index.mjs';
+import {
+  Container,
+  Many,
+  Self,
+  Service,
+  ServiceIdentifier,
+  ServiceNotFoundError,
+  SkipSelf,
+  Token,
+} from 'internal:typedi';
 import { TransientRef } from '../../src/contrib/transient-ref/transient-ref.function.mjs';
 import { TransientRefHost } from '../../src/contrib/transient-ref/transient-ref-host.class.mjs';
 import { TYPE_WRAPPER, TypeWrapperStamp } from '../../src/constants/type-wrapper.const.mjs';
