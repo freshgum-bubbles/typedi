@@ -1,6 +1,10 @@
 import { ContainerInstance, defaultContainer } from './container-instance.class.mjs';
 import { ServiceMetadata } from './interfaces/service-metadata.interface.mjs';
-import { ContainerTreeVisitor, ContainerTreeVisitorWithOrphanedContainerVisitor, VisitRetrievalOptions } from './interfaces/tree-visitor.interface.mjs';
+import {
+  ContainerTreeVisitor,
+  ContainerTreeVisitorWithOrphanedContainerVisitor,
+  VisitRetrievalOptions,
+} from './interfaces/tree-visitor.interface.mjs';
 import { Disposable } from './types/disposable.type.mjs';
 import { ServiceIdentifier } from './types/service-identifier.type.mjs';
 

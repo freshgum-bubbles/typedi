@@ -17,5 +17,5 @@ export default {
   CodeBlock,
   Root,
   WorkInProgress,
-  NPMInstallBlock
+  NPMInstallBlock,
 };

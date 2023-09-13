@@ -14,12 +14,12 @@ const customFields = {
      * The `pathname://` directive prevents Docusaurus from using its SPA's router
      * to interpret the link.
      * <https://docusaurus.io/docs/advanced/routing#escaping-from-spa-redirects>
-    */
-    link: 'pathname:///api-reference/'
+     */
+    link: 'pathname:///api-reference/',
   },
   github: {
-    repoPath: 'freshgum-bubbles/typedi'
-  }
+    repoPath: 'freshgum-bubbles/typedi',
+  },
 };
 
 /** @type {import('@docusaurus/types').Config} */
@@ -28,16 +28,12 @@ const config = {
   tagline: 'Elegant Dependency Injection in JavaScript and TypeScript.',
   favicon: 'img/favicon.ico',
 
-  staticDirectories: [
-    "static"
-  ],
+  staticDirectories: ['static'],
 
-  "clientModules": [
-    
-  ],
+  clientModules: [],
 
   markdown: {
-    mermaid: true
+    mermaid: true,
   },
 
   themes: [
@@ -48,9 +44,9 @@ const config = {
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions & Record<string, any>} */
       ({
         hashed: true,
-        language: ['en']
-      })
-    ]
+        language: ['en'],
+      }),
+    ],
   ],
 
   // Set the production url of your site here
@@ -88,12 +84,11 @@ const config = {
           sidebarCollapsible: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/freshgum-bubbles/typedi/docs/'
+          editUrl: 'https://github.com/freshgum-bubbles/typedi/docs/',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css')
-        }
+          customCss: require.resolve('./src/css/custom.css'),
+        },
       }),
     ],
   ],
@@ -106,10 +101,11 @@ const config = {
         id: 'global_announcement',
 
         // Add in a disclaimer about the documentation being alpha.
-        content: 'This documentation is mostly complete, though lacking in some areas. Any incomplete sections are greyed out.',
+        content:
+          'This documentation is mostly complete, though lacking in some areas. Any incomplete sections are greyed out.',
 
         // We want to make sure people don't accidentally close it.
-        isCloseable: false
+        isCloseable: false,
       },
 
       // Replace with your project's social card
@@ -125,12 +121,12 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial'
+            label: 'Tutorial',
           },
           {
             href: customFields.apiReference.link,
             label: 'API Reference',
-            position: 'right'
+            position: 'right',
           },
           {
             href: 'https://github.com/freshgum-bubbles/typedi',
@@ -157,7 +153,7 @@ const config = {
               {
                 label: 'GitHub',
                 href: 'https:/github.com/freshgum-bubbles/typedi',
-              }
+              },
             ],
           },
           {
@@ -170,7 +166,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
+        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
@@ -184,7 +180,7 @@ const config = {
           {
             className: 'theme-code-block-highlighted-line',
             line: 'highlight-next-line',
-            block: {start: 'highlight-start', end: 'highlight-end'},
+            block: { start: 'highlight-start', end: 'highlight-end' },
           },
           {
             className: 'code-block-error-line',
@@ -193,24 +189,24 @@ const config = {
           {
             className: 'code-block-error-line-comment',
             line: 'highlight-error-comment',
-            block: {start: 'highlight-error-comment-start', end: 'highlight-error-comment-end'}
+            block: { start: 'highlight-error-comment-start', end: 'highlight-error-comment-end' },
           },
           {
             className: 'code-block-revision-line-comment',
             line: 'highlight-revision',
-            block: {start: 'highlight-revision-start', end: 'highlight-revision-end'}
-          }
+            block: { start: 'highlight-revision-start', end: 'highlight-revision-end' },
+          },
         ],
       },
       colorMode: {
         defaultMode: 'dark',
-        respectPrefersColorScheme: true
+        respectPrefersColorScheme: true,
       },
       mermaid: {
         options: {
-          fontSize: 17
-        }
-      }
+          fontSize: 17,
+        },
+      },
     }),
 };
 
