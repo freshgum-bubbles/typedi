@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { ContainerRegistry } from './container-registry.class.mjs';
 import { ServiceNotFoundError } from './error/service-not-found.error.mjs';
 import { CannotInstantiateValueError } from './error/cannot-instantiate-value.error.mjs';
@@ -821,7 +822,8 @@ export class ContainerInstance implements Disposable {
      */
     const dependencies: Resolvable[] =
       precompiledDependencies ??
-      (serviceOptions as ServiceOptions<NewableFunction>)?.dependencies?.map((dependency, index) =>
+      (serviceOptions as ServiceOptions<NewableFunction>).dependencies?.map((dependency, index) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- This is completely wrong.
         wrapDependencyAsResolvable(dependency, serviceOptions, index)
       ) ??
       [];
