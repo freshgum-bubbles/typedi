@@ -6,13 +6,7 @@ import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type
 import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
 import { ContainerScope } from '../../types/container-scope.type.mjs';
 import { ServiceIdentifierLocation } from '../../types/service-identifier-location.type.mjs';
-
-/** A helper to access private {@link ContainerInstance} methods. @ignore */
-type ContainerInternals = {
-  metadataMap: ContainerInstance['metadataMap'];
-  resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
-  resolveMultiID: ContainerInstance['resolveMultiID'];
-};
+import { ContainerInternals } from '../util/container-internals.util.mjs';
 
 /**
  * A helper object for managing instances of transient services.
