@@ -21,7 +21,7 @@ export interface TypeWrapper<
   readonly [TYPE_WRAPPER]: TypeWrapperStamp.Generic;
 
   eagerType?: ServiceIdentifier | undefined;
-  lazyType: () => TIdentifier;
+  lazyType?: () => TIdentifier;
 
   /**
    * Resolve a customised value, which will be injected into the constructor
