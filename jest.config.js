@@ -1,15 +1,15 @@
-module.exports = {
+/** @type {import('jest').Config} */
+const configuration = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   maxWorkers: 4,
   collectCoverageFrom: ['src/**/*.ts', '!src/**/index.ts', '!src/**/*.interface.ts', '!src/**/*.type.ts'],
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: 'tsconfig.json'
+    '^.+\\.(m?[tj]sx?)$': ['ts-jest', {
+      tsconfig: 'tsconfig.spec.json'
     }]
   },
-  moduleNameMapper: {
-    '^internal\\:typedi$': '<rootDir>/src/index.mts',
-    '^internal\\:typedi/(.+)': '<rootDir>/src/$1'
-  }
+  resolver: '<rootDir>/scripts/testing/jest-module-resolver.cjs'
 };
+
+module.exports = configuration;
