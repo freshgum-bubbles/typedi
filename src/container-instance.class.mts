@@ -1039,7 +1039,8 @@ export class ContainerInstance implements Disposable {
            */
           return null as unknown as ContainerInstance;
         } else if (onConflict === 'throw') {
-          throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${String(containerId)}") already exists.`);
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
+          throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}") already exists.`);
         }
       }
     } else {
@@ -1047,7 +1048,8 @@ export class ContainerInstance implements Disposable {
         /** As above: The cast here is correct. */
         return null as unknown as ContainerInstance;
       } else if (onFree === 'throw') {
-        throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${String(containerId)}) does not already exist.`);
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
+        throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}) does not already exist.`);
       }
       /**
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
