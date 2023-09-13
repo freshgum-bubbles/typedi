@@ -1,5 +1,5 @@
-import { Token } from '../token.class';
-import { ServiceIdentifier } from '../types/service-identifier.type';
+import { Token } from '../token.class.mjs';
+import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
 
 export function normalizeIdentifier(identifier: ServiceIdentifier) {
   let name: string;

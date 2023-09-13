@@ -1,5 +1,5 @@
 import { ManyServicesMetadata } from '../interfaces/many-services-metadata.interface.mjs';
-import { ServiceIdentifierLocation } from './service-identifier-location.type';
+import { ServiceIdentifierLocation } from './service-identifier-location.type.mjs';
 
 export type MultiIDLookupResponse =
   | [location: ServiceIdentifierLocation.None, idMap: null]
