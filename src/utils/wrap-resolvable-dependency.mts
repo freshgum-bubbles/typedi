@@ -1,13 +1,13 @@
 import { BUILT_INS } from '../constants/builtins.const.mjs';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error.mjs';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error.mjs';
+import { ServiceIdentifier } from '../index.mjs';
 import { Resolvable } from '../interfaces/resolvable.interface.mjs';
 import { AnyServiceDependency, DependencyPairWithConfiguration } from '../interfaces/service-dependency.interface.mjs';
 import { ServiceOptionsWithoutDependencies } from '../interfaces/service-options.interface.mjs';
 import { Constructable } from '../types/constructable.type.mjs';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
 import { TypeWrapper } from '../types/type-wrapper.type.mjs';
-import { formatClassName } from './format-class-name.mjs';
 import { isArray } from './is-array.util.mjs';
 import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util.mjs';
 
@@ -50,16 +50,17 @@ export function wrapDependencyAsResolvable(
   if (eagerType !== null) {
     const type = typeof typeWrapper;
 
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    const errorFooter = `Occurred from dependency ${index} for service ${serviceOptions.type?.name}.`;
+
     if (type !== 'function' && type !== 'object' && type !== 'string') {
-      throw new CannotInstantiateValueError(
-        `The identifier provided at index ${index} for service ${formatClassName(serviceOptions.type)} is invalid.`
-      );
+      throw new CannotInstantiateValueError(eagerType as ServiceIdentifier, errorFooter);
     } else if (serviceOptions.factory == null && (BUILT_INS as unknown[]).includes(eagerType)) {
       /**
        * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
        * without also holding a factory to manually create an instance of the constructor.
        */
-      throw new CannotInstantiateBuiltInError((eagerType as Constructable<unknown>)?.name ?? eagerType);
+      throw new CannotInstantiateBuiltInError((eagerType as Constructable<unknown>)?.name ?? eagerType, errorFooter);
     }
   }
 

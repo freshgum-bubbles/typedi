@@ -9,7 +9,6 @@
 import { ServiceOptions, ServiceOptionsWithDependencies } from '../interfaces/service-options.interface.mjs';
 import { Constructable } from '../types/constructable.type.mjs';
 import { ContainerInstance } from '../container-instance.class.mjs';
-import { formatClassName } from '../utils/format-class-name.mjs';
 import { ServiceMetadata } from '../interfaces/service-metadata.interface.mjs';
 import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const.mjs';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
@@ -192,7 +191,7 @@ export function Service<T>(
      */
     if (container.has(id, false) && !metadata.multiple) {
       throw Error(
-        `@Service() has been called twice upon ${formatClassName(targetConstructor)}, or you have used an ID twice.`
+        `@Service() has been called twice upon ${targetConstructor.name}, or you have used an ID twice.`
       );
     }
 

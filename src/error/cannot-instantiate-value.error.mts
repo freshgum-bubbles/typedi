@@ -15,11 +15,11 @@ export class CannotInstantiateValueError extends Error {
   public get message(): string {
     return (
       `Cannot instantiate the requested value for the "${this.normalizedIdentifier}" identifier. ` +
-      `The related metadata doesn't contain a factory or a type to instantiate.`
+      `The related metadata doesn't contain a factory or a type to instantiate. ` + this.footer
     );
   }
 
-  constructor(identifier: ServiceIdentifier) {
+  constructor(identifier: ServiceIdentifier, private footer = '') {
     super();
     this.normalizedIdentifier = normalizeIdentifier(identifier);
   }
