@@ -14,8 +14,6 @@ export class ServiceNotFoundError extends Error {
 
   public readonly message: string;
 
-  get message(): string {}
-
   constructor(identifier: ServiceIdentifier) {
     super();
     this.normalizedIdentifier = normalizeIdentifier(identifier);
