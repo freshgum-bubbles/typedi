@@ -14,6 +14,7 @@ import { ServiceMetadata } from '../interfaces/service-metadata.interface.mjs';
 import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const.mjs';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mjs';
+import { isArray } from '../utils/is-array.util.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -128,7 +129,7 @@ export function Service<T>(
 
     /** A list of dependencies resolved from the arguments provided to the function. */
     let resolvedDependencies!: AnyServiceDependency[];
-    const optionsOrDependenciesIsArray = Array.isArray(optionsOrDependencies);
+    const optionsOrDependenciesIsArray = isArray(optionsOrDependencies);
 
     if (optionsOrDependenciesIsArray) {
       /**
@@ -136,7 +137,7 @@ export function Service<T>(
        * and has instead filled the slot with a list of dependencies.
        */
       resolvedDependencies = optionsOrDependencies;
-    } else if (Array.isArray(maybeDependencies)) {
+    } else if (isArray(maybeDependencies)) {
       resolvedDependencies = maybeDependencies;
     } else if ('dependencies' in optionsOrDependencies) {
       /**

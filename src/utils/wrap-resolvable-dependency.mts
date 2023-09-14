@@ -8,6 +8,7 @@ import { Constructable } from '../types/constructable.type.mjs';
 import { AnyInjectIdentifier } from '../types/inject-identifier.type.mjs';
 import { TypeWrapper } from '../types/type-wrapper.type.mjs';
 import { formatClassName } from './format-class-name.mjs';
+import { isArray } from './is-array.util.mjs';
 import { resolveToTypeWrapper } from './resolve-to-type-wrapper.util.mjs';
 
 export function wrapDependencyAsResolvable(
@@ -18,7 +19,7 @@ export function wrapDependencyAsResolvable(
   let constraints!: number | undefined;
   let typeWrapper!: TypeWrapper;
 
-  if (Array.isArray(dependency)) {
+  if (isArray(dependency)) {
     /** The dependency is a [ID, options] pair. Let's parse it as such. */
     const [id, options] = dependency as DependencyPairWithConfiguration;
 

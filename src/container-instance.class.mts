@@ -33,6 +33,7 @@ import { ServiceIdentifierLocation } from './types/service-identifier-location.t
 import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const.mjs';
 import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
+import { isArray } from './utils/is-array.util.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -948,7 +949,7 @@ export class ContainerInstance implements Disposable {
    */
   public remove(identifierOrIdentifierArray: ServiceIdentifier | ServiceIdentifier[]): this {
     this.throwIfDisposed();
-    if (Array.isArray(identifierOrIdentifierArray)) {
+    if (isArray(identifierOrIdentifierArray)) {
       identifierOrIdentifierArray.forEach(id => this.remove(id));
     } else {
       const serviceMetadata = this.metadataMap.get(identifierOrIdentifierArray);
@@ -1302,7 +1303,7 @@ export class ContainerInstance implements Disposable {
        *   - The {@link ServiceIdentifier} of the newly-created service.
        *   - The declared dependencies of the service.
        */
-      if (Array.isArray(factoryMeta)) {
+      if (isArray(factoryMeta)) {
         const [factoryServiceId, factoryServiceMethod] = factoryMeta;
 
         /** Try to get the factory from TypeDI first, if failed, fall back to simply initiating the class. */
