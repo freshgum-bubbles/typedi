@@ -51,7 +51,7 @@ export function wrapDependencyAsResolvable(
     const type = typeof typeWrapper;
 
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    const errorFooter = `Occurred from dependency ${index} for service ${serviceOptions.type?.name}.`;
+    const errorFooter = `Occurred from dependency ${index} of service ${serviceOptions.type?.name}.`;
 
     if (type !== 'function' && type !== 'object' && type !== 'string') {
       throw new CannotInstantiateValueError(eagerType as ServiceIdentifier, errorFooter);
