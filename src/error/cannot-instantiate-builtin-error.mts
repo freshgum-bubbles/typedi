@@ -6,7 +6,6 @@ import { CannotInstantiateValueError } from './cannot-instantiate-value.error.mj
  * @group Errors
  */
 export class CannotInstantiateBuiltInError extends CannotInstantiateValueError {
-  get message() {
-    return super.message + ` If your service requires built-in or unresolvable types, please use a factory.`;
-  }
+  public readonly message =
+    super.message + ` If your service requires built-in or unresolvable types, please use a factory.`;
 }

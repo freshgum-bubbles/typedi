@@ -12,15 +12,16 @@ export class ServiceNotFoundError extends Error {
   /** Normalized identifier name used in the error message. */
   private readonly normalizedIdentifier: string;
 
-  get message(): string {
-    return (
-      `Service with "${this.normalizedIdentifier}" identifier was not found in the container. ` +
-      `Register it before usage via explicitly calling the "Container.set" function or using the "@Service()" decorator.`
-    );
-  }
+  public readonly message: string;
+
+  get message(): string {}
 
   constructor(identifier: ServiceIdentifier) {
     super();
     this.normalizedIdentifier = normalizeIdentifier(identifier);
+
+    this.message =
+      `Service with "${this.normalizedIdentifier}" identifier was not found in the container. ` +
+      `Register it before usage via explicitly calling the "Container.set" function or using the "@Service()" decorator.`;
   }
 }

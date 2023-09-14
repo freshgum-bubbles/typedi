@@ -11,7 +11,7 @@ import { ContainerRegistry } from '../container-registry.class.mjs';
 export class ContainerRegistryError extends Error {
   readonly name = 'ContainerRegistryError';
 
-  constructor (message: string) {
+  constructor(message: string) {
     super(message);
   }
 }
