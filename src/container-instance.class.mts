@@ -1490,9 +1490,6 @@ export class ContainerInstance implements Disposable {
     /** If Self() is used, do not use recursion. */
     const recursive = !isSelf;
 
-    /**
-     * Set up some state registers for various flag configurations.
-     */
     const identifierIsPresent = targetContainer.has(identifier, recursive);
 
     /**
