@@ -193,7 +193,7 @@ export class ContainerInstance implements Disposable {
      * comes from the parent itself; if the parent can't find it, it'll walk the hierarchy
      * until it either exhausts the tree, resulting in None, or Parent.
      */
-    if (recursive && this.parent && this.parent.has(identifier, true)) {
+    if (recursive && this.parent?.has(identifier, true)) {
       return ServiceIdentifierLocation.Parent;
     }
 
