@@ -1456,8 +1456,6 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if {@link SkipSelf} and {@link Self} are used at the same time.
    */
   protected resolveConstrainedIdentifier(identifier: ServiceIdentifier, constraints: number) {
-    let resolvedIdentifier!: unknown;
-
     /**
      * For the individual bit flags, we don't care about the return from `&`.
      * All that matters is that, if it doesn't return 0, the flag is activated.
@@ -1507,12 +1505,10 @@ export class ContainerInstance implements Disposable {
 
     if (isMany) {
       /** If we're in isMany mode, resolve the identifier via `getMany`. */
-      resolvedIdentifier = targetContainer.getMany(identifier, recursive);
+      return targetContainer.getMany(identifier, recursive);
     } else {
-      resolvedIdentifier = targetContainer.get(identifier, recursive);
+      return targetContainer.get(identifier, recursive);
     }
-
-    return resolvedIdentifier;
   }
 
   private resolveTypeWrapper(wrapper: TypeWrapper): ServiceIdentifier {
