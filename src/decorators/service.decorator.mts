@@ -190,9 +190,7 @@ export function Service<T>(
      * to an internal array of values for the specified identifier.
      */
     if (container.has(id, false) && !metadata.multiple) {
-      throw Error(
-        `@Service() has been called twice upon ${targetConstructor.name}, or you have used an ID twice.`
-      );
+      throw Error(`@Service() has been called twice upon ${targetConstructor.name}, or you have used an ID twice.`);
     }
 
     /**
