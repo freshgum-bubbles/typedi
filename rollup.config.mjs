@@ -33,6 +33,10 @@ const PROPERTIES_TO_MANGLE = [
 
 /** @type {import('@rollup/plugin-terser').Options} */
 const TERSER_OPTIONS = {
+  parse: {
+    html5_comments: false,
+    shebang: false
+  },
   compress: {
     defaults: true,
     keep_fargs: false,
