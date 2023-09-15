@@ -1,7 +1,7 @@
-import { AnyServiceDependency, DependencyPairWithConfiguration } from '../interfaces/service-dependency.interface';
-import { Token } from '../token.class';
-import { LazyReference } from './lazy-reference.type';
-import { ServiceIdentifier } from './service-identifier.type';
+import { AnyServiceDependency, DependencyPairWithConfiguration } from '../interfaces/service-dependency.interface.mjs';
+import { Token } from '../token.class.mjs';
+import { ServiceIdentifier } from './service-identifier.type.mjs';
+import { TypeWrapper } from './type-wrapper.type.mjs';
 
 /**
  * @fileoverview @ignore
@@ -144,10 +144,9 @@ export type UnpackServiceDependency<T extends AnyServiceDependency> =
     T extends Token<infer U> ? MapBuiltInToNativeType<U> :
   
     /**
-     * Also unpack LazyReference types to their underlying type, ensuring we also transform
-     * the return type of the reference if it resolves to a built-in.
+     * Unpack extractable type-wrappers to their corresponding types.
      */
-    T extends LazyReference<infer U extends ServiceIdentifier> ? MapBuiltInToNativeType<UnpackServiceDependency<U>> :
+    T extends TypeWrapper<ServiceIdentifier, infer U> ? U :
     never;
 
 /**
