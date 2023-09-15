@@ -175,7 +175,7 @@ export type ServiceWithDependencies<TDeps extends readonly AnyServiceDependency[
  *
  * @remarks
  * The implementation of this type creates a dependency on a TypeScript version over
- * or equal to vxx.xx.xx.  This is due to prior versions not allowing mapped arrays
+ * or equal to v5.1.6.  This is due to prior versions not allowing mapped arrays
  * to be presented as rest parameters for function / constructors.
  * [The original issue, present since 2019](https://github.com/microsoft/TypeScript/issues/29919),
  * was fixed in a [pull request](https://github.com/microsoft/TypeScript/pull/49947) in 2023.
