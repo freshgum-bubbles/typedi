@@ -1,5 +1,5 @@
 import { Container, ContainerInstance, Service, Token } from 'internal:typedi';
-import { TypedService } from '../../src/contrib/typed-service.decorator';
+import { TypedService } from '../contrib/typed-service/typed-service.decorator';
 
 /**
  * We duplicate the Service test suite for both the {@link Service} and {@link TypedService}
