@@ -76,6 +76,7 @@ type BuiltIn = typeof String | typeof Number | typeof Boolean | typeof Symbol | 
  * Map a built-in to its native type.
  * @ignore
  *
+ * @remarks
  * As built-in types can only be expressed using constructors,
  * we need to cast them to their TypeScript-friendly type, as
  * otherwise classes using these built-in types would be forced
