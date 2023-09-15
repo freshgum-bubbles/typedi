@@ -138,6 +138,14 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
     }
   }
 
+  /**
+   * Resolve the identifier in the context of the attached container.
+   *
+   * @param constraintMask An optional mask to supply.
+   * If a mask is supplied, it is applied via Bitwise OR to the default set of constraints.
+   *
+   * @returns The resolved value of the identifier with the applied constraints.
+   */
   private resolve(constraintMask = 0): TInstance {
     /** Use the same hack in the constructor to access the private class member. */
     return (this.container as unknown as ContainerInternals).resolveConstrainedIdentifier(
