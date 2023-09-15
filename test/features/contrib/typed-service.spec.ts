@@ -1,4 +1,4 @@
-import { TypedService } from '../../../src/contrib/typed-service.decorator';
+import { TypedService } from '../../contrib/typed-service/typed-service.decorator';
 
 describe('TypedService', () => {
     it('is a function', () => {

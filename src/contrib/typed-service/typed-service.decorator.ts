@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- The T overload is used to keep compatibility with other overloads. */
-import { Service } from '../decorators/service.decorator';
-import { AnyServiceDependency } from '../interfaces/service-dependency.interface';
-import { ServiceOptions } from '../interfaces/service-options.interface';
-import { ServiceWithDependencies } from '../types/typed-dependencies.type';
+import { Service } from '../../decorators/service.decorator.mjs';
+import { AnyServiceDependency } from '../../interfaces/service-dependency.interface.mjs';
+import { ServiceOptions } from '../../interfaces/service-options.interface.mjs';
+import { ServiceWithDependencies } from '../../types/typed-dependencies.type';
 
 /**
  * Marks class as a service that can be injected using Container.
