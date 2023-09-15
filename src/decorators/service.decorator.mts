@@ -149,9 +149,7 @@ export function Service<T>(
        * We can access its "dependencies" property and then map the unwrapped types.
        */
       resolvedDependencies = (optionsOrDependencies as any).dependencies;
-    }
-
-    if (!resolvedDependencies) {
+    } else {
       /** At this point we have exhausted all options, so throw. */
       throw NativeError('The dependencies provided were not able to be resolved.');
     }
