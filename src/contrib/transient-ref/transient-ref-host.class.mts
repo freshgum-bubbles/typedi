@@ -62,19 +62,19 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * This identifier should always result in the creation of a new transient service.
    * No checks are done to ensure this.
    */
-  protected id: TIdentifier;
+  protected readonly id: TIdentifier;
 
   /**
    * The container from which to attain individual transient services.
    * @internal
    */
-  protected container: ContainerInstance;
+  protected readonly container: ContainerInstance;
 
   /**
    * The constraints to use when resolving the specified identifier.
    * @internal
    */
-  protected constraints: number;
+  protected readonly constraints: number;
 
   /**
    * Create an instance of a {@link TransientRefInstance}.
