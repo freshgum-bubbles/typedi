@@ -1,4 +1,4 @@
-import { __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID } from './constants/strings.const.mjs';
+import { __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID } from './constants/minification/strings.const.mjs';
 import { ContainerInstance } from './container-instance.class.mjs';
 import { ContainerRegistryError } from './error/container-registry-error.error.mjs';
 import { ContainerIdentifier } from './types/container-identifier.type.mjs';

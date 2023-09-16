@@ -30,7 +30,7 @@ import { VisitorCollection } from './visitor-collection.class.mjs';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface.mjs';
 import { CreateContainerResult } from './types/create-container-result.type.mjs';
 import { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
-import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/strings.const.mjs';
+import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/minification/strings.const.mjs';
 import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
