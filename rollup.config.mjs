@@ -47,6 +47,7 @@ const TERSER_OPTIONS = {
     ecma: 6,
     ie8: false,
     comments: false,
+    wrap_func_args: false
   },
   mangle: {
     properties: {
