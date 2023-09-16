@@ -1,4 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { NativeError } from '../constants/minification/native-error.const.mjs';
 import { ContainerRegistry } from '../container-registry.class.mjs';
 
 /**
@@ -8,7 +9,7 @@ import { ContainerRegistry } from '../container-registry.class.mjs';
  *
  * @see {@link ContainerRegistry}
  */
-export class ContainerRegistryError extends Error {
+export class ContainerRegistryError extends NativeError {
   readonly name = 'ContainerRegistryError';
 
   constructor(message: string) {

@@ -6,6 +6,7 @@ import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type
 import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
 import { ContainerScope } from '../../types/container-scope.type.mjs';
 import { ServiceIdentifierLocation } from '../../types/service-identifier-location.type.mjs';
+import { NativeError } from '../../constants/minification/native-error.const.mjs';
 
 /** A helper to access private {@link ContainerInstance} methods. @ignore */
 type ContainerInternals = {
@@ -134,7 +135,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * non-transient metadata -- however, this seems like a very rare edge-case.
      */
     if (scope !== 'transient' && scope !== null) {
-      throw new Error('The provided identifier was not bound to a transient service.');
+      throw NativeError('The provided identifier was not bound to a transient service.');
     }
   }
 

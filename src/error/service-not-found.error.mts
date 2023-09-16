@@ -1,3 +1,4 @@
+import { NativeError } from '../constants/minification/native-error.const.mjs';
 import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
 import { normalizeIdentifier } from '../utils/normalize-identifier.util.mjs';
 
@@ -6,7 +7,7 @@ import { normalizeIdentifier } from '../utils/normalize-identifier.util.mjs';
  *
  * @group Errors
  */
-export class ServiceNotFoundError extends Error {
+export class ServiceNotFoundError extends NativeError {
   public readonly name = 'ServiceNotFoundError';
 
   /** Normalized identifier name used in the error message. */

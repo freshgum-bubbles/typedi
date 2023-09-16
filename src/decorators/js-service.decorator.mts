@@ -1,3 +1,4 @@
+import { NativeError } from '../constants/minification/native-error.const.mjs';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
 import {
   ServiceOptions,
@@ -88,7 +89,7 @@ export function JSService<T extends Constructable<unknown>>(
   }
 
   if (!constructor) {
-    throw Error('The JSService overload was not used correctly.');
+    throw NativeError('The JSService overload was not used correctly.');
   }
 
   return constructor;

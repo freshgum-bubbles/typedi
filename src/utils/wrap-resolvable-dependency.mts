@@ -1,4 +1,5 @@
 import { BUILT_INS } from '../constants/builtins.const.mjs';
+import { NativeError } from '../constants/minification/native-error.const.mjs';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error.mjs';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error.mjs';
 import { ServiceIdentifier } from '../index.mjs';
@@ -26,7 +27,7 @@ export function wrapDependencyAsResolvable(
     /** Perform some very basic sanity checking on the pair. */
     if (id == null || options == null) {
       // TODO: make this more descriptive
-      throw Error('The dependency pair was not instantiated correctly.');
+      throw NativeError('The dependency pair was not instantiated correctly.');
     }
 
     if (typeof options === 'number') {

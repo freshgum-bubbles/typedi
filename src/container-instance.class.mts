@@ -34,6 +34,7 @@ import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/minification/
 import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
+import { NativeError } from './constants/minification/native-error.const.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -455,7 +456,7 @@ export class ContainerInstance implements Disposable {
     /** This should never happen as multi services are masked with custom token in Container.set. */
     if (metadata && metadata.multiple === true) {
       /* istanbul ignore next */
-      throw Error(`Cannot resolve multiple values for ${identifier.toString()} service!`);
+      throw NativeError(`Cannot resolve multiple values for ${identifier.toString()} service!`);
     }
 
     /** Otherwise it's returned from the current / parent container. */
@@ -792,7 +793,7 @@ export class ContainerInstance implements Disposable {
      * If so, we can't reasonably allow this service to be set.
      */
     if (ALWAYS_RESOLVABLE.includes((serviceOptions as any).id as ServiceIdentifier)) {
-      throw Error('Virtual identifiers can not be overridden.');
+      throw NativeError('Virtual identifiers can not be overridden.');
     }
 
     /**
@@ -917,7 +918,7 @@ export class ContainerInstance implements Disposable {
     TValue extends TServiceID extends Token<infer U> ? U : unknown,
   >(id: TServiceID, value: TValue) {
     if (typeof id !== 'string' && !(id instanceof Token)) {
-      throw Error('The ID passed to setValue must either be a string or a Token.');
+      throw NativeError('The ID passed to setValue must either be a string or a Token.');
     }
 
     return this.set({ id, value }, []);
@@ -1041,7 +1042,7 @@ export class ContainerInstance implements Disposable {
           return null as unknown as ContainerInstance;
         } else if (onConflict === 'throw') {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
-          throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}") already exists.`);
+          throw NativeError(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}") already exists.`);
         }
       }
     } else {
@@ -1050,7 +1051,7 @@ export class ContainerInstance implements Disposable {
         return null as unknown as ContainerInstance;
       } else if (onFree === 'throw') {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
-        throw Error(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}) does not already exist.`);
+        throw NativeError(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}) does not already exist.`);
       }
       /**
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
@@ -1149,7 +1150,7 @@ export class ContainerInstance implements Disposable {
         this.multiServiceIds.clear();
         break;
       default:
-        throw Error('Received invalid reset strategy.');
+        throw NativeError('Received invalid reset strategy.');
     }
     return this;
   }
@@ -1221,7 +1222,7 @@ export class ContainerInstance implements Disposable {
   private throwIfDisposed() {
     if (this.disposed) {
       // TODO: Use custom error.
-      throw Error('Cannot use container after it has been disposed.');
+      throw NativeError('Cannot use container after it has been disposed.');
     }
   }
 
@@ -1472,12 +1473,12 @@ export class ContainerInstance implements Disposable {
 
     /** SkipSelf() and Self() are incompatible. */
     if (isSkipSelf && isSelf) {
-      throw Error('SkipSelf() and Self() cannot be used at the same time.');
+      throw NativeError('SkipSelf() and Self() cannot be used at the same time.');
     }
 
     /** If SkipSelf is declared, make sure we actually *have* a parent. */
     if (isSkipSelf && !this.parent) {
-      throw Error(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`);
+      throw NativeError(`The SkipSelf() flag was enabled, but the subject container does not have a parent.`);
     }
 
     /**
@@ -1530,7 +1531,7 @@ export class ContainerInstance implements Disposable {
      */
     /* istanbul ignore next */
     if (resolved == null) {
-      throw Error(`The wrapped value could not be resolved.`);
+      throw NativeError(`The wrapped value could not be resolved.`);
     }
 
     /**

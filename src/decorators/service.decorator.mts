@@ -14,6 +14,7 @@ import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const.m
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mjs';
 import { isArray } from '../utils/is-array.util.mjs';
+import { NativeError } from '../constants/minification/native-error.const.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -123,7 +124,7 @@ export function Service<T>(
 ): ClassDecorator {
   return targetConstructor => {
     if (optionsOrDependencies == null || targetConstructor == null) {
-      throw Error('The @Service decorator was not used correctly.');
+      throw NativeError('The @Service decorator was not used correctly.');
     }
 
     /** A list of dependencies resolved from the arguments provided to the function. */
@@ -148,7 +149,7 @@ export function Service<T>(
 
     if (!resolvedDependencies) {
       /** At this point we have exhausted all options, so throw. */
-      throw Error('The dependencies provided were not able to be resolved.');
+      throw NativeError('The dependencies provided were not able to be resolved.');
     }
 
     /**
@@ -190,7 +191,7 @@ export function Service<T>(
      * to an internal array of values for the specified identifier.
      */
     if (container.has(id, false) && !metadata.multiple) {
-      throw Error(`@Service() has been called twice upon ${targetConstructor.name}, or you have used an ID twice.`);
+      throw NativeError(`@Service() has been called twice upon ${targetConstructor.name}, or you have used an ID twice.`);
     }
 
     /**
