@@ -141,6 +141,7 @@ export class ContainerInstance implements Disposable {
    * If the container tree is substantial, this operation may affect performance.
    *
    * @param identifier The identifier of the service to look up.
+   * @param [recursive=true] Whether the operation will be recursive.
    *
    * @returns Whether the identifier is present in the current container, or its parent.
    *
