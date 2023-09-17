@@ -10,7 +10,7 @@ export class CannotInstantiateBuiltInError extends CannotInstantiateValueError {
   public readonly message =
     super.message + ` If your service requires built-in or unresolvable types, please use a factory.`;
 
-  constructor (identifier: ServiceIdentifier, footer?: string) {
+  constructor(identifier: ServiceIdentifier, footer?: string) {
     super(identifier, footer);
   }
 }

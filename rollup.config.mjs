@@ -35,7 +35,7 @@ const PROPERTIES_TO_MANGLE = [
 const TERSER_OPTIONS = {
   parse: {
     html5_comments: false,
-    shebang: false
+    shebang: false,
   },
   compress: {
     defaults: true,
@@ -47,7 +47,7 @@ const TERSER_OPTIONS = {
     ecma: 6,
     ie8: false,
     comments: false,
-    wrap_func_args: false
+    wrap_func_args: false,
   },
   mangle: {
     properties: {
