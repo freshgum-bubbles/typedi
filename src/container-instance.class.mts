@@ -35,6 +35,7 @@ import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
+import { IdentifierPresenceScope } from './types/identifier-presence-scope.type.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -148,7 +149,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
+  public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true, scope: IdentifierPresenceScope): boolean {
     this.throwIfDisposed();
 
     if (ALWAYS_RESOLVABLE.includes(identifier)) {
@@ -171,6 +172,8 @@ export class ContainerInstance implements Disposable {
    * If the container tree is substantial, this operation may affect performance.
    *
    * @param identifier The identifier of the service to look up.
+   * @param [recursive=true] Whether the operation will take place recursively.
+   * @param [scope=IdentifierPresenceScope.Any] The scope of the operation.
    *
    * @returns A {@link ServiceIdentifierLocation}.
    *  - If the identifier cannot be found, {@link ServiceIdentifierLocation.None | None}.
@@ -182,12 +185,25 @@ export class ContainerInstance implements Disposable {
    */
   protected getIdentifierLocation<T = unknown>(
     identifier: ServiceIdentifier<T>,
-    recursive = true
+    recursive = true,
+    scope: IdentifierPresenceScope = IdentifierPresenceScope.Any
   ): ServiceIdentifierLocation {
     this.throwIfDisposed();
 
-    if (this.metadataMap.has(identifier) || this.multiServiceIds.has(identifier)) {
-      return ServiceIdentifierLocation.Local;
+    {
+      let isPresentLocally = false;
+
+      if (scope & IdentifierPresenceScope.Many) {
+        isPresentLocally = this.multiServiceIds.has(identifier);
+      }
+
+      if (scope & IdentifierPresenceScope.Singular) {
+        isPresentLocally = isPresentLocally || this.metadataMap.has(identifier);
+      }
+
+      if (isPresentLocally) {
+        return ServiceIdentifierLocation.Local;
+      }
     }
 
     /**
@@ -196,7 +212,7 @@ export class ContainerInstance implements Disposable {
      * comes from the parent itself; if the parent can't find it, it'll walk the hierarchy
      * until it either exhausts the tree, resulting in None, or Parent.
      */
-    if (recursive && this.parent?.has(identifier, true)) {
+    if (recursive && this.parent?.has(identifier, true, scope)) {
       return ServiceIdentifierLocation.Parent;
     }
 
