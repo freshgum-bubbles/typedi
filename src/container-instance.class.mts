@@ -149,7 +149,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true, scope: IdentifierScope): boolean {
+  public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true, scope = IdentifierScope.Any): boolean {
     this.throwIfDisposed();
 
     if (ALWAYS_RESOLVABLE.includes(identifier)) {
