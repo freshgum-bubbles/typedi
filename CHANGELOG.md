@@ -1,5 +1,34 @@
 # @freshgum/typedi
 
+## 0.5.0
+
+### Minor Changes
+
+- 4e99704: Type wrappers have been refactored! All internal type-wrappers (Lazy, TransientRef, etc.) have been refactored into new "extractable type-wrappers"; this simplifies the implementation. Unless you're writing custom type-wrappers, this won't affect you!
+- 7512978: Introduction of a TransientRef function to get references to transient services without HostContainer.
+
+  This is related to [Issue #28](https://github.com/freshgum-bubbles/typedi/issues/28).
+
+  As a quick example of the syntax:
+
+  ```ts
+  import { Service } from '@freshgum/inject';
+  import { TransientRef } from '@freshgum/inject/contrib/transient-ref';
+
+  @Service({ scope: 'transient' }, [])
+  class MyTransientService {}
+
+  @Service([TransientRef(MyTransientService)])
+  class MyService {
+    constructor(private myTransient: TransientRef<MyTransientService>) {
+      assert(myTransient.create() !== myTransient.create());
+    }
+  }
+  ```
+
+- b3c3814: Refactor the package exports (use ES Modules, and package.json's "exports" property), and force a minimum Node version of 15.3.0.
+- 7dab124: IDs set with "multiple: true" are now properly recursive! This means that they're inherited just like regular identifiers. This makes them much easier to work with.
+
 ## 0.4.0
 
 ### Minor Changes
