@@ -10,10 +10,6 @@
   "license": "MIT",
   "private": false,
   "sideEffects": false,
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm5/index.js",
-  "es2015": "./build/esm5/index.js",
-  "typings": "./build/types/index.d.ts",
   "unpkg": "./bundles/typedi.umd.min.js",
   "repository": {
     "type": "git",
