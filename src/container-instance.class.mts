@@ -35,7 +35,7 @@ import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
-import { IdentifierPresenceScope } from './types/identifier-presence-scope.type.mjs';
+import { IdentifierScope } from './types/identifier-scope.type.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -149,7 +149,7 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true, scope: IdentifierPresenceScope): boolean {
+  public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true, scope: IdentifierScope): boolean {
     this.throwIfDisposed();
 
     if (ALWAYS_RESOLVABLE.includes(identifier)) {
@@ -186,18 +186,18 @@ export class ContainerInstance implements Disposable {
   protected getIdentifierLocation<T = unknown>(
     identifier: ServiceIdentifier<T>,
     recursive = true,
-    scope: IdentifierPresenceScope = IdentifierPresenceScope.Any
+    scope: IdentifierScope = IdentifierScope.Any
   ): ServiceIdentifierLocation {
     this.throwIfDisposed();
 
     {
       let isPresentLocally = false;
 
-      if (scope & IdentifierPresenceScope.Many) {
+      if (scope & IdentifierScope.Many) {
         isPresentLocally = this.multiServiceIds.has(identifier);
       }
 
-      if (scope & IdentifierPresenceScope.Singular) {
+      if (scope & IdentifierScope.Singular) {
         isPresentLocally = isPresentLocally || this.metadataMap.has(identifier);
       }
 
@@ -1504,7 +1504,7 @@ export class ContainerInstance implements Disposable {
     /** If Self() is used, do not use recursion. */
     const recursive = !isSelf;
 
-    const identifierIsPresent = targetContainer.has(identifier, recursive, isMany ? IdentifierPresenceScope.Many : IdentifierPresenceScope.Singular);
+    const identifierIsPresent = targetContainer.has(identifier, recursive, isMany ? IdentifierScope.Many : IdentifierScope.Singular);
 
     /**
      * Straight away, check if optional was declared.

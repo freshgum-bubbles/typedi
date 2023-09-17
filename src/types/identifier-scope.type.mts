@@ -1,7 +1,7 @@
 /**
  * A specification of how an identifier is implemented inside a container.
  */
-export const enum IdentifierPresenceScope {
+export const enum IdentifierScope {
     /** The identifier is implemented as a group of values. */
     Many = 0b10,
 
@@ -9,8 +9,8 @@ export const enum IdentifierPresenceScope {
     Singular = 0b01,
 
     /**
-     * The identifier is either implemented as {@link IdentifierPresenceScope.Many | a group of values},
-     * or {@link IdentifierPresenceScope.Singular | a singular value}.
+     * The identifier is either implemented as {@link IdentifierScope.Many | a group of values},
+     * or {@link IdentifierScope.Singular | a singular value}.
      */
     Any = 0b11
 }
