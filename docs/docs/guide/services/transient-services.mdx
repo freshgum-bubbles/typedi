@@ -52,31 +52,23 @@ a fictional service which is responsible for rendering pages.
 
 ```ts title="src/page.service.ts"
 import { Service, HostContainer } from '@freshgum/typedi';
+import { TransientRef } from '@freshgum/typedi/contrib/transient-ref';
 import { TimerService } from './timer.service';
 
 @Service([
-    HostContainer()
+    TransientRef(TimerService)
 ])
 export class PageService {
-    constructor (private container: ContainerInstance) { }
+    constructor (private timerServiceRef: TransientRef<TimerService>) { }
 
     async renderPage () {
-        const timer = this.container.get(TimerService);
+        const timer = this.timerServiceRef.create();
         timer.start('page-render');
         // Perform page rendering logic...
         timer.end();
     }
 }
 ```
-
-:::note
-
-The current API for getting fresh transient services isn't ideal.
-[`HostContainer`](./host-container) is an "escape hatch", and it should be avoided where possible.
-
-The issue is being tracked and investigated in issue <GitHubRefLink type="issue" nodeID={28} />.
-
-:::
 
 Now, when a page is rendered, we'll have new performance entries to upload to a central diagnostics server.
 
@@ -91,10 +83,6 @@ Then, you can replace references to the transient service with calls to `Contain
 
 In the example above, we did just that.  This allowed us to get a new instance of `TimerService`
 for each page that was rendered in the app.
-
-## Transient Factories
-
-TODO
 
 ## Performance
 
