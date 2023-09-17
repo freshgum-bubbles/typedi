@@ -97,5 +97,10 @@ If you would still prefer transient scenarios in this case, consider **hoisting*
 and side-effects out of *individual* transient services, replacing them with references to a 
 static / singleton service.
 
+## `TransientRef`
+
+In v0.5.0, a new function was added to make the management of transient services easier.
+This should replace any prior usages of [`HostContainer`](./host-container.md).
+
 <!-- TODO: add hoisting example: Database and UserEntity service -->
 
