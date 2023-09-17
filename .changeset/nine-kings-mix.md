@@ -16,7 +16,7 @@ Container.set({ id: NAME, value: 'Joanna' });
 
 // Ensure we can access the identifier via Container.get(A).
 if (Container.has(NAME, false, IdentifierScope.Singular)) {
-    console.log(Container.get(NAME));
+  console.log(Container.get(NAME));
 }
 
 // This will throw:

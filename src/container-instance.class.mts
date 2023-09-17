@@ -1504,7 +1504,11 @@ export class ContainerInstance implements Disposable {
     /** If Self() is used, do not use recursion. */
     const recursive = !isSelf;
 
-    const identifierIsPresent = targetContainer.has(identifier, recursive, isMany ? IdentifierScope.Many : IdentifierScope.Singular);
+    const identifierIsPresent = targetContainer.has(
+      identifier,
+      recursive,
+      isMany ? IdentifierScope.Many : IdentifierScope.Singular
+    );
 
     /**
      * Straight away, check if optional was declared.
