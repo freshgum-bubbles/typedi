@@ -21,8 +21,8 @@
   },
   "exports": {
     ".": {
-      "types": "./build/esm5/index.mjs",
-      "import": "./build/esm5/index.d.mts",
+      "types": "./build/esm5/index.d.mts",
+      "import": "./build/esm5/index.mjs",
       "bun": "./src/index.mts"
     },
     "./contrib/transient-ref": {
