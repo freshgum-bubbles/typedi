@@ -24,7 +24,7 @@ export interface AppConfig extends DocusaurusConfig {
     };
     changelog: {
       link: string;
-    }
+    };
   };
 }
 

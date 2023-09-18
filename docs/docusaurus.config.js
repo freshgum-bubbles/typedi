@@ -21,8 +21,8 @@ const customFields = {
     repoPath: 'freshgum-bubbles/typedi',
   },
   changelog: {
-    link: 'https://github.com/freshgum-bubbles/typedi/blob/develop/CHANGELOG.md'
-  }
+    link: 'https://github.com/freshgum-bubbles/typedi/blob/develop/CHANGELOG.md',
+  },
 };
 
 /** @type {import('@docusaurus/types').Config} */
@@ -131,7 +131,7 @@ const config = {
           {
             href: customFields.changelog.link,
             label: 'Changelog',
-            position: 'right'
+            position: 'right',
           },
           {
             href: customFields.apiReference.link,
