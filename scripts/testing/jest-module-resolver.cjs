@@ -19,6 +19,7 @@ module.exports = (modulePath, options) => {
   if (modulePath === MAGIC_TYPEDI_IMPORT_SPECIFIER) {
     newPath = path.resolve(basePath, './src/index.mts');
   } else if (modulePath.startsWith(MAGIC_TYPEDI_IMPORT_SPECIFIER)) {
+    /** Also support `internal:typedi/src/container-instance.class.mjs` etc. */
     newPath = path.resolve(basePath, './src/', modulePath.slice(MAGIC_TYPEDI_IMPORT_SPECIFIER.length + 1));
   }
 
