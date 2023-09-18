@@ -36,6 +36,8 @@ const config = {
     mermaid: true,
   },
 
+  trailingSlash: false,
+
   themes: [
     '@docusaurus/theme-mermaid',
     [
