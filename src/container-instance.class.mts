@@ -268,8 +268,6 @@ export class ContainerInstance implements Disposable {
       case ServiceIdentifierLocation.Local:
         return [this.metadataMap.get(identifier) as ServiceMetadata<T>, location];
       case ServiceIdentifierLocation.Parent:
-        /** Don't perform any parent lookups if we're not recursively scanning the tree. */
-        if (recursive) {
           /**
            * Unpack the possibly-resolved metadata object from the parent.
            * We don't directly return the parent's resolveMetadata call here as that would
@@ -278,10 +276,9 @@ export class ContainerInstance implements Disposable {
           const possibleResolution = this.parent?.resolveMetadata<T>(identifier, true);
 
           return possibleResolution ? [possibleResolution[0], ServiceIdentifierLocation.Parent] : null;
-        }
-
-        return null;
     }
+
+    return null;
   }
 
   /**
