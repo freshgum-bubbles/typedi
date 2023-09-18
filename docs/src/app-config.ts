@@ -22,6 +22,9 @@ export interface AppConfig extends DocusaurusConfig {
        */
       repoPath: string;
     };
+    changelog: {
+      link: string;
+    }
   };
 }
 
