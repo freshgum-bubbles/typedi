@@ -260,7 +260,7 @@ export class ContainerInstance implements Disposable {
      * Firstly, ascertain the location of the identifier.
      * If it is located on the parent, we shall yield to the parent's .get.
      */
-    const location = this.getIdentifierLocation(identifier);
+    const location = this.getIdentifierLocation(identifier, recursive);
 
     switch (location) {
       case ServiceIdentifierLocation.None:
