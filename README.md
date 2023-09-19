@@ -2,7 +2,7 @@
 
 > Note: Support for Node versions under 15.3.0 will soon be removed as the package transitions to ES Modules.
 
-![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)](https://64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app/) ![Maintenance](https://img.shields.io/maintenance/yes/2023)
+![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)][docs-site] ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
 _Elegant Dependency Injection in JavaScript and TypeScript._
 
@@ -44,8 +44,10 @@ Container.get(RootService).run();
 ```
 
 **Congrats!** You've just mastered DI in 23 lines. To learn more,
-[check out the documentation](https://64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app/)!
+[check out the documentation][docs-site]!
 
 ## License
 
 Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbles) & [upstream TypeDI contributors](https://github.com/typestack/typedi/blob/develop/LICENSE).
+
+[docs-site]: https://typedi.js.org
