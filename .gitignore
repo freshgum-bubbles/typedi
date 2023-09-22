@@ -57,3 +57,5 @@ website/static/api-reference/
 
 # Keep build directory
 !build/.gitkeep
+
+scripts/publish_docs.sh
