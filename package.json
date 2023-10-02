@@ -107,7 +107,7 @@
     "rollup": "^3.29.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "type-fest": "^4.2.0",
+    "type-fest": "^4.3.3",
     "typedoc": "^0.25.1",
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-markdown": "^3.16.0",
