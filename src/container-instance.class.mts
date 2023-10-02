@@ -277,8 +277,6 @@ export class ContainerInstance implements Disposable {
 
         return possibleResolution ? [possibleResolution[0], ServiceIdentifierLocation.Parent] : null;
     }
-
-    return null;
   }
 
   /**
