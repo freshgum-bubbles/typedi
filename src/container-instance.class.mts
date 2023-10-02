@@ -35,6 +35,8 @@ import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
+import { DISPOSE } from './constants/dispose.const.mjs';
+import { ObjectWithDISymbolDispose, ObjectWithSymbolDispose, ObjectWithSymbolAsyncDispose, ObjectWithDisposeMethod } from './types/disposable-objects.type.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -1140,10 +1142,10 @@ export class ContainerInstance implements Disposable {
 
     switch (options.strategy) {
       case ContainerResetStrategy.ResetValue:
-        this.metadataMap.forEach(service => this.disposeServiceInstance(service));
+        [...this.resetValuesLazily()];
         break;
       case ContainerResetStrategy.ResetServices:
-        this.metadataMap.forEach(service => this.disposeServiceInstance(service));
+        this.reset();
         this.metadataMap.clear();
         this.multiServiceIds.clear();
         break;
@@ -1151,6 +1153,39 @@ export class ContainerInstance implements Disposable {
         throw NativeError('Received invalid reset strategy.');
     }
     return this;
+  }
+
+  /**
+   * Reset all values in the container.
+   * 
+   * @param force Whether to forcibly dispose non-reconstructable services,
+   * which do not have a factory or class constructor to allow for future
+   * re-initialization.  By default, this is `false`.
+   * 
+   * @remarks
+   * This method returns an iterator which, for each iteration,
+   * disposes of one service in the container.
+   * Once the iterator is exhausted, all services in 
+   * the container have been disposed.
+   * 
+   * @remarks
+   * This method is equivalent to calling {@link ContainerInstance.reset}
+   * with the {@link ContainerResetStrategy.ResetValue} strategy.
+   * The values for each service are erased, although they are not
+   * removed from internal stores.  This means they can be constructed
+   * again at a later point.
+   * 
+   * @returns
+   * An iterator which, for each iteration, disposes of a new service
+   * in the container.  Each iteration returns both the ID of the disposed
+   * service, alongside either a `Promise<void>` signifying the status of
+   * the service's disposal, or `void` if its disposal method does not exist,
+   * or did not return a `Promise<void>`.
+   */
+  public *resetValuesLazily (force?: boolean) {
+    for (const [id, metadata] of this.metadataMap.entries()) {
+      yield { id, status: this.disposeServiceInstance(metadata, force) };
+    }
   }
 
   /**
@@ -1542,7 +1577,6 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Check if the given service is able to be destroyed and, if so, destroys it in-place.
-   * @deprecated
    *
    * @remarks
    * If the service contains a method named `destroy`, it is called.
@@ -1555,21 +1589,94 @@ export class ContainerInstance implements Disposable {
     this.throwIfDisposed();
 
     const { value, type, factory } = serviceMetadata;
-    /** We reset value only if we can re-create it (aka type or factory exists). */
+
+    /** 
+     * We reset value only if we can re-create it (aka type or factory exists).
+     * 
+     * If a factory or a type (a class constructor) exists for a service, it's
+     * internally referred to as a constructable service, which essentially means
+     * that the service's value can be discarded and, in theory, a new instance
+     * of the service can be created by either the type or the factory.
+     * 
+     * As an example, a non-reconstructable object would be a string.
+     * For example:
+     * 
+     * ```ts
+     * const NAME = new Token<string>();
+     * Container.set({ id: NAME, value: 'Joanna' });
+     * ```
+     * 
+     * The above would be non-reconstructable, as if we disposed of `NAME`'s value
+     * in the container, we would have no way of getting it back.
+     * 
+     * Therefore, to prevent the unwanted disposal of non-reconstructable services,
+     * we enforce a check here: we either require the `force` parameter to be passed,
+     * or we require that the service is reconstructable.
+     */
     const shouldResetValue = force || !!type || !!factory;
 
-    if (shouldResetValue) {
-      /** If we wound a function named destroy we call it without any params. */
-      if (typeof (value as Record<string, unknown>)?.['dispose'] === 'function') {
-        try {
-          (value as { dispose: CallableFunction }).dispose();
-        } catch (error) {
-          /** We simply ignore the errors from the destroy function. */
-        }
-      }
-
-      serviceMetadata.value = EMPTY_VALUE;
+    if (!shouldResetValue || typeof value !== 'object' || value === null) {
+      return;
     }
+
+    return this.invokeDisposal(value);
+  }
+
+  /**
+   * Create a function which disposes the provided object, if it hosts a
+   * suitable method for object disposal.
+   * 
+   * @param subject The subject of the disposal operation.
+   * 
+   * @returns A function which will dispose the provided object.
+   * 
+   * @remarks
+   * The return type of the returned function depends upon the declared disposal method.
+   * If {@link Symbol.asyncDispose} is declared, it is more than likely that a {@link Promise} will be returned.
+   * Note that if a disposal method does not exist, void is returned.
+   */
+  private invokeDisposal (subject: object) {
+    /**
+     * In order of priority, we check for the existence of the following properties:
+     *   1. TypeDI's own {@link DISPOSE} constant.
+     *      This acts as an override for the usual {@link Symbol.dispose} logic.
+     *   2. {@link Symbol.dispose}.
+     *   3. {@link Symbol.asyncDispose}.
+     *   4. For backwards compatibility, we maintain support for an ordinary dispose method.
+     *      However, this remnant is not ideal, as it may result in unexpected behaviour.
+     *
+     * For the uninitiated, both {@link Symbol.dispose} and {@link Symbol.asyncDispose}
+     * are parts of the newly-created (as of 2023) Explicit Resource Management proposal:
+     * <https://tc39.es/proposal-explicit-resource-management/>.
+     *
+     * As a result, we ensure that they exist in the environment before checking for
+     * their existence on the target value.  If the checks below did not exist, if
+     * `Symbol.dispose` evaluated to `undefined`, we would be searching for an
+     * `undefined` property on the target value, which is unwanted behaviour.
+     *
+     * One important distinction from the previous behaviour, however, is that this
+     * method no longer swallows promises from calls to a service's disposal method.
+     * (This is, quite frankly, an absolutely terrible idea.)
+     *
+     * This allows the caller of the `reset`/`remove` calls to actually handle errors,
+     * instead of hoping that the service in question's disposal method won't throw
+     * any unexpected errors.
+     *
+     * One aspect of note is that now, a call to `remove` or `reset` will result in a
+     * `Promise`, which may be rejected.  This is a worthy breakage, as the previous
+     * behaviour of returning nothing means we have a safe migration path to the new
+     * behaviour.  Furthermore, it is a required change, as future revisions of Node
+     * will quit the process in the case of an uncaught rejected promise.
+     */
+    const disposeMethod = (
+      (subject as ObjectWithDISymbolDispose)[DISPOSE] ??
+      (Symbol.dispose && (subject as ObjectWithSymbolDispose)[Symbol.dispose]) ?? 
+      (Symbol.asyncDispose && (subject as ObjectWithSymbolAsyncDispose)[Symbol.asyncDispose]) ?? 
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      (subject as ObjectWithDisposeMethod).dispose
+    );
+
+    return disposeMethod?.call(subject);
   }
 
   /**
