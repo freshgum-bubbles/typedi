@@ -53,7 +53,7 @@ const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
 ];
 
 /**
- * An instance of a TypeDI container.
+ * # The Container.
  *
  * A container allows you to get, set, and modify dependencies in-place.
  * You can also attach individual services to a container, using them
