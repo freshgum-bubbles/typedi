@@ -48,7 +48,7 @@ export interface ObjectWithDisposeMethod {
 }
 
 /**
- * An object implementing any of the 4 disposal methods supported by the container:
+ * An object implementing any of the 4 disposal methods supported by the container, in order:
  * 
  * @see {@link ObjectWithSymbolDispose | `Symbol.dispose`}
  * @see {@link ObjectWithSymbolAsyncDispose | `Symbol.disposeAsync`}
