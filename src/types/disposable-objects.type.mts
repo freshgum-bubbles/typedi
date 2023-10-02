@@ -1,5 +1,6 @@
 import { DISPOSE } from "../constants/dispose.const.mjs";
-import { Disposable } from "./disposable.type";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Disposable } from "./disposable.type.mjs";
 
 /**
  * An object with a {@link Symbol.dispose} member, which is used
@@ -49,10 +50,10 @@ export interface ObjectWithDisposeMethod {
 /**
  * An object implementing any of the 4 disposal methods supported by the container:
  * 
- * @see {@link ObjectWithSymbolDispose}
- * @see {@link ObjectWithSymbolAsyncDispose}
- * @see {@link ObjectWithDISymbolDispose}
- * @see {@link ObjectWithDisposeMethod}
+ * @see {@link ObjectWithSymbolDispose | `Symbol.dispose`}
+ * @see {@link ObjectWithSymbolAsyncDispose | `Symbol.disposeAsync`}
+ * @see {@link ObjectWithDISymbolDispose | `DISPOSE`}
+ * @see {@link ObjectWithDisposeMethod | `"dispose"` (legacy; no longer recommended)}
  */
 export type AnyDisposableObject =
     | ObjectWithSymbolDispose
