@@ -40,7 +40,7 @@ const TERSER_OPTIONS = {
   compress: {
     defaults: true,
     keep_fargs: false,
-    passes: 3,
+    passes: 5,
     unsafe_symbols: true,
   },
   format: {
@@ -50,6 +50,7 @@ const TERSER_OPTIONS = {
     wrap_func_args: false,
   },
   mangle: {
+    safari10: false,
     properties: {
       regex: new RegExp(PROPERTIES_TO_MANGLE.join('|')),
     },
