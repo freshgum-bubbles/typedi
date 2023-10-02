@@ -15,6 +15,7 @@ import { AnyServiceDependency } from '../interfaces/service-dependency.interface
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mjs';
 import { isArray } from '../utils/is-array.util.mjs';
 import { NativeError } from '../constants/minification/native-error.const.mjs';
+import { Container } from '../index.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -161,7 +162,7 @@ export function Service<T>(
       id: targetConstructor,
       type: targetConstructor as unknown as Constructable<T>,
       ...SERVICE_METADATA_DEFAULTS,
-      container: ContainerInstance.defaultContainer,
+      container: Container,
     };
 
     if (!optionsOrDependenciesIsArray) {
