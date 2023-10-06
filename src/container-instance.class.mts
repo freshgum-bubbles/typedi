@@ -1459,10 +1459,6 @@ export class ContainerInstance implements Disposable {
     /**
      * For the individual bit flags, we don't care about the return from `&`.
      * All that matters is that, if it doesn't return 0, the flag is activated.
-     *
-     * We also don't cast to boolean here, as 0 evaluates to "false",
-     * while anything nonzero evaluates to "true".
-     * This saves bytes in the final bundle.
      */
     const isOptional = constraints & ResolutionConstraintFlag.Optional;
     const isSkipSelf = constraints & ResolutionConstraintFlag.SkipSelf;
