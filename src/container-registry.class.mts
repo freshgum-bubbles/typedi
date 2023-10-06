@@ -67,7 +67,7 @@ export class ContainerRegistry {
    * the given ID does not exist in the registry.
    */
   public static getContainer(id: ContainerIdentifier): ContainerInstance {
-    const registeredContainer = this.containerMap.get(id);
+    const registeredContainer = ContainerRegistry.containerMap.get(id);
 
     if (registeredContainer === undefined) {
       throw new ContainerRegistryError(__NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID);
