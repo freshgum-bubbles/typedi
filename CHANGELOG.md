@@ -4,8 +4,8 @@
 
 ### Minor Changes
 
-- 4e99704: Type wrappers have been refactored! All internal type-wrappers (Lazy, TransientRef, etc.) have been refactored into new "extractable type-wrappers"; this simplifies the implementation. Unless you're writing custom type-wrappers, this won't affect you!
-- 7512978: Introduction of a TransientRef function to get references to transient services without HostContainer.
+- 4e99704: Type wrappers have been refactored! All internal type-wrappers (`Lazy`, `TransientRef`, etc.) have been refactored into new "extractable type-wrappers"; this simplifies the implementation. Unless you're writing custom type-wrappers, this won't affect you!
+- 7512978: Introduction of a `TransientRef` function to get references to transient services without `HostContainer`.
 
   This is related to [Issue #28](https://github.com/freshgum-bubbles/typedi/issues/28).
 
