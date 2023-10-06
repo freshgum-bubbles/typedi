@@ -451,8 +451,10 @@ export class ContainerInstance implements Disposable {
 
     /** This should never happen as multi services are masked with custom token in Container.set. */
     if (metadata && metadata.multiple === true) {
+      /* eslint-disable @typescript-eslint/restrict-template-expressions */
       /* istanbul ignore next */
-      throw NativeError(`Cannot resolve multiple values for ${identifier.toString()} service!`);
+      throw NativeError(`Cannot resolve multiple values for ${identifier} service!`);
+      /* eslint-enable @typescript-eslint/restrict-template-expressions */
     }
 
     /** Otherwise it's returned from the current / parent container. */
