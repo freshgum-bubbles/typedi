@@ -1,6 +1,7 @@
 import { __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID } from './constants/minification/strings.const.mjs';
 import { ContainerInstance } from './container-instance.class.mjs';
 import { ContainerRegistryError } from './error/container-registry-error.error.mjs';
+import { ContainerCollection } from './interfaces/container-registry-map.interface.mjs';
 import { ContainerIdentifier } from './types/container-identifier.type.mjs';
 
 /**
@@ -17,7 +18,7 @@ export class ContainerRegistry {
    *
    * This map doesn't contains the default container.
    */
-  private static readonly containerMap: Map<ContainerIdentifier, ContainerInstance> = new Map();
+  private static readonly containerMap: ContainerCollection = new Map();
 
   /**
    * Registers the given container instance or throws an error.
