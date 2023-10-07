@@ -30,6 +30,7 @@ export { Constructable } from './types/constructable.type.mjs';
 export { ContainerIdentifier } from './types/container-identifier.type.mjs';
 export { ContainerScope } from './types/container-scope.type.mjs';
 export { ExtractToken } from './types/extract-token.type.mjs';
+export { IdentifierScope } from './types/identifier-scope.type.mjs';
 export { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
 export { ServiceIdentifier } from './types/service-identifier.type.mjs';
 export { ResolutionConstraintFlag, ResolutionConstraintsDescriptor } from './types/resolution-constraint.type.mjs';
