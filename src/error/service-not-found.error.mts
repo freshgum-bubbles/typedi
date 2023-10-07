@@ -21,6 +21,6 @@ export class ServiceNotFoundError extends NativeError {
 
     this.message =
       `Service with "${this.normalizedIdentifier}" identifier was not found in the container. ` +
-      `Register it before usage via explicitly calling the "Container.set" function or using the "@Service()" decorator.`;
+      `Register it before usage via "Container.set" or the "@Service()" decorator.`;
   }
 }
