@@ -2,18 +2,21 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
 import mergeObjects from 'deepmerge';
+import isStringYes from 'yn';
 
 /**
  * A list of properties in the codebase to mangle.
  * In this case, "mangling" refers to the minification of the names in the final bundle.
+ * Note that this only affects minified builds (ending in `.min.js`).
  *
  * The addition of members to this array should be done very cautiously.
  *
- * WARNING: DO NOT ADD ANY MEMBERS OF PUBLICLY-EXPORTED CLASSES / OBJECTS HERE!!!
+ * __WARNING: DO NOT ADD ANY MEMBERS OF PUBLICLY-EXPORTED CLASSES / OBJECTS HERE.__
+ *
  * A special exception is made for `ContainerInstance.throwIfDisposed`, which is
  * marked as private and can easily be replicated.
  */
-const PROPERTIES_TO_MANGLE = [
+const SAFE_PROPERTIES_TO_MANGLE = [
   // ContainerInstance
   'throwIfDisposed',
 
@@ -28,8 +31,56 @@ const PROPERTIES_TO_MANGLE = [
   'anyVisitorsPresent',
   'forEachVisitor',
   'addVisitorToCollection',
-  'removeVisitorFromCollection',
+  'removeVisitorFromCollection'
 ];
+
+/**
+ * A list of properties in the codebase to mangle.
+ *
+ * Unlike `SAFE_PROPERTIES_TO_MANGLE`, this list contains publicly-exposed members.
+ * This list may be useful in the case of `umd.js` builds, where consumers
+ * require the absolute bare minimum file size, at the expense of being able to
+ * (safely & deterministically) access well-known public / private class members.
+ */
+const UNSAFE_PROPERTIES_TO_MANGLE = [
+  // ContainerInstance
+  'getServiceValue',
+  'disposeServiceInstance',
+  'getOrDefault',
+  'getManyOrDefault',
+  'resolveMetadata',
+  'getIdentifierLocation',
+  'resolveConstrainedIdentifier',
+  'resolveMultiID',
+  'multiServiceIds',
+  'metadataMap',
+  'resolveTypeWrapper',
+  'isRetrievingPrivateToken',
+  'getConstructorParameters',
+  'resolveResolvable',
+  'visitor',
+
+  // ManyServicesMetadata
+  'tokens',
+
+  // TypeWrapper
+  'extract',
+  'lazyType',
+  'eagerType',
+
+  // ContainerRegistry
+  'registerContainer',
+  'hasContainer',
+  'getContainer',
+  'removeContainer',
+  'containerMap',
+
+  // Errors
+  'normalizedIdentifier',
+  'footer'
+];
+
+const PROPERTIES_TO_MANGLE = getListOfPropertiesToMangle();
 
 /** @type {import('@rollup/plugin-terser').Options} */
 const TERSER_OPTIONS = {
@@ -66,13 +117,6 @@ const DEFAULT_ROLLUP_OUTPUT_OPTIONS = {
 };
 
 /**
- * @param {import('rollup').OutputOptions} options The options to merge with defaults.
- */
-function createOutput(options) {
-  return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
-}
-
-/**
  * @type {import('@rollup/plugin-terser').Options}
  * A set of Terser options for ES6 builds of TypeDI.
  */
@@ -81,6 +125,37 @@ const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
     module: true,
   },
 });
+
+/**
+ * Get a list of properties to mangle in minified builds.
+ * 
+ * @see {@link SAFE_PROPERTIES_TO_MANGLE}
+ * @see {@link UNSAFE_PROPERTIES_TO_MANGLE}
+ */
+function getListOfPropertiesToMangle() {
+  const PROPERTIES_TO_MANGLE = [];
+
+  /** Safe properties are always mangled. */
+  PROPERTIES_TO_MANGLE.push(...SAFE_PROPERTIES_TO_MANGLE);
+
+  const MANGLE_UNSAFE = isStringYes(process.env.MANGLE_UNSAFE, {
+    default: false
+  });
+
+  if (MANGLE_UNSAFE) {
+    PROPERTIES_TO_MANGLE.push(...UNSAFE_PROPERTIES_TO_MANGLE);
+  }
+  return PROPERTIES_TO_MANGLE;
+}
+
+/**
+ * Interpolate a pre-existing Rollup output options object with further values.
+ * 
+ * @param {import('rollup').OutputOptions} options The options to merge with defaults.
+ */
+function createOutput(options) {
+  return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
+}
 
 export default {
   input: 'build/esm5/index.mjs',
