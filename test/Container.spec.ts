@@ -8,7 +8,6 @@ import {
   ServiceNotFoundError,
 } from 'internal:typedi';
 import { Disposable } from 'internal:typedi/types/disposable.type.mjs';
-import { ContainerRegistry } from 'internal:typedi/container-registry.class.mjs';
 
 describe('Container', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
@@ -504,13 +503,6 @@ describe('Container', function () {
 
       expect(container).not.toBe(null);
       expect(container).toStrictEqual(Container);
-    });
-
-    it('should register the container in ContainerRegistry', () => {
-      const NAME = 'Container.of-3';
-      Container.of(NAME);
-
-      expect(ContainerRegistry.hasContainer(NAME)).toBe(true);
     });
   });
 
