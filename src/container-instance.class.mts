@@ -36,6 +36,8 @@ import { ManyServicesMetadata } from './interfaces/many-services-metadata.interf
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
 
+let defaultContainer!: ContainerInstance;
+
 /**
  * A list of IDs which, when passed to `.has`, always return true.
  *
@@ -94,7 +96,7 @@ export class ContainerInstance implements Disposable {
    * The default global container. By default services are registered into this
    * container when registered via `Container.set()` or `@Service` decorator.
    */
-  public static readonly defaultContainer = new ContainerInstance('default');
+  public static readonly defaultContainer = (defaultContainer = new ContainerInstance('default'));
 
   /**
    * The currently-present visitors attached to the container.
@@ -1613,9 +1615,7 @@ export class ContainerInstance implements Disposable {
  * as we are referencing a static variable instead of continuously
  * looking up a property.
  */
-null;
-
-export const { defaultContainer } = ContainerInstance;
+export { defaultContainer };
 
 /**
  * Register the default container in ContainerRegistry.
