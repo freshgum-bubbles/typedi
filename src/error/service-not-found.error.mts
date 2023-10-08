@@ -1,4 +1,4 @@
-import { NativeError } from '../constants/minification/native-error.const.mjs';
+import { NativeError } from '../constants/errors/native-error.const.mjs';
 import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
 import { normalizeIdentifier } from '../utils/normalize-identifier.util.mjs';
 

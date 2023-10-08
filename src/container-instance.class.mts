@@ -34,7 +34,7 @@ import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/minification/
 import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
-import { NativeError } from './constants/minification/native-error.const.mjs';
+import { NativeError } from './constants/errors/native-error.const.mjs';
 
 let defaultContainer!: ContainerInstance;
 

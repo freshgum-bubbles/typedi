@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NativeError } from '../constants/minification/native-error.const.mjs';
+import { NativeError } from '../constants/errors/native-error.const.mjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ContainerRegistry } from '../container-registry.class.mjs';
 
