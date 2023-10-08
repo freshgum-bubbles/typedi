@@ -1,8 +1,21 @@
-import { ContainerInstance, Container } from 'internal:typedi';
+import { ContainerInstance, Container, ContainerIdentifier } from 'internal:typedi';
 import { ContainerRegistry } from 'internal:typedi/container-registry.class.mjs';
 
 describe('ContainerRegistry', () => {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
+
+  describe('new ContainerInstance(...)', () => {
+    it('should not register the container in the registry', () => {
+      class ContainerTest extends ContainerInstance {
+        public constructor (id: ContainerIdentifier, parent?: ContainerInstance | undefined) {
+          super(id, parent);
+        }
+      }
+      
+      const container = new ContainerTest(Symbol());
+      expect(ContainerRegistry.hasContainer(container.id)).toBe(false);
+    });
+  });
 
   describe('ContainerRegistry.registerContainer', () => {
     it('should not allow re-registering the default container', () => {
