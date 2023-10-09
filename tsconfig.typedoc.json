@@ -1,5 +1,10 @@
 {
+    // This Typescript configuration is used by TypeDoc to generate API documentation
+    // for the project; this documentation can be accessed via the following link:
+    // <https://typedi.js.org/api-reference>
     "extends": "./tsconfig.json",
     "include": ["./src/**/*"],
+
+    // Elide any non-src folders to prevent them being added to the documentation.
     "exclude": ["./website/**/*", "./website/*", "./test/*", "./docs/*", "./build/*"]
 }
