@@ -31,7 +31,7 @@ const SAFE_PROPERTIES_TO_MANGLE = [
   'anyVisitorsPresent',
   'forEachVisitor',
   'addVisitorToCollection',
-  'removeVisitorFromCollection'
+  'removeVisitorFromCollection',
 ];
 
 /**
@@ -77,7 +77,7 @@ const UNSAFE_PROPERTIES_TO_MANGLE = [
 
   // Errors
   'normalizedIdentifier',
-  'footer'
+  'footer',
 ];
 
 const PROPERTIES_TO_MANGLE = getListOfPropertiesToMangle();
@@ -128,7 +128,7 @@ const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
 
 /**
  * Get a list of properties to mangle in minified builds.
- * 
+ *
  * @see {@link SAFE_PROPERTIES_TO_MANGLE}
  * @see {@link UNSAFE_PROPERTIES_TO_MANGLE}
  */
@@ -139,7 +139,7 @@ function getListOfPropertiesToMangle() {
   PROPERTIES_TO_MANGLE.push(...SAFE_PROPERTIES_TO_MANGLE);
 
   const MANGLE_UNSAFE = isStringYes(process.env.MANGLE_UNSAFE, {
-    default: false
+    default: false,
   });
 
   if (MANGLE_UNSAFE) {
@@ -150,7 +150,7 @@ function getListOfPropertiesToMangle() {
 
 /**
  * Interpolate a pre-existing Rollup output options object with further values.
- * 
+ *
  * @param {import('rollup').OutputOptions} options The options to merge with defaults.
  */
 function createOutput(options) {

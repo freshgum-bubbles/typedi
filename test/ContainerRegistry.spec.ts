@@ -7,11 +7,11 @@ describe('ContainerRegistry', () => {
   describe('new ContainerInstance(...)', () => {
     it('should not register the container in the registry', () => {
       class ContainerTest extends ContainerInstance {
-        public constructor (id: ContainerIdentifier, parent?: ContainerInstance | undefined) {
+        public constructor(id: ContainerIdentifier, parent?: ContainerInstance | undefined) {
           super(id, parent);
         }
       }
-      
+
       const container = new ContainerTest(Symbol());
       expect(ContainerRegistry.hasContainer(container.id)).toBe(false);
     });
