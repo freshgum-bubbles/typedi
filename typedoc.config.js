@@ -12,9 +12,6 @@ var configuration = {
   gitRemote: repositoryURL,
   disableGit: false,
 
-  /** (https://typedi.js.org/api-reference) */
-  basePath: '/api-reference/',
-
   /** Not sure how you would even localize TSDoc... */
   htmlLang: 'en',
 
