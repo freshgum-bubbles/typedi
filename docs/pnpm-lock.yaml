@@ -58,6 +58,9 @@ devDependencies:
   '@types/react':
     specifier: ^18.2.14
     version: 18.2.14
+  dotenv:
+    specifier: ^16.3.1
+    version: 16.3.1
   typescript:
     specifier: ^4.7.4
     version: 4.7.4
@@ -4892,6 +4895,11 @@ packages:
     dependencies:
       is-obj: 2.0.0
     dev: false
+
+  /dotenv@16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
+    dev: true
 
   /duplexer3@0.1.5:
     resolution: {integrity: sha512-1A8za6ws41LQgv9HrE/66jyC5yuSjQ3L/KOpFtoBilsAK2iA2wuS5rTt1OCzIvtS2V7nVmedsUU+DGRcjBmOYA==}
