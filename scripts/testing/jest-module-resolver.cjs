@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 /**
  * @fileoverview
  * This file manages imports for test files, via Jest's custom resolver API.
