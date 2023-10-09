@@ -1,0 +1,15 @@
+{
+    "iis.configDir": "",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "hide-files.files": [],
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "jest.jestCommandLine": "pnpm run test",
+    "npm.packageManager": "pnpm"
+}
