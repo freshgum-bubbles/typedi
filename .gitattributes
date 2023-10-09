@@ -9,3 +9,4 @@ vscode/*.json linguist-language=JSON-with-Comments
 
 # Bah, humbug.
 .env.example linguist-language=Dotenv
+.env.template linguist-language=Dotenv
