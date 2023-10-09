@@ -53,6 +53,7 @@
     "build:umd": "npm run build:esm5",
     "build:types": "tsc --project tsconfig.prod.types.json",
     "docs:website": "pushd website && npm run build && popd",
+    "docs:website-prod": "npm run docs:api-reference && npm run docs:website",
     "prettier:fix": "prettier --write \"**/*.{ts,md,mts,mjs,js,cjs}\"",
     "prettier:check": "prettier --check \"**/*.{ts,md,mts,mjs,js,cjs}\"",
     "lint:fix": "eslint --max-warnings 0 --fix --ext .mts src/",
