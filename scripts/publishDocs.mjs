@@ -10,13 +10,13 @@ const scriptsDirectory = dirname(fileURLToPath(import.meta.url));
 const dotenvFilePath = resolvePath(scriptsDirectory, '../.env');
 const docsDirectoryPath = resolvePath(scriptsDirectory, '../docs/');
 
+/** Load variables from the .env file into `process.env`. */
+config({ path: dotenvFilePath });
+
 /** All required environmental variables go here to allow for easier inspection. */
 const DOCUSAURUS_DEPLOY_GIT_USER = getEnvironmentalVariable('DOCUSAURUS_GIT_USER', true);
 const DOCUSAURUS_DEPLOY_GIT_PASS = getEnvironmentalVariable('DOCUSAURUS_GIT_PASS', true);
 const DOCUSAURUS_DEPLOY_USE_SSH = getEnvironmentalVariable('DOCUSAURUS_USE_SSH', false) ?? 'false';
-
-/** Load variables from the .env file into `process.env`. */
-config({ path: dotenvFilePath });
 
 /**
  * Pipe the stderr and stdout of an execa child process to this process' streams.
