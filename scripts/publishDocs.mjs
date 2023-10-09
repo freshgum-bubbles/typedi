@@ -10,6 +10,11 @@ const scriptsDirectory = dirname(fileURLToPath(import.meta.url));
 const dotenvFilePath = resolvePath(scriptsDirectory, '../.env');
 const docsDirectoryPath = resolvePath(scriptsDirectory, '../docs/');
 
+/** All required environmental variables go here to allow for easier inspection. */
+const DOCUSAURUS_DEPLOY_GIT_USER = getEnvironmentalVariable('DOCUSAURUS_GIT_USER', true);
+const DOCUSAURUS_DEPLOY_GIT_PASS = getEnvironmentalVariable('DOCUSAURUS_GIT_PASS', true);
+const DOCUSAURUS_DEPLOY_USE_SSH = getEnvironmentalVariable('DOCUSAURUS_USE_SSH', false) ?? 'false';
+
 /** Load variables from the .env file into `process.env`. */
 config({ path: dotenvFilePath });
 
@@ -64,9 +69,6 @@ function getEnvironmentalVariable(name, ensureExists = true) {
   return value;
 }
 
-const gitUser = getEnvironmentalVariable('DOCUSAURUS_GIT_USER', true);
-const gitPass = getEnvironmentalVariable('DOCUSAURUS_GIT_PASS', true);
-
 // TODO: check for any dirty / staged git files?
 
 await buildAPIReference();
@@ -76,8 +78,9 @@ await deployDocs();
 async function deployDocs() {
   const deployDocsCommand = $({
     env: {
-      GIT_USER: gitUser,
-      GIT_PASS: gitPass,
+      GIT_USER: DOCUSAURUS_DEPLOY_GIT_USER,
+      GIT_PASS: DOCUSAURUS_DEPLOY_GIT_PASS,
+      USE_SSH: DOCUSAURUS_DEPLOY_USE_SSH,
     },
 
     /** Run in docs/. Alternative to `pushd` which isn't cross-platform. */
