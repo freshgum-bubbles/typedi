@@ -4,6 +4,11 @@ import terser from '@rollup/plugin-terser';
 import mergeObjects from 'deepmerge';
 import isStringYes from 'yn';
 
+const UMD_BUNDLE_PATH = 'build/bundles/typedi.umd.js';
+const UMD_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.min.js';
+const MJS_BUNDLE_PATH = 'build/bundles/typedi.mjs';
+const MJS_MIN_BUNDLE_PATH = 'build/bundles/typedi.min.mjs';
+
 /**
  * A list of properties in the codebase to mangle.
  * In this case, "mangling" refers to the minification of the names in the final bundle.
@@ -165,21 +170,21 @@ export default {
     {
       name: 'TypeDI',
       format: 'umd',
-      file: 'build/bundles/typedi.umd.js',
+      file: UMD_BUNDLE_PATH,
     },
     {
       name: 'TypeDI',
       format: 'umd',
-      file: 'build/bundles/typedi.umd.min.js',
+      file: UMD_MIN_BUNDLE_PATH,
       plugins: [terser(TERSER_OPTIONS)],
     },
     {
       format: 'es',
-      file: 'build/bundles/typedi.mjs',
+      file: MJS_BUNDLE_PATH,
     },
     {
       format: 'es',
-      file: 'build/bundles/typedi.min.mjs',
+      file: MJS_MIN_BUNDLE_PATH,
       plugins: [terser(MJS_TERSER_OPTIONS)],
     },
   ].map(createOutput),
