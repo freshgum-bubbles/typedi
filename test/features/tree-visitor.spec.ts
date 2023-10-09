@@ -218,6 +218,20 @@ describe('Tree Visitors', () => {
         expect(visitor.visitOrphanedContainer).toHaveBeenCalledTimes(0);
       });
 
+      it('should remove visitors which throw in visitContainer', () => {
+        const visitor = createVisitorMock();
+        visitor.visitContainer.mockImplementation(() => { throw new Error(); });
+
+        /** Attach the visitor to a container. */
+        expect(() => Container.acceptTreeVisitor(visitor)).toThrow(Error);
+        
+        const testKey = new Token<string>();
+        Container.setValue(testKey, 'my value');
+
+        expect(visitor.visitNewService).toHaveBeenCalledTimes(0);
+        expect(Container.detachTreeVisitor(visitor)).toBe(false);
+      });
+
       /**
        * We skip the inverse case: visitors that return true are given events.
        * This is because we already implicitly test this (numerous times) above.
