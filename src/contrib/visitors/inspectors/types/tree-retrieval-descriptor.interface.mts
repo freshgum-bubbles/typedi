@@ -1,11 +1,14 @@
-import { ServiceIdentifier } from '../../../../index.mjs';
+import { ServiceIdentifier, VisitRetrievalOptions } from '../../../../index.mjs';
 
 // todo: add tsdoc to all of this
 
-export interface TreeContainerRetrievalDescriptor {
+export interface TreeRetrievalDescriptor {
   /** The time at which the retrieval was performed. */
   readonly time: number;
 
-  /** The key being retrieved. */
-  readonly key: ServiceIdentifier;
+  /** The identifier being retrieved. */
+  readonly identifier: ServiceIdentifier;
+
+  /** The {@link VisitRetrievalOptions} value passed to the visitor. */
+  readonly options: VisitRetrievalOptions;
 }
