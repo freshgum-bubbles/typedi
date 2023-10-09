@@ -4,6 +4,7 @@ import terser from '@rollup/plugin-terser';
 import mergeObjects from 'deepmerge';
 import isStringYes from 'yn';
 
+const UMD_NAME = 'TypeDI';
 const UMD_BUNDLE_PATH = 'build/bundles/typedi.umd.js';
 const UMD_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.min.js';
 const MJS_BUNDLE_PATH = 'build/bundles/typedi.mjs';
@@ -168,12 +169,12 @@ export default {
   input: 'build/esm5/index.mjs',
   output: [
     {
-      name: 'TypeDI',
+      name: UMD_NAME,
       format: 'umd',
       file: UMD_BUNDLE_PATH,
     },
     {
-      name: 'TypeDI',
+      name: UMD_NAME,
       format: 'umd',
       file: UMD_MIN_BUNDLE_PATH,
       plugins: [terser(TERSER_OPTIONS)],
