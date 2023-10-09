@@ -220,11 +220,13 @@ describe('Tree Visitors', () => {
 
       it('should remove visitors which throw in visitContainer', () => {
         const visitor = createVisitorMock();
-        visitor.visitContainer.mockImplementation(() => { throw new Error(); });
+        visitor.visitContainer.mockImplementation(() => {
+          throw new Error();
+        });
 
         /** Attach the visitor to a container. */
         expect(() => Container.acceptTreeVisitor(visitor)).toThrow(Error);
-        
+
         const testKey = new Token<string>();
         Container.setValue(testKey, 'my value');
 
