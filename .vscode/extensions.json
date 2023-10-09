@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        // Makes TypeScript errors prettier.  Very useful even outside of this repository.
+        "yoavbls.pretty-ts-errors",
+
+        // Prettier, the tool used to format TypeDI++ code.
+        // This extension provides further integration with VSCode. 
+        "esbenp.prettier-vscode",
+
+        // PNPM, the package manager used by this project.
+        "jacano.vscode-pnpm",
+
+        // Commitlint, which lints each commit message saved to Git.
+        "joshbolduc.commitlint"
+    ]
+}
