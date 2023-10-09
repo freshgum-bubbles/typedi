@@ -113,5 +113,8 @@
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "yn": "^5.0.0"
   }
 }
