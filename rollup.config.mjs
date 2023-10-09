@@ -41,6 +41,8 @@ const SAFE_PROPERTIES_TO_MANGLE = [
  * This list may be useful in the case of `umd.js` builds, where consumers
  * require the absolute bare minimum file size, at the expense of being able to
  * (safely & deterministically) access well-known public / private class members.
+ *
+ * **This is not currently used.**
  */
 const UNSAFE_PROPERTIES_TO_MANGLE = [
   // ContainerInstance
