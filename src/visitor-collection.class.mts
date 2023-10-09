@@ -125,28 +125,31 @@ export class VisitorCollection implements Disposable {
       this.anyVisitorsPresent = true;
     }
 
-    /**
-     * Directly call the visitor's "visitContainer" method
-     * to initialise it upon the given container.
-     *
-     * Implementation detail: We don't provide any sort of protection against
-     * this being called again on a different container.
-     * The visitor would be able to handle that themselves, as the API states
-     * that any call to `visitContainer` means that the visitor was added
-     * to a container.
-     */
-    const isAllowedToAttachVisitor = visitor.visitContainer?.(container);
+    let isAllowedToAttachVisitor: boolean | undefined;
 
-    /**
-     * If a false-y return value was returned to signal that the visitor
-     * should not be attached to the given container, immediately remove it.
-     */
-    if (!isAllowedToAttachVisitor) {
-      this.removeVisitorFromCollection(visitor);
-      return false;
+    try {
+      /**
+       * Directly call the visitor's "visitContainer" method
+       * to initialise it upon the given container.
+       *
+       * Implementation detail: We don't provide any sort of protection against
+       * this being called again on a different container.
+       * The visitor would be able to handle that themselves, as the API states
+       * that any call to `visitContainer` means that the visitor was added
+       * to a container.
+       */
+      isAllowedToAttachVisitor = visitor.visitContainer?.(container);
+    } finally {
+      /**
+       * If a false-y return value was returned to signal that the visitor
+       * should not be attached to the given container, immediately remove it.
+       */
+      if (!isAllowedToAttachVisitor) {
+        this.removeVisitorFromCollection(visitor);
+      }
     }
 
-    return true;
+    return isAllowedToAttachVisitor;
   }
 
   /**
