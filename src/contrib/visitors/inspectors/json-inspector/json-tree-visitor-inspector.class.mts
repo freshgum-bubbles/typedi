@@ -1,9 +1,5 @@
 import { ContainerInstance, ContainerTreeVisitor, ServiceIdentifier, ServiceMetadata, VisitRetrievalOptions } from "../../../../index.mjs";
 
-export interface ContainerTreeContainerDescriptor {
-    parent
-}
-
 export class JSONTreeVisitorInspector implements ContainerTreeVisitor {
     visitChildContainer?(child: ContainerInstance): void {
         throw new Error("Method not implemented.");
