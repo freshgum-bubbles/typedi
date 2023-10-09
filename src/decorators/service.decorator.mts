@@ -25,6 +25,7 @@ import { NativeError } from '../constants/errors/native-error.const.mjs';
  * **This is a TypeScript decorator.**
  *
  * @example
+ * Here is an example:
  * ```ts
  * @Service([ ])
  * class OtherService { }
@@ -54,6 +55,7 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * **This is a TypeScript decorator.**
  *
  * @example
+ * Here is an example:
  * ```ts
  * const OTHER_SERVICE = new Token<OtherService>();
  *
@@ -93,6 +95,7 @@ export function Service<T = unknown>(
  * **This is a TypeScript decorator.**
  *
  * @example
+ * Here is an example:
  * ```ts
  * const OTHER_SERVICE = new Token<OtherService>();
  *
