@@ -28,6 +28,12 @@
       "import": "./build/esm5/contrib/transient-ref/index.mjs",
       "node": "./build/esm5/contrib/transient-ref/index.mjs",
       "bun": "./src/contrib/transient-ref/index.mts"
+    },
+    "./contrib/util/synchronous-disposable": {
+      "types": "./build/esm5/contrib/util/synchronous-disposable.d.mts",
+      "import": "./build/esm5/contrib/util/synchronous-disposable.mjs",
+      "node": "./build/esm5/contrib/util/synchronous-disposable.mjs",
+      "bun": "./src/contrib/util/synchronous-disposable.class.mts"
     }
   },
   "engines": {
