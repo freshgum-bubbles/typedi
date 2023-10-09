@@ -22,7 +22,7 @@ import { NativeError } from '../constants/errors/native-error.const.mjs';
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
  * @remarks
- * **This ia a TypeScript decorator.**
+ * **This is a TypeScript decorator.**
  *
  * @example
  * ```ts
@@ -51,7 +51,7 @@ export function Service(dependencies: AnyServiceDependency[]): ClassDecorator;
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
  * @remarks
- * **This ia a TypeScript decorator.**
+ * **This is a TypeScript decorator.**
  *
  * @example
  * ```ts
@@ -90,7 +90,7 @@ export function Service<T = unknown>(
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
  * @remarks
- * **This ia a TypeScript decorator.**
+ * **This is a TypeScript decorator.**
  *
  * @example
  * ```ts
