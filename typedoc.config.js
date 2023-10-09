@@ -1,5 +1,7 @@
 const { repository, name } = require('./package.json');
 
+const repositoryURL = repository.url.replace(/\/?\.git$/i, '');
+
 /** @type {import('typedoc').TypeDocOptions} */
 var configuration = {
   /**
@@ -7,7 +9,24 @@ var configuration = {
    * Perhaps in future we may want to also document contrib/ packages.
    */
   entryPoints: ['./src/index.mts'],
-  gitRemote: repository.url,
+  gitRemote: repositoryURL,
+  disableGit: false,
+
+  /** (https://typedi.js.org/api-reference) */
+  basePath: '/api-reference/',
+
+  /** Not sure how you would even localize TSDoc... */
+  htmlLang: 'en',
+
+  includeVersion: true,
+
+  navigationLinks: {
+    /** Link to https://typedi.js.org/ */
+    home: '/'
+  },
+
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  sourceLinkTemplate: `${repositoryURL}/blob/{gitRevision}/{path}#L{line}`,
 
   /** Use the mxssfd theme. */
   plugin: ['@mxssfd/typedoc-theme'],
