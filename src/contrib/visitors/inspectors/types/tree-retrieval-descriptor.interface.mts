@@ -4,8 +4,8 @@ import { ServiceIdentifier } from "../../../../index.mjs";
 
 export interface TreeContainerRetrievalDescriptor {
     /** The time at which the retrieval was performed. */
-    time: number;
+    readonly time: number;
 
     /** The key being retrieved. */
-    key: ServiceIdentifier;
+    readonly key: ServiceIdentifier;
 }

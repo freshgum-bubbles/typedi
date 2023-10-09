@@ -3,5 +3,5 @@ import { TreeContainerDescriptor } from "./tree-container-descriptor.interface.m
 // todo: add tsdoc to all of this
 
 export interface TreeRootDescriptor {
-    containers: TreeContainerDescriptor[];
+    readonly containers: TreeContainerDescriptor[];
 }

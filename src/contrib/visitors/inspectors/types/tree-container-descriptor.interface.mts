@@ -11,7 +11,7 @@ export const enum TreeContainerDescriptorType {
 }
 
 export interface BaseTreeContainerDescriptor {
-    retrievals: TreeContainerRetrievalDescriptor[];
+    readonly retrievals: TreeContainerRetrievalDescriptor[];
 }
 
 export interface TreeOrphanedContainerDescriptor {
