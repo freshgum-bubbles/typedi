@@ -1,3 +1,12 @@
+/**
+ * @fileoverview
+ * This file manages imports for test files, via Jest's custom resolver API.
+ * It adds support for the `internal:typedi` module specifier, which is used to
+ * import a version of TypeDI++ without `../../../../../...`.
+ * 
+ * Currently, the imported TypeDI++ version is `../../src/container-instance.class.mts`.
+ */
+
 const path = require('path');
 const basePath = path.resolve(__dirname, '../../');
 
