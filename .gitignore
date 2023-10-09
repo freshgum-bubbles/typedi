@@ -58,3 +58,5 @@ website/static/api-reference/
 # Keep build directory
 !build/.gitkeep
 
+# Environmental secrets file
+.env
