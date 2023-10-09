@@ -19,7 +19,7 @@ var configuration = {
 
   navigationLinks: {
     /** Link to https://typedi.js.org/ */
-    home: '/'
+    home: '/',
   },
 
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
