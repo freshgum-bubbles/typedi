@@ -6,8 +6,8 @@ import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type
 import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
 import { ContainerScope } from '../../types/container-scope.type.mjs';
 import { ServiceIdentifierLocation } from '../../types/service-identifier-location.type.mjs';
-import { NativeError } from '../../constants/errors/native-error.const.mjs';
-import { NativeNull } from '../../constants/native-null.const.mjs';
+import { NativeError } from '../../constants/minification/native-error.const.mjs';
+import { NativeNull } from '../../constants/minification/native-null.const.mjs';
 
 /** A helper to access private {@link ContainerInstance} methods. @ignore */
 type ContainerInternals = {

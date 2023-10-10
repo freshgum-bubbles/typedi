@@ -14,8 +14,8 @@ import { SERVICE_METADATA_DEFAULTS } from '../constants/service-defaults.const.m
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mjs';
 import { isArray } from '../utils/is-array.util.mjs';
-import { NativeError } from '../constants/errors/native-error.const.mjs';
-import { NativeNull } from '../constants/native-null.const.mjs';
+import { NativeError } from '../constants/minification/native-error.const.mjs';
+import { NativeNull } from '../constants/minification/native-null.const.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.

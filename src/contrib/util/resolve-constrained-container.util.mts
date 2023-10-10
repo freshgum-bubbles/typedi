@@ -1,4 +1,4 @@
-import { NativeError } from '../../constants/errors/native-error.const.mjs';
+import { NativeError } from '../../constants/minification/native-error.const.mjs';
 import { ContainerInstance } from '../../container-instance.class.mjs';
 import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type.mjs';
 

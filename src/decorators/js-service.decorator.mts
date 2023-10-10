@@ -1,4 +1,4 @@
-import { NativeError } from '../constants/errors/native-error.const.mjs';
+import { NativeError } from '../constants/minification/native-error.const.mjs';
 import { AnyServiceDependency } from '../interfaces/service-dependency.interface.mjs';
 import {
   ServiceOptions,

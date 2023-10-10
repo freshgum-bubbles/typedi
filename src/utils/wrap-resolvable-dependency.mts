@@ -1,6 +1,6 @@
 import { BUILT_INS } from '../constants/builtins.const.mjs';
-import { NativeError } from '../constants/errors/native-error.const.mjs';
-import { NativeNull } from '../constants/native-null.const.mjs';
+import { NativeError } from '../constants/minification/native-error.const.mjs';
+import { NativeNull } from '../constants/minification/native-null.const.mjs';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error.mjs';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error.mjs';
 import { ServiceIdentifier } from '../index.mjs';
