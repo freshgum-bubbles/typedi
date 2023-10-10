@@ -10,6 +10,9 @@ const UMD_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.min.js';
 const MJS_BUNDLE_PATH = 'build/bundles/typedi.mjs';
 const MJS_MIN_BUNDLE_PATH = 'build/bundles/typedi.min.mjs';
 
+// See below for information on tiny builds.
+const MJS_TINY_BUNDLE_PATH = 'build/bundles/typedi.tiny.min.mjs';
+
 /**
  * A list of properties in the codebase to mangle.
  * In this case, "mangling" refers to the minification of the names in the final bundle.
@@ -88,7 +91,7 @@ const UNSAFE_PROPERTIES_TO_MANGLE = [
   'footer',
 ];
 
-const PROPERTIES_TO_MANGLE = getListOfPropertiesToMangle();
+const PROPERTIES_TO_MANGLE_FOR_TINY_BUILDS = [...SAFE_PROPERTIES_TO_MANGLE, ...UNSAFE_PROPERTIES_TO_MANGLE];
 
 /** @type {import('@rollup/plugin-terser').Options} */
 const TERSER_OPTIONS = {
@@ -134,7 +137,10 @@ const TERSER_OPTIONS = {
     // It's a deprecated version, and we only target evergreen browsers.
     safari10: false,
     properties: {
-      regex: new RegExp(PROPERTIES_TO_MANGLE.join('|')),
+      // For ordinary .min.js builds, we ALWAYS use the safe list of properties to mangle.
+      // The unsafe lists may cause a few issues with those who need to access private
+      // Container API's.
+      regex: new RegExp(SAFE_PROPERTIES_TO_MANGLE.join('|')),
     },
   },
 };
@@ -158,26 +164,26 @@ const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
 });
 
 /**
- * Get a list of properties to mangle in minified builds.
- *
- * @see {@link SAFE_PROPERTIES_TO_MANGLE}
- * @see {@link UNSAFE_PROPERTIES_TO_MANGLE}
+ * @type {import('@rollup/plugin-terser').Options}
+ * A set of Terser options for tiny builds of TypeDI.
  */
-function getListOfPropertiesToMangle() {
-  const PROPERTIES_TO_MANGLE = [];
+const TINY_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
+  mangle: {
+    properties: {
+      regex: new RegExp(PROPERTIES_TO_MANGLE_FOR_TINY_BUILDS).join('|'),
+    },
+  },
+});
 
-  /** Safe properties are always mangled. */
-  PROPERTIES_TO_MANGLE.push(...SAFE_PROPERTIES_TO_MANGLE);
-
-  const MANGLE_UNSAFE = isStringYes(process.env.MANGLE_UNSAFE, {
-    default: false,
-  });
-
-  if (MANGLE_UNSAFE) {
-    PROPERTIES_TO_MANGLE.push(...UNSAFE_PROPERTIES_TO_MANGLE);
-  }
-  return PROPERTIES_TO_MANGLE;
-}
+/**
+ * @type {import('@rollup/plugin-terser').Options}
+ * A set of Terser options for tiny.mjs builds of TypeDI.
+ */
+const MJS_TINY_TERSER_OPTIONS = mergeObjects(TINY_TERSER_OPTIONS, {
+  compress: {
+    module: true,
+  },
+});
 
 /**
  * Interpolate a pre-existing Rollup output options object with further values.
@@ -210,6 +216,19 @@ export default {
       format: 'es',
       file: MJS_MIN_BUNDLE_PATH,
       plugins: [terser(MJS_TERSER_OPTIONS)],
+    },
+
+    // Tiny builds of TypeDI are experimental; they're mostly designed for private use,
+    // to investigate ways to optimize the Container architecture.
+    // They include minification for more private symbols, which may cause issues for
+    // those who require access to private Container API's.
+    //
+    // They're also only available in ES Modules format (so no UMD variants).
+    // Therefore, they're not yet recommended for public consumption.
+    {
+      format: 'es',
+      file: MJS_TINY_BUNDLE_PATH,
+      plugins: [terser(MJS_TINY_TERSER_OPTIONS)],
     },
   ].map(createOutput),
   plugins: [commonjs(), nodeResolve()],
