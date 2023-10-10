@@ -100,10 +100,23 @@ const TERSER_OPTIONS = {
     defaults: true,
     keep_fargs: false,
     passes: 5,
+
+    // Unsafe transformations.
+    // Be careful when changing these!
+    unsafe: true,
+
+    // Remove names from Symbol() expressions.
     unsafe_symbols: true,
+
+    // Transform regular functions to arrow functions in select circumstances.
+    unsafe_arrows: true,
+    unsafe_methods: true,
+    unsafe_comps: false,
+    hoist_funs: true,
+    pure_getters: true,
   },
   format: {
-    ecma: 6,
+    ecma: 2020,
     ie8: false,
     comments: false,
     wrap_func_args: false,
