@@ -7,6 +7,7 @@ import { resolveConstrainedContainer } from '../util/resolve-constrained-contain
 import { ContainerScope } from '../../types/container-scope.type.mjs';
 import { ServiceIdentifierLocation } from '../../types/service-identifier-location.type.mjs';
 import { NativeError } from '../../constants/errors/native-error.const.mjs';
+import { NativeNull } from '../../constants/native-null.const.mjs';
 
 /** A helper to access private {@link ContainerInstance} methods. @ignore */
 type ContainerInternals = {
@@ -119,7 +120,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
       throw new ServiceNotFoundError(id);
     }
 
-    let scope: ContainerScope | null = null;
+    let scope: ContainerScope | null = NativeNull;
 
     if (!isManyConstrained) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -134,7 +135,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * In theory, they *could* instantiate this, remove the identifier, and re-bind it to
      * non-transient metadata -- however, this seems like a very rare edge-case.
      */
-    if (scope !== 'transient' && scope !== null) {
+    if (scope !== 'transient' && scope !== NativeNull) {
       throw NativeError('The provided identifier was not bound to a transient service.');
     }
   }

@@ -1,5 +1,6 @@
 import { BUILT_INS } from '../constants/builtins.const.mjs';
 import { NativeError } from '../constants/errors/native-error.const.mjs';
+import { NativeNull } from '../constants/native-null.const.mjs';
 import { CannotInstantiateBuiltInError } from '../error/cannot-instantiate-builtin-error.mjs';
 import { CannotInstantiateValueError } from '../error/cannot-instantiate-value.error.mjs';
 import { ServiceIdentifier } from '../index.mjs';
@@ -25,7 +26,7 @@ export function wrapDependencyAsResolvable(
     const [id, options] = dependency as DependencyPairWithConfiguration;
 
     /** Perform some very basic sanity checking on the pair. */
-    if (id == null || options == null) {
+    if (id == NativeNull || options == NativeNull) {
       // TODO: make this more descriptive
       throw NativeError('The dependency pair was not instantiated correctly.');
     }
@@ -48,7 +49,7 @@ export function wrapDependencyAsResolvable(
    */
   const { eagerType } = typeWrapper;
 
-  if (eagerType !== null) {
+  if (eagerType !== NativeNull) {
     const type = typeof typeWrapper;
 
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -56,7 +57,7 @@ export function wrapDependencyAsResolvable(
 
     if (type !== 'function' && type !== 'object' && type !== 'string') {
       throw new CannotInstantiateValueError(eagerType as ServiceIdentifier, errorFooter);
-    } else if (serviceOptions.factory == null && (BUILT_INS as unknown[]).includes(eagerType)) {
+    } else if (serviceOptions.factory == NativeNull && (BUILT_INS as unknown[]).includes(eagerType)) {
       /**
        * Ensure the service does not contain built-in types (Number, Symbol, Object, etc.)
        * without also holding a factory to manually create an instance of the constructor.

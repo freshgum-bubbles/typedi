@@ -35,6 +35,7 @@ import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/errors/native-error.const.mjs';
+import { NativeNull } from './constants/native-null.const.mjs';
 
 let defaultContainer!: ContainerInstance;
 
@@ -266,7 +267,7 @@ export class ContainerInstance implements Disposable {
 
     switch (location) {
       case ServiceIdentifierLocation.None:
-        return null;
+        return NativeNull;
       case ServiceIdentifierLocation.Local:
         return [this.metadataMap.get(identifier) as ServiceMetadata<T>, location];
       case ServiceIdentifierLocation.Parent:
@@ -277,7 +278,7 @@ export class ContainerInstance implements Disposable {
          */
         const possibleResolution = this.parent?.resolveMetadata<T>(identifier, true);
 
-        return possibleResolution ? [possibleResolution[0], ServiceIdentifierLocation.Parent] : null;
+        return possibleResolution ? [possibleResolution[0], ServiceIdentifierLocation.Parent] : NativeNull;
     }
   }
 
@@ -293,7 +294,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public getOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T | null {
-    return this.getOrDefault<null, T>(identifier, null, recursive);
+    return this.getOrDefault<null, T>(identifier, NativeNull, recursive);
   }
 
   /**
@@ -342,7 +343,7 @@ export class ContainerInstance implements Disposable {
 
     const maybeResolvedMetadata = this.resolveMetadata(identifier, recursive);
 
-    if (maybeResolvedMetadata === null) {
+    if (maybeResolvedMetadata === NativeNull) {
       if (notifyVisitors) {
         /** Notify our listeners that the identifier wasn't found. */
         this.visitor.notifyRetrievalVisited(identifier, {
@@ -388,7 +389,7 @@ export class ContainerInstance implements Disposable {
        * If the type cannot be reconstructed  (i.e. it's a static value, possibly set via
        * {@link ContainerInstance.setValue}), do not erase the type in the new metadata.
        */
-      const isReconstructable = baseMetadata.factory != null || baseMetadata.type != null;
+      const isReconstructable = baseMetadata.factory != NativeNull || baseMetadata.type != NativeNull;
 
       if (!isReconstructable) {
         value = baseMetadata.value;
@@ -527,7 +528,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public getManyOrNull<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): T[] | null {
-    return this.getManyOrDefault<null, T>(identifier, null, recursive);
+    return this.getManyOrDefault<null, T>(identifier, NativeNull, recursive);
   }
 
   /**
@@ -702,7 +703,7 @@ export class ContainerInstance implements Disposable {
      * Therefore, if a container sets a singleton variable, and is an orphan, it won't
      * have any knowledge of it.
      */
-    return [ServiceIdentifierLocation.None, null];
+    return [ServiceIdentifierLocation.None, NativeNull];
   }
 
   /**
@@ -836,7 +837,7 @@ export class ContainerInstance implements Disposable {
        * typing so we need to explicitly cast this to a `ServiceIdentifier`
        */
       id: ((serviceOptions as any).id ?? (serviceOptions as any).type) as ServiceIdentifier,
-      type: null,
+      type: NativeNull,
       ...SERVICE_METADATA_DEFAULTS,
 
       /** We allow overriding the above options via the received config object. */
@@ -1039,7 +1040,7 @@ export class ContainerInstance implements Disposable {
            * TypeScript isn't smart enough to understand that, if 'onConflict' is 'null'
            * and the container already exists, we're allowed to return null to the caller.
            */
-          return null as unknown as ContainerInstance;
+          return NativeNull as unknown as ContainerInstance;
         } else if (onConflict === 'throw') {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
           throw NativeError(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}") already exists.`);
@@ -1048,7 +1049,7 @@ export class ContainerInstance implements Disposable {
     } else {
       if (onFree === 'null') {
         /** As above: The cast here is correct. */
-        return null as unknown as ContainerInstance;
+        return NativeNull as unknown as ContainerInstance;
       } else if (onFree === 'throw') {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
         throw NativeError(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}) does not already exist.`);
@@ -1059,7 +1060,7 @@ export class ContainerInstance implements Disposable {
        */
       container = new ContainerInstance(containerId, parent ?? undefined);
 
-      if (parent === null) {
+      if (parent === NativeNull) {
         /**
          * To keep an understandable API surface, visitors attached to
          * the default container are notified of the new orphaned service here.
@@ -1495,7 +1496,7 @@ export class ContainerInstance implements Disposable {
      */
     if (!identifierIsPresent) {
       if (isOptional) {
-        return null;
+        return NativeNull;
       }
 
       throw new ServiceNotFoundError(identifier);
@@ -1526,7 +1527,7 @@ export class ContainerInstance implements Disposable {
      * and hand-crafted a TypeWrapper, which is not recommended.
      */
     /* istanbul ignore next */
-    if (resolved == null) {
+    if (resolved == NativeNull) {
       throw NativeError(`The wrapped value could not be resolved.`);
     }
 

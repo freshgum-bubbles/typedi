@@ -15,6 +15,7 @@ import { AnyServiceDependency } from '../interfaces/service-dependency.interface
 import { wrapDependencyAsResolvable } from '../utils/wrap-resolvable-dependency.mjs';
 import { isArray } from '../utils/is-array.util.mjs';
 import { NativeError } from '../constants/errors/native-error.const.mjs';
+import { NativeNull } from '../constants/native-null.const.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -126,7 +127,7 @@ export function Service<T>(
   maybeDependencies?: AnyServiceDependency[]
 ): ClassDecorator {
   return targetConstructor => {
-    if (optionsOrDependencies == null || targetConstructor == null) {
+    if (optionsOrDependencies == NativeNull || targetConstructor == NativeNull) {
       throw NativeError('The @Service decorator was not used correctly.');
     }
 
