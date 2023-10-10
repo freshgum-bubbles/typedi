@@ -110,18 +110,28 @@ const TERSER_OPTIONS = {
 
     // Transform regular functions to arrow functions in select circumstances.
     unsafe_arrows: true,
+
+    // Transform { m: function () { } } to { m() { } }.
+    // We don't strictly need this, as we never use functions as properties,
+    // but it may be useful in future.
     unsafe_methods: true,
+
+    // Disable unsafe comparisons, as it may cause issues.
     unsafe_comps: false,
     hoist_funs: true,
     pure_getters: true,
   },
   format: {
     ecma: 2020,
+
+    // We won't need IE8 where we're going.
     ie8: false,
     comments: false,
     wrap_func_args: false,
   },
   mangle: {
+    // Disable any support for Safari 10.
+    // It's a deprecated version, and we only target evergreen browsers.
     safari10: false,
     properties: {
       regex: new RegExp(PROPERTIES_TO_MANGLE.join('|')),
