@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container, ContainerInstance, Service, Token } from 'internal:typedi';
 import { WrappedESServiceDecorator } from '../contrib/es/test-utils/es-service-decorator-wrapper.util';
-import { TypedService } from 'internal:typedi/contrib/typed-service/typed-service.decorator';
+import { TypedService } from '../contrib/typed-service/typed-service.decorator.mjs';
 
 // To ensure conformance between different Service implementations,
 // we wrap some decorators here with stubs which pass them quasi-values.
