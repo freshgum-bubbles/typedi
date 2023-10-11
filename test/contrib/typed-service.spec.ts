@@ -1,4 +1,4 @@
-import { TypedService } from '../../contrib/typed-service/typed-service.decorator.mjs';
+import { TypedService } from 'internal:typedi/contrib/typed-service/typed-service.decorator.mjs';
 
 describe('TypedService', () => {
     it('is a function', () => {
