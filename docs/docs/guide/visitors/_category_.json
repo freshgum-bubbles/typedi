@@ -1,0 +1,5 @@
+{
+    "label": "Visitors",
+    "position": 2,
+    "link": { "type": "doc", "id": "guide/visitors/introduction" }
+  }
