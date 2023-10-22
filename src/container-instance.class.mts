@@ -1188,23 +1188,13 @@ export class ContainerInstance implements Disposable {
     // eslint-disable-next-line @typescript-eslint/require-await
     this.throwIfDisposed();
 
-    /**
-     * TODO: Fix floating disposal promises
-     *
-     * When each service is disposed, the operation may result in a `Promise`,
-     * which presumably resolves when the disposal of the service and its
-     * resources has concluded.
-     *
-     * The current design leaves these `Promise` objects floating, which is an
-     * incredibly bad design flaw of the current system.
-     */
-    this.reset({ strategy: 'resetServices' });
-
     /** We mark the container as disposed, forbidding any further interaction with it. */
     (this as any).disposed = true;
 
-    /** Also dispose visitors. */
-    return this.visitor.dispose();
+    return Promise.all([
+      this.visitor.dispose(),
+      this.reset({ strategy: 'resetServices' })
+    ]);
   }
 
   /**
