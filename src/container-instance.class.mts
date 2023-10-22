@@ -1191,10 +1191,7 @@ export class ContainerInstance implements Disposable {
     /** We mark the container as disposed, forbidding any further interaction with it. */
     (this as any).disposed = true;
 
-    return Promise.all([
-      this.visitor.dispose(),
-      this.reset({ strategy: 'resetServices' })
-    ]);
+    await Promise.all([this.visitor.dispose(), this.reset({ strategy: 'resetServices' })]);
   }
 
   /**
