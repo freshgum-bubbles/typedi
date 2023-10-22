@@ -1,5 +1,6 @@
 import { TYPE_WRAPPER, TypeWrapperStamp } from '../constants/type-wrapper.const.mjs';
-import { ContainerInstance, ServiceIdentifier } from '../index.mjs';
+import { ServiceIdentifier } from '../index.mjs';
+import { ContainerInternals } from '../interfaces/container-internals.interface.mjs';
 import { InferServiceType } from '../types/infer-service-type.type.mjs';
 import { TypeWrapper } from '../types/type-wrapper.type.mjs';
 
@@ -23,8 +24,6 @@ export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferSer
      * process extracted into a new method.  This lets us call it from type-wrappers.
      */
     extract: (container, constraints) =>
-      (
-        container as unknown as { resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'] }
-      ).resolveConstrainedIdentifier(fn(), constraints) as TInstance,
+      (container as unknown as ContainerInternals).resolveConstrainedIdentifier(fn(), constraints) as TInstance,
   };
 }
