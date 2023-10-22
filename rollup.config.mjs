@@ -1,3 +1,5 @@
+// @ts-check
+
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
@@ -170,7 +172,7 @@ const MJS_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
 const TINY_TERSER_OPTIONS = mergeObjects(TERSER_OPTIONS, {
   mangle: {
     properties: {
-      regex: new RegExp(PROPERTIES_TO_MANGLE_FOR_TINY_BUILDS).join('|'),
+      regex: new RegExp(PROPERTIES_TO_MANGLE_FOR_TINY_BUILDS.join('|')),
     },
   },
 });
@@ -189,6 +191,7 @@ const MJS_TINY_TERSER_OPTIONS = mergeObjects(TINY_TERSER_OPTIONS, {
  * Interpolate a pre-existing Rollup output options object with further values.
  *
  * @param {import('rollup').OutputOptions} options The options to merge with defaults.
+ * @return {import('rollup').OutputOptions}
  */
 function createOutput(options) {
   return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
