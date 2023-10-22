@@ -77,19 +77,43 @@ export class VisitorCollection implements Disposable {
     }
   }
 
-  notifyChildContainerVisited(child: ContainerInstance): void {
+  /**
+   * Notify all attached visitors of a newly-created child container.
+   * @internal
+   *
+   * @see {@link ContainerTreeVisitor.visitChildContainer}
+   */
+  public notifyChildContainerVisited(child: ContainerInstance): void {
     this.forEachVisitor(visitor => visitor.visitChildContainer?.(child));
   }
 
-  notifyOrphanedContainerVisited(container: ContainerInstance): void {
+  /**
+   * Notify all attached visitors of a newly-created orphaned container.
+   * @internal
+   *
+   * @see {@link ContainerTreeVisitor.visitOrphanedContainer}
+   */
+  public notifyOrphanedContainerVisited(container: ContainerInstance): void {
     this.forEachVisitor(visitor => visitor.visitOrphanedContainer?.(container));
   }
 
-  notifyNewServiceVisited(serviceOptions: ServiceMetadata<unknown>): void {
+  /**
+   * Notify all attached visitors of a newly-created service.
+   * @internal
+   *
+   * @see {@link ContainerTreeVisitor.visitNewService}
+   */
+  public notifyNewServiceVisited(serviceOptions: ServiceMetadata<unknown>): void {
     this.forEachVisitor(visitor => visitor.visitNewService?.(serviceOptions));
   }
 
-  notifyRetrievalVisited(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
+  /**
+   * Notify all attached visitors of a retrieval.
+   * @internal
+   *
+   * @see {@link ContainerTreeVisitor.visitRetrieval}
+   */
+  public notifyRetrievalVisited(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
     this.forEachVisitor(visitor => visitor.visitRetrieval?.(identifier, options));
   }
 
