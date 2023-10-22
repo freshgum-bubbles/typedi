@@ -1,4 +1,4 @@
-import { ContainerInstance } from "../index.mjs";
+import { ContainerInstance } from '../index.mjs';
 
 /**
  * A collection of private methods which are part of {@link ContainerInstance}.
@@ -7,5 +7,5 @@ import { ContainerInstance } from "../index.mjs";
  * @internal
  */
 export interface ContainerInternals {
-    resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
+  resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
 }
