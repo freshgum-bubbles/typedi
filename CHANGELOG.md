@@ -1,5 +1,55 @@
 # @freshgum/typedi
 
+## 0.6.0
+
+### Minor Changes
+
+- 3fc9b19: A new `SynchronousDisposable` class has been added to `contrib/util`. This class manages the small amount of boilerplate involved in setting up and managing a container-compliant disposable object (implementing `Disposable`).
+
+  As an example...
+
+  ```ts
+  import { Disposable } from '@freshgum/typedi';
+  import { SynchronousDisposable } from '@freshgum/typedi/contrib/util/synchronous-disposable';
+
+  export class MyClass extends SynchronousDisposable implements Disposable {
+    public override dispose() {
+      super.dispose();
+      // Run custom disposal logic here...
+    }
+
+    public myMethod() {
+      if (this.disposed) {
+        throw new Error('The MyClass instance has already been disposed.');
+      }
+
+      // ...
+    }
+  }
+  ```
+
+  It has three responsibilities:
+
+  1. Throwing if `dispose` has been called more than once.
+  2. Setting the `disposed` property.
+  3. Being compliant with the container.
+
+  To keep the API surface minimal, no other functionality has or will be implemented via this class.
+
+  The use-case of _writing methods without worrying about whether the object has been disposed_ is being investigated,
+  as the container makes extensive use of disposal itself.
+
+- ef1dec3: Containers in the `ContainerRegistry` are now part of a stronger-typed collection. This prevents manual `.set` calls to the registry where the key is not equivalent to that of the value being set.
+
+### Patch Changes
+
+- f319e65: type-fest is now listed as a dependency of this package. It contains types used in the typings of TypeDI++'s interfaces. Previously, it was listed as a devDependency -- this was a mistake.
+- f6f1f37: TypeDI++ now has an [API Reference](https://typedi.js.org/api-reference/) page, which documents the exported symbols in the package. This was previously meant to be a part of the website, but got lost along the way :-)
+- 224cc93: The Service decorator now uses the `Container` variable, as opposed to `ContainerInstance.defaultContainer`.
+- 3d32c26: The container now removes visitors which throw an error in their `visitContainer` method.
+  Previously, this resulted in them still receiving notifications from the attached container.
+- 4274c22: Fix for Node not resolving the package entrypoint under certain scenarios.
+
 ## 0.5.0
 
 ### Minor Changes
