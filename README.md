@@ -1,7 +1,9 @@
 # TypeDI<sup>++</sup>
 
 > **Warning**
-> From 0.4.0, support for Node versions under 15.3.0 has been removed, as the package has transitioned to ES Modules.
+> From 0.4.0, support for Node versions under v15.3.0 has been removed, as the package has transitioned to ES Modules.
+> 
+> <sup>See [*Why does the package not support Node versions under v15.3.0?*][pkg-faq-node-15-3-0].</sup>
 
 > **Note**
 > [Experimental support for Bun has also been introduced](https://github.com/freshgum-bubbles/typedi/commit/f2ec73a6fe1598122cf64f7097a77910fab13560).  Feel free to test and report any issues!
@@ -54,4 +56,5 @@ Container.get(RootService).run();
 
 Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbles) & [upstream TypeDI contributors](https://github.com/typestack/typedi/blob/develop/LICENSE).
 
+[pkg-faq-node-15-3-0]: ./FAQ.md#why-does-the-package-not-support-node-versions-under-v1530
 [docs-site]: https://typedi.js.org
