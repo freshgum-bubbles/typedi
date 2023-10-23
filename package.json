@@ -3,6 +3,7 @@
   "version": "0.6.0",
   "description": "Elegant Dependency Injection in JavaScript and TypeScript.",
   "homepage": "https://typedi.js.org",
+  "main": "./build/esm5/entry/index.mjs",
   "maintainers": [
     "freshgum"
   ],
