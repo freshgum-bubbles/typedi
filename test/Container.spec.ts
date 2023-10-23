@@ -574,6 +574,8 @@ describe('Container', function () {
     it('should immediately set "disposed" to true', () => {
       const tempContainer = Container.ofChild(Symbol());
 
+      // Make sure the use of asynchronicity does not mean that the .disposed property
+      // is set at a later point, e.g. when the .disposed promise resolves.
       void tempContainer.dispose();
       expect(tempContainer.disposed).toBe(true);
     });
