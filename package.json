@@ -6,6 +6,7 @@
   "maintainers": [
     "freshgum"
   ],
+  "main": "./build/esm5/entry/index.mjs",
   "author": "freshgum",
   "license": "MIT",
   "private": false,
