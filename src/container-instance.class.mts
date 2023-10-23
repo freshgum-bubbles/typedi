@@ -1184,14 +1184,18 @@ export class ContainerInstance implements Disposable {
    * @throws Error
    * This exception is thrown if the container has been disposed.
    */
-  public async dispose(): Promise<void> {
+  public dispose(): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/require-await
-    this.throwIfDisposed();
+    if (this.disposed) {
+      return Promise.reject(new NativeError('Cannot use container after it has been disposed.'));
+    }
+
+    const promise = Promise.all([this.visitor.dispose(), this.reset({ strategy: 'resetServices' })]);
 
     /** We mark the container as disposed, forbidding any further interaction with it. */
     (this as any).disposed = true;
 
-    await Promise.all([this.visitor.dispose(), this.reset({ strategy: 'resetServices' })]);
+    return promise as unknown as Promise<void>;
   }
 
   /**
