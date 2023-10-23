@@ -45,7 +45,7 @@ describe('ContainerRegistry', () => {
     it('should not allow conflicting string container IDs', () => {
       // Make the ContainerInstance constructor public for use below.
       class MyContainer extends ContainerInstance {
-        public constructor (id: ContainerIdentifier) {
+        public constructor(id: ContainerIdentifier) {
           super(id);
         }
       }
