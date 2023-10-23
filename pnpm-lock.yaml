@@ -76,9 +76,6 @@ devDependencies:
   prettier:
     specifier: ^3.0.3
     version: 3.0.3
-  reflect-metadata:
-    specifier: 0.1.13
-    version: 0.1.13
   rimraf:
     specifier: 5.0.1
     version: 5.0.1
@@ -4634,10 +4631,6 @@ packages:
     dependencies:
       indent-string: 4.0.0
       strip-indent: 3.0.0
-    dev: true
-
-  /reflect-metadata@0.1.13:
-    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
     dev: true
 
   /regenerator-runtime@0.14.0:
