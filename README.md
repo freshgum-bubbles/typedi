@@ -1,10 +1,10 @@
 # TypeDI<sup>++</sup>
 
 > **Warning**
-> Support for Node versions under 15.3.0 has been removed, as the package has transitioned to ES Modules.
+> From 0.4.0, support for Node versions under 15.3.0 has been removed, as the package has transitioned to ES Modules.
 
 > **Note**
-> Experimental support for Bun has also been introduced.  Feel free to test and report any issues!
+> [Experimental support for Bun has also been introduced](https://github.com/freshgum-bubbles/typedi/commit/f2ec73a6fe1598122cf64f7097a77910fab13560).  Feel free to test and report any issues!
 
 ![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)][docs-site] ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
