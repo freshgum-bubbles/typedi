@@ -120,6 +120,17 @@ describe('ContainerRegistry', () => {
       expect(ContainerRegistry.removeContainer(newContainer)).resolves.toBeUndefined();
     });
 
+    it('should not dispose already-disposed containers', async () => {
+      const newContainer = Container.of(Symbol());
+      const disposeSpy = jest.spyOn(newContainer, 'dispose');
+
+      await newContainer.dispose();
+      await ContainerRegistry.removeContainer(newContainer);
+
+      // We already called "dispose" after the spy was set up, so expect only one call.
+      expect(disposeSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should return a promise', () => {
       const newContainer = Container.of('CS.RC-4');
 
