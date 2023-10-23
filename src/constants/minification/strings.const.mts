@@ -25,3 +25,4 @@ null;
 
 export const __A_CONTAINER_WITH_THE_SPECIFIED_NAME = 'A container with the specified name';
 export const __NO_CONTAINER_IS_REGISTERED_WITH_THE_GIVEN_ID = 'No container is registered with the given ID.';
+export const __CANNOT_USE_CONTAINER_AFTER_IT_HAS_BEEN_DISPOSED = 'Cannot use container after it has been disposed.';

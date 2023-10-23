@@ -30,7 +30,10 @@ import { VisitorCollection } from './visitor-collection.class.mjs';
 import { CreateContainerOptions } from './interfaces/create-container-options.interface.mjs';
 import { CreateContainerResult } from './types/create-container-result.type.mjs';
 import { ServiceIdentifierLocation } from './types/service-identifier-location.type.mjs';
-import { __A_CONTAINER_WITH_THE_SPECIFIED_NAME } from './constants/minification/strings.const.mjs';
+import {
+  __A_CONTAINER_WITH_THE_SPECIFIED_NAME,
+  __CANNOT_USE_CONTAINER_AFTER_IT_HAS_BEEN_DISPOSED,
+} from './constants/minification/strings.const.mjs';
 import { MultiIDLookupResponse } from './types/multi-id-lookup-response.type.mjs';
 import { ManyServicesMetadata } from './interfaces/many-services-metadata.interface.mjs';
 import { isArray } from './utils/is-array.util.mjs';
@@ -1187,7 +1190,7 @@ export class ContainerInstance implements Disposable {
   public dispose(): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/require-await
     if (this.disposed) {
-      return Promise.reject(new NativeError('Cannot use container after it has been disposed.'));
+      return Promise.reject(new NativeError(__CANNOT_USE_CONTAINER_AFTER_IT_HAS_BEEN_DISPOSED));
     }
 
     const promise = Promise.all([this.visitor.dispose(), this.reset({ strategy: 'resetServices' })]);
@@ -1216,7 +1219,7 @@ export class ContainerInstance implements Disposable {
   private throwIfDisposed() {
     if (this.disposed) {
       // TODO: Use custom error.
-      throw NativeError('Cannot use container after it has been disposed.');
+      throw NativeError(__CANNOT_USE_CONTAINER_AFTER_IT_HAS_BEEN_DISPOSED);
     }
   }
 
