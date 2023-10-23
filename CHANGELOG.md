@@ -1,15 +1,5 @@
 # @freshgum/typedi
 
-## 0.7.0
-
-### Minor Changes
-
-- 658d830: The ContainerInstance.dispose method now runs semi-synchronously. This means that, immediately after calling it, the `disposed` property will be set to `true`. This is a semi-preemptive fix for situations where, due to the method previously being marked as `async`, the property would not be set in the same event loop iteration.
-
-### Patch Changes
-
-- 8b13caa: The `ContainerRegistry.removeContainer` method no longer disposes already-disposed containers. This may have been an issue if a container was disposed, and then `removeContainer` was called; the call would always fail, as the registry attempted a disposal upon the container when doing so was invalid.
-
 ## 0.6.0
 
 ### Minor Changes
@@ -50,6 +40,7 @@
   as the container makes extensive use of disposal itself.
 
 - ef1dec3: Containers in the `ContainerRegistry` are now part of a stronger-typed collection. This prevents manual `.set` calls to the registry where the key is not equivalent to that of the value being set.
+- 658d830: The ContainerInstance.dispose method now runs semi-synchronously. This means that, immediately after calling it, the `disposed` property will be set to `true`. This is a semi-preemptive fix for situations where, due to the method previously being marked as `async`, the property would not be set in the same event loop iteration.
 
 ### Patch Changes
 
@@ -59,6 +50,7 @@
 - 3d32c26: The container now removes visitors which throw an error in their `visitContainer` method.
   Previously, this resulted in them still receiving notifications from the attached container.
 - 4274c22: Fix for Node not resolving the package entrypoint under certain scenarios.
+- 8b13caa: The `ContainerRegistry.removeContainer` method no longer disposes already-disposed containers. This may have been an issue if a container was disposed, and then `removeContainer` was called; the call would always fail, as the registry attempted a disposal upon the container when doing so was invalid.
 
 ## 0.5.0
 
