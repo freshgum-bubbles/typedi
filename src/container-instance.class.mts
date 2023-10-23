@@ -1161,6 +1161,7 @@ export class ContainerInstance implements Disposable {
 
   /**
    * Dispose the container, rendering it unable to perform any further injection or storage.
+   * @async
    *
    * @remarks
    * It is currently not advised to dispose of the default container.
