@@ -105,6 +105,8 @@ export class ContainerRegistry {
     ContainerRegistry.containerMap.delete(container.id);
 
     /** We dispose all registered classes in the container. */
-    await registeredContainer.dispose();
+    if (!registeredContainer.disposed) {
+      registeredContainer.dispose();
+    }
   }
 }
