@@ -1196,6 +1196,7 @@ export class ContainerInstance implements Disposable {
     (this as any).disposed = true;
 
     /** Cast the promise to `Promise<void>` as expected. */
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return promise.then(() => {});
   }
 
