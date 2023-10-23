@@ -571,6 +571,13 @@ describe('Container', function () {
       });
     });
 
+    it('should immediately set "disposed" to true', () => {
+      const tempContainer = Container.ofChild(Symbol());
+
+      void tempContainer.dispose();
+      expect(tempContainer.disposed).toBe(true);
+    });
+
     it('should throw an error if the container is already disposed', () => {
       const tempContainer = Container.of(Symbol());
 
