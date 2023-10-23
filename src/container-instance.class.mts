@@ -1195,7 +1195,8 @@ export class ContainerInstance implements Disposable {
     /** We mark the container as disposed, forbidding any further interaction with it. */
     (this as any).disposed = true;
 
-    return promise as unknown as Promise<void>;
+    /** Cast the promise to `Promise<void>` as expected. */
+    return promise.then(() => {});
   }
 
   /**
