@@ -499,7 +499,7 @@ describe('Container', function () {
     });
 
     it('should return the default container when "default" is passed', () => {
-      const container = Container.of(Symbol());
+      const container = Container.of('default');
 
       expect(container).not.toBe(null);
       expect(container).toStrictEqual(Container);
