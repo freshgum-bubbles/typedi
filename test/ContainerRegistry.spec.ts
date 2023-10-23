@@ -1,5 +1,6 @@
 import { ContainerInstance, Container, ContainerIdentifier } from 'internal:typedi';
 import { ContainerRegistry } from 'internal:typedi/container-registry.class.mjs';
+import { createRandomUid } from './utils/create-random-name.util';
 
 describe('ContainerRegistry', () => {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
@@ -34,11 +35,27 @@ describe('ContainerRegistry', () => {
     });
 
     it('should not allow conflicting container IDs', () => {
-      const fooContainer = Container.of('CR.RC-1');
+      const fooContainer = Container.of(Symbol());
 
       /** The first call should fail too, as .of registers the container in the registry. */
       expect(() => ContainerRegistry.registerContainer(fooContainer)).toThrow();
       expect(() => ContainerRegistry.registerContainer(fooContainer)).toThrow();
+    });
+
+    it('should not allow conflicting string container IDs', () => {
+      // Make the ContainerInstance constructor public for use below.
+      class MyContainer extends ContainerInstance {
+        public constructor (id: ContainerIdentifier) {
+          super(id);
+        }
+      }
+
+      const NAME = createRandomUid();
+
+      const myContainer1 = new MyContainer(NAME);
+      const myContainer2 = new MyContainer(NAME);
+      expect(() => ContainerRegistry.registerContainer(myContainer1)).not.toThrowError();
+      expect(() => ContainerRegistry.registerContainer(myContainer2)).toThrowError();
     });
 
     it('should allow unique IDs', () => {
