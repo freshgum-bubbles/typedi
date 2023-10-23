@@ -106,7 +106,7 @@ export class ContainerRegistry {
 
     /** We dispose all registered classes in the container. */
     if (!registeredContainer.disposed) {
-      registeredContainer.dispose();
+      await registeredContainer.dispose();
     }
   }
 }
