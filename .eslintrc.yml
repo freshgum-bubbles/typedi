@@ -36,8 +36,7 @@ rules:
   # If @ts-ignore is being used, it's probably for a good reason.
   # In one part of the code-base, it's used due to a bug in the TypeScript compiler.
   # Therefore, it's turned off here.
-  '@typescript-eslint/ban-ts-comment':
-    - 'off'
+  '@typescript-eslint/ban-ts-comment': off
 
   '@typescript-eslint/ban-types': off
   '@typescript-eslint/no-unsafe-return': off
