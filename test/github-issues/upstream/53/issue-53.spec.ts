@@ -1,6 +1,13 @@
 import { Container, Service, Token } from 'internal:typedi';
+import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../../utils/create-test-name-from-github-issue.util';
 
-describe('github issues > #53 Token-based services are cached in the Global container even when fetched via a subcontainer', function () {
+const TEST_NAME = createTestNameFromGitHubIssue({
+  id: 53,
+  summary: 'Token-based services are cached in the default container, even when fetched via a subcontainer',
+  repository: GH_UPSTREAM
+});
+
+describe(TEST_NAME, function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
 
   it('should work properly', function () {

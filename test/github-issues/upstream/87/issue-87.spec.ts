@@ -1,9 +1,16 @@
 import { Container, Service, ServiceNotFoundError } from 'internal:typedi';
+import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../../utils/create-test-name-from-github-issue.util';
 
-describe('Github Issues', function () {
+const TEST_NAME = createTestNameFromGitHubIssue({
+  id: 87,
+  summary: 'The container does not throw an error when a dependency is not found',
+  repository: GH_UPSTREAM
+});
+
+describe(TEST_NAME, function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
 
-  it('#87 - TypeDI should throw error if a dependency is not found', () => {
+  it('should work properly', () => {
     @Service([])
     class InjectedClassA {}
 

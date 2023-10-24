@@ -1,9 +1,16 @@
 import { Container, Service } from 'internal:typedi';
+import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../../utils/create-test-name-from-github-issue.util';
 
-describe('Github Issues', function () {
+const TEST_NAME = createTestNameFromGitHubIssue({
+  id: 157,
+  summary: 'Container.reset should not break transient services',
+  repository: GH_UPSTREAM
+});
+
+describe(TEST_NAME, function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
 
-  it('#157 - reset should not break transient services', () => {
+  it('should work properly', () => {
     let creationCounter = 0;
 
     @Service({ scope: 'transient' }, [])

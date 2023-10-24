@@ -1,9 +1,16 @@
 import { Container, Service } from 'internal:typedi';
+import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../../utils/create-test-name-from-github-issue.util';
 
-describe('Github Issues', function () {
+const TEST_NAME = createTestNameFromGitHubIssue({
+  id: 61,
+  summary: 'A child container creates a new instance of a service each time .get is called',
+  repository: GH_UPSTREAM
+});
+
+describe(TEST_NAME, function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
 
-  it('#61 - Scoped container creates new instance of service every time', function () {
+  it('should work properly', function () {
     @Service([])
     class CarABC {
       public name = 'carabc-default';

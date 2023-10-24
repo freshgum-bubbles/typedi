@@ -1,6 +1,13 @@
 import { Container, Service, Token } from 'internal:typedi';
+import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../../utils/create-test-name-from-github-issue.util';
 
-describe('github issues > #41 Token as service id in combination with factory', function () {
+const TEST_NAME = createTestNameFromGitHubIssue({
+  id: 41,
+  summary: 'Possible to use tokens as service ID in combination with factory',
+  repository: GH_UPSTREAM
+});
+
+describe(TEST_NAME, function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
 
   it('should work properly', function () {
