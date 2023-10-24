@@ -4,7 +4,7 @@ import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-t
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 87,
   summary: 'The container does not throw an error when a dependency is not found',
-  repository: GH_UPSTREAM
+  repository: GH_UPSTREAM,
 });
 
 describe(TEST_NAME, function () {

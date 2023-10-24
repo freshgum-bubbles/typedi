@@ -4,7 +4,7 @@ import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-t
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 61,
   summary: 'A child container creates a new instance of a service each time .get is called',
-  repository: GH_UPSTREAM
+  repository: GH_UPSTREAM,
 });
 
 describe(TEST_NAME, function () {

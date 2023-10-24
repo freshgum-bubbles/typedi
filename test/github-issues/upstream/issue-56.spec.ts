@@ -4,8 +4,8 @@ import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-t
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 56,
   summary: 'Extended classes are being overwritten (?)',
-  repository: GH_UPSTREAM
-})
+  repository: GH_UPSTREAM,
+});
 
 describe(TEST_NAME, function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));

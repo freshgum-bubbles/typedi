@@ -4,7 +4,7 @@ import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-t
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 53,
   summary: 'Token-based services are cached in the default container, even when fetched via a subcontainer',
-  repository: GH_UPSTREAM
+  repository: GH_UPSTREAM,
 });
 
 describe(TEST_NAME, function () {

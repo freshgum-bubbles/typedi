@@ -4,7 +4,7 @@ import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-t
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 41,
   summary: 'Possible to use tokens as service ID in combination with factory',
-  repository: GH_UPSTREAM
+  repository: GH_UPSTREAM,
 });
 
 describe(TEST_NAME, function () {

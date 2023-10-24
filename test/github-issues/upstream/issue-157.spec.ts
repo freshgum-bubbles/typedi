@@ -4,7 +4,7 @@ import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-t
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 157,
   summary: 'Container.reset should not break transient services',
-  repository: GH_UPSTREAM
+  repository: GH_UPSTREAM,
 });
 
 describe(TEST_NAME, function () {
