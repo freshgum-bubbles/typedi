@@ -62,3 +62,6 @@ website/static/api-reference/
 
 # Environmental secrets file
 .env
+
+# Secrets / temporary files
+out/
