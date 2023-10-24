@@ -1,5 +1,5 @@
 import { Container, Service, ServiceNotFoundError } from 'internal:typedi';
-import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../../utils/create-test-name-from-github-issue.util';
+import { GH_UPSTREAM, createTestNameFromGitHubIssue } from '../../utils/create-test-name-from-github-issue.util';
 
 const TEST_NAME = createTestNameFromGitHubIssue({
   id: 87,
