@@ -7,7 +7,10 @@ import {
   VisitRetrievalOptions,
 } from '../../../../index.mjs';
 import { SynchronousDisposable } from '../../../util/synchronous-disposable.class.mjs';
-import { TreeContainerDescriptorType, TreeParentContainerDescriptor } from '../types/tree-container-descriptor.interface.mjs';
+import {
+  TreeContainerDescriptorType,
+  TreeParentContainerDescriptor,
+} from '../types/tree-container-descriptor.interface.mjs';
 import { TreeRetrievalDescriptor } from '../types/tree-retrieval-descriptor.interface.mjs';
 import { TreeServiceDescriptor } from '../types/tree-service-descriptor.interface.mjs';
 
@@ -32,9 +35,9 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
 
   visitContainer?(container: ContainerInstance): boolean {
     if (this.disposed) {
-        throw new Error('A disposed JSONContainerInspector instance cannot be added as a visitor to a container.');
+      throw new Error('A disposed JSONContainerInspector instance cannot be added as a visitor to a container.');
     }
-    
+
     /** Prevent the visitor being added if it is already attached to a container. */
     if (this.container) {
       throw new Error('The JSONContainerInspector is already attached to a container.');
@@ -45,9 +48,9 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
     this.descriptor = {
       type: TreeContainerDescriptorType.Parent,
       identifier: container.id,
-      children: [ ] as TreeParentContainerDescriptor[],
-      services: [ ] as TreeServiceDescriptor[],
-      retrievals: [ ] as TreeRetrievalDescriptor[],
+      children: [] as TreeParentContainerDescriptor[],
+      services: [] as TreeServiceDescriptor[],
+      retrievals: [] as TreeRetrievalDescriptor[],
     };
 
     return true;
@@ -56,9 +59,9 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
   visitRetrieval?(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
     const currentTime = this.getCurrentTime();
     const retrievalDescriptor: TreeRetrievalDescriptor = {
-        time: currentTime,
-        identifier,
-        options
+      time: currentTime,
+      identifier,
+      options,
     };
 
     this.descriptor!.retrievals.push(retrievalDescriptor);
@@ -66,13 +69,13 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
 
   /**
    * Get the current system time.
-   * 
+   *
    * @remarks
    * The default implementation makes use of `performance.now()` to measure time.
-   * 
+   *
    * @returns The current time in milliseconds.
    */
-  protected getCurrentTime () {
+  protected getCurrentTime() {
     return performance.now();
   }
 }

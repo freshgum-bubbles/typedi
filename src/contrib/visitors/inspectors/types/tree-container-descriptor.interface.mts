@@ -6,7 +6,7 @@ import { TreeServiceDescriptor } from './tree-service-descriptor.interface.mjs';
 
 export const enum TreeContainerDescriptorType {
   Orphaned,
-  Parent
+  Parent,
 }
 
 export interface BaseTreeContainerDescriptor {
@@ -25,6 +25,4 @@ export interface TreeParentContainerDescriptor extends BaseTreeContainerDescript
   readonly children: TreeParentContainerDescriptor[];
 }
 
-export type TreeContainerDescriptor =
-  | TreeOrphanedContainerDescriptor
-  | TreeParentContainerDescriptor;
+export type TreeContainerDescriptor = TreeOrphanedContainerDescriptor | TreeParentContainerDescriptor;
