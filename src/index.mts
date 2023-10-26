@@ -1,10 +1,10 @@
 export { JSService } from './decorators/js-service.decorator.mjs';
 export { Service } from './decorators/service.decorator.mjs';
 
-export * from './error/cannot-instantiate-builtin-error.mjs';
-export * from './error/cannot-instantiate-value.error.mjs';
-export * from './error/container-registry-error.error.mjs';
-export * from './error/service-not-found.error.mjs';
+export { CannotInstantiateBuiltInError } from './error/cannot-instantiate-builtin-error.mjs';
+export { CannotInstantiateValueError } from './error/cannot-instantiate-value.error.mjs';
+export { ContainerRegistryError } from './error/container-registry-error.error.mjs';
+export { ServiceNotFoundError } from './error/service-not-found.error.mjs';
 
 export { HostContainer } from './functions/host-container.function.mjs';
 export { Lazy } from './functions/lazy.function.mjs';
