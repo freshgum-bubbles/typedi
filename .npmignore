@@ -28,3 +28,7 @@
 
 # Unnecessary template for .env file
 .env.template
+
+# Ensure potentially relevant documentation is included in the NPM tarball.
+!FAQ.md
+!CHANGELOG.md
