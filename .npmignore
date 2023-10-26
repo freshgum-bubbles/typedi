@@ -22,3 +22,9 @@
 /jest.config.js
 /tsconfig*.json
 /tslint.json
+
+# Environmental secrets file -- should never be pushed to production!
+.env
+
+# Unnecessary template for .env file
+.env.template
