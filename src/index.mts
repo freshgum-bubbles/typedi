@@ -3,6 +3,7 @@ export { Service } from './decorators/service.decorator.mjs';
 
 export * from './error/cannot-instantiate-builtin-error.mjs';
 export * from './error/cannot-instantiate-value.error.mjs';
+export * from './error/container-registry-error.error.mjs';
 export * from './error/service-not-found.error.mjs';
 
 export { HostContainer } from './functions/host-container.function.mjs';
