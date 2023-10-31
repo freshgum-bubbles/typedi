@@ -1,3 +1,5 @@
+const { TYPESCRIPT_CONFIGURATIONS } = require('./scripts/getTsConfigFiles.cjs');
+
 /** @type {import('jest').Config} */
 const configuration = {
   preset: 'ts-jest',
@@ -7,9 +9,7 @@ const configuration = {
   transform: {
     '^.+\\.(m?[tj]sx?)$': [
       'ts-jest',
-      {
-        tsconfig: 'tsconfig.spec.json',
-      },
+      { tsconfig: TYPESCRIPT_CONFIGURATIONS.Spec },
     ],
   },
   resolver: '<rootDir>/scripts/testing/jest-module-resolver.cjs',
