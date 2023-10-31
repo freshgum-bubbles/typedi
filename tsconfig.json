@@ -1,28 +1,3 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "ESNext",
-    "lib": ["es2017"],
-    "rootDirs": ["./src"],
-
-    // This configuration intentionally acts as a base for other TSConfig files.
-    // Therefore, it doesn't emit any files.  Extending configurations must disable
-    // this flag to ensure builds are emitted by the compiler.
-    "noEmit": true,
-
-    "strict": true,
-    "sourceMap": true,
-    "inlineSources": false,
-    "inlineSourceMap": false,
-    "removeComments": false,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "stripInternal": true
-  },
-  "exclude": ["build", "node_modules", "sample", "**/*.spec.ts", "test/**", "docs", "website/**", "dist"]
+  "extends": "./scripts/tsconfig/tsconfig.base.json"
 }
