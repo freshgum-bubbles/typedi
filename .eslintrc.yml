@@ -4,9 +4,9 @@ plugins:
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
-  project: 
+  project:
     - ./tsconfig.json
-    - ./tsconfig.spec.json
+    - ./scripts/tsconfig/tsconfig.spec.json
 extends:
   - 'plugin:@typescript-eslint/recommended'
   - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
