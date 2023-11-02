@@ -1,9 +1,11 @@
+// @ts-check
+
 const { repository, name } = require('./package.json');
 const { TYPESCRIPT_CONFIGURATIONS } = require('./scripts/getTsConfigFiles.cjs');
 
 const repositoryURL = repository.url.replace(/\/?\.git$/i, '');
 
-/** @type {import('typedoc').TypeDocOptions} */
+/** @type {Partial<import('typedoc').TypeDocOptions>} */
 var configuration = {
   /**
    * The barrel file exports everything consumers should currently know about.
