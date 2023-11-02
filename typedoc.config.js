@@ -1,4 +1,5 @@
 const { repository, name } = require('./package.json');
+const { TYPESCRIPT_CONFIGURATIONS } = require('./scripts/getTsConfigFiles.cjs');
 
 const repositoryURL = repository.url.replace(/\/?\.git$/i, '');
 
@@ -33,7 +34,7 @@ var configuration = {
 
   /** The README is included in the index.html page. */
   readme: 'README.md',
-  tsconfig: 'tsconfig.typedoc.json',
+  tsconfig: TYPESCRIPT_CONFIGURATIONS.Spec,
   out: './docs/static/api-reference/',
   pretty: true,
   titleLink: repository.url,
