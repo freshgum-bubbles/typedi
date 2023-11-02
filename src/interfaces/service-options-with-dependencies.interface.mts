@@ -1,4 +1,4 @@
-import { PickRequired } from '../types/pick-required.type.mjs';
+import { SetRequired } from 'type-fest';
 import { ServiceOptions } from './service-options.interface.mjs';
 
 /**
@@ -6,4 +6,4 @@ import { ServiceOptions } from './service-options.interface.mjs';
  *
  * @see {@link ServiceOptions}
  */
-export type ServiceOptionsWithDependencies<T> = PickRequired<ServiceOptions<T>, 'dependencies'>;
+export type ServiceOptionsWithDependencies<T> = SetRequired<ServiceOptions<T>, 'dependencies'>;
