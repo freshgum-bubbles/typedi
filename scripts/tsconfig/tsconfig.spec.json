@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "rootDirs": ["./src", "./test"],
+    "rootDirs": ["../../src/", "../../test/"],
     "strict": false,
     "sourceMap": false,
     "removeComments": true,

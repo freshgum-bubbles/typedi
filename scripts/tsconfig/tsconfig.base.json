@@ -4,7 +4,7 @@
       "moduleResolution": "node",
       "target": "ESNext",
       "lib": ["es2017"],
-      "rootDirs": ["./src"],
+      "rootDirs": ["../../src/"],
 
       // This configuration intentionally acts as a base for other TSConfig files.
       // Therefore, it doesn't emit any files.  Extending configurations must disable
@@ -24,5 +24,17 @@
       "noImplicitAny": true,
       "stripInternal": true
     },
-    "exclude": ["build", "node_modules", "sample", "**/*.spec.ts", "test/**", "docs", "website/**", "dist"]
+    "exclude": [
+      "../../build",
+      "../../node_modules",
+      "../../sample",
+      "../../**/*.spec.ts",
+      "../../test/**",
+      "../../docs",
+      "../../website/**",
+      "../../dist"
+    ],
+    "include": [
+      "../../src/"
+    ]
   }
