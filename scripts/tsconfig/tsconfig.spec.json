@@ -6,8 +6,8 @@
     "sourceMap": false,
     "removeComments": true,
     "paths": {
-      "internal:typedi": ["./src/index.mjs"],
-      "internal:typedi/*": ["./src/*"]
+      "internal:typedi": ["../../src/index.mts"],
+      "internal:typedi/*": ["../../src/*"]
     }
   },
   "exclude": ["node_modules"]
