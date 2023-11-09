@@ -38,6 +38,13 @@
       "default": "./build/esm5/contrib/util/synchronous-disposable.mjs",
       "node": "./build/esm5/contrib/util/synchronous-disposable.mjs",
       "bun": "./src/contrib/util/synchronous-disposable.class.mts"
+    },
+    "./contrib/util/get-service-identifier-type": {
+      "types": "./build/esm5/contrib/util/get-service-identifier-type.util.d.mts",
+      "import": "./build/esm5/contrib/util/get-service-identifier-type.util.mjs",
+      "default": "./build/esm5/contrib/util/get-service-identifier-type.util.mjs",
+      "node": "./build/esm5/contrib/util/get-service-identifier-type.util.mjs",
+      "bun": "./src/contrib/util/get-service-identifier-type.util.mts"
     }
   },
   "engines": {
