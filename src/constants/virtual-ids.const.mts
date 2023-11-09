@@ -10,7 +10,7 @@ import { HOST_CONTAINER } from "./host-container.const.mjs";
  * In these situations, returning `false` on a .has check would not be spec-compliant,
  * and would expose internal implementation details regarding the container.
  */
-export const VIRTUAL_IDENTIFIERS: ServiceIdentifier[] = [
+export const VIRTUAL_IDENTIFIERS: readonly ServiceIdentifier[] = [
     /**
      * Provide compatibility with the `HostContainer()` API.
      */
