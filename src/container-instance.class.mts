@@ -39,24 +39,9 @@ import { ManyServicesMetadata } from './interfaces/many-services-metadata.interf
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
 import { NativeNull } from './constants/minification/native-null.const.mjs';
+import { VIRTUAL_IDENTIFIERS } from './constants/virtual-ids.const.mjs';
 
 let defaultContainer!: ContainerInstance;
-
-/**
- * A list of IDs which, when passed to `.has`, always return true.
- *
- * This is used to facilitate the implementation of virtual tokens such as
- * HostContainer which are not actually present in the container.
- *
- * In these situations, returning `false` on a .has check would not be spec-compliant,
- * and would expose internal implementation details regarding the container.
- */
-const ALWAYS_RESOLVABLE: ServiceIdentifier[] = [
-  /**
-   * Provide compatibility with the `HostContainer()` API.
-   */
-  HOST_CONTAINER,
-];
 
 /**
  * # The Container.
@@ -157,7 +142,7 @@ export class ContainerInstance implements Disposable {
   public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
     this.throwIfDisposed();
 
-    if (ALWAYS_RESOLVABLE.includes(identifier)) {
+    if (VIRTUAL_IDENTIFIERS.includes(identifier)) {
       return true;
     }
 
@@ -796,7 +781,7 @@ export class ContainerInstance implements Disposable {
      * such as HostContainer.
      * If so, we can't reasonably allow this service to be set.
      */
-    if (ALWAYS_RESOLVABLE.includes((serviceOptions as any).id as ServiceIdentifier)) {
+    if (VIRTUAL_IDENTIFIERS.includes((serviceOptions as any).id as ServiceIdentifier)) {
       throw NativeError('Virtual identifiers can not be overridden.');
     }
 
