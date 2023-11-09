@@ -2,4 +2,5 @@
   // This TS config is added for VS Code, so it understand the test files are
   // using the tsconfig.spec.json file instead of the default one.
   "extends": "../scripts/tsconfig/tsconfig.spec.json",
+  "include": ["./**/*", "./*"]
 }

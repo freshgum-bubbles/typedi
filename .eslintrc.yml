@@ -6,7 +6,7 @@ parserOptions:
   sourceType: module
   project:
     - ./tsconfig.json
-    - ./scripts/tsconfig/tsconfig.spec.json
+    - ./test/tsconfig.json
 extends:
   - 'plugin:@typescript-eslint/recommended'
   - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
