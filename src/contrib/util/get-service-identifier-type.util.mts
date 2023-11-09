@@ -6,7 +6,6 @@ import type { Token, HostContainer, ServiceIdentifier } from "../../index.mjs";
  * A description of a {@link ServiceIdentifier}'s type.
  *
  * @see {@link getServiceIdentifierType}
- *
  */
 export enum ServiceIdentifierType {
     /**
