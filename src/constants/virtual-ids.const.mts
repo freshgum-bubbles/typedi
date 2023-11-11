@@ -1,5 +1,5 @@
-import { ServiceIdentifier } from "../index.mjs";
-import { HOST_CONTAINER } from "./host-container.const.mjs";
+import { ServiceIdentifier } from '../index.mjs';
+import { HOST_CONTAINER } from './host-container.const.mjs';
 
 /**
  * A list of IDs which, when passed to `.has`, always return true.
@@ -11,8 +11,8 @@ import { HOST_CONTAINER } from "./host-container.const.mjs";
  * and would expose internal implementation details regarding the container.
  */
 export const VIRTUAL_IDENTIFIERS: readonly ServiceIdentifier[] = [
-    /**
-     * Provide compatibility with the `HostContainer()` API.
-     */
-    HOST_CONTAINER,
+  /**
+   * Provide compatibility with the `HostContainer()` API.
+   */
+  HOST_CONTAINER,
 ];
