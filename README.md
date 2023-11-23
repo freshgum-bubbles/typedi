@@ -59,21 +59,30 @@ class RootService {
 Container.get(RootService).run();
 ```
 
+## Runtime Support
+
+This DI implementation doesn't require any sort of precompilation / bundler steps, aside from the usual one provided by your TypeScript compiler.
+
 ## Project Goals
 
 Some goals of the project include:
 
-- **To keep things simple**: Containers are essentially type-safe `Map` instances, with smarts for resolving dependencies, managing container hierarchies, resolving constraints, and some additional functionality.
-- **Avoid reinventing the wheel**: I could bundle an endless amount of code in this package, but I'd rather not -- instead, let's allow this project to focus on one thing and execute it well, as opposed to doing hundreds of things badly.
-- **Have a minimal presence in bundles**: As it stands, the production builds of this project are around 10kB.  Other libraries tend to be much larger, which typically leads to a lot of unused functionality and slower loading times on constrained network connections.
-- **Extensibility**: The container, and all other parts of the package, should be extendable by the consumer, instead of forcing everyone into a pre-defined workflow.  However, steps are taken to ensure that the consumer is guided into making The Right Decision<sup>(tm)</sup> when not doing so would be harder to manage.
-- **To allow for opaque implementations**: The package should avoid using global state where possible (aside from the default container, of course), to prevent libraries using the package from conflicting with end-user code.
-- **Avoid breaking end-user code**: As the package is sub-v1, this isn't as much of a priority right now; however, very few breaking changes are introduced, and the changes that *are* made are typically made for good reasons (and are documented in the changelog.).  Unnecessarily breaking end-user code is pointless, frustrating, and causes work for everyone.
-- **Make it easy to create well-defined, stable interfaces**: Currently, this is done through simply using service classes.  Instances of said classes can then be attained and used as regular instances.
-- **Avoid magical syntax, in favour of easy, simple syntax**: Avoid using "magic" when doing so would be unnecessary, and would obfuscate what the code does to anyone not familiar with this container implementation.
-- **Do one thing, and do it well**.
+1. **To keep things simple**: Containers are essentially type-safe `Map` instances, with smarts for resolving dependencies, managing container hierarchies, resolving constraints, and some additional functionality.
+2. **Avoid reinventing the wheel**: I could bundle an endless amount of code in this package, but I'd rather not -- instead, let's allow this project to focus on one thing and execute it well, as opposed to doing hundreds of things badly.
+3. **Have a minimal presence in bundles**: As it stands, the production builds of this project are around 10kB.  Other libraries tend to be much larger, which typically leads to a lot of unused functionality and slower loading times on constrained network connections.
+4. **Extensibility**: The container, and all other parts of the package, should be extendable by the consumer, instead of forcing everyone into a pre-defined workflow.  However, steps are taken to ensure that the consumer is guided into making The Right Decision<sup>(tm)</sup> when not doing so would be harder to manage.
+5. **To allow for opaque implementations**: The package should avoid using global state where possible (aside from the default container, of course), to prevent libraries using the package from conflicting with end-user code.
+6. **Avoid breaking end-user code**: As the package is sub-v1, this isn't as much of a priority right now; however, very few breaking changes are introduced, and the changes that *are* made are typically made for good reasons (and are documented in the changelog.).  Unnecessarily breaking end-user code is pointless, frustrating, and causes work for everyone.
+7. **Make it easy to create well-defined, stable interfaces**: Currently, this is done through simply using service classes.  Instances of said classes can then be attained and used as regular instances.
+8. **Avoid magical syntax, in favour of easy, simple syntax**: Avoid using "magic" when doing so would be unnecessary, and would obfuscate what the code does to anyone not familiar with this container implementation.
+9. **Encompass isomorphism.**: Some other DI implementations access Node-specific APIs (e.g. the filesystem); we don't want to do that here.  Instead of tying the library to a specific runtime, or set of libraries, **this implementation aims to be compatible across different bundlers, ecosystems, runners, and more**.  However, we can't explicitly guarantee compatibility with runtimes we don't personally use; if you think we've missed something, however, please open an issue.
+10. **Do one thing, and do it well**.  Regarding filesystems, we've *specifically* made a note of avoiding doing anything like that here; it's fragile, hard to debug, and generally becomes an annoyance as a project scales, files are moved, and paths have to be continually updated.  Instead of that, regular `import` statements are used; this dramatically simplifies any required refactoring work, and general maintenance of consumer code.
 
 This container was initially made for my own use in code, though I will happily take suggestions, issues and feature requests to improve it.
+
+## Project Non-Goals
+
+*These will be added if any features are requested that are not compatible with the project goals.*
 
 ## "Why was this created?"
 
