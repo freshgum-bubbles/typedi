@@ -92,7 +92,7 @@ It's mainly a more modern, simpler version of the original [TypeDI project](http
 
 <img src="./assets/this-is-fine-meme.png" width="150px" />
 
-Yes.  I regularly use it as part of my packages.  However, bear in mind that, as the goal of this package is to do one thing well, there may not be updates for periods if they are not explicitly required, or if the addition of further functionality would go against the project goals.
+Yes.  I regularly use it as part of my packages[^6].  However, bear in mind that, as the goal of this package is to do one thing well, there may not be updates for periods if they are not explicitly required, or if the addition of further functionality would go against the project goals.
 
 However, I will happily review any MRs made against the source tree.  If you wish to suggest a feature, I would prefer it if you could open an issue first to discuss whether the feature is appropriate, and whether its implementation is feasible.
 
@@ -109,3 +109,4 @@ Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbl
 [^3]: This mainly refers to the package's standard container-based interface, which makes testing easy (as you can replace services and values at any time).  Further work is being done on a more featureful testing suite, which would be able to simplify the overall testing process.
 [^4]: I haven't counted each one, but I'd say that the package exports ~40 types (as of writing: 23/11/2023); a lot of the safety is provided through typing, as opposed to unnecessary runtime checks, which affect performance and code size.
 [^5]: In the future, I'll most likely look at renaming this package.  That'll come naturally as part of a wider project.  You'll probably notice that I avoid explicitly using this package's name in a lot of places; that will make it easier to update.  The naming scheme is... unfortunate, and in retrospect I should have named it differently to avoid confusion with the original project.
+[^6]: One example of such a project is [ListenBrainz Discord RPC](https://github.com/freshgum-bubbles/listenbrainz-discord-rpc), which makes use of this package to structure its functionality into modular services.  There are some other examples on GitHub's *Dependents* view, too.
