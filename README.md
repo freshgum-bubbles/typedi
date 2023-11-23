@@ -79,11 +79,13 @@ This container was initially made for my own use in code, though I will happily 
 
 It's mainly a more modern, simpler version of the original [TypeDI project](https://github.com/typestack/typedi), with more features, easier integration, and better error reporting.
 
+## (Un)ideal Naming
+
 In the future, I'll most likely look at renaming this package.  That'll come naturally as part of a wider project.  You'll probably notice that I avoid explicitly using this package's name in a lot of places; that will make it easier to update.  The naming scheme is... unfortunate, and in retrospect I should have named it differently to avoid confusion with the original project.
 
 ## Maintenance
 
-<img src="./image.png" width="150px" />
+<img src="./assets/this-is-fine-meme.png" width="150px" />
 
 Yes.  I regularly use it as part of my packages.  However, bear in mind that, as the goal of this package is to do one thing well, there may not be updates for periods if they are not explicitly required, or if the addition of further functionality would go against the project goals.
 
