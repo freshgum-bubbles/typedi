@@ -104,6 +104,12 @@ Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbl
 [docs-site]: https://typedi.js.org
 [docs-site-constraints]: https://typedi.js.org/docs/guide/services/resolution-constraints
 
+<!-- 
+  All these footnotes make the README look like one of Apple's promotional pages...
+
+  P.S. Future maintainers: these footnotes are in order of *addition*, not appearance throughout the document.
+  The ordering doesn't really matter anyway, as GitHub automatically sorts them in order of appearance (or so it seems).
+-->
 [^1]: Tested on 23/11/2023.  [A lot of work](https://github.com/search?q=repo%3Afreshgum-bubbles%2Ftypedi+bundle+size&type=commits) is made to reduce the size of the bundle *(a lot of work has also been inlined into other, non-related commits)*.
 [^2]: No *runtime* dependencies are included.  The only dependency of this package is [type-fest](https://github.com/sindresorhus/type-fest) (which only provides TypeScript types which are used internally).  This dependency has been [version-locked](https://github.com/freshgum-bubbles/typedi/blob/develop/package.json) to ensure any breaches of that package's security does not impact anyone using this package.  Any updates are checked and verified to ensure they do not contain malicious code.
 [^3]: This mainly refers to the package's standard container-based interface, which makes testing easy (as you can replace services and values at any time).  Further work is being done on a more featureful testing suite, which would be able to simplify the overall testing process.
