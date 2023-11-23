@@ -17,9 +17,9 @@
 
 - [`Optional`, `SkipSelf`, `Self`, `Many`][docs-site-constraints] and more, just like Angular!
 - 100% functional injection, without any runtime reflection (no more `reflect-metadata`!)
-- **10kB bundle size, and no dependencies.**
-- Simplify testing across your entire app, with a simple suite of injection tools to get you started.
-- Rigorously tested, type-safe API.
+- **10kB bundle size[^1], and no dependencies[^2].**
+- Simplify testing across your entire app, with a simple suite of injection tools to get you started[^3].
+- Rigorously tested, type-safe API[^4].
 
 ## Get Started
 
@@ -86,11 +86,7 @@ This container was initially made for my own use in code, though I will happily 
 
 ## "Why was this created?"
 
-It's mainly a more modern, simpler version of the original [TypeDI project](https://github.com/typestack/typedi), with more features, easier integration, and better error reporting.
-
-## (Un)ideal Naming
-
-In the future, I'll most likely look at renaming this package.  That'll come naturally as part of a wider project.  You'll probably notice that I avoid explicitly using this package's name in a lot of places; that will make it easier to update.  The naming scheme is... unfortunate, and in retrospect I should have named it differently to avoid confusion with the original project.
+It's mainly a more modern, simpler version of the original [TypeDI project](https://github.com/typestack/typedi), with more features, easier integration, and better error reporting.  The naming isn't ideal, and it'll most likely be changed in the future[^5].
 
 ## Maintenance
 
@@ -107,3 +103,9 @@ Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbl
 [pkg-faq-node-15-3-0]: ./FAQ.md#why-does-the-package-not-support-node-versions-under-v1530
 [docs-site]: https://typedi.js.org
 [docs-site-constraints]: https://typedi.js.org/docs/guide/services/resolution-constraints
+
+[^1]: Tested on 23/11/2023.  [A lot of work](https://github.com/search?q=repo%3Afreshgum-bubbles%2Ftypedi+bundle+size&type=commits) is made to reduce the size of the bundle *(a lot of work has also been inlined into other, non-related commits)*.
+[^2]: No *runtime* dependencies are included.  The only dependency of this package is [type-fest](https://github.com/sindresorhus/type-fest) (which only provides TypeScript types which are used internally).  This dependency has been [version-locked](https://github.com/freshgum-bubbles/typedi/blob/develop/package.json) to ensure any breaches of that package's security does not impact anyone using this package.  Any updates are checked and verified to ensure they do not contain malicious code.
+[^3]: This mainly refers to the package's standard container-based interface, which makes testing easy (as you can replace services and values at any time).  Further work is being done on a more featureful testing suite, which would be able to simplify the overall testing process.
+[^4]: I haven't counted each one, but I'd say that the package exports ~40 types (as of writing: 23/11/2023); a lot of the safety is provided through typing, as opposed to unnecessary runtime checks, which affect performance and code size.
+[^5]: In the future, I'll most likely look at renaming this package.  That'll come naturally as part of a wider project.  You'll probably notice that I avoid explicitly using this package's name in a lot of places; that will make it easier to update.  The naming scheme is... unfortunate, and in retrospect I should have named it differently to avoid confusion with the original project.
