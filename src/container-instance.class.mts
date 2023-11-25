@@ -995,8 +995,6 @@ export class ContainerInstance implements Disposable {
       return defaultContainer;
     }
 
-    // todo: test parent= default arg
-
     let container: ContainerInstance;
     const conflictDefinition = options?.conflictDefinition ?? 'rejectAll';
 
