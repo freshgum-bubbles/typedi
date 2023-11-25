@@ -1042,7 +1042,7 @@ export class ContainerInstance implements Disposable {
         return NativeNull as unknown as ContainerInstance;
       } else if (onFree === 'throw') {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- Implicitly toString.
-        throw NativeError(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}) does not already exist.`);
+        throw NativeError(`${__A_CONTAINER_WITH_THE_SPECIFIED_NAME} ("${containerId}") does not already exist.`);
       }
       /**
        * This is deprecated functionality, for now we create the container if it's doesn't exists.
