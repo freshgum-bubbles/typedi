@@ -78,6 +78,10 @@ export class ContainerInstance implements Disposable {
   /**
    * Indicates if the container has been disposed or not.
    * Any function call should fail when called after being disposed.
+   *
+   * @remarks
+   * This is readonly for outside consumers.
+   * Its value will change to `true` if the instance is disposed.
    */
   public readonly disposed: boolean = false;
 
