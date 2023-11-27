@@ -11,7 +11,8 @@
 >
 > <sup>See [_Why does the package not support Node versions under v15.3.0?_][pkg-faq-node-15-3-0].</sup>
 
-> [!NOTE] > [Experimental support for Bun has also been introduced](https://github.com/freshgum-bubbles/typedi/commit/f2ec73a6fe1598122cf64f7097a77910fab13560). Feel free to test and report any issues!
+> [!NOTE]
+> [Experimental support for Bun has also been introduced](https://github.com/freshgum-bubbles/typedi/commit/f2ec73a6fe1598122cf64f7097a77910fab13560). Feel free to test and report any issues!
 
 ## Features
 
