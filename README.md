@@ -17,7 +17,7 @@
 
 - [`Optional`, `SkipSelf`, `Self`, `Many`][docs-site-constraints] and more, just like Angular!
 - 100% functional injection, without any runtime reflection (no more `reflect-metadata`!)
-- **10kB bundle size[^1], and no dependencies[^2].**
+- **10kB bundle size[^1] (3.8k gzip'd[^9]), and no dependencies[^2].**
 - Simplify testing across your entire app, with a simple suite of injection tools to get you started[^3].
 - Rigorously tested, type-safe API[^4].
 
@@ -119,3 +119,4 @@ Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbl
 [^6]: One example of such a project is [ListenBrainz Discord RPC](https://github.com/freshgum-bubbles/listenbrainz-discord-rpc), which makes use of this package to structure its functionality into modular services. There are some other examples on GitHub's _Dependents_ view, too.
 [^7]: An example of "magic", in this context, would be integration with the filesystem to read a configuration file in a proprietary format, and then using that to configure services -- while that might make more sense for Java developers, such features don't (in my experience) scale well in JavaScript. Also, we'd have to write a ton of editor integrations! `</ramble>`
 [^8]: If the library is ever feature-complete, **it'll still be maintained** -- compatibility with the latest engines will still be tested. However, as stated prior, features would not be added for the sake of adding features. Therefore, if this package ever _becomes_ feature-complete (and is placed into maintenance mode), **there's no need to ask if it's abandoned.** If I ever become unable to continue maintaining the package, it shall be placed into archival (and the NPM package will become deprecated); in that case, please fork it and continue my efforts. All power to you!
+[^9]: Tested via `pnpm run build; cd build/bundles; for file in *.mjs; do printf "$file\t$(cat $file | wc -c | xargs printf "%'d\n")\t$(gzip -9c $file | wc -c | xargs printf "%'d\n")\t$(brotli -cZ $file | wc -c | xargs printf "%'d\n")\n"; done | tee` *(credit: [mrienstra on Stack Overflow](https://stackoverflow.com/a/53870869))*
