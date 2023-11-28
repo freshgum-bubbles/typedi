@@ -26,16 +26,6 @@ export type IDStatus =
  */
 export abstract class RefHost<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>> {
   /**
-   * The identifier of the service to attain from the specified container.
-   * @internal
-   *
-   * @remarks
-   * This identifier should always result in the creation of a new transient service.
-   * No checks are done to ensure this.
-   */
-  protected readonly abstract id: TIdentifier;
-
-  /**
    * The container from which to attain individual transient services.
    * @internal
    */
@@ -46,6 +36,16 @@ export abstract class RefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * @internal
    */
   protected readonly abstract constraints: number;
+
+  /**
+   * The identifier of the service to attain from the specified container.
+   * @internal
+   *
+   * @remarks
+   * This identifier should always result in the creation of a new transient service.
+   * No checks are done to ensure this.
+   */
+  protected abstract accessor id: TIdentifier;
 
   /**
    * Resolve the identifier in the context of the attached container.
