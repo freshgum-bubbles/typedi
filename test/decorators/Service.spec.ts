@@ -1,32 +1,43 @@
 import { Container, ContainerInstance, Service, Token } from 'internal:typedi';
+import { TypedService } from 'internal:typedi/contrib/typed-service/typed-service.decorator.mjs';
 
-describe('Service Decorator', function () {
+/**
+ * We duplicate the Service test suite for both the {@link Service} and {@link TypedService}
+ * decorators to ensure that they have the *exact* same mechanics, quirks and functionality.
+ */
+describe.each([
+  { name: 'TypedService', decorator: TypedService },
+  { name: 'Service', decorator: Service },
+])('$name decorator', ({ decorator: baseDecorator }) => {
+  /** Casting here avoids a compilation error. */
+  const decorator = baseDecorator as typeof Service;
+
   beforeEach(() => Container.reset({ strategy: 'resetServices' }));
 
   it('should register class in the container, and its instance should be retrievable', function () {
-    @Service([])
+    @decorator([])
     class TestService {}
-    @Service({ id: 'super.service' }, [])
+    @decorator({ id: 'super.service' }, [])
     class NamedService {}
     expect(Container.get(TestService)).toBeInstanceOf(TestService);
     expect(Container.get(TestService)).not.toBeInstanceOf(NamedService);
   });
 
   it('should register class in the container with given name, and its instance should be retrievable', function () {
-    @Service([])
+    @decorator([])
     class TestService {}
-    @Service({ id: 'super.service' }, [])
+    @decorator({ id: 'super.service' }, [])
     class NamedService {}
     expect(Container.get('super.service')).toBeInstanceOf(NamedService);
     expect(Container.get('super.service')).not.toBeInstanceOf(TestService);
   });
 
   it('should register class in the container, and its parameter dependencies should be properly initialized', function () {
-    @Service([])
+    @decorator([])
     class TestService {}
-    @Service([])
+    @decorator([])
     class SecondTestService {}
-    @Service([TestService, SecondTestService])
+    @decorator([TestService, SecondTestService])
     class TestServiceWithParameters {
       constructor(
         public testClass: TestService,
@@ -39,7 +50,7 @@ describe('Service Decorator', function () {
   });
 
   it('should support factory functions', function () {
-    @Service([])
+    @decorator([])
     class Engine {
       constructor(public serialNumber: string) {}
     }
@@ -48,7 +59,7 @@ describe('Service Decorator', function () {
       return new Car('BMW', new Engine('A-123'));
     }
 
-    @Service({ factory: createCar }, [String, Engine])
+    @decorator({ factory: createCar }, [String, Engine])
     class Car {
       constructor(
         public name: string,
@@ -61,12 +72,12 @@ describe('Service Decorator', function () {
   });
 
   it('should support factory classes', function () {
-    @Service([])
+    @decorator([])
     class Engine {
       public serialNumber = 'A-123';
     }
 
-    @Service([Engine])
+    @decorator([Engine])
     class CarFactory {
       constructor(public engine: Engine) {}
 
@@ -75,7 +86,7 @@ describe('Service Decorator', function () {
       }
     }
 
-    @Service({ factory: [CarFactory, 'createCar'] }, [String, Engine])
+    @decorator({ factory: [CarFactory, 'createCar'] }, [String, Engine])
     class Car {
       name: string;
       constructor(
@@ -91,12 +102,12 @@ describe('Service Decorator', function () {
   });
 
   it('should support factory function with arguments', function () {
-    @Service([])
+    @decorator([])
     class Engine {
       public type = 'V8';
     }
 
-    @Service([Engine])
+    @decorator([Engine])
     class CarFactory {
       createCar(engine: Engine) {
         engine.type = 'V6';
@@ -104,7 +115,7 @@ describe('Service Decorator', function () {
       }
     }
 
-    @Service({ factory: [CarFactory, 'createCar'] }, [Engine])
+    @decorator({ factory: [CarFactory, 'createCar'] }, [Engine])
     class Car {
       constructor(public engine: Engine) {}
     }
@@ -113,12 +124,12 @@ describe('Service Decorator', function () {
   });
 
   it('should support transient services', function () {
-    @Service([])
+    @decorator([])
     class Car {
       public serial = Math.random();
     }
 
-    @Service({ scope: 'transient' }, [])
+    @decorator({ scope: 'transient' }, [])
     class Engine {
       public serial = Math.random();
     }
@@ -140,12 +151,12 @@ describe('Service Decorator', function () {
   });
 
   it('should support global services', function () {
-    @Service([])
+    @decorator([])
     class Engine {
       public name = 'sporty';
     }
 
-    @Service({ scope: 'singleton' }, [])
+    @decorator({ scope: 'singleton' }, [])
     class Car {
       public name = 'SportCar';
     }
@@ -198,14 +209,14 @@ describe('Service Decorator', function () {
   });
 
   it('should support an object with dependencies with no other arguments', () => {
-    @Service([])
+    @decorator([])
     class AnotherService {
       getMeaningOfLife() {
         return 42;
       }
     }
 
-    @Service({ dependencies: [AnotherService] })
+    @decorator({ dependencies: [AnotherService] })
     class MyService {
       constructor(public anotherService: AnotherService) {}
     }
@@ -228,8 +239,8 @@ describe('Service Decorator', function () {
 
   it('should throw if called twice on the same class', () => {
     expect(() => {
-      @Service([])
-      @Service([])
+      @decorator([])
+      @decorator([])
       class MyService {}
     }).toThrowError();
   });
@@ -238,13 +249,13 @@ describe('Service Decorator', function () {
     it('should work with the same ID', () => {
       const id = new Token<MyService>('MyService');
 
-      @Service({ id, multiple: true }, [])
+      @decorator({ id, multiple: true }, [])
       class MyService {}
 
-      @Service({ id, multiple: true }, [])
+      @decorator({ id, multiple: true }, [])
       class MyService1 {}
 
-      @Service({ id, multiple: true }, [])
+      @decorator({ id, multiple: true }, [])
       class MyService2 {}
 
       expect(() => Container.getMany(id)).not.toThrowError();
@@ -264,13 +275,13 @@ describe('Service Decorator', function () {
     describe.each(builtinTypes.map(type => ({ type, name: type.name })))('$name() usage', ({ type: builtinType }) => {
       it('throws if used and no factory is provided', () => {
         expect(() => {
-          @Service([builtinType])
+          @decorator([builtinType])
           class MyService {}
         }).toThrowError();
       });
 
       it('does not throw if used and a factory is provided', () => {
-        @Service({ factory: () => new MyService() }, [builtinType])
+        @decorator({ factory: () => new MyService() }, [builtinType])
         class MyService {}
 
         expect(Container.get(MyService)).toBeInstanceOf(MyService);
@@ -280,7 +291,7 @@ describe('Service Decorator', function () {
         const id = new Token();
 
         expect(() => {
-          @Service({ id }, [builtinType])
+          @decorator({ id }, [builtinType])
           class MyService {}
         }).toThrowError();
 
