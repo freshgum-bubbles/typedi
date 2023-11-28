@@ -1,4 +1,4 @@
-# TypeDI<sup>++</sup> Website
+# The Website(tm)
 
 This folder contains the website for the TypeDI project.
 It is built using Docusaurus 2, with some modifications made to the base theme.
