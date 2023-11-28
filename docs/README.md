@@ -23,7 +23,7 @@ $ pnpm start
 ```
 
 Note that this will start a local HTTP server with the website built in development mode.
-If you instead want a static variant of the site, jump to the [#building](Building) section.
+If you instead want a static variant of the site, jump to the [Building](#building) section.
 
 ## Building
 
