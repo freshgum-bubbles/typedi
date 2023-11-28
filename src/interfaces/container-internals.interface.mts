@@ -8,4 +8,6 @@ import { ContainerInstance } from '../index.mjs';
  */
 export interface ContainerInternals {
   resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
+  metadataMap: ContainerInstance['metadataMap'];
+  resolveMultiID: ContainerInstance['resolveMultiID'];
 }
