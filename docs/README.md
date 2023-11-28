@@ -37,4 +37,4 @@ This will emit the build output to [the build directory](./build/).
 
 ## License
 
-This project inherits its license from [the overall TypeDI<sup>++</sup> project](../LICENSE).
+This project inherits its license from [the overall <sup>++</sup> project](../LICENSE).
