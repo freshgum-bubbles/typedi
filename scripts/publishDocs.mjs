@@ -13,6 +13,8 @@ const docsDirectoryPath = resolvePath(scriptsDirectory, '../docs/');
 const DOCUSAURUS_DEPLOY_GIT_USER = getEnvironmentalVariable('DOCUSAURUS_GIT_USER', true);
 const DOCUSAURUS_DEPLOY_GIT_PASS = getEnvironmentalVariable('DOCUSAURUS_GIT_PASS', true);
 const DOCUSAURUS_DEPLOY_USE_SSH = getEnvironmentalVariable('DOCUSAURUS_USE_SSH', false) ?? 'false';
+const DOCUSAURUS_DEPLOY_GIT_USER_NAME = getEnvironmentalVariable('DOCUSAURUS_DEPLOY_GIT_USER_NAME', true);
+const DOCUSAURUS_DEPLOY_GIT_USER_EMAIL = getEnvironmentalVariable('DOCUSAURUS_DEPLOY_GIT_USER_EMAIL', true);
 
 /**
  * Pipe the stderr and stdout of an execa child process to this process' streams.
@@ -77,6 +79,8 @@ async function deployDocs() {
       GIT_USER: DOCUSAURUS_DEPLOY_GIT_USER,
       GIT_PASS: DOCUSAURUS_DEPLOY_GIT_PASS,
       USE_SSH: DOCUSAURUS_DEPLOY_USE_SSH,
+      GIT_USER_NAME: DOCUSAURUS_DEPLOY_GIT_USER_NAME,
+      GIT_USER_EMAIL: DOCUSAURUS_DEPLOY_GIT_USER_EMAIL
     },
 
     /** Run in docs/. Alternative to `pushd` which isn't cross-platform. */
