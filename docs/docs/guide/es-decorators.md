@@ -12,7 +12,7 @@ as of 10/18/2023, decorators have now been standarized as part of the TC39 proce
 
 TypeScript 5.0 [introduced support for this new decorator API][ts-blog-5.0-release-decorators],
 and packages have slowly begun transitioning to it.  It's now considered stable, so support
-for it has been added to the TypeDI++ project as part of a contributory package.
+for it has been added to the TypeDI++ project ([as of v0.7.0][gh-project-changelog]) as part of a contributory package.
 
 ## Example
 
