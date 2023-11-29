@@ -35,7 +35,11 @@ export class MyService { }
 ## Legacy Decorators
 
 For backwards compatibility, the usage of legacy decorators is still supported.
-Due to their prevalence, they are not deprecated.
+There's no immediate need to migrate to the new API.
+
+However, documentation will be updated to encourage usage of ES Decorators,
+as the TypeScript team will (most likely) eventually remove support for these decorators.
 
 [ts-blog-5.0-release-decorators]: https://devblogs.microsoft.com/typescript/announcing-typescript-5-0/#decorators
 [axel-r-decorators]: https://2ality.com/2022/10/javascript-decorators.html
+[gh-project-changelog]: https://github.com/freshgum-bubbles/typedi/blob/develop/CHANGELOG.md
