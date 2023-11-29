@@ -1,5 +1,37 @@
 # @freshgum/typedi
 
+## 0.7.0
+
+### Minor Changes
+
+- 18372c6: **We now support ES decorators**! Grab the new ESService decorator from contrib/es!
+
+  To use this, you'll need to disable `experimentalDecorators` in your TypeScript
+  configuration file. Note that, by doing this, you won't be able to utilise the
+  legacy decorators included in the package (`Service`).
+
+  Here's an example:
+
+  ```ts
+  import { ESService } from '@freshgum/typedi/contrib/es';
+
+  @ESService([])
+  export class MyService {}
+  ```
+
+  Note that the **legacy decorators have not been removed** for backwards-compatibility
+  reasons: you're still able to use them just as before.
+
+  Many thanks to Axel Rauschmayer for providing
+  [a very detailed guide re: ES decorators](https://2ality.com/2022/10/javascript-decorators.html).
+
+### Patch Changes
+
+- b26ad02: Add a new `getServiceIdentifierType` utility to ascertain the type of a given `ServiceIdentifier`. This allows for differentiation between virtual identifiers, such as `HostContainer`, and concrete identifiers set by you / any code which interacts with the `ContainerInstance`.
+- 9ad853e: The `ContainerRegistryError` constructor is now exported from the package index. This allows for greater pattern-matching of errors which occur as a result of invalid registry operations.
+- e18d944: An unused `PickPartial` utility type has been removed. This change does not affect consumers of the package.
+- f4e10cf: The internal `PickRequired` type has been replaced with `SetRequired` from type-fest, to take further advantage of the dependency. This change does not affect consumers of the package.
+
 ## 0.6.0
 
 ### Minor Changes
