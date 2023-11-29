@@ -176,7 +176,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Built on ${new Date().getFullYear()}. Not affiliated with typestack.`,
+        copyright: `Built on ${new Date().getFullYear()}. Not affiliated with typestack. Released under the MIT license.`,
       },
       prism: {
         theme: lightCodeTheme,
