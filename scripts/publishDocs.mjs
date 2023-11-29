@@ -15,8 +15,8 @@ const DOCUSAURUS_DEPLOY_GIT_PASS = getEnvironmentalVariable('DOCUSAURUS_GIT_PASS
 const DOCUSAURUS_DEPLOY_USE_SSH = getEnvironmentalVariable('DOCUSAURUS_USE_SSH', false) ?? 'false';
 
 // We set [ensure] to true here to avoid potential OPSEC leakage.
-const DOCUSAURUS_DEPLOY_GIT_USER_NAME = getEnvironmentalVariable('DOCUSAURUS_DEPLOY_GIT_USER_NAME', true);
-const DOCUSAURUS_DEPLOY_GIT_USER_EMAIL = getEnvironmentalVariable('DOCUSAURUS_DEPLOY_GIT_USER_EMAIL', true);
+const DOCUSAURUS_DEPLOY_GIT_USER_NAME = getEnvironmentalVariable('DOCUSAURUS_GIT_USER_NAME', true);
+const DOCUSAURUS_DEPLOY_GIT_USER_EMAIL = getEnvironmentalVariable('DOCUSAURUS_GIT_USER_EMAIL', true);
 
 /**
  * Pipe the stderr and stdout of an execa child process to this process' streams.
