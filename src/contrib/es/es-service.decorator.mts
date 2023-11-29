@@ -1,6 +1,9 @@
-import { AnyServiceDependency, ServiceOptions, Constructable, Service } from "../../index.mjs";
-import { ServiceOptionsWithDependencies, ServiceOptionsWithoutDependencies } from "../../interfaces/service-options.interface.mjs";
-import { ESClassDecorator } from "../util/es-class-decorator.type.mjs";
+import { AnyServiceDependency, ServiceOptions, Constructable, Service } from '../../index.mjs';
+import {
+  ServiceOptionsWithDependencies,
+  ServiceOptionsWithoutDependencies,
+} from '../../interfaces/service-options.interface.mjs';
+import { ESClassDecorator } from '../util/es-class-decorator.type.mjs';
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -106,7 +109,9 @@ export function ESService<T = unknown>(
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<T = unknown>(options: ServiceOptionsWithDependencies<Constructable<unknown>>): ESClassDecorator<Constructable<T>>;
+export function ESService<T = unknown>(
+  options: ServiceOptionsWithDependencies<Constructable<unknown>>
+): ESClassDecorator<Constructable<T>>;
 export function ESService<T = unknown>(
   optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]
@@ -116,6 +121,9 @@ export function ESService<T = unknown>(
       throw new Error('@ESService() must only be used to decorate classes.');
     }
 
-    Service(optionsOrDependencies as ServiceOptionsWithoutDependencies<T>, maybeDependencies as AnyServiceDependency[])(target);
+    Service(
+      optionsOrDependencies as ServiceOptionsWithoutDependencies<T>,
+      maybeDependencies as AnyServiceDependency[]
+    )(target);
   };
 }
