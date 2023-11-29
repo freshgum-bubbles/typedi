@@ -13,6 +13,8 @@ const docsDirectoryPath = resolvePath(scriptsDirectory, '../docs/');
 const DOCUSAURUS_DEPLOY_GIT_USER = getEnvironmentalVariable('DOCUSAURUS_GIT_USER', true);
 const DOCUSAURUS_DEPLOY_GIT_PASS = getEnvironmentalVariable('DOCUSAURUS_GIT_PASS', true);
 const DOCUSAURUS_DEPLOY_USE_SSH = getEnvironmentalVariable('DOCUSAURUS_USE_SSH', false) ?? 'false';
+
+// We set [ensure] to true here to avoid potential OPSEC leakage.
 const DOCUSAURUS_DEPLOY_GIT_USER_NAME = getEnvironmentalVariable('DOCUSAURUS_DEPLOY_GIT_USER_NAME', true);
 const DOCUSAURUS_DEPLOY_GIT_USER_EMAIL = getEnvironmentalVariable('DOCUSAURUS_DEPLOY_GIT_USER_EMAIL', true);
 
