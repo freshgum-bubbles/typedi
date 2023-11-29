@@ -11,7 +11,9 @@ import { ESClassDecorator } from '../util/es-class-decorator.type.mjs';
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
  * @remarks
- * **This is a TypeScript decorator.**
+ * **This is an ES decorator.**
+ * It performs the same as {@link Service}, though it works under
+ * TypeScript 5.0+ when the `experimentalDecorators` option is disabled.
  *
  * @example
  * Here is an example:
@@ -41,7 +43,9 @@ export function ESService<T = unknown>(dependencies: AnyServiceDependency[]): ES
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
  * @remarks
- * **This is a TypeScript decorator.**
+ * **This is an ES decorator.**
+ * It performs the same as {@link Service}, though it works under
+ * TypeScript 5.0+ when the `experimentalDecorators` option is disabled.
  *
  * @example
  * Here is an example:
@@ -81,7 +85,9 @@ export function ESService<T = unknown>(
  * By default, the service shall be registered upon the `defaultContainer` container.
  *
  * @remarks
- * **This is a TypeScript decorator.**
+ * **This is an ES decorator.**
+ * It performs the same as {@link Service}, though it works under
+ * TypeScript 5.0+ when the `experimentalDecorators` option is disabled.
  *
  * @example
  * Here is an example:
@@ -112,11 +118,13 @@ export function ESService<T = unknown>(
 export function ESService<T = unknown>(
   options: ServiceOptionsWithDependencies<Constructable<unknown>>
 ): ESClassDecorator<Constructable<T>>;
+
 export function ESService<T = unknown>(
   optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]
 ): ESClassDecorator<Constructable<T>> {
   return (target: Constructable<T>, context: ClassDecoratorContext) => {
+    // This is probably overcautious.
     if (context.kind !== 'class') {
       throw new Error('@ESService() must only be used to decorate classes.');
     }
