@@ -82,7 +82,7 @@ async function deployDocs() {
       GIT_PASS: DOCUSAURUS_DEPLOY_GIT_PASS,
       USE_SSH: DOCUSAURUS_DEPLOY_USE_SSH,
       GIT_USER_NAME: DOCUSAURUS_DEPLOY_GIT_USER_NAME,
-      GIT_USER_EMAIL: DOCUSAURUS_DEPLOY_GIT_USER_EMAIL
+      GIT_USER_EMAIL: DOCUSAURUS_DEPLOY_GIT_USER_EMAIL,
     },
 
     /** Run in docs/. Alternative to `pushd` which isn't cross-platform. */
