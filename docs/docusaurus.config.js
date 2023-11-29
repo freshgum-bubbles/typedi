@@ -176,7 +176,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Built on ${new Date().getFullYear()}. Not affiliated with typestack.`,
       },
       prism: {
         theme: lightCodeTheme,
