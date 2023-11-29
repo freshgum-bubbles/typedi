@@ -1,5 +1,5 @@
 import { Container } from 'internal:typedi';
-import { createFakeClassDecoratorContext } from './utils/fake-context.util';
+import { createFakeClassDecoratorContext } from './test-utils/fake-context.util';
 import { ESService } from 'internal:typedi/contrib/es/es-service.decorator.mjs';
 
 // Due to the testing structure, we can't actually use ES Decorators
