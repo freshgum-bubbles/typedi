@@ -19,7 +19,7 @@ interface DecoratorTestScenario {
 
 const DECORATORS_TO_TEST: DecoratorTestScenario[] = [
   { decorator: Service, description: 'main, non-ES', name: 'Service' },
-  { decorator: WrappedESServiceDecorator, description: 'contrib/es/ESService', name: 'ESService' }
+  { decorator: WrappedESServiceDecorator, description: 'contrib/es/ESService', name: 'ESService' },
 ];
 
 describe.each(DECORATORS_TO_TEST)('$name decorator ($description)', ({ decorator: Decorator }) => {
