@@ -6,11 +6,13 @@
 
 </div>
 
+<!-- prettier-ignore -->
 > [!WARNING]
 > From 0.4.0, support for Node versions under v15.3.0 has been removed, as the package has transitioned to ES Modules.
 >
 > <sup>See [_Why does the package not support Node versions under v15.3.0?_][pkg-faq-node-15-3-0].</sup>
 
+<!-- prettier-ignore -->
 > [!NOTE]
 > [Experimental support for Bun has also been introduced](https://github.com/freshgum-bubbles/typedi/commit/f2ec73a6fe1598122cf64f7097a77910fab13560). Feel free to test and report any issues!
 
