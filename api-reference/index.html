@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@freshgum/typedi - v0.5.1</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/my-theme.css"/><script defer src="assets/main.js"></script><script async src="assets/search.js" id="search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@freshgum/typedi - v0.6.0</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/my-theme.css"/><script defer src="assets/main.js"></script><script async src="assets/search.js" id="search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base=".">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -6,7 +6,7 @@
 <div id="tsd-toolbar-links"><a href="/">home</a></div></div>
 <ul class="results">
 <li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="https://github.com/freshgum-bubbles/typedi.git" class="title">@freshgum/typedi - v0.5.1</a>
+<li class="state failure">The search index is not available</li></ul><a href="https://github.com/freshgum-bubbles/typedi.git" class="title">@freshgum/typedi - v0.6.0</a>
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>Settings</h3></summary>
@@ -24,27 +24,76 @@
 <div class="container container-main">
 <div class="col-content">
 <div class="tsd-page-title">
-<h2>@freshgum/typedi - v0.5.1</h2></div>
-<div class="tsd-panel tsd-typography"><a id="md:typedi" class="tsd-anchor"></a><h1><a href="#md:typedi">TypeDI<sup>++</sup></a></h1><blockquote>
-<p>Note: Support for Node versions under 15.3.0 will soon be removed as the package transitions to ES Modules.</p>
-</blockquote>
+<h2>@freshgum/typedi - v0.6.0</h2></div>
+<div class="tsd-panel tsd-typography"><div align="center">
+  <h1>TypeDI<sup>++</sup></h1>
+  <p>Elegant dependency injection in TypeScript and JavaScript.</p>
+
 <p><img src="https://img.shields.io/github/license/freshgum-bubbles/typedi" alt="GitHub"> <img src="https://img.shields.io/npm/v/@freshgum/typedi" alt="npm (scoped)"> <a href="https://typedi.js.org"><img src="https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28" alt="Website"></a> <img src="https://img.shields.io/maintenance/yes/2023" alt="Maintenance"></p>
-<p><em>Elegant Dependency Injection in JavaScript and TypeScript.</em></p>
-<ul>
-<li><code>Optional</code>, <code>SkipSelf</code>, <code>Self</code>, <code>Many</code> support; just like Angular!</li>
-<li>Purely functional injection without any runtime reflection.</li>
-<li>Strict integration with TypeScript.</li>
-<li>Easy testability with the Container-based API.</li>
-<li>Rigorously tested API (nearly 100% coverage!)</li>
-<li><strong>🔥 10 kB bundle size.</strong> (no dependencies!)</li>
+</div>
+
+<!-- prettier-ignore -->
+<blockquote>
+<p>[!WARNING]
+From 0.4.0, support for Node versions under v15.3.0 has been removed, as the package has transitioned to ES Modules.</p>
+<p><sup>See <a href="./FAQ.md#why-does-the-package-not-support-node-versions-under-v1530"><em>Why does the package not support Node versions under v15.3.0?</em></a>.</sup></p>
+</blockquote>
+<!-- prettier-ignore -->
+<blockquote>
+<p>[!NOTE]
+<a href="https://github.com/freshgum-bubbles/typedi/commit/f2ec73a6fe1598122cf64f7097a77910fab13560">Experimental support for Bun has also been introduced</a>. Feel free to test and report any issues!</p>
+</blockquote>
+<a id="md:features" class="tsd-anchor"></a><h2><a href="#md:features">Features</a></h2><ul>
+<li><a href="https://typedi.js.org/docs/guide/services/resolution-constraints"><code>Optional</code>, <code>SkipSelf</code>, <code>Self</code>, <code>Many</code></a> and more, just like Angular!</li>
+<li>100% functional injection, without any runtime reflection (no more <code>reflect-metadata</code>!)</li>
+<li><strong>10kB bundle size[^1] (3.8k gzip&#39;d[^9]), and no dependencies[^2].</strong></li>
+<li>Simplify testing across your entire app, with a simple suite of injection tools to get you started[^3].</li>
+<li>Rigorously tested, type-safe API[^4].</li>
 </ul>
-<p><del>(The only thing it can&#39;t do is make coffee.)</del></p>
-<p><em>Dependency Injection in 23 lines:</em></p>
-<pre><code class="language-ts"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">Service</span><span class="hl-1">, </span><span class="hl-2">Container</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@freshgum/typedi&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// Make a service that logs a message to the console.</span><br/><span class="hl-1">@</span><span class="hl-5">Service</span><span class="hl-1">([])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">LogService</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">log</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-5">log</span><span class="hl-1">(</span><span class="hl-2">message</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">// Then, use our logging service in our root service,</span><br/><span class="hl-4">// which will log &quot;hello world!&quot; to the console.</span><br/><span class="hl-1">@</span><span class="hl-5">Service</span><span class="hl-1">([</span><span class="hl-2">LogService</span><span class="hl-1">])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">RootService</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">// Store the instance of the logger inside the class.</span><br/><span class="hl-1">  </span><span class="hl-6">constructor</span><span class="hl-1">(</span><span class="hl-6">private</span><span class="hl-1"> </span><span class="hl-2">logger</span><span class="hl-1">: </span><span class="hl-7">LogService</span><span class="hl-1">) {}</span><br/><span class="hl-1">  </span><span class="hl-5">run</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-6">this</span><span class="hl-1">.</span><span class="hl-2">logger</span><span class="hl-1">.</span><span class="hl-5">log</span><span class="hl-1">(</span><span class="hl-3">&#39;hello world!&#39;</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">// Now, run our service!</span><br/><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">get</span><span class="hl-1">(</span><span class="hl-2">RootService</span><span class="hl-1">).</span><span class="hl-5">run</span><span class="hl-1">();</span>
+<a id="md:get-started" class="tsd-anchor"></a><h2><a href="#md:get-started">Get Started</a></h2><p>To start, you&#39;ll want to install the NPM package as part of your project.</p>
+<pre><code class="language-sh"><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-2">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@freshgum/typedi</span>
 </code><button>Copy</button></pre>
-<p><strong>Congrats!</strong> You&#39;ve just mastered DI in 23 lines. To learn more,
-<a href="https://typedi.js.org">check out the documentation</a>!</p>
+<p>After that, you should be good to go. Read the <a href="https://typedi.js.org">documentation</a> to get started!</p>
+<a id="md:quick-example" class="tsd-anchor"></a><h2><a href="#md:quick-example">Quick Example</a></h2><pre><code class="language-ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">Service</span><span class="hl-1">, </span><span class="hl-4">Container</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@freshgum/typedi&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">// Make a service that logs a message to the console.</span><br/><span class="hl-1">@</span><span class="hl-0">Service</span><span class="hl-1">([])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">LogService</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">message</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">message</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">// Then, use our logging service in our root service,</span><br/><span class="hl-5">// which will log &quot;hello world!&quot; to the console.</span><br/><span class="hl-1">@</span><span class="hl-0">Service</span><span class="hl-1">([</span><span class="hl-4">LogService</span><span class="hl-1">])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">RootService</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">// Store the instance of the logger inside the class.</span><br/><span class="hl-1">  </span><span class="hl-6">constructor</span><span class="hl-1">(</span><span class="hl-6">private</span><span class="hl-1"> </span><span class="hl-4">logger</span><span class="hl-1">: </span><span class="hl-7">LogService</span><span class="hl-1">) {}</span><br/><span class="hl-1">  </span><span class="hl-0">run</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-6">this</span><span class="hl-1">.</span><span class="hl-4">logger</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;hello world!&#39;</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">// Now, run our service!</span><br/><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">get</span><span class="hl-1">(</span><span class="hl-4">RootService</span><span class="hl-1">).</span><span class="hl-0">run</span><span class="hl-1">();</span>
+</code><button>Copy</button></pre>
+<a id="md:runtime-support" class="tsd-anchor"></a><h2><a href="#md:runtime-support">Runtime Support</a></h2><p>This DI implementation doesn&#39;t require any sort of precompilation / bundler steps, aside from the usual one provided by your TypeScript compiler.</p>
+<a id="md:project-goals" class="tsd-anchor"></a><h2><a href="#md:project-goals">Project Goals</a></h2><p>Some goals of the project include:</p>
+<ol>
+<li><strong>To keep things simple</strong>: Containers are essentially type-safe <code>Map</code> instances, with smarts for resolving dependencies, managing container hierarchies, resolving constraints, and some additional functionality.</li>
+<li><strong>Avoid reinventing the wheel</strong>: I could bundle an endless amount of code in this package, but I&#39;d rather not -- instead, let&#39;s allow this project to focus on one thing and execute it well, as opposed to doing hundreds of things badly.</li>
+<li><strong>Have a minimal presence in bundles</strong>: As it stands, the production builds of this project are around 10kB. Other libraries tend to be much larger, which typically leads to a lot of unused functionality and slower loading times on constrained network connections.</li>
+<li><strong>Extensibility</strong>: The container, and all other parts of the package, should be extendable by the consumer, instead of forcing everyone into a pre-defined workflow. However, steps are taken to ensure that the consumer is guided into making The Right Decision<sup>(tm)</sup> when not doing so would be harder to manage.</li>
+<li><strong>To allow for opaque implementations</strong>: The package should avoid using global state where possible (aside from the default container, of course), to prevent libraries using the package from conflicting with end-user code.</li>
+<li><strong>Avoid breaking end-user code</strong>: As the package is sub-v1, this isn&#39;t as much of a priority right now; however, very few breaking changes are introduced, and the changes that <em>are</em> made are typically made for good reasons (and are documented in the changelog.). Unnecessarily breaking end-user code is pointless, frustrating, and causes work for everyone.</li>
+<li><strong>Make it easy to create well-defined, stable interfaces</strong>: Currently, this is done through simply using service classes. Instances of said classes can then be attained and used as regular instances.</li>
+<li><strong>Avoid magical syntax, in favour of easy, simple syntax</strong>: Avoid using &quot;magic&quot;[^7] when doing so would be unnecessary, and would obfuscate what the code does to anyone not familiar with this container implementation.</li>
+<li><strong>Encompass isomorphism.</strong>: Some other DI implementations access Node-specific APIs (e.g. the filesystem); we don&#39;t want to do that here. Instead of tying the library to a specific runtime, or set of libraries, <strong>this implementation aims to be compatible across different bundlers, ecosystems, runners, and more</strong>. However, we can&#39;t explicitly guarantee compatibility with runtimes we don&#39;t personally use; if you think we&#39;ve missed something, however, please open an issue.</li>
+<li><strong>Do one thing, and do it well</strong>. Regarding filesystems, we&#39;ve <em>specifically</em> made a note of avoiding doing anything like that here; it&#39;s fragile, hard to debug, and generally becomes an annoyance as a project scales, files are moved, and paths have to be continually updated. Instead of that, regular <code>import</code> statements are used; this dramatically simplifies any required refactoring work, and general maintenance of consumer code.</li>
+</ol>
+<p>This container was initially made for my own use in code, though I will happily take suggestions, issues and feature requests to improve it.</p>
+<a id="md:project-non-goals" class="tsd-anchor"></a><h2><a href="#md:project-non-goals">Project Non-Goals</a></h2><p><em>These will be added if any features are requested that are not compatible with the project goals.</em></p>
+<a id="md:quotwhy-was-this-createdquot" class="tsd-anchor"></a><h2><a href="#md:quotwhy-was-this-createdquot">&quot;Why was this created?&quot;</a></h2><p>It&#39;s mainly a more modern, simpler version of the original <a href="https://github.com/typestack/typedi">TypeDI project</a>, with more features, easier integration, and better error reporting. The naming isn&#39;t ideal, and it&#39;ll most likely be changed in the future[^5].</p>
+<a id="md:maintenance" class="tsd-anchor"></a><h2><a href="#md:maintenance">Maintenance</a></h2><img src="./assets/this-is-fine-meme.png" width="150px" />
+
+<p>Yes. I regularly use it as part of my packages (and so do others!)[^6]. I didn&#39;t put in all this effort just to abandon the project. However, bear in mind that, as the goal of this package is to do one thing well, there may not be updates for periods if they are not explicitly required[^8], or if the addition of further functionality would go against the project goals.</p>
+<p>However, I will happily review any MRs made against the source tree. If you wish to suggest a feature, I would prefer it if you could open an issue first to discuss whether the feature is appropriate, and whether its implementation is feasible.</p>
 <a id="md:license" class="tsd-anchor"></a><h2><a href="#md:license">License</a></h2><p>Released under <a href="./LICENSE">MIT</a> by <a href="https://github.com/freshgum-bubbles">@freshgum</a> &amp; <a href="https://github.com/typestack/typedi/blob/develop/LICENSE">upstream TypeDI contributors</a>.</p>
+<!--
+  All these footnotes make the README look like one of Apple's promotional pages...
+
+  P.S. Future maintainers: these footnotes are in order of *addition*, not appearance throughout the document.
+  The ordering doesn't really matter anyway, as GitHub automatically sorts them in order of appearance (or so it seems).
+-->
+
+<p>[^1]: <strong>Tested on 23/11/2023</strong>. <a href="https://github.com/search?q=repo%3Afreshgum-bubbles%2Ftypedi+bundle+size&type=commits">A lot of work</a> is made to reduce the size of the bundle <em>(a lot of work has also been inlined into other, non-related commits)</em>. Note that bundle size tests are performed by copying the minified <code>typedi.min.mjs</code> file into <a href="https://freshgum-bubbles.github.io/bytesizematters/">ByteSizeMatters</a> -- there are most likely better ways to test this. Investigation on reducing bundle size is then performed by formatting the minified file with Prettier, and assessing the bundle for unnecessary code / possible refactors; this is done iteratively until I am unable to find any further code size optimizations (which would not negatively affect performance / result in breaking changes). An example of a trick used to reduce the bundle size is name mangling: the <a href="./rollup.config.mjs">Rollup configuration file</a> contains code to minify certain members of internal classes (such as <code>VisitorCollection</code>).
+[^2]: No <em>runtime</em> dependencies are included. The only dependency of this package is <a href="https://github.com/sindresorhus/type-fest">type-fest</a> (which only provides TypeScript types which are used internally). This dependency has been <a href="https://github.com/freshgum-bubbles/typedi/blob/develop/package.json">version-locked</a> to ensure any breaches of that package&#39;s security does not impact anyone using this package. Any updates are checked and verified to ensure they do not contain malicious code.
+[^3]: This mainly refers to the package&#39;s standard container-based interface, which makes testing easy (as you can replace services and values at any time). Further work is being done on a more featureful testing suite, which would be able to simplify the overall testing process.
+[^4]: I haven&#39;t counted each one, but I&#39;d say that the package exports ~40 types (as of writing: 23/11/2023); a lot of the safety is provided through typing, as opposed to unnecessary runtime checks, which affect performance and code size.
+[^5]: In the future, I&#39;ll most likely look at renaming this package. That&#39;ll come naturally as part of a wider project. You&#39;ll probably notice that I avoid explicitly using this package&#39;s name in a lot of places; that will make it easier to update. The naming scheme is... unfortunate, and in retrospect I should have named it differently to avoid confusion with the original project.
+[^6]: One example of such a project is <a href="https://github.com/freshgum-bubbles/listenbrainz-discord-rpc">ListenBrainz Discord RPC</a>, which makes use of this package to structure its functionality into modular services. There are some other examples on GitHub&#39;s <em>Dependents</em> view, too.
+[^7]: An example of &quot;magic&quot;, in this context, would be integration with the filesystem to read a configuration file in a proprietary format, and then using that to configure services -- while that might make more sense for Java developers, such features don&#39;t (in my experience) scale well in JavaScript. Also, we&#39;d have to write a ton of editor integrations! <code>&lt;/ramble&gt;</code>
+[^8]: If the library is ever feature-complete, <strong>it&#39;ll still be maintained</strong> -- compatibility with the latest engines will still be tested. However, as stated prior, features would not be added for the sake of adding features. Therefore, if this package ever <em>becomes</em> feature-complete (and is placed into maintenance mode), <strong>there&#39;s no need to ask if it&#39;s abandoned.</strong> If I ever become unable to continue maintaining the package, it shall be placed into archival (and the NPM package will become deprecated); in that case, please fork it and continue my efforts. All power to you!
+[^9]: Tested via <code>pnpm run build; cd build/bundles; for file in *.mjs; do printf &quot;$file\t$(cat $file | wc -c | xargs printf &quot;%&#39;d\n&quot;)\t$(gzip -9c $file | wc -c | xargs printf &quot;%&#39;d\n&quot;)\t$(brotli -cZ $file | wc -c | xargs printf &quot;%&#39;d\n&quot;)\n&quot;; done | tee</code> <em>(credit: <a href="https://stackoverflow.com/a/53870869">mrienstra on Stack Overflow</a>)</em></p>
 </div></div>
 <div class="col-sidebar">
 <div class="page-menu">
@@ -54,13 +103,20 @@
 <ul>
 <li>
 <ul>
-<li><a href="#md:typedi"><span>TypeDI++</span></a></li>
+<li><a href="#md:features"><span>Features</span></a></li>
 <li>
 <ul>
+<li><a href="#md:get-started"><span>Get <wbr/>Started</span></a></li>
+<li><a href="#md:quick-example"><span>Quick <wbr/>Example</span></a></li>
+<li><a href="#md:runtime-support"><span>Runtime <wbr/>Support</span></a></li>
+<li><a href="#md:project-goals"><span>Project <wbr/>Goals</span></a></li>
+<li><a href="#md:project-non-goals"><span>Project <wbr/>Non-<wbr/>Goals</span></a></li>
+<li><a href="#md:quotwhy-was-this-createdquot"><span>&quot;<wbr/>Why was this created?&quot;</span></a></li>
+<li><a href="#md:maintenance"><span>Maintenance</span></a></li>
 <li><a href="#md:license"><span>License</span></a></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg>
-<div>@freshgum/typedi -<wbr/> v0.5.1</div></a>
+<div>@freshgum/typedi -<wbr/> v0.6.0</div></a>
 <ul class="tsd-small-nested-navigation">
 <li><a href="modules.html#default"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg>
 <div>default
@@ -80,6 +136,9 @@
 <li><a href="classes/ContainerInstance.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Container<wbr/>Instance
 <div class="menu-item-desc">The Container.</div></div></a></li>
+<li><a href="classes/ContainerRegistryError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<div>Container<wbr/>Registry<wbr/>Error
+<div class="menu-item-desc">An error thrown from operations within the ContainerRegistry.</div></div></a></li>
 <li><a href="classes/ServiceNotFoundError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Service<wbr/>Not<wbr/>Found<wbr/>Error
 <div class="menu-item-desc">Thrown when requested service was not found.</div></div></a></li>

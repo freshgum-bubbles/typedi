@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_freshgum_typedi_docs=self.webpackChunk_freshgum_typedi_docs||[]).push([[706],{2776:s=>{s.exports=JSON.parse('{"name":"@easyops-cn/docusaurus-search-local","id":"default"}')}}]);

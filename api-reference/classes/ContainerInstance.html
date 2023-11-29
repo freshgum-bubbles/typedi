@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ContainerInstance | @freshgum/typedi - v0.5.1</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/my-theme.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ContainerInstance | @freshgum/typedi - v0.6.0</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/my-theme.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -6,7 +6,7 @@
 <div id="tsd-toolbar-links"><a href="/">home</a></div></div>
 <ul class="results">
 <li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="https://github.com/freshgum-bubbles/typedi.git" class="title">@freshgum/typedi - v0.5.1</a>
+<li class="state failure">The search index is not available</li></ul><a href="https://github.com/freshgum-bubbles/typedi.git" class="title">@freshgum/typedi - v0.6.0</a>
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>Settings</h3></summary>
@@ -36,7 +36,7 @@ to store services for later execution.</p>
 <div class="tsd-comment tsd-typography">
 <h4>See</h4><p><a href="https://typedi.js.org/docs/guide/containers/introduction">https://typedi.js.org/docs/guide/containers/introduction</a></p>
 
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">container</span><span class="hl-1"> = </span><span class="hl-2">defaultContainer</span><span class="hl-1">.</span><span class="hl-5">ofChild</span><span class="hl-1">(</span><span class="hl-3">&#39;my-new-container&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-1">@</span><span class="hl-5">Service</span><span class="hl-1">({ </span><span class="hl-2">container</span><span class="hl-1"> })</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">MyService</span><span class="hl-1"> { }</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">container</span><span class="hl-1"> = </span><span class="hl-4">defaultContainer</span><span class="hl-1">.</span><span class="hl-0">ofChild</span><span class="hl-1">(</span><span class="hl-2">&#39;my-new-container&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-1">@</span><span class="hl-0">Service</span><span class="hl-1">({ </span><span class="hl-4">container</span><span class="hl-1"> })</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">MyService</span><span class="hl-1"> { }</span>
 </code><button>Copy</button></pre>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
@@ -48,7 +48,7 @@ to store services for later execution.</p>
 <ul class="tsd-hierarchy">
 <li><span class="tsd-signature-type ">Disposable</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L74">src/container-instance.class.mts:74</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L63">src/container-instance.class.mts:63</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -126,7 +126,7 @@ not present in this container.</p>
 <h4 class="tsd-returns-title">Returns <a href="ContainerInstance.html" class="tsd-signature-type tsd-kind-class">ContainerInstance</a></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L130">src/container-instance.class.mts:130</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L123">src/container-instance.class.mts:123</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member"><a id="disposed" class="tsd-anchor"></a>
@@ -135,10 +135,13 @@ not present in this container.</p>
 <div class="tsd-comment tsd-typography"><p>Indicates if the container has been disposed or not.
 Any function call should fail when called after being disposed.</p>
 </div>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography">
+<h4>Remarks</h4><p>This is readonly for outside consumers.
+Its value will change to <code>true</code> if the instance is disposed.</p>
+</div><aside class="tsd-sources">
 <p>Implementation of Disposable.disposed</p>
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L93">src/container-instance.class.mts:93</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L86">src/container-instance.class.mts:86</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="id" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <a href="../types/ContainerIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ContainerIdentifier</a></div>
@@ -146,7 +149,7 @@ Any function call should fail when called after being disposed.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L76">src/container-instance.class.mts:76</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L65">src/container-instance.class.mts:65</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="isRetrievingPrivateToken" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>is<wbr/>Retrieving<wbr/>Private<wbr/>Token</span><a href="#isRetrievingPrivateToken" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">is<wbr/>Retrieving<wbr/>Private<wbr/>Token</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
@@ -158,7 +161,7 @@ which is used to store services of <code>{ multiple: true }</code>.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L120">src/container-instance.class.mts:120</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L113">src/container-instance.class.mts:113</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="metadataMap" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>metadata<wbr/>Map</span><a href="#metadataMap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">metadata<wbr/>Map</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/ServiceMetadata.html" class="tsd-signature-type tsd-kind-interface">ServiceMetadata</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
@@ -166,7 +169,7 @@ which is used to store services of <code>{ multiple: true }</code>.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L79">src/container-instance.class.mts:79</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L68">src/container-instance.class.mts:68</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="multiServiceIds" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>multi<wbr/>Service<wbr/>Ids</span><a href="#multiServiceIds" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">multi<wbr/>Service<wbr/>Ids</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type ">ManyServicesMetadata</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
@@ -177,7 +180,7 @@ the inner workings of the service instance.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L87">src/container-instance.class.mts:87</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L76">src/container-instance.class.mts:76</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="parent" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>parent</span><a href="#parent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">parent</span><span class="tsd-signature-symbol">?:</span> <a href="ContainerInstance.html" class="tsd-signature-type tsd-kind-class">ContainerInstance</a></div>
@@ -187,7 +190,7 @@ not present in this container.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L132">src/container-instance.class.mts:132</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L125">src/container-instance.class.mts:125</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="visitor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>visitor</span><a href="#visitor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">visitor</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">VisitorCollection</span><span class="tsd-signature-symbol"> = ...</span></div>
@@ -203,7 +206,7 @@ and individual listeners can be added and removed at will.</p>
 </ul>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L110">src/container-instance.class.mts:110</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L103">src/container-instance.class.mts:103</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="defaultContainer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>default<wbr/>Container</span><a href="#defaultContainer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">default<wbr/>Container</span><span class="tsd-signature-symbol">:</span> <a href="ContainerInstance.html" class="tsd-signature-type tsd-kind-class">ContainerInstance</a><span class="tsd-signature-symbol"> = ...</span></div>
@@ -212,7 +215,7 @@ container when registered via <code>Container.set()</code> or <code>@Service</co
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L99">src/container-instance.class.mts:99</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L92">src/container-instance.class.mts:92</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="_iterator_" class="tsd-anchor"></a>
@@ -225,11 +228,11 @@ container when registered via <code>Container.set()</code> or <code>@Service</co
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">IterableIterator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/ServiceMetadata.html" class="tsd-signature-type tsd-kind-interface">ServiceMetadata</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1607">src/container-instance.class.mts:1607</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1592">src/container-instance.class.mts:1592</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="acceptTreeVisitor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>accept<wbr/>Tree<wbr/>Visitor</span><a href="#acceptTreeVisitor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="acceptTreeVisitor.acceptTreeVisitor-1"><span class="tsd-kind-call-signature">accept<wbr/>Tree<wbr/>Visitor</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">visitor</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#acceptTreeVisitor.acceptTreeVisitor-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="acceptTreeVisitor.acceptTreeVisitor-1"><span class="tsd-kind-call-signature">accept<wbr/>Tree<wbr/>Visitor</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">visitor</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span><a href="#acceptTreeVisitor.acceptTreeVisitor-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description"><code class="tsd-tag ts-flagExperimental">Experimental</code> 
 <div class="tsd-comment tsd-typography"><p>Add a visitor to the container.</p>
 </div>
@@ -241,13 +244,13 @@ container when registered via <code>Container.set()</code> or <code>@Service</co
 <div class="tsd-comment tsd-typography"><p>The visitor to add to this container.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><p>Whether the operation was successful.</p>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></h4><p>Whether the operation was successful.</p>
 
 <div class="tsd-comment tsd-typography">
 <h4>See</h4><p><a href="../interfaces/ContainerTreeVisitor.html" class="tsd-kind-interface">ContainerTreeVisitor</a></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1583">src/container-instance.class.mts:1583</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1568">src/container-instance.class.mts:1568</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="detachTreeVisitor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>detach<wbr/>Tree<wbr/>Visitor</span><a href="#detachTreeVisitor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -270,7 +273,7 @@ No-op if the visitor was never attached to the container.</p>
 <h4>See</h4><p><a href="../interfaces/ContainerTreeVisitor.html" class="tsd-kind-interface">ContainerTreeVisitor</a></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1600">src/container-instance.class.mts:1600</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1585">src/container-instance.class.mts:1585</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="dispose" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>dispose</span><a href="#dispose" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -281,10 +284,11 @@ No-op if the visitor was never attached to the container.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><p>A promise that resolves when the disposal process is complete.</p>
 
 <div class="tsd-comment tsd-typography">
+<h4>Async</h4>
 <h4>Remarks</h4><p>It is currently not advised to dispose of the default container.
 This would result in resolution issues in your application.</p>
 
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">appContainer</span><span class="hl-1"> = </span><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">of</span><span class="hl-1">(</span><span class="hl-3">&#39;app&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-2">appContainer</span><span class="hl-1">.</span><span class="hl-5">dispose</span><span class="hl-1">().</span><span class="hl-5">then</span><span class="hl-1">(</span><br/><span class="hl-1">  () </span><span class="hl-6">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-5">log</span><span class="hl-1">(</span><span class="hl-3">&#39;The container has been disposed.&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">);</span><br/><br/><span class="hl-2">appContainer</span><span class="hl-1">.</span><span class="hl-2">disposed</span><span class="hl-1"> === </span><span class="hl-6">true</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// This will throw an error:</span><br/><span class="hl-2">appContainer</span><span class="hl-1">.</span><span class="hl-5">get</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-5">Token</span><span class="hl-1">&lt;</span><span class="hl-7">unknown</span><span class="hl-1">&gt;(</span><span class="hl-3">&#39;test&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">);</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">appContainer</span><span class="hl-1"> = </span><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">of</span><span class="hl-1">(</span><span class="hl-2">&#39;app&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">appContainer</span><span class="hl-1">.</span><span class="hl-0">dispose</span><span class="hl-1">().</span><span class="hl-0">then</span><span class="hl-1">(</span><br/><span class="hl-1">  () </span><span class="hl-6">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;The container has been disposed.&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">);</span><br/><br/><span class="hl-4">appContainer</span><span class="hl-1">.</span><span class="hl-4">disposed</span><span class="hl-1"> === </span><span class="hl-6">true</span><span class="hl-1">;</span><br/><br/><span class="hl-5">// This will throw an error:</span><br/><span class="hl-4">appContainer</span><span class="hl-1">.</span><span class="hl-0">get</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">Token</span><span class="hl-1">&lt;</span><span class="hl-7">unknown</span><span class="hl-1">&gt;(</span><span class="hl-2">&#39;test&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 
 <h4>Throws</h4><p>Error
@@ -292,7 +296,7 @@ This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of Disposable.dispose</p>
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1186">src/container-instance.class.mts:1186</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1178">src/container-instance.class.mts:1178</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="disposeServiceInstance" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span class="deprecated">dispose<wbr/>Service<wbr/>Instance</span><a href="#disposeServiceInstance" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -320,7 +324,7 @@ This exception is thrown if the container has been disposed.</p>
 However, the value it returns is ignored.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1552">src/container-instance.class.mts:1552</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1537">src/container-instance.class.mts:1537</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="get" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get</span><a href="#get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -356,7 +360,7 @@ This exception is thrown if the identifier cannot be found in the tree.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L224">src/container-instance.class.mts:224</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L217">src/container-instance.class.mts:217</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="getConstructorParameters" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>get<wbr/>Constructor<wbr/>Parameters</span><a href="#getConstructorParameters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -376,7 +380,7 @@ This exception is thrown if the container has been disposed.</p>
 <h5><span class="tsd-kind-parameter">guardBuiltIns</span>: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1349">src/container-instance.class.mts:1349</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1334">src/container-instance.class.mts:1334</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="getIdentifierLocation" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Identifier<wbr/>Location</span><a href="#getIdentifierLocation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -414,7 +418,7 @@ If the container tree is substantial, this operation may affect performance.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L185">src/container-instance.class.mts:185</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L178">src/container-instance.class.mts:178</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getMany" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Many</span><a href="#getMany" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -442,7 +446,7 @@ Used when service are defined with the <code>{ multiple: true }</code> option.</
 identifier.</p>
 
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">set</span><span class="hl-1">({ </span><span class="hl-2">id:</span><span class="hl-1"> </span><span class="hl-3">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-2">value:</span><span class="hl-1"> </span><span class="hl-9">1</span><span class="hl-1">, </span><span class="hl-2">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> });</span><br/><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">set</span><span class="hl-1">({ </span><span class="hl-2">id:</span><span class="hl-1"> </span><span class="hl-3">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-2">value:</span><span class="hl-1"> </span><span class="hl-9">2</span><span class="hl-1">, </span><span class="hl-2">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> });</span><br/><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">set</span><span class="hl-1">({ </span><span class="hl-2">id:</span><span class="hl-1"> </span><span class="hl-3">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-2">value:</span><span class="hl-1"> </span><span class="hl-9">3</span><span class="hl-1">, </span><span class="hl-2">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> });</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> [</span><span class="hl-8">one</span><span class="hl-1">, </span><span class="hl-8">two</span><span class="hl-1">, </span><span class="hl-8">three</span><span class="hl-1">] = </span><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">getMany</span><span class="hl-1">(</span><span class="hl-3">&#39;key&#39;</span><span class="hl-1">);</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">({ </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-4">value:</span><span class="hl-1"> </span><span class="hl-9">1</span><span class="hl-1">, </span><span class="hl-4">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> });</span><br/><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">({ </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-4">value:</span><span class="hl-1"> </span><span class="hl-9">2</span><span class="hl-1">, </span><span class="hl-4">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> });</span><br/><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">({ </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-4">value:</span><span class="hl-1"> </span><span class="hl-9">3</span><span class="hl-1">, </span><span class="hl-4">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> });</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> [</span><span class="hl-8">one</span><span class="hl-1">, </span><span class="hl-8">two</span><span class="hl-1">, </span><span class="hl-8">three</span><span class="hl-1">] = </span><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">getMany</span><span class="hl-1">(</span><span class="hl-2">&#39;key&#39;</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 
 <h4>Throws</h4><p>ServiceNotFoundError
@@ -452,7 +456,7 @@ This exception is thrown if a value could not be found for the given identifier.
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L494">src/container-instance.class.mts:494</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L487">src/container-instance.class.mts:487</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="getManyOrDefault" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Many<wbr/>Or<wbr/>Default</span><a href="#getManyOrDefault" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -497,7 +501,7 @@ If none can be found, the default value is returned.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L551">src/container-instance.class.mts:551</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L544">src/container-instance.class.mts:544</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getManyOrNull" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Many<wbr/>Or<wbr/>Null</span><a href="#getManyOrNull" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -526,7 +530,7 @@ If none can be found, <code>null</code> is returned.</p>
 
 <div class="tsd-comment tsd-typography">
 <h4>Example</h4><p>Here&#39;s an example:</p>
-<pre><code class="language-ts"><span class="hl-5">assert</span><span class="hl-1">(</span><span class="hl-2">container</span><span class="hl-1">.</span><span class="hl-5">getManyOrNull</span><span class="hl-1">(</span><span class="hl-8">UNKNOWN_TOKEN</span><span class="hl-1">) === </span><span class="hl-6">null</span><span class="hl-1">);</span><br/><span class="hl-5">assert</span><span class="hl-1">(</span><span class="hl-2">Array</span><span class="hl-1">.</span><span class="hl-5">isArray</span><span class="hl-1">(</span><span class="hl-2">container</span><span class="hl-1">.</span><span class="hl-5">getManyOrNull</span><span class="hl-1">(</span><span class="hl-8">KNOWN_TOKEN</span><span class="hl-1">)));</span>
+<pre><code class="language-ts"><span class="hl-0">assert</span><span class="hl-1">(</span><span class="hl-4">container</span><span class="hl-1">.</span><span class="hl-0">getManyOrNull</span><span class="hl-1">(</span><span class="hl-8">UNKNOWN_TOKEN</span><span class="hl-1">) === </span><span class="hl-6">null</span><span class="hl-1">);</span><br/><span class="hl-0">assert</span><span class="hl-1">(</span><span class="hl-4">Array</span><span class="hl-1">.</span><span class="hl-0">isArray</span><span class="hl-1">(</span><span class="hl-4">container</span><span class="hl-1">.</span><span class="hl-0">getManyOrNull</span><span class="hl-1">(</span><span class="hl-8">KNOWN_TOKEN</span><span class="hl-1">)));</span>
 </code><button>Copy</button></pre>
 
 <h4>See</h4><p><a href="ContainerInstance.html#getMany" class="tsd-kind-method">ContainerInstance.getMany</a></p>
@@ -535,7 +539,7 @@ If none can be found, <code>null</code> is returned.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L529">src/container-instance.class.mts:529</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L522">src/container-instance.class.mts:522</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="getOrDefault" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>get<wbr/>Or<wbr/>Default</span><a href="#getOrDefault" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -575,7 +579,7 @@ If the identifier cannot be found, return the provided default value.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L314">src/container-instance.class.mts:314</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L307">src/container-instance.class.mts:307</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getOrNull" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Or<wbr/>Null</span><a href="#getOrNull" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -606,7 +610,7 @@ Optionally, parameters can be passed in case if instance is initialized in the c
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L295">src/container-instance.class.mts:295</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L288">src/container-instance.class.mts:288</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="getServiceValue" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>get<wbr/>Service<wbr/>Value</span><a href="#getServiceValue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -628,7 +632,7 @@ which is then saved to <a href="../interfaces/ServiceMetadata.html#value" class=
 </ul>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1237">src/container-instance.class.mts:1237</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1222">src/container-instance.class.mts:1222</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="has" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>has</span><a href="#has" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -665,7 +669,7 @@ If the container tree is substantial, this operation may affect performance.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L153">src/container-instance.class.mts:153</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L146">src/container-instance.class.mts:146</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="of" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>of</span><a href="#of" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -692,11 +696,11 @@ This exception is thrown if the container has been disposed.</p>
 with the same name if one already exists.</p>
 
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">newContainer</span><span class="hl-1"> = </span><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">of</span><span class="hl-1">(</span><span class="hl-3">&#39;foo&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-1">@</span><span class="hl-5">Service</span><span class="hl-1">({ </span><span class="hl-2">container:</span><span class="hl-1"> </span><span class="hl-2">newContainer</span><span class="hl-1"> }, [])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">MyService</span><span class="hl-1"> {}</span>
+<h4>Example</h4><pre><code><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">newContainer</span><span class="hl-1"> = </span><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">of</span><span class="hl-1">(</span><span class="hl-2">&#39;foo&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-1">@</span><span class="hl-0">Service</span><span class="hl-1">({ </span><span class="hl-4">container:</span><span class="hl-1"> </span><span class="hl-4">newContainer</span><span class="hl-1"> }, [])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">MyService</span><span class="hl-1"> {}</span>
 </code><button>Copy</button></pre>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1094">src/container-instance.class.mts:1094</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1085">src/container-instance.class.mts:1085</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="ofChild" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>of<wbr/>Child</span><a href="#ofChild" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -727,7 +731,7 @@ with the same name if one already exists.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1115">src/container-instance.class.mts:1115</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1106">src/container-instance.class.mts:1106</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="remove" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove</span><a href="#remove" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -747,14 +751,14 @@ This exception is thrown if the container has been disposed.</p>
 
 <div class="tsd-comment tsd-typography">
 <h4>Example</h4><p>Here&#39;s an example:</p>
-<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">NAME</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-5">Token</span><span class="hl-1">&lt;</span><span class="hl-7">string</span><span class="hl-1">&gt;();</span><br/><br/><span class="hl-4">// Set a new identifier in the container:</span><br/><span class="hl-2">defaultContainer</span><span class="hl-1">.</span><span class="hl-5">setValue</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">, </span><span class="hl-3">&#39;Joanna&#39;</span><span class="hl-1">);</span><br/><span class="hl-5">assert</span><span class="hl-1">(</span><span class="hl-2">defaultContainer</span><span class="hl-1">.</span><span class="hl-5">get</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">) === </span><span class="hl-3">&#39;Joanna&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// Now remove it, making the container forget it ever existed:</span><br/><span class="hl-2">defaultContainer</span><span class="hl-1">.</span><span class="hl-5">remove</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">);</span><br/><span class="hl-5">assert</span><span class="hl-1">(</span><span class="hl-2">defaultContainer</span><span class="hl-1">.</span><span class="hl-5">getOrNull</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">) === </span><span class="hl-6">null</span><span class="hl-1">);</span>
+<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">NAME</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">Token</span><span class="hl-1">&lt;</span><span class="hl-7">string</span><span class="hl-1">&gt;();</span><br/><br/><span class="hl-5">// Set a new identifier in the container:</span><br/><span class="hl-4">defaultContainer</span><span class="hl-1">.</span><span class="hl-0">setValue</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">, </span><span class="hl-2">&#39;Joanna&#39;</span><span class="hl-1">);</span><br/><span class="hl-0">assert</span><span class="hl-1">(</span><span class="hl-4">defaultContainer</span><span class="hl-1">.</span><span class="hl-0">get</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">) === </span><span class="hl-2">&#39;Joanna&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-5">// Now remove it, making the container forget it ever existed:</span><br/><span class="hl-4">defaultContainer</span><span class="hl-1">.</span><span class="hl-0">remove</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">);</span><br/><span class="hl-0">assert</span><span class="hl-1">(</span><span class="hl-4">defaultContainer</span><span class="hl-1">.</span><span class="hl-0">getOrNull</span><span class="hl-1">(</span><span class="hl-8">NAME</span><span class="hl-1">) === </span><span class="hl-6">null</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 
 <h4>Throws</h4><p>Error
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L951">src/container-instance.class.mts:951</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L944">src/container-instance.class.mts:944</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="reset" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>reset</span><a href="#reset" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -773,7 +777,7 @@ This exception is thrown if the container has been disposed.</p>
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1136">src/container-instance.class.mts:1136</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1127">src/container-instance.class.mts:1127</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="resolveConstrainedIdentifier" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>resolve<wbr/>Constrained<wbr/>Identifier</span><a href="#resolveConstrainedIdentifier" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -815,7 +819,7 @@ but the current container does not have a parent.</p>
 This exception is thrown if <a href="../functions/SkipSelf.html" class="tsd-kind-function">SkipSelf</a> and <a href="../functions/Self.html" class="tsd-kind-function">Self</a> are used at the same time.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1460">src/container-instance.class.mts:1460</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1445">src/container-instance.class.mts:1445</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="resolveMetadata" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>resolve<wbr/>Metadata</span><a href="#resolveMetadata" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -854,7 +858,7 @@ This exception is thrown if <a href="../functions/SkipSelf.html" class="tsd-kind
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L255">src/container-instance.class.mts:255</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L248">src/container-instance.class.mts:248</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="resolveMultiID" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>resolve<wbr/>MultiID</span><a href="#resolveMultiID" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -882,14 +886,14 @@ of this container, regardless of whether the parent has the identifier.</p>
 second element being the value associated with the specified identifier.</p>
 
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-4">// Create a new container, as a child of a child of the default container.</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">myContainer</span><span class="hl-1"> = </span><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">ofChild</span><span class="hl-1">(</span><span class="hl-5">Symbol</span><span class="hl-1">()).</span><span class="hl-5">ofChild</span><span class="hl-1">(</span><span class="hl-5">Symbol</span><span class="hl-1">());</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">MY_SERVICE</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-5">Token</span><span class="hl-1">&lt;</span><span class="hl-7">MyService</span><span class="hl-1">&gt;();</span><br/><br/><span class="hl-4">// Add a service to the default container, as a value of the MY_SERVICE group.</span><br/><span class="hl-1">@</span><span class="hl-5">Service</span><span class="hl-1">({ </span><span class="hl-2">container:</span><span class="hl-1"> </span><span class="hl-2">myContainer</span><span class="hl-1">, </span><span class="hl-2">id:</span><span class="hl-1"> </span><span class="hl-8">MY_SERVICE</span><span class="hl-1">, </span><span class="hl-2">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> }, [ ])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">MyService</span><span class="hl-1"> { }</span><br/><br/><span class="hl-4">// Add another service to the default container, as a value of the MY_SERVICE group.</span><br/><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">set</span><span class="hl-1">({ </span><span class="hl-2">id:</span><span class="hl-1"> </span><span class="hl-8">MY_SERVICE</span><span class="hl-1">, </span><span class="hl-2">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">, </span><span class="hl-2">value:</span><span class="hl-1"> </span><span class="hl-5">Symbol</span><span class="hl-1">() });</span><br/><br/><span class="hl-4">// Get the multi-IDs from the child container.</span><br/><span class="hl-6">const</span><span class="hl-1"> [</span><span class="hl-8">myService</span><span class="hl-1">, </span><span class="hl-8">mySymbol</span><span class="hl-1">] = </span><span class="hl-2">myContainer</span><span class="hl-1">.</span><span class="hl-5">getMany</span><span class="hl-1">(</span><span class="hl-8">MY_SERVICE</span><span class="hl-1">);</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">// Create a new container, as a child of a child of the default container.</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">myContainer</span><span class="hl-1"> = </span><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">ofChild</span><span class="hl-1">(</span><span class="hl-0">Symbol</span><span class="hl-1">()).</span><span class="hl-0">ofChild</span><span class="hl-1">(</span><span class="hl-0">Symbol</span><span class="hl-1">());</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">MY_SERVICE</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">Token</span><span class="hl-1">&lt;</span><span class="hl-7">MyService</span><span class="hl-1">&gt;();</span><br/><br/><span class="hl-5">// Add a service to the default container, as a value of the MY_SERVICE group.</span><br/><span class="hl-1">@</span><span class="hl-0">Service</span><span class="hl-1">({ </span><span class="hl-4">container:</span><span class="hl-1"> </span><span class="hl-4">myContainer</span><span class="hl-1">, </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-8">MY_SERVICE</span><span class="hl-1">, </span><span class="hl-4">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> }, [ ])</span><br/><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">MyService</span><span class="hl-1"> { }</span><br/><br/><span class="hl-5">// Add another service to the default container, as a value of the MY_SERVICE group.</span><br/><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">({ </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-8">MY_SERVICE</span><span class="hl-1">, </span><span class="hl-4">multiple:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">, </span><span class="hl-4">value:</span><span class="hl-1"> </span><span class="hl-0">Symbol</span><span class="hl-1">() });</span><br/><br/><span class="hl-5">// Get the multi-IDs from the child container.</span><br/><span class="hl-6">const</span><span class="hl-1"> [</span><span class="hl-8">myService</span><span class="hl-1">, </span><span class="hl-8">mySymbol</span><span class="hl-1">] = </span><span class="hl-4">myContainer</span><span class="hl-1">.</span><span class="hl-0">getMany</span><span class="hl-1">(</span><span class="hl-8">MY_SERVICE</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 
 <h4>Remarks</h4><p>This replaces the previous implementation, which did not implement proper recursion,
 as it only inherited from the direct container of a parent.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L685">src/container-instance.class.mts:685</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L678">src/container-instance.class.mts:678</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="resolveResolvable" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>resolve<wbr/>Resolvable</span><a href="#resolveResolvable" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -911,7 +915,7 @@ as it only inherited from the direct container of a parent.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1366">src/container-instance.class.mts:1366</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1351">src/container-instance.class.mts:1351</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="resolveTypeWrapper" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>resolve<wbr/>Type<wbr/>Wrapper</span><a href="#resolveTypeWrapper" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -924,7 +928,7 @@ as it only inherited from the direct container of a parent.</p>
 <h5><span class="tsd-kind-parameter">wrapper</span>: <span class="tsd-signature-type ">TypeWrapper</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L1512">src/container-instance.class.mts:1512</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L1497">src/container-instance.class.mts:1497</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="set" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set</span><a href="#set" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -960,7 +964,7 @@ This can then be passed to <a href="ContainerInstance.html#get" class="tsd-kind-
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L723">src/container-instance.class.mts:723</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L716">src/container-instance.class.mts:716</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="set.set-2"><span class="tsd-kind-call-signature">set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">serviceOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a><a href="#set.set-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Add a service to the container using the provided options, containing
@@ -1002,7 +1006,7 @@ be used to reference a given dependency in the container.</li>
 </ul>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L753">src/container-instance.class.mts:753</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L746">src/container-instance.class.mts:746</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="set.set-3"><span class="tsd-kind-call-signature">set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">serviceOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/ServiceIdentifier.html" class="tsd-signature-type tsd-kind-type-alias">ServiceIdentifier</a><a href="#set.set-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Add a service to the container, without providing any dependencies which would
@@ -1046,7 +1050,7 @@ be used to reference a given dependency in the container.</li>
 </ul>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L782">src/container-instance.class.mts:782</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L775">src/container-instance.class.mts:775</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="setValue" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Value</span><a href="#setValue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1079,14 +1083,14 @@ Must be either a string or a Token.</p>
 This can then be passed to <a href="ContainerInstance.html#get" class="tsd-kind-method">.get</a> to resolve the identifier.</p>
 
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-4">// We can simplify this:</span><br/><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">set</span><span class="hl-1">({ </span><span class="hl-2">id:</span><span class="hl-1"> </span><span class="hl-3">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-2">value:</span><span class="hl-1"> </span><span class="hl-3">&#39;test&#39;</span><span class="hl-1">, </span><span class="hl-2">dependencies:</span><span class="hl-1"> [ ] });</span><br/><span class="hl-4">// To this:</span><br/><span class="hl-2">Container</span><span class="hl-1">.</span><span class="hl-5">setValue</span><span class="hl-1">(</span><span class="hl-3">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;test&#39;</span><span class="hl-1">);</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">// We can simplify this:</span><br/><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">({ </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-4">value:</span><span class="hl-1"> </span><span class="hl-2">&#39;test&#39;</span><span class="hl-1">, </span><span class="hl-4">dependencies:</span><span class="hl-1"> [ ] });</span><br/><span class="hl-5">// To this:</span><br/><span class="hl-4">Container</span><span class="hl-1">.</span><span class="hl-0">setValue</span><span class="hl-1">(</span><span class="hl-2">&#39;key&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;test&#39;</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 
 <h4>Throws</h4><p>Error
 This exception is thrown if the container has been disposed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L916">src/container-instance.class.mts:916</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L909">src/container-instance.class.mts:909</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="of-2" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>of</span><a href="#of-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1126,13 +1130,13 @@ if one already exists.</p>
 <h4>Remarks</h4><p>This is functionally equivalent to <a href="ContainerInstance.html#of-2" class="tsd-kind-method">ContainerInstance.of</a>.
 However, it allows container creation from a static interface.</p>
 
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-4">// Create a container which has the default container as its parent:</span><br/><span class="hl-2">ContainerInstance</span><span class="hl-1">.</span><span class="hl-5">of</span><span class="hl-1">(</span><span class="hl-3">&#39;my-new-container&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// Create a container without a parent:</span><br/><span class="hl-2">ContainerInstance</span><span class="hl-1">.</span><span class="hl-5">of</span><span class="hl-1">(</span><span class="hl-3">&#39;my-new-container-without-a-parent&#39;</span><span class="hl-1">, </span><span class="hl-6">null</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// Create a container with a separate container:</span><br/><span class="hl-2">ContainerInstance</span><span class="hl-1">.</span><span class="hl-5">of</span><span class="hl-1">(</span><span class="hl-3">&#39;my-new-special-container&#39;</span><span class="hl-1">, </span><span class="hl-2">myOtherContainer</span><span class="hl-1">);</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">// Create a container which has the default container as its parent:</span><br/><span class="hl-4">ContainerInstance</span><span class="hl-1">.</span><span class="hl-0">of</span><span class="hl-1">(</span><span class="hl-2">&#39;my-new-container&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-5">// Create a container without a parent:</span><br/><span class="hl-4">ContainerInstance</span><span class="hl-1">.</span><span class="hl-0">of</span><span class="hl-1">(</span><span class="hl-2">&#39;my-new-container-without-a-parent&#39;</span><span class="hl-1">, </span><span class="hl-6">null</span><span class="hl-1">);</span><br/><br/><span class="hl-5">// Create a container with a separate container:</span><br/><span class="hl-4">ContainerInstance</span><span class="hl-1">.</span><span class="hl-0">of</span><span class="hl-1">(</span><span class="hl-2">&#39;my-new-special-container&#39;</span><span class="hl-1">, </span><span class="hl-4">myOtherContainer</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 
 <h4>See</h4><p><a href="../interfaces/CreateContainerOptions.html" class="tsd-kind-interface">CreateContainerOptions</a></p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/container-instance.class.mts#L996">src/container-instance.class.mts:996</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/container-instance.class.mts#L989">src/container-instance.class.mts:989</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary">
@@ -1180,7 +1184,7 @@ However, it allows container creation from a static interface.</p>
 <li><a href="#of-2" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>of</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg>
-<div>@freshgum/typedi -<wbr/> v0.5.1</div></a>
+<div>@freshgum/typedi -<wbr/> v0.6.0</div></a>
 <ul class="tsd-small-nested-navigation">
 <li><a href="../modules.html#default"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg>
 <div>default
@@ -1200,6 +1204,9 @@ However, it allows container creation from a static interface.</p>
 <li><a href="ContainerInstance.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Container<wbr/>Instance
 <div class="menu-item-desc">The Container.</div></div></a></li>
+<li><a href="ContainerRegistryError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<div>Container<wbr/>Registry<wbr/>Error
+<div class="menu-item-desc">An error thrown from operations within the ContainerRegistry.</div></div></a></li>
 <li><a href="ServiceNotFoundError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Service<wbr/>Not<wbr/>Found<wbr/>Error
 <div class="menu-item-desc">Thrown when requested service was not found.</div></div></a></li>

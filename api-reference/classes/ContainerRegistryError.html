@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ExtractToken | @freshgum/typedi - v0.6.0</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/my-theme.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ContainerRegistryError | @freshgum/typedi - v0.6.0</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/my-theme.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -26,26 +26,145 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../modules.html">@freshgum/typedi</a></li>
-<li><a href="ExtractToken.html">ExtractToken</a></li></ul>
-<h1>Type alias ExtractToken&lt;T&gt;</h1></div>
-<div class="tsd-signature"><span class="tsd-kind-type-alias">Extract<wbr/>Token</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol"> extends </span><a href="../classes/Token.html" class="tsd-signature-type tsd-kind-class">Token</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> <span class="tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol">&gt;</span><br/><span>    </span><span class="tsd-signature-symbol">? </span><span class="tsd-signature-type tsd-kind-type-parameter">U</span><br/><span>    </span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">never</span></div>
-<div class="tsd-comment tsd-typography"><p>Extract the type of a Token.</p>
+<li><a href="ContainerRegistryError.html">ContainerRegistryError</a></li></ul>
+<h1>Class ContainerRegistryError</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>An error thrown from operations within the ContainerRegistry.</p>
 </div>
-<section class="tsd-panel">
-<h4>Type Parameters</h4>
-<ul class="tsd-type-parameter-list">
-<li>
-<h4><span class="tsd-kind-type-parameter">T</span></h4></li></ul></section>
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">token</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">Token</span><span class="hl-1">&lt;</span><span class="hl-7">string</span><span class="hl-1">&gt;();</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">value</span><span class="hl-1">: </span><span class="hl-7">ExtractToken</span><span class="hl-1">&lt;</span><span class="hl-6">typeof</span><span class="hl-1"> </span><span class="hl-4">token</span><span class="hl-1">&gt; = </span><span class="hl-2">&quot;Hello!&quot;</span><span class="hl-1">;</span>
-</code><button>Copy</button></pre>
-
-<h4>Remarks</h4><p>This implements <a href="https://github.com/typestack/typedi/pull/1127">https://github.com/typestack/typedi/pull/1127</a>.</p>
-</div><aside class="tsd-sources">
+<h4>See</h4><p>ContainerRegistry</p>
+</div></section>
+<section class="tsd-panel tsd-hierarchy">
+<h4>Hierarchy</h4>
+<ul class="tsd-hierarchy">
+<li><span class="tsd-signature-type ">NativeError</span>
+<ul class="tsd-hierarchy">
+<li><span class="target">ContainerRegistryError</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/types/extract-token.type.mts#L15">src/types/extract-token.type.mts:15</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/error/container-registry-error.error.mts#L13">src/error/container-registry-error.error.mts:13</a></li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
+<h5 class="tsd-index-heading uppercase" role="button" aria-expanded="false" tabIndex=0><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-chevronSmall"></use></svg> Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Constructors</h3>
+<div class="tsd-index-list"><a href="ContainerRegistryError.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Properties</h3>
+<div class="tsd-index-list"><a href="ContainerRegistryError.html#message" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>message</span></a>
+<a href="ContainerRegistryError.html#name" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>name</span></a>
+<a href="ContainerRegistryError.html#stack" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>stack?</span></a>
+<a href="ContainerRegistryError.html#prepareStackTrace" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>prepare<wbr/>Stack<wbr/>Trace?</span></a>
+<a href="ContainerRegistryError.html#stackTraceLimit" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>stack<wbr/>Trace<wbr/>Limit</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading">Methods</h3>
+<div class="tsd-index-list"><a href="ContainerRegistryError.html#captureStackTrace" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>capture<wbr/>Stack<wbr/>Trace</span></a>
+</div></section></div></details></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Constructors</h2>
+<section class="tsd-panel tsd-member"><a id="constructor" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_ContainerRegistryError"><span class="tsd-kind-constructor-signature">new <wbr/>Container<wbr/>Registry<wbr/>Error</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">message</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ContainerRegistryError.html" class="tsd-signature-type tsd-kind-class">ContainerRegistryError</a><a href="#constructor.new_ContainerRegistryError" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">message</span>: <span class="tsd-signature-type">string</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="ContainerRegistryError.html" class="tsd-signature-type tsd-kind-class">ContainerRegistryError</a></h4><aside class="tsd-sources">
+<p>Overrides NativeError.constructor</p>
+<ul>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/error/container-registry-error.error.mts#L16">src/error/container-registry-error.error.mts:16</a></li></ul></aside></li></ul></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Properties</h2>
+<section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="message" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>message</span><a href="#message" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">message</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<p>Inherited from NativeError.message</p>
+<ul>
+<li>Defined in node_modules/.pnpm/typescript@5.2.2/node_modules/typescript/lib/lib.es5.d.ts:1068</li></ul></aside></section>
+<section class="tsd-panel tsd-member"><a id="name" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;ContainerRegistryError&quot;</span><span class="tsd-signature-symbol"> = &#39;ContainerRegistryError&#39;</span></div><aside class="tsd-sources">
+<p>Overrides NativeError.name</p>
+<ul>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/error/container-registry-error.error.mts#L14">src/error/container-registry-error.error.mts:14</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="stack" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>stack</span><a href="#stack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">stack</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<p>Inherited from NativeError.stack</p>
+<ul>
+<li>Defined in node_modules/.pnpm/typescript@5.2.2/node_modules/typescript/lib/lib.es5.d.ts:1069</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="prepareStackTrace" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagOptional">Optional</code> <span>prepare<wbr/>Stack<wbr/>Trace</span><a href="#prepareStackTrace" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">prepare<wbr/>Stack<wbr/>Trace</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">err</span>, <span class="tsd-kind-parameter">stackTraces</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span></div>
+<div class="tsd-type-declaration">
+<h4>Type declaration</h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures tsd-is-external">
+<li class="tsd-signature" id="prepareStackTrace.__type.__type-1"><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">err</span>, <span class="tsd-kind-parameter">stackTraces</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Optional override for formatting stack traces</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">err</span>: <span class="tsd-signature-type ">Error</span></h5></li>
+<li>
+<h5><span class="tsd-kind-parameter">stackTraces</span>: <span class="tsd-signature-type ">CallSite</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://v8.dev/docs/stack-trace-api#customizing-stack-traces">https://v8.dev/docs/stack-trace-api#customizing-stack-traces</a></p>
+</div></li></ul></li></ul></div><aside class="tsd-sources">
+<p>Inherited from NativeError.prepareStackTrace</p>
+<ul>
+<li>Defined in node_modules/.pnpm/@types+node@20.8.3/node_modules/@types/node/globals.d.ts:11</li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="stackTraceLimit" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>stack<wbr/>Trace<wbr/>Limit</span><a href="#stackTraceLimit" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">stack<wbr/>Trace<wbr/>Limit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
+<p>Inherited from NativeError.stackTraceLimit</p>
+<ul>
+<li>Defined in node_modules/.pnpm/@types+node@20.8.3/node_modules/@types/node/globals.d.ts:13</li></ul></aside></section></section>
+<section class="tsd-panel-group tsd-member-group">
+<h2>Methods</h2>
+<section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="captureStackTrace" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>capture<wbr/>Stack<wbr/>Trace</span><a href="#captureStackTrace" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited tsd-is-external">
+<li class="tsd-signature tsd-anchor-link" id="captureStackTrace.captureStackTrace-1"><span class="tsd-kind-call-signature">capture<wbr/>Stack<wbr/>Trace</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">targetObject</span>, <span class="tsd-kind-parameter">constructorOpt</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#captureStackTrace.captureStackTrace-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Create .stack property on a target object</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">targetObject</span>: <span class="tsd-signature-type">object</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">constructorOpt</span>: <span class="tsd-signature-type ">Function</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<p>Inherited from NativeError.captureStackTrace</p>
+<ul>
+<li>Defined in node_modules/.pnpm/@types+node@20.8.3/node_modules/@types/node/globals.d.ts:4</li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
-<div class="page-menu"></div>
+<div class="page-menu">
+<details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
+<li><a href="#message" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>message</span></a></li>
+<li><a href="#name" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>name</span></a></li>
+<li><a href="#stack" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>stack</span></a></li>
+<li><a href="#prepareStackTrace" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>prepare<wbr/>Stack<wbr/>Trace</span></a></li>
+<li><a href="#stackTraceLimit" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>stack<wbr/>Trace<wbr/>Limit</span></a></li>
+<li><a href="#captureStackTrace" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>capture<wbr/>Stack<wbr/>Trace</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg>
 <div>@freshgum/typedi -<wbr/> v0.6.0</div></a>
@@ -59,22 +178,22 @@
 <li><a href="../enums/ResolutionConstraintFlag.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>
 <div>Resolution<wbr/>Constraint<wbr/>Flag
 <div class="menu-item-desc">A collection of bit-flags describing resolution constraints to append to a bitmask.</div></div></a></li>
-<li><a href="../classes/CannotInstantiateBuiltInError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<li><a href="CannotInstantiateBuiltInError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Cannot<wbr/>Instantiate<wbr/>Built<wbr/>In<wbr/>Error
 <div class="menu-item-desc">Thrown when DI encounters a service depending on a built-in type (Number, String) with no factory.</div></div></a></li>
-<li><a href="../classes/CannotInstantiateValueError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<li><a href="CannotInstantiateValueError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Cannot<wbr/>Instantiate<wbr/>Value<wbr/>Error
 <div class="menu-item-desc">Thrown when DI cannot inject value into property decorated by `@Inject` decorator.</div></div></a></li>
-<li><a href="../classes/ContainerInstance.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<li><a href="ContainerInstance.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Container<wbr/>Instance
 <div class="menu-item-desc">The Container.</div></div></a></li>
-<li><a href="../classes/ContainerRegistryError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<li><a href="ContainerRegistryError.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Container<wbr/>Registry<wbr/>Error
 <div class="menu-item-desc">An error thrown from operations within the ContainerRegistry.</div></div></a></li>
-<li><a href="../classes/ServiceNotFoundError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<li><a href="ServiceNotFoundError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Service<wbr/>Not<wbr/>Found<wbr/>Error
 <div class="menu-item-desc">Thrown when requested service was not found.</div></div></a></li>
-<li><a href="../classes/Token.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<li><a href="Token.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Token
 <div class="menu-item-desc">Used to create unique typed service identifier.</div></div></a></li>
 <li><a href="../interfaces/ContainerResetOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg>
@@ -101,37 +220,37 @@
 <li><a href="../interfaces/VisitRetrievalOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg>
 <div>Visit<wbr/>Retrieval<wbr/>Options
 <div class="menu-item-desc">A collection of options passed to ContainerTreeVisitor.visitRetrieval.</div></div></a></li>
-<li><a href="AnyServiceDependency.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/AnyServiceDependency.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Any<wbr/>Service<wbr/>Dependency
 <div class="menu-item-desc">In the context of the Service decorator, any item in the dependencies array can either</div></div></a></li>
-<li><a href="Constructable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/Constructable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Constructable</div></a></li>
-<li><a href="ContainerConflictDefinition.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ContainerConflictDefinition.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Container<wbr/>Conflict<wbr/>Definition
 <div class="menu-item-desc">A definition of what constitutes a conflict in the case of a pre-existing container</div></div></a></li>
-<li><a href="ContainerConflictStrategy.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ContainerConflictStrategy.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Container<wbr/>Conflict<wbr/>Strategy
 <div class="menu-item-desc">A description of how TypeDI should react when a container</div></div></a></li>
-<li><a href="ContainerFreeStrategy.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ContainerFreeStrategy.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Container<wbr/>Free<wbr/>Strategy
 <div class="menu-item-desc">A description of how TypeDI should react when a container</div></div></a></li>
-<li><a href="ContainerIdentifier.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ContainerIdentifier.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Container<wbr/>Identifier
 <div class="menu-item-desc">A container identifier. This value must be unique across all containers.</div></div></a></li>
-<li><a href="ContainerScope.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ContainerScope.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Container<wbr/>Scope</div></a></li>
-<li><a href="DependencyPairWithConfiguration.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/DependencyPairWithConfiguration.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Dependency<wbr/>Pair<wbr/>With<wbr/>Configuration
 <div class="menu-item-desc">A tuple containing a service identifier, along with a set of options for said dependency.</div></div></a></li>
-<li><a href="ExtractToken.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ExtractToken.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Extract<wbr/>Token
 <div class="menu-item-desc">Extract the type of a Token.</div></div></a></li>
-<li><a href="JSService.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/JSService.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>JSService</div></a></li>
-<li><a href="ServiceIdentifier.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ServiceIdentifier.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Service<wbr/>Identifier
 <div class="menu-item-desc">Unique service identifier.</div></div></a></li>
-<li><a href="ServiceOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
+<li><a href="../types/ServiceOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>
 <div>Service<wbr/>Options
 <div class="menu-item-desc">The public ServiceOptions is partial object of ServiceMetadata and either one</div></div></a></li>
 <li><a href="../variables/Container.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg>

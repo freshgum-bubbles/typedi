@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ContainerTreeVisitor | @freshgum/typedi - v0.5.1</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/my-theme.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ContainerTreeVisitor | @freshgum/typedi - v0.6.0</title><meta name="description" content="Documentation for @freshgum/typedi"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/my-theme.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>console.log(`Loaded ${location.href}`)</script><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -6,7 +6,7 @@
 <div id="tsd-toolbar-links"><a href="/">home</a></div></div>
 <ul class="results">
 <li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="https://github.com/freshgum-bubbles/typedi.git" class="title">@freshgum/typedi - v0.5.1</a>
+<li class="state failure">The search index is not available</li></ul><a href="https://github.com/freshgum-bubbles/typedi.git" class="title">@freshgum/typedi - v0.6.0</a>
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
 <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>Settings</h3></summary>
@@ -59,7 +59,7 @@ being added to more than one container.</p>
 </div>
 <div class="tsd-comment tsd-typography">
 <h4>Example</h4><p>A simple example of the visitor API is as follows:</p>
-<pre><code class="language-ts"><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">LoggingTreeVisitor</span><span class="hl-1"> </span><span class="hl-6">implements</span><span class="hl-1"> </span><span class="hl-7">ContainerTreeVisitor</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-6">public</span><span class="hl-1"> </span><span class="hl-2">container</span><span class="hl-1">!: </span><span class="hl-7">ContainerIdentifier</span><span class="hl-1">;</span><br/><br/><span class="hl-1">  </span><span class="hl-5">visitContainer</span><span class="hl-1"> (</span><span class="hl-2">container</span><span class="hl-1">: </span><span class="hl-7">ContainerIdentifier</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-0">if</span><span class="hl-1"> (!</span><span class="hl-6">this</span><span class="hl-1">.</span><span class="hl-2">container</span><span class="hl-1">) {</span><br/><span class="hl-1">      </span><span class="hl-6">this</span><span class="hl-1">.</span><span class="hl-2">container</span><span class="hl-1"> = </span><span class="hl-2">container</span><span class="hl-1">;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  }</span><br/><br/><span class="hl-1">  </span><span class="hl-5">visitNewService</span><span class="hl-1"> (</span><span class="hl-2">options</span><span class="hl-1">: </span><span class="hl-7">ServiceOptions</span><span class="hl-1">&lt;</span><span class="hl-7">unknown</span><span class="hl-1">&gt;) {</span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-5">log</span><span class="hl-1">(</span><span class="hl-3">&#39;New service added to container: &#39;</span><span class="hl-1">, </span><span class="hl-2">options</span><span class="hl-1">.</span><span class="hl-2">id</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+<pre><code class="language-ts"><span class="hl-6">class</span><span class="hl-1"> </span><span class="hl-7">LoggingTreeVisitor</span><span class="hl-1"> </span><span class="hl-6">implements</span><span class="hl-1"> </span><span class="hl-7">ContainerTreeVisitor</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-6">public</span><span class="hl-1"> </span><span class="hl-4">container</span><span class="hl-1">!: </span><span class="hl-7">ContainerIdentifier</span><span class="hl-1">;</span><br/><br/><span class="hl-1">  </span><span class="hl-0">visitContainer</span><span class="hl-1"> (</span><span class="hl-4">container</span><span class="hl-1">: </span><span class="hl-7">ContainerIdentifier</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-3">if</span><span class="hl-1"> (!</span><span class="hl-6">this</span><span class="hl-1">.</span><span class="hl-4">container</span><span class="hl-1">) {</span><br/><span class="hl-1">      </span><span class="hl-6">this</span><span class="hl-1">.</span><span class="hl-4">container</span><span class="hl-1"> = </span><span class="hl-4">container</span><span class="hl-1">;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  }</span><br/><br/><span class="hl-1">  </span><span class="hl-0">visitNewService</span><span class="hl-1"> (</span><span class="hl-4">options</span><span class="hl-1">: </span><span class="hl-7">ServiceOptions</span><span class="hl-1">&lt;</span><span class="hl-7">unknown</span><span class="hl-1">&gt;) {</span><br/><span class="hl-1">    </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;New service added to container: &#39;</span><span class="hl-1">, </span><span class="hl-4">options</span><span class="hl-1">.</span><span class="hl-4">id</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
 </code><button>Copy</button></pre>
 <p>(This is a very simplified example and use-case.)</p>
 </div></section>
@@ -70,7 +70,7 @@ being added to more than one container.</p>
 <ul class="tsd-hierarchy">
 <li><span class="target">ContainerTreeVisitor</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/interfaces/tree-visitor.interface.mts#L103">src/interfaces/tree-visitor.interface.mts:103</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/interfaces/tree-visitor.interface.mts#L103">src/interfaces/tree-visitor.interface.mts:103</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -99,7 +99,7 @@ being added to more than one container.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from Disposable.disposed</p>
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/types/disposable.type.mts#L8">src/types/disposable.type.mts:8</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/types/disposable.type.mts#L8">src/types/disposable.type.mts:8</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="dispose" class="tsd-anchor"></a>
@@ -120,7 +120,7 @@ The type of error thrown is unknown.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from Disposable.dispose</p>
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/types/disposable.type.mts#L29">src/types/disposable.type.mts:29</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/types/disposable.type.mts#L29">src/types/disposable.type.mts:29</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="visitChildContainer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>visit<wbr/>Child<wbr/>Container</span><a href="#visitChildContainer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -139,7 +139,7 @@ The type of error thrown is unknown.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/interfaces/tree-visitor.interface.mts#L110">src/interfaces/tree-visitor.interface.mts:110</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/interfaces/tree-visitor.interface.mts#L110">src/interfaces/tree-visitor.interface.mts:110</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="visitContainer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>visit<wbr/>Container</span><a href="#visitContainer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -162,7 +162,7 @@ Otherwise, all notifications from the passed are sent to the visitor.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/interfaces/tree-visitor.interface.mts#L141">src/interfaces/tree-visitor.interface.mts:141</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/interfaces/tree-visitor.interface.mts#L141">src/interfaces/tree-visitor.interface.mts:141</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="visitNewService" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>visit<wbr/>New<wbr/>Service</span><a href="#visitNewService" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -182,7 +182,7 @@ This is called when a new service is added via <code>Container.set(...)</code>.<
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/interfaces/tree-visitor.interface.mts#L128">src/interfaces/tree-visitor.interface.mts:128</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/interfaces/tree-visitor.interface.mts#L128">src/interfaces/tree-visitor.interface.mts:128</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="visitOrphanedContainer" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>visit<wbr/>Orphaned<wbr/>Container</span><a href="#visitOrphanedContainer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -202,7 +202,7 @@ This is only called if the visitor was attached to the default container.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/interfaces/tree-visitor.interface.mts#L119">src/interfaces/tree-visitor.interface.mts:119</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/interfaces/tree-visitor.interface.mts#L119">src/interfaces/tree-visitor.interface.mts:119</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="visitRetrieval" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>visit<wbr/>Retrieval</span><a href="#visitRetrieval" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -230,7 +230,7 @@ Documented in <a href="VisitRetrievalOptions.html" class="tsd-kind-interface">Vi
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/5810606/src/interfaces/tree-visitor.interface.mts#L156">src/interfaces/tree-visitor.interface.mts:156</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/freshgum-bubbles/typedi/blob/7b0a0a8/src/interfaces/tree-visitor.interface.mts#L156">src/interfaces/tree-visitor.interface.mts:156</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary">
@@ -253,7 +253,7 @@ Documented in <a href="VisitRetrievalOptions.html" class="tsd-kind-interface">Vi
 <li><a href="#visitRetrieval" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>visit<wbr/>Retrieval</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg>
-<div>@freshgum/typedi -<wbr/> v0.5.1</div></a>
+<div>@freshgum/typedi -<wbr/> v0.6.0</div></a>
 <ul class="tsd-small-nested-navigation">
 <li><a href="../modules.html#default"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg>
 <div>default
@@ -273,6 +273,9 @@ Documented in <a href="VisitRetrievalOptions.html" class="tsd-kind-interface">Vi
 <li><a href="../classes/ContainerInstance.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Container<wbr/>Instance
 <div class="menu-item-desc">The Container.</div></div></a></li>
+<li><a href="../classes/ContainerRegistryError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
+<div>Container<wbr/>Registry<wbr/>Error
+<div class="menu-item-desc">An error thrown from operations within the ContainerRegistry.</div></div></a></li>
 <li><a href="../classes/ServiceNotFoundError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>
 <div>Service<wbr/>Not<wbr/>Found<wbr/>Error
 <div class="menu-item-desc">Thrown when requested service was not found.</div></div></a></li>
