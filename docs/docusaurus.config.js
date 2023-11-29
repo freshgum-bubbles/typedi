@@ -27,7 +27,7 @@ const customFields = {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'TypeDI',
+  title: 'TypeDI++',
   tagline: 'Elegant Dependency Injection in JavaScript and TypeScript.',
   favicon: 'img/favicon.ico',
 
