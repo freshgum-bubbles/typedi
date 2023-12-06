@@ -14,7 +14,6 @@ export function LazyRef<TIdentifier extends ServiceIdentifier, TInstance = Infer
 ): TypeWrapper<TIdentifier, LazyRefHost<TIdentifier, TInstance>> {
   return {
     [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
-    lazyType: fn,
 
     /**
      * Because extractable type-wrappers are able to completely override the resolution process,
