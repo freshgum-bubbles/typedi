@@ -8,14 +8,13 @@ import {
 } from '../../../../index.mjs';
 import { SynchronousDisposable } from '../../../util/synchronous-disposable.class.mjs';
 import {
-  TreeContainerDescriptorType,
-  TreeParentContainerDescriptor,
+  TreeContainerDescriptor
 } from '../types/tree-container-descriptor.interface.mjs';
 import { TreeRetrievalDescriptor } from '../types/tree-retrieval-descriptor.interface.mjs';
 import { TreeServiceDescriptor } from '../types/tree-service-descriptor.interface.mjs';
 
 export class JSONContainerInspector extends SynchronousDisposable implements ContainerTreeVisitor {
-  public descriptor: TreeParentContainerDescriptor | null = null;
+  public descriptor: TreeContainerDescriptor | null = null;
   public container: ContainerInstance | null = null;
 
   visitChildContainer?(childContainer: ContainerInstance): void {
@@ -46,11 +45,10 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
     /** Lazily initialize the class' fields. */
     this.container = container;
     this.descriptor = {
-      type: TreeContainerDescriptorType.Parent,
       identifier: container.id,
-      children: [] as TreeParentContainerDescriptor[],
-      services: [] as TreeServiceDescriptor[],
-      retrievals: [] as TreeRetrievalDescriptor[],
+      children: [],
+      services: [],
+      retrievals: [],
     };
 
     return true;
@@ -67,6 +65,11 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
     this.descriptor!.retrievals.push(retrievalDescriptor);
   }
 
+  dispose() {
+    super.dispose();
+    this.container?.detachTreeVisitor(this);
+  }
+
   /**
    * Get the current system time.
    *
@@ -77,5 +80,9 @@ export class JSONContainerInspector extends SynchronousDisposable implements Con
    */
   protected getCurrentTime() {
     return performance.now();
+  }
+
+  public toJSON () {
+    return this.descriptor;
   }
 }

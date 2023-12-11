@@ -1,28 +1,23 @@
-import { ContainerIdentifier } from '../../../../index.mjs';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { ContainerIdentifier, ContainerInstance } from '../../../../index.mjs';
 import { TreeRetrievalDescriptor } from './tree-retrieval-descriptor.interface.mjs';
 import { TreeServiceDescriptor } from './tree-service-descriptor.interface.mjs';
 
-// todo: add tsdoc to all of this
-
-export const enum TreeContainerDescriptorType {
-  Orphaned,
-  Parent,
-}
-
-export interface BaseTreeContainerDescriptor {
-  readonly retrievals: TreeRetrievalDescriptor[];
-}
-
-export interface TreeOrphanedContainerDescriptor extends BaseTreeContainerDescriptor {
-  readonly type: TreeContainerDescriptorType.Orphaned;
-  readonly services: TreeServiceDescriptor[];
-}
-
-export interface TreeParentContainerDescriptor extends BaseTreeContainerDescriptor {
+/** An object representation of a {@link ContainerInstance}. */
+export interface TreeContainerDescriptor {
+  /** The identifier of the container. */
   readonly identifier: ContainerIdentifier;
-  readonly type: TreeContainerDescriptorType.Parent;
+
+  /** A sorted list of retrieval operations performed on this container. */
+  readonly retrievals: TreeRetrievalDescriptor[];
+
+  /** An array of services provided by this container. */
   readonly services: TreeServiceDescriptor[];
-  readonly children: TreeParentContainerDescriptor[];
+
+  /** An array of children provided by this container. */
+  readonly children: TreeContainerDescriptor[];
 }
 
-export type TreeContainerDescriptor = TreeOrphanedContainerDescriptor | TreeParentContainerDescriptor;
+export interface TreeContainerRootDescriptor extends TreeContainerDescriptor {
+  readonly orphans: TreeContainerDescriptor[];
+}
