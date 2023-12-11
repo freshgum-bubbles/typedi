@@ -22,7 +22,11 @@
       "strictPropertyInitialization": true,
       "strictNullChecks": true,
       "noImplicitAny": true,
-      "stripInternal": true
+
+      // stripInternal is disabled due to it causing issues in bundles, wherein types marked as
+      // @internal were being elided from the build, even when other parts of the package depended
+      // upon them.  See: <https://github.com/freshgum-bubbles/typedi/issues/146>
+      "stripInternal": false
     },
     "exclude": [
       "../../build",
