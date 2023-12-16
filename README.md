@@ -2,7 +2,7 @@
   <h1>TypeDI<sup>++</sup></h1>
   <p>Elegant dependency injection in TypeScript and JavaScript.</p>
 
-[![MIT License](https://img.shields.io/github/license/freshgum-bubbles/typedi)][pkg-license-file] [![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi)][pkg-npm] [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)][docs-site] [![Maintenance](https://img.shields.io/maintenance/yes/2023)](#)
+[![MIT License](https://img.shields.io/github/license/freshgum-bubbles/typedi)][pkg-license-file] [![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi)][pkg-npm] [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)][docs-site] [![Maintenance](https://img.shields.io/maintenance/yes/2023)](#maintenance)
 
 </div>
 
