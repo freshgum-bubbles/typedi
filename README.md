@@ -2,7 +2,7 @@
   <h1>TypeDI<sup>++</sup></h1>
   <p>Elegant dependency injection in TypeScript and JavaScript.</p>
 
-![GitHub](https://img.shields.io/github/license/freshgum-bubbles/typedi) ![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi) [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)][docs-site] ![Maintenance](https://img.shields.io/maintenance/yes/2023)
+[![MIT License](https://img.shields.io/github/license/freshgum-bubbles/typedi)][pkg-license-file] [![npm (scoped)](https://img.shields.io/npm/v/@freshgum/typedi)][pkg-npm] [![Website](https://img.shields.io/website/https/64a0c6b5de74517c4c7bdb77--singular-praline-356e00.netlify.app.svg?logo=BookStack&label=Documentation&labelColor=177C28)][docs-site] [![Maintenance](https://img.shields.io/maintenance/yes/2023)](#)
 
 </div>
 
@@ -106,6 +106,11 @@ Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbl
 [pkg-faq-node-15-3-0]: ./FAQ.md#why-does-the-package-not-support-node-versions-under-v1530
 [docs-site]: https://typedi.js.org
 [docs-site-constraints]: https://typedi.js.org/docs/guide/services/resolution-constraints
+[pkg-vcs]: https://github.com/freshgum-bubbles/typedi
+[pkg-npm]: https://npmjs.org/@freshgum/typedi
+
+<!-- Direct file link to ensure compatibility across local / NPM / GitHub views. -->
+[pkg-license-file]: ./LICENSE
 
 <!--
   All these footnotes make the README look like one of Apple's promotional pages...
