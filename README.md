@@ -10,7 +10,7 @@
 > [!WARNING]
 > From 0.4.0, support for Node versions under v15.3.0 has been removed, as the package has transitioned to ES Modules.
 >
-> <sup>See [_Why does the package not support Node versions under v15.3.0?_][pkg-faq-node-15-3-0].</sup>
+> <sup>See [Why does the package not support Node versions under v15.3.0?][pkg-faq-node-15-3-0]</sup>
 
 <!-- prettier-ignore -->
 > [!NOTE]
