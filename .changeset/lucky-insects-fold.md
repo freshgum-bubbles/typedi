@@ -2,11 +2,9 @@
 '@freshgum/typedi': minor
 ---
 
-**This is a breaking change for users of the `Lazy` function, and for anyone constructing `TypeWrapper` objects.**
+**This is a breaking change for anyone constructing `TypeWrapper` objects.**
 
-Internal `TypeWrapper` objects have been refactored, and the `Lazy` function has been removed.
-
-**TypeWrapper**
+Internal `TypeWrapper` objects have been refactored.
 
 Now, the `eagerType` property is optional, and the `lazyType` property has been removed. This has been changed because the `lazyType` property was part of broader lazy functionality (alongside the `Lazy` function) which was mainly a remnant from the upstream TypeDI project.
 
