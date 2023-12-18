@@ -1,0 +1,8 @@
+// This TypeScript configuration is used to test types, via the tsd-lite Jest runner suite.
+{
+    "extends": "./tsconfig.spec.json",
+
+    // Ignore all files under test/ folder, except type-testing/.
+    "exclude": ["../../test/**/*", "../../test/*"],
+    "include": ["../../test/type-testing/*", "../../test/type-testing/**/*"]
+}
