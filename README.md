@@ -110,6 +110,7 @@ Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbl
 [pkg-npm]: https://npmjs.org/@freshgum/typedi
 
 <!-- Direct file link to ensure compatibility across local / NPM / GitHub views. -->
+
 [pkg-license-file]: ./LICENSE
 
 <!--
