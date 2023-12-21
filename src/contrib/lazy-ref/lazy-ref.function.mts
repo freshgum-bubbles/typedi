@@ -1,20 +1,19 @@
-import { TYPE_WRAPPER, TypeWrapperStamp } from '../constants/type-wrapper.const.mjs';
-import { ServiceIdentifier } from '../index.mjs';
-import { ContainerInternals } from '../interfaces/container-internals.interface.mjs';
-import { InferServiceType } from '../types/infer-service-type.type.mjs';
-import { TypeWrapper } from '../types/type-wrapper.type.mjs';
+import { TYPE_WRAPPER, TypeWrapperStamp } from '../../constants/type-wrapper.const.mjs';
+import { ServiceIdentifier } from '../../index.mjs';
+import { InferServiceType } from '../../types/infer-service-type.type.mjs';
+import { TypeWrapper } from '../../types/type-wrapper.type.mjs';
+import { LazyRefHost } from './lazy-ref-host.class.mjs';
 
 /**
  * Create a lazy reference to a value.
  * This is typically used to signal to `@InjectAll` that a reference must
  * not be eagerly loaded, e.g. in the case of cyclic dependencies.
  */
-export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>>(
+export function LazyRef<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>>(
   fn: () => TIdentifier
-): TypeWrapper<TIdentifier, TInstance> {
+): TypeWrapper<TIdentifier, LazyRefHost<TIdentifier, TInstance>> {
   return {
     [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
-    lazyType: fn,
 
     /**
      * Because extractable type-wrappers are able to completely override the resolution process,
@@ -24,6 +23,6 @@ export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferSer
      * process extracted into a new method.  This lets us call it from type-wrappers.
      */
     extract: (container, constraints) =>
-      (container as unknown as ContainerInternals).resolveConstrainedIdentifier(fn(), constraints) as TInstance,
+      new LazyRefHost(fn, container, constraints)
   };
 }

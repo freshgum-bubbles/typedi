@@ -3,18 +3,9 @@ import { ContainerInstance } from '../../container-instance.class.mjs';
 import { InferServiceType } from '../../types/infer-service-type.type.mjs';
 import { ServiceNotFoundError } from '../../error/service-not-found.error.mjs';
 import { ResolutionConstraintFlag } from '../../types/resolution-constraint.type.mjs';
-import { resolveConstrainedContainer } from '../util/resolve-constrained-container.util.mjs';
-import { ContainerScope } from '../../types/container-scope.type.mjs';
-import { ServiceIdentifierLocation } from '../../types/service-identifier-location.type.mjs';
 import { NativeError } from '../../constants/minification/native-error.const.mjs';
 import { NativeNull } from '../../constants/minification/native-null.const.mjs';
-
-/** A helper to access private {@link ContainerInstance} methods. @ignore */
-type ContainerInternals = {
-  metadataMap: ContainerInstance['metadataMap'];
-  resolveConstrainedIdentifier: ContainerInstance['resolveConstrainedIdentifier'];
-  resolveMultiID: ContainerInstance['resolveMultiID'];
-};
+import { RefHost } from '../util/types/ref-host.class.mjs';
 
 /**
  * A helper object for managing instances of transient services.
@@ -55,27 +46,13 @@ type ContainerInternals = {
  *
  * @see {@link TransientRef}
  */
-export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>> {
-  /**
-   * The identifier of the service to attain from the specified container.
-   * @internal
-   *
-   * @remarks
-   * This identifier should always result in the creation of a new transient service.
-   * No checks are done to ensure this.
-   */
+export class TransientRefHost<
+  TIdentifier extends ServiceIdentifier,
+  TInstance = InferServiceType<TIdentifier>,
+> extends RefHost<TIdentifier, TInstance> {
+  // See [RefHost] for documentation:
   protected readonly id: TIdentifier;
-
-  /**
-   * The container from which to attain individual transient services.
-   * @internal
-   */
   protected readonly container: ContainerInstance;
-
-  /**
-   * The constraints to use when resolving the specified identifier.
-   * @internal
-   */
   protected readonly constraints: number;
 
   /**
@@ -87,28 +64,13 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * @param constraints A set of constraints to apply when resolving the identifier.
    */
   public constructor(id: TIdentifier, container: ContainerInstance, constraints: number) {
+    super();
+
     this.id = id;
     this.container = container;
     this.constraints = constraints;
 
-    /**
-     * We need to grab a reference to the identifier in the container's internal metadata map
-     * to do a few checks, such as whether the identifier exists, and whether it's transient.
-     *
-     * We *could* use square-bracket notation at runtime here, but we don't to save bytes in the bundle.
-     */
-    const targetContainer = resolveConstrainedContainer(constraints, container);
-    const { metadataMap } = targetContainer as unknown as ContainerInternals;
-
-    const isManyConstrained = constraints & ResolutionConstraintFlag.Many;
-    let isServiceFound: boolean;
-
-    if (isManyConstrained) {
-      const [location] = (targetContainer as unknown as ContainerInternals).resolveMultiID(id);
-      isServiceFound = location !== ServiceIdentifierLocation.None;
-    } else {
-      isServiceFound = metadataMap.has(id);
-    }
+    const status = this.getIDStatus();
 
     /**
      * The {@link TransientRef} function does not ensure that the identifier exists.
@@ -116,16 +78,11 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
      * To simplify the implementation and ensure this check is performed from potential future call-sites,
      * we do it here instead.
      */
-    if (!isServiceFound) {
+    if (status === null) {
       throw new ServiceNotFoundError(id);
     }
 
-    let scope: ContainerScope | null = NativeNull;
-
-    if (!isManyConstrained) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      scope = metadataMap.get(id)!.scope;
-    }
+    const [, scope] = status;
 
     /**
      * The implementation throws in the case of a non-transient identifier being bound as not
@@ -138,22 +95,6 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
     if (scope !== 'transient' && scope !== NativeNull) {
       throw NativeError('The provided identifier was not bound to a transient service.');
     }
-  }
-
-  /**
-   * Resolve the identifier in the context of the attached container.
-   *
-   * @param constraintMask An optional mask to supply.
-   * If a mask is supplied, it is applied via Bitwise OR to the default set of constraints.
-   *
-   * @returns The resolved value of the identifier with the applied constraints.
-   */
-  private resolve(constraintMask = 0): TInstance {
-    /** Use the same hack in the constructor to access the private class member. */
-    return (this.container as unknown as ContainerInternals).resolveConstrainedIdentifier(
-      this.id,
-      this.constraints | constraintMask
-    ) as TInstance;
   }
 
   /**
@@ -190,7 +131,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * This exception is thrown if the container cannot find the specified ID.
    * For a variant which instead returns null if the ID cannot be found, use {@link TransientRefHost.createOrNull}.
    */
-  create(): TInstance {
+  override create(): TInstance {
     /**
      * Remove the {@link Optional} flag from the constraints.
      * This ensures that {@link TransientRefHost.create} does not return null.
@@ -213,7 +154,7 @@ export class TransientRefHost<TIdentifier extends ServiceIdentifier, TInstance =
    * Either an instance of the given identifier, or null.
    * For a variant which throws an error if the ID cannot be found, use {@link TransientRefHost.create}.
    */
-  createOrNull(): TInstance | null {
+  override createOrNull(): TInstance | null {
     return this.resolve(ResolutionConstraintFlag.Optional);
   }
 }

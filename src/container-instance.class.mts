@@ -1274,7 +1274,7 @@ export class ContainerInstance implements Disposable {
        * One important note is that the dependency *itself* is never resolved in the container.
        */
       const parameters = serviceMetadata.dependencies.map(resolvable => ({
-        id: this.resolveTypeWrapper(resolvable.typeWrapper),
+        id: resolvable.typeWrapper.eagerType,
         constraints: resolvable.constraints,
       }));
 
@@ -1350,14 +1350,13 @@ export class ContainerInstance implements Disposable {
    */
   private resolveResolvable(resolvable: Resolvable, guardBuiltIns: boolean): unknown {
     const { typeWrapper } = resolvable;
-
-    const identifier = this.resolveTypeWrapper(resolvable.typeWrapper);
+    const identifier = resolvable.typeWrapper.eagerType;
 
     /**
      * The type wrapper resolver doesn't check if the identifier
      * is a built-in (Number, String, etc.).
      */
-    if ((BUILT_INS as unknown[]).includes(identifier)) {
+    if (identifier && (BUILT_INS as unknown[]).includes(identifier)) {
       if (guardBuiltIns) {
         throw new CannotInstantiateBuiltInError((identifier as Function).name);
       }
@@ -1396,6 +1395,8 @@ export class ContainerInstance implements Disposable {
        */
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return typeWrapper.extract!(this, constraints ?? ResolutionConstraintFlag.None);
+    } else if (!identifier) {
+      throw new Error('The type wrapper was not extractable, and an eager type was not provided.');
     }
 
     if (constraints) {
@@ -1492,35 +1493,6 @@ export class ContainerInstance implements Disposable {
     } else {
       return targetContainer.get(identifier, recursive);
     }
-  }
-
-  private resolveTypeWrapper(wrapper: TypeWrapper): ServiceIdentifier {
-    /**
-     * Reminder: The type wrapper is either resolvable to:
-     *   1. An eager type containing the id of the service, or...
-     *   2. A lazy type containing a function that must be called to resolve the id.
-     *
-     * Therefore, if the eager type does not exist, the lazy type should.
-     */
-    /** ESLint removes the cast, which causes a compilation error: */
-    // eslint-disable-next-line
-    const resolved = wrapper.eagerType ?? (wrapper as TypeWrapper).lazyType?.();
-
-    /**
-     * This should never be hit unless the caller has elided TypeScript
-     * and hand-crafted a TypeWrapper, which is not recommended.
-     */
-    /* istanbul ignore next */
-    if (resolved == NativeNull) {
-      throw NativeError(`The wrapped value could not be resolved.`);
-    }
-
-    /**
-     * We also need to search the graph recursively.
-     * This is in-line with prior behaviour, ensuring that services
-     * from upstream containers can be resolved correctly.
-     */
-    return resolved;
   }
 
   /**

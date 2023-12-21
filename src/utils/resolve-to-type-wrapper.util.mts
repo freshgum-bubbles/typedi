@@ -12,15 +12,6 @@ import { isTypeWrapper } from './is-type-wrapper.util.mjs';
  * @param target the class definition of the target of the decorator
  */
 export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): TypeWrapper {
-  /**
-   * ? We want to error out as soon as possible when looking up services to inject, however
-   * ? we cannot determine the type at decorator execution when cyclic dependencies are involved
-   * ? because calling the received `() => MyType` function right away would cause a JS error:
-   * ? "Cannot access 'MyType' before initialization", so we need to execute the function in the handler,
-   * ? when the classes are already created. To overcome this, we use a wrapper:
-   * ?  - the lazyType is executed in the handler so we never have a JS error
-   * ?  - the eagerType is checked when decorator is running and an error is raised if an unknown type is encountered
-   */
   let typeWrapper!: TypeWrapper;
   const inputType = typeof typeOrIdentifier;
 
@@ -29,8 +20,7 @@ export function resolveToTypeWrapper(typeOrIdentifier: AnyInjectIdentifier): Typ
     typeWrapper = {
       [TYPE_WRAPPER]: TypeWrapperStamp.Generic,
       /** We have to use 'as any' casts here due to moving the "typeof" checks to a constant. */
-      eagerType: typeOrIdentifier as any,
-      lazyType: () => typeOrIdentifier as any,
+      eagerType: typeOrIdentifier as any
     };
   } else if (inputType === 'object' && isTypeWrapper(typeOrIdentifier as object)) {
     /**

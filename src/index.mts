@@ -10,7 +10,6 @@ export { ServiceNotFoundError } from './error/service-not-found.error.mjs';
 
 // Functions
 export { HostContainer } from './functions/host-container.function.mjs';
-export { Lazy } from './functions/lazy.function.mjs';
 export { Many, Optional, Self, SkipSelf } from './functions/resolution-constraints.functions.mjs';
 
 // Interfaces
