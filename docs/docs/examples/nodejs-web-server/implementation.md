@@ -61,7 +61,7 @@ export class WebServerService {
   }
 
   protected handleRequest(request: IncomingMessage, response: ServerResponse<IncomingMessage>) {
-    switch (response.url) {
+    switch (request.url) {
       case '/hello':
         response.writeHead(200);
         response.end('Hello!');
@@ -183,11 +183,11 @@ class WebServerService {
     const { searchParams: params } = new URL(request.url ?? '');
     // highlight-revision-end
 
-    switch (response.url) {
+    switch (request.url) {
       case '/hello':
         response.writeHead(200);
         // highlight-revision-start
-        this.database.get('name').then(name => {
+        this.database.read('name').then(name => {
           response.end(`Hello, ${name ?? 'unknown person'}!`);
         });
         // highlight-revision-end
@@ -196,8 +196,8 @@ class WebServerService {
       case '/setname':
         response.writeHead(200);
         // highlight-revision-start
-        this.database.set('name', params.name).then(() => {
-          response.end(`Hello, ${params.name}!`);
+        this.database.write('name', params.get('name').then(() => {
+          response.end(`Hello, ${params.get('name')}!`);
         });
         // highlight-revision-end
         break;
