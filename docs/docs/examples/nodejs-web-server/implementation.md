@@ -61,7 +61,7 @@ export class WebServerService {
   }
 
   protected handleRequest(request: IncomingMessage, response: ServerResponse<IncomingMessage>) {
-    switch (response.url) {
+    switch (request.url) {
       case '/hello':
         response.writeHead(200);
         response.end('Hello!');
@@ -183,7 +183,7 @@ class WebServerService {
     const { searchParams: params } = new URL(request.url ?? '');
     // highlight-revision-end
 
-    switch (response.url) {
+    switch (request.url) {
       case '/hello':
         response.writeHead(200);
         // highlight-revision-start
