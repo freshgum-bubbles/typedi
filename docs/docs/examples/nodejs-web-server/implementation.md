@@ -197,7 +197,7 @@ class WebServerService {
         response.writeHead(200);
         // highlight-revision-start
         this.database.write('name', params.get('name').then(() => {
-          response.end(`Hello, ${params.name}!`);
+          response.end(`Hello, ${params.get('name')}!`);
         });
         // highlight-revision-end
         break;
