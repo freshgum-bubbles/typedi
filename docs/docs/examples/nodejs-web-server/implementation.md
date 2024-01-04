@@ -187,7 +187,7 @@ class WebServerService {
       case '/hello':
         response.writeHead(200);
         // highlight-revision-start
-        this.database.get('name').then(name => {
+        this.database.read('name').then(name => {
           response.end(`Hello, ${name ?? 'unknown person'}!`);
         });
         // highlight-revision-end
@@ -196,7 +196,7 @@ class WebServerService {
       case '/setname':
         response.writeHead(200);
         // highlight-revision-start
-        this.database.set('name', params.name).then(() => {
+        this.database.write('name', params.name).then(() => {
           response.end(`Hello, ${params.name}!`);
         });
         // highlight-revision-end
