@@ -147,7 +147,7 @@ export class ContainerInstance implements Disposable {
     this.throwIfDisposed();
 
     /** 
-     * Virtual identifiers (SkipSelf(), Self(), HostContainer(), etc.) are always present.
+     * Virtual identifiers (HostContainer(), etc.) are always present.
      *
      * TODO: The .includes check here might be better replaced by a hard-coded comparison
      * to all members of the `VIRTUAL_IDENTIFIERS` array for additional performance.
