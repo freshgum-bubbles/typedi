@@ -1,0 +1,3 @@
+[submodule "src/contrib/upstream/tree"]
+	path = src/contrib/upstream/tree
+	url = https://github.com/typestack/typedi
