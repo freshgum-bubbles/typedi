@@ -554,6 +554,7 @@ export class ContainerInstance implements Disposable {
   ): T[] | U {
     this.throwIfDisposed();
 
+    // TODO: redo this, very clunky wording.
     /**
      * # An explanation of `multiple: true` semantics
      *
