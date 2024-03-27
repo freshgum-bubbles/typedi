@@ -23,7 +23,7 @@ import { ServiceIdentifier } from '../types/service-identifier.type.mjs';
  */
 export interface DependencyDescriptor<T = unknown> {
   /** The identifier of the declared dependency. */
-  id: ServiceIdentifier<T>;
+  id?: ServiceIdentifier<T>;
 
   /**
    * The constraints of the given service, if any.
