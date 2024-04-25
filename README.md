@@ -37,13 +37,18 @@ After that, you should be good to go. Read the [documentation][docs-site] to get
 ## Quick Example
 
 ```ts
-import { Service, Container } from '@freshgum/typedi';
+import { Service, Container, Token } from '@freshgum/typedi';
 
 // Make a service that logs a message to the console.
-@Service([])
+type LogFunction = (...args: any[]) => void;
+const LOG_FUNCTION = new Token<LogFunction>();
+
+@Service([LOG_FUNCTION])
 class LogService {
+  constructor (private logFn: LogFunction) { }
+
   log(message: string) {
-    console.log(message);
+    this.logFn(message);
   }
 }
 
@@ -57,6 +62,9 @@ class RootService {
     this.logger.log('hello world!');
   }
 }
+
+// Set the logging function...
+Container.set(LOG_FUNCTION, console.log);
 
 // Now, run our service!
 Container.get(RootService).run();
