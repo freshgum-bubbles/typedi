@@ -64,7 +64,7 @@ childContainer.get(MyService);
 ```
 
 The child container didn't know how to resolve that value, so it looked it up in its parent,
-the defualt container, which *did*.  The metadata for that service was then pulled from the parent,
+the default container, which *did*.  The metadata for that service was then pulled from the parent,
 with the newly-created instance being stored in the child container and then returned to the caller.
 
 :::tip
