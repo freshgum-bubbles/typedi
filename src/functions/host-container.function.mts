@@ -1,4 +1,6 @@
 import { HOST_CONTAINER } from '../constants/host-container.const.mjs';
+import { ExecutableToken } from '../executable-token.class.mjs';
+import { ContainerInstance } from '../index.mjs';
 
 /**
  * A special identifier which can be used to get the container
@@ -17,4 +19,4 @@ import { HOST_CONTAINER } from '../constants/host-container.const.mjs';
  * }
  * ```
  */
-export const HostContainer = () => HOST_CONTAINER;
+export const HostContainer: { (): ExecutableToken<ContainerInstance> } = () => HOST_CONTAINER;

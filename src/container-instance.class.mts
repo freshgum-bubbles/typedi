@@ -23,7 +23,6 @@ import { SERVICE_METADATA_DEFAULTS } from './constants/service-defaults.const.mj
 import { Resolvable } from './interfaces/resolvable.interface.mjs';
 import { wrapDependencyAsResolvable } from './utils/wrap-resolvable-dependency.mjs';
 import { ResolutionConstraintFlag } from './types/resolution-constraint.type.mjs';
-import { HOST_CONTAINER } from './constants/host-container.const.mjs';
 import { ContainerResetOptions, ContainerResetStrategy } from './interfaces/container-reset-options.interface.mjs';
 import { ContainerTreeVisitor } from './interfaces/tree-visitor.interface.mjs';
 import { VisitorCollection } from './visitor-collection.class.mjs';
@@ -39,7 +38,7 @@ import { ManyServicesMetadata } from './interfaces/many-services-metadata.interf
 import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
 import { NativeNull } from './constants/minification/native-null.const.mjs';
-import { VIRTUAL_IDENTIFIERS } from './constants/virtual-ids.const.mjs';
+import { ExecutableToken, isExecutableToken } from './executable-token.class.mjs';
 
 let defaultContainer!: ContainerInstance;
 
@@ -147,12 +146,12 @@ export class ContainerInstance implements Disposable {
     this.throwIfDisposed();
 
     /**
-     * Virtual identifiers (HostContainer(), etc.) are always present.
+     * Executable tokens (HostContainer(), etc.) are always present.
      *
      * TODO: The .includes check here might be better replaced by a hard-coded comparison
      * to all members of the `VIRTUAL_IDENTIFIERS` array for additional performance.
      */
-    if (VIRTUAL_IDENTIFIERS.includes(identifier)) {
+    if (isExecutableToken(identifier)) {
       return true;
     }
 
@@ -326,9 +325,10 @@ export class ContainerInstance implements Disposable {
     const partialVisitRetrievalOptions = { recursive, many: false } as const;
 
     /**
-     * Provide compatibility with the `HostContainer()` API.
+     * Check if the provided identifier is of type {@link ExecutableToken}.
+     * If so, defer to its {@link ExecutableToken.execute} method.
      */
-    if (identifier === HOST_CONTAINER) {
+    if (isExecutableToken(identifier)) {
       if (notifyVisitors) {
         this.visitor.notifyRetrievalVisited(identifier, {
           ...partialVisitRetrievalOptions,
@@ -336,7 +336,7 @@ export class ContainerInstance implements Disposable {
         });
       }
 
-      return this as unknown as T;
+      return (identifier as ExecutableToken<T>).execute(this);
     }
 
     const maybeResolvedMetadata = this.resolveMetadata(identifier, recursive);
@@ -788,12 +788,11 @@ export class ContainerInstance implements Disposable {
     this.throwIfDisposed();
 
     /**
-     * Check if the identifier being set is a virtual one,
-     * such as HostContainer.
+     * Check if the identifier being set is an executable one, such as HostContainer.
      * If so, we can't reasonably allow this service to be set.
      */
-    if (VIRTUAL_IDENTIFIERS.includes((serviceOptions as any).id as ServiceIdentifier)) {
-      throw NativeError('Virtual identifiers can not be overridden.');
+    if (isExecutableToken(serviceOptions.id)) {
+      throw NativeError('Executable identifiers can not be overridden.');
     }
 
     /**
