@@ -11,7 +11,7 @@
   "license": "MIT",
   "private": false,
   "sideEffects": false,
-  "unpkg": "./bundles/typedi.umd.min.js",
+  "unpkg": "./build/bundles/typedi.umd.min.js",
   "types": "./build/types/index.d.mts",
   "repository": {
     "type": "git",
