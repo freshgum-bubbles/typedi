@@ -40,11 +40,11 @@
       "default": "./build/esm5/contrib/transient-ref/index.mjs"
     },
     "./contrib/util/synchronous-disposable": {
-      "types": "./build/esm5/contrib/util/synchronous-disposable.d.mts",
-      "import": "./build/esm5/contrib/util/synchronous-disposable.mjs",
-      "node": "./build/esm5/contrib/util/synchronous-disposable.mjs",
+      "types": "./build/esm5/contrib/util/synchronous-disposable.class.d.mts",
+      "import": "./build/esm5/contrib/util/synchronous-disposable.class.mjs",
+      "node": "./build/esm5/contrib/util/synchronous-disposable.class.mjs",
       "bun": "./src/contrib/util/synchronous-disposable.class.mts",
-      "default": "./build/esm5/contrib/util/synchronous-disposable.mjs"
+      "default": "./build/esm5/contrib/util/synchronous-disposable.class.mjs"
     },
     "./contrib/util/get-service-identifier-type": {
       "types": "./build/esm5/contrib/util/get-service-identifier-type.util.d.mts",
