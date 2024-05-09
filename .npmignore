@@ -16,9 +16,7 @@
 /.eslintrc.yml
 /.gitbook.yaml
 /.prettierrc.yml
-/codecov.yml
 /jest.config.js
-/tslint.json
 
 # Environmental secrets file -- should never be pushed to production!
 .env
