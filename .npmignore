@@ -7,9 +7,7 @@
 /scripts/
 /test/
 /docs/
-/src/
 /temp/
-/tsconfig*.json
 
 /jest.config.ts
 /rollup.config.mjs
@@ -20,7 +18,6 @@
 /.prettierrc.yml
 /codecov.yml
 /jest.config.js
-/tsconfig*.json
 /tslint.json
 
 # Environmental secrets file -- should never be pushed to production!
@@ -32,3 +29,11 @@
 # Ensure potentially relevant documentation is included in the NPM tarball.
 !FAQ.md
 !CHANGELOG.md
+
+# Keep /src included for compatibility with Bun <https://bun.sh/>.
+# Bun can read TypeScript natively, so we point it at the raw TypeScript
+# source files in /src instead of the ESM5 ones (this is done in <./package.json>)
+!/src/
+
+# ...also keep the tsconfig.json files in as Bun may need them.
+!/scripts/tsconfig/
