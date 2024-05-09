@@ -146,7 +146,7 @@ export class ContainerInstance implements Disposable {
   public has<T = unknown>(identifier: ServiceIdentifier<T>, recursive = true): boolean {
     this.throwIfDisposed();
 
-    /** 
+    /**
      * Virtual identifiers (HostContainer(), etc.) are always present.
      *
      * TODO: The .includes check here might be better replaced by a hard-coded comparison
