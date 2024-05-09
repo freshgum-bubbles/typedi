@@ -45,7 +45,7 @@ const LOG_FUNCTION = new Token<LogFunction>();
 
 @Service([LOG_FUNCTION])
 class LogService {
-  constructor (private logFn: LogFunction) { }
+  constructor(private logFn: LogFunction) {}
 
   log(message: string) {
     this.logFn(message);
