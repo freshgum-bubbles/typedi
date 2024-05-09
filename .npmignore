@@ -27,6 +27,7 @@
 # Ensure potentially relevant documentation is included in the NPM tarball.
 !FAQ.md
 !CHANGELOG.md
+!README.md
 
 # Keep /src included for compatibility with Bun <https://bun.sh/>.
 # Bun can read TypeScript natively, so we point it at the raw TypeScript
