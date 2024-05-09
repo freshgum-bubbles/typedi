@@ -158,7 +158,6 @@ jobs:
           git --version
           node --version
           npm --version
-          pnpm exec commitlint --version
           pnpm --version
       - uses: actions/cache@v3
         name: Restore PNPM Package Cache
