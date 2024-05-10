@@ -1,5 +1,5 @@
 import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from "./constants/stamps/executable-token.const.mjs";
-import { Token } from "./contrib/upstream/tree/src";
+import { Token } from "./index.mjs";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ContainerInstance, HostContainer } from "./index.mjs";
 
