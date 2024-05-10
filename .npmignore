@@ -9,9 +9,12 @@
 /docs/
 /temp/
 
+.gitattributes
+.editorconfig
+
 /jest.config.ts
 /rollup.config.mjs
-/typedoc.config.js
+/typedoc.config.cjs
 /.commitlintrc.js
 /.eslintrc.yml
 /.gitbook.yaml
