@@ -1,4 +1,5 @@
-import { VIRTUAL_IDENTIFIERS } from '../../constants/virtual-ids.const.mjs';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { isExecutableToken } from '../../executable-token.class.mjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Token, HostContainer, ServiceIdentifier } from '../../index.mjs';
 
@@ -30,5 +31,5 @@ export enum ServiceIdentifierType {
  * @returns Whether the provided identifier is virtual.
  */
 export function getServiceIdentifierType<TIdentifier extends ServiceIdentifier>(identifier: TIdentifier) {
-  return VIRTUAL_IDENTIFIERS.includes(identifier) ? ServiceIdentifierType.Virtual : ServiceIdentifierType.Concrete;
+  return isExecutableToken(identifier) ? ServiceIdentifierType.Virtual : ServiceIdentifierType.Concrete;
 }
