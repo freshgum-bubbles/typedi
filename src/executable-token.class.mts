@@ -1,7 +1,8 @@
 import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from "./constants/stamps/executable-token.const.mjs";
-import { Token } from "./index.mjs";
+import { ContainerInstance } from "./container-instance.class.mjs";
+import { Token } from "./token.class.mjs";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ContainerInstance, HostContainer } from "./index.mjs";
+import { HostContainer } from './functions/host-container.function.mjs';
 
 /**
  * A token which does not immediately reference a value in a container.
@@ -38,7 +39,7 @@ export abstract class ExecutableToken<T> extends Token<T> {
      *
      * @private
      */
-    [EXECUTABLE_TOKEN] = ExecutableTokenStamp.Generic;
+    readonly [EXECUTABLE_TOKEN] = ExecutableTokenStamp.Generic;
 }
 
 export function isExecutableToken (x: any): x is ExecutableToken<unknown> {
