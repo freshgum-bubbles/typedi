@@ -1,5 +1,4 @@
-import { Token } from 'internal:typedi';
-import { VIRTUAL_IDENTIFIERS } from 'internal:typedi/constants/virtual-ids.const.mjs';
+import { HostContainer, Token } from 'internal:typedi';
 import {
   ServiceIdentifierType,
   getServiceIdentifierType,
@@ -7,7 +6,9 @@ import {
 import { createRandomUid } from '../../utils/create-random-name.util';
 
 describe('getServiceIdentifierType', () => {
-  it.each(VIRTUAL_IDENTIFIERS)('It correctly reports $name as ServiceIdentifierType.Virtual', id => {
+  it.each([
+    HostContainer()
+  ])('It correctly reports $name as ServiceIdentifierType.Virtual', id => {
     expect(getServiceIdentifierType(id)).toStrictEqual(ServiceIdentifierType.Virtual);
   });
 
