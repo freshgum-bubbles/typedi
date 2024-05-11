@@ -9,6 +9,7 @@
 <!-- prettier-ignore -->
 > [!WARNING]
 > From 0.4.0, support for Node versions under v15.3.0 has been removed, as the package has transitioned to ES Modules.
+> [Support for CommonJS has been removed](https://github.com/freshgum-bubbles/typedi/issues/166#issuecomment-2101653010).
 >
 > <sup>See [Why does the package not support Node versions under v15.3.0?][pkg-faq-node-15-3-0]</sup>
 
