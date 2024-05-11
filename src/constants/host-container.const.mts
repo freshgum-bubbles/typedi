@@ -4,9 +4,9 @@ import { ContainerInstance } from '../container-instance.class.mjs';
 import { HostContainer } from '../functions/host-container.function.mjs';
 
 class ExecutableTokenHostContainerToken extends ExecutableToken<ContainerInstance> {
-    execute(subject: ContainerInstance) {
-        return subject;
-    }
+  execute(subject: ContainerInstance) {
+    return subject;
+  }
 }
 
 /**

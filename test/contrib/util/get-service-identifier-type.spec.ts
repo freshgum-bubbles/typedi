@@ -6,9 +6,7 @@ import {
 import { createRandomUid } from '../../utils/create-random-name.util';
 
 describe('getServiceIdentifierType', () => {
-  it.each([
-    HostContainer()
-  ])('It correctly reports $name as ServiceIdentifierType.Virtual', id => {
+  it.each([HostContainer()])('It correctly reports $name as ServiceIdentifierType.Virtual', id => {
     expect(getServiceIdentifierType(id)).toStrictEqual(ServiceIdentifierType.Virtual);
   });
 

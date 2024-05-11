@@ -1,6 +1,6 @@
-import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from "./constants/stamps/executable-token.const.mjs";
-import { ContainerInstance } from "./container-instance.class.mjs";
-import { Token } from "./token.class.mjs";
+import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from './constants/stamps/executable-token.const.mjs';
+import { ContainerInstance } from './container-instance.class.mjs';
+import { Token } from './token.class.mjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { HostContainer } from './functions/host-container.function.mjs';
 
@@ -23,25 +23,25 @@ import { HostContainer } from './functions/host-container.function.mjs';
  * Another example of an {@link ExecutableToken} would be {@link HostContainer}.
  */
 export abstract class ExecutableToken<T> extends Token<T> {
-    /**
-     * A function which, when executed upon a container, performs a function.
-     *
-     * The performed function is undefined, but should generally pertain to the container
-     * it is called against.
-     *
-     * @param subject - The container the token is being executed upon.
-     */
-    abstract execute (subject: ContainerInstance): T;
+  /**
+   * A function which, when executed upon a container, performs a function.
+   *
+   * The performed function is undefined, but should generally pertain to the container
+   * it is called against.
+   *
+   * @param subject - The container the token is being executed upon.
+   */
+  abstract execute(subject: ContainerInstance): T;
 
-    /**
-     * A stamp to quickly differentiate between non-executable and executable tokens.
-     * This should not be relied upon by external consumers.
-     *
-     * @private
-     */
-    readonly [EXECUTABLE_TOKEN] = ExecutableTokenStamp.Generic;
+  /**
+   * A stamp to quickly differentiate between non-executable and executable tokens.
+   * This should not be relied upon by external consumers.
+   *
+   * @private
+   */
+  readonly [EXECUTABLE_TOKEN] = ExecutableTokenStamp.Generic;
 }
 
-export function isExecutableToken (x: any): x is ExecutableToken<unknown> {
-    return x != null && x[EXECUTABLE_TOKEN] == ExecutableTokenStamp.Generic;
+export function isExecutableToken(x: any): x is ExecutableToken<unknown> {
+  return x != null && x[EXECUTABLE_TOKEN] == ExecutableTokenStamp.Generic;
 }
