@@ -110,7 +110,7 @@ However, I will happily review any MRs made against the source tree. If you wish
 
 ## License
 
-Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbles) & [upstream TypeDI contributors](https://github.com/typestack/typedi/blob/develop/LICENSE).
+Released under [MIT](./LICENSE) by [@freshgum](https://github.com/freshgum-bubbles).  Forked from [typestack's implementation](https://github.com/typestack/typedi), therefore this project contains code published by [upstream TypeDI contributors](https://github.com/typestack/typedi/blob/develop/LICENSE).
 
 [pkg-faq-node-15-3-0]: ./FAQ.md#why-does-the-package-not-support-node-versions-under-v1530
 [docs-site]: https://typedi.js.org
