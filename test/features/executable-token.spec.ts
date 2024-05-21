@@ -19,8 +19,10 @@ describe('isExecutableToken', () => {
     expect(typeof isExecutableToken).toBe('function');
   });
 
-  test('it returns true for HostContainer', () => {
-    expect(isExecutableToken(HostContainer())).toBe(true);
+  test.each([
+    { token: HostContainer() }
+  ])('it returns true for $token.name', ({ token }) => {
+    expect(isExecutableToken(token)).toBe(true);
   });
 
   const FALSE_CASES = [
