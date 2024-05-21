@@ -2,7 +2,7 @@ import { inspect } from 'node:util';
 import { ContainerInstance, HostContainer, Token } from 'internal:typedi';
 import { ExecutableToken, isExecutableToken } from 'internal:typedi/executable-token.class.mjs';
 import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from 'internal:typedi/constants/stamps/executable-token.const.mjs';
-import { hasOwnProperty } from './utils/has-own-property.util';
+import { hasOwnProperty } from '../utils/has-own-property.util';
 
 class MyExecutableToken extends ExecutableToken<string> {
   execute(subject: ContainerInstance): string {
