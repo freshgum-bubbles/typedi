@@ -1,5 +1,5 @@
 import { inspect } from 'node:util';
-import { ContainerInstance, HostContainer, Token } from 'internal:typedi';
+import { Container, ContainerInstance, HostContainer, Token } from 'internal:typedi';
 import { ExecutableToken, isExecutableToken } from 'internal:typedi/executable-token.class.mjs';
 import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from 'internal:typedi/constants/stamps/executable-token.const.mjs';
 import { hasOwnProperty } from '../utils/has-own-property.util';
@@ -8,6 +8,10 @@ class MyExecutableToken extends ExecutableToken<string> {
   execute(subject: ContainerInstance): string {
     return 'hello world';
   }
+}
+
+class MyMockExecutableToken extends ExecutableToken<null> {
+  execute = jest.fn().mockReturnValue(null);
 }
 
 describe('isExecutableToken', () => {
@@ -65,5 +69,15 @@ describe('ExecutableToken', () => {
     const NAME = 'NAME';
     const namedToken = new MyExecutableToken(NAME);
     expect(namedToken.name).toStrictEqual(NAME);
+  });
+
+  test('it should be passed the correct container parameter', () => {
+    const mockToken = new MyMockExecutableToken();
+    const myContainer = Container.of(Symbol());
+    const { execute: executeFn } = mockToken;
+
+    expect(myContainer.get(mockToken)).toBe(null);
+    expect(executeFn).toHaveBeenCalledTimes(1);
+    expect(executeFn).toHaveBeenCalledWith(myContainer);
   });
 });
