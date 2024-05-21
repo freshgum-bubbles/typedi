@@ -42,6 +42,12 @@ export abstract class ExecutableToken<T> extends Token<T> {
   readonly [EXECUTABLE_TOKEN] = ExecutableTokenStamp.Generic;
 }
 
+/**
+ * Determine whether a given value is of type {@link ExecutableToken}.
+ *
+ * @param x - The parameter to test.
+ * @returns Whether the given value is an executable token.
+ */
 export function isExecutableToken(x: any): x is ExecutableToken<unknown> {
   return x != null && x[EXECUTABLE_TOKEN] == ExecutableTokenStamp.Generic;
 }
