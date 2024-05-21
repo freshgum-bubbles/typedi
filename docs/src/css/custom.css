@@ -6,6 +6,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
+  font-size: 17px;
   --ifm-color-primary: #00569d;
   --ifm-color-primary-dark: #214067;
   --ifm-color-primary-darker: #243352;
@@ -18,31 +19,41 @@
 
   --ifm-background-color-emphasis: #ffffff;
   --ifm-background-color-emphasis-2: #ededed;
-  --ifm-navbar-background-color: rgb(208, 208, 208)!important;
+  --ifm-navbar-background-color: rgb(255, 255, 255)!important;
+  --ifm-background-color: #f3f3f3!important;
   --hero-background-color: #dfdfdf!important;
   --ifm-color-primary-light: #7e5fe4;
   --ifm-color-primary-lighter: #8e6df8;
   --ifm-color-primary-lightest: #9f82ff;
 
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Nimbus Sans";
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #89caff;
+  --ifm-color-primary: #9f89ff;
   --ifm-color-primary-dark: #7da5d6;
   --ifm-color-primary-darker: #6884bd;
   --ifm-color-primary-darkest: #526f9a;
-  --ifm-background-color: #262430!important;
+  --ifm-background-color: #171620!important;
   /* --ifm-background-color-emph: #343142!important; */
   --ifm-background-color-emphasis: #403c53;
   --ifm-background-color-emphasis-2: #575370;
-  --ifm-navbar-background-color: #322f40!important;
-  --hero-background-color: #2f2b3c!important;
+  --ifm-navbar-background-color: #1b1a26!important;
+  --hero-background-color: #171620!important;
   --ifm-color-primary-light: #7e5fe4;
   --ifm-color-primary-lighter: #8e6df8;
   --ifm-color-primary-lightest: #9f82ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-navbar-shadow: 0px 0px 0px 1px rgb(65, 65, 65);
+
+  --ifm-navbar-search-input-background-color: #000000;
+
+  --ifm-alert-background-color: red!important;
+}
+
+[data-theme="dark"] .navbar__search-input {
+  border: 1px solid rgb(65, 65, 65);
 }
 
 /** Custom styles for the announcement bar. */
@@ -77,6 +88,15 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
   border-left: 3px solid #0073ff62;
+}
+
+.menu__link--active {
+  font-weight: bold;
+}
+
+.menu__link {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* Only show incomplete pages in development. */
