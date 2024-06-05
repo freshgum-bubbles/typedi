@@ -190,8 +190,8 @@ const MJS_TINY_TERSER_OPTIONS = mergeObjects(TINY_TERSER_OPTIONS, {
 /**
  * Interpolate a pre-existing Rollup output options object with further values.
  *
- * @param {import('rollup').OutputOptions} options The options to merge with defaults.
- * @return {import('rollup').OutputOptions}
+ * @param {import('rollup').RollupOptions} options The options to merge with defaults.
+ * @return {import('rollup').RollupOptions}
  */
 function createOutput(options) {
   return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
