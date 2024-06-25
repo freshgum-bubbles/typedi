@@ -12,6 +12,23 @@ const UMD_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.min.js';
 const MJS_BUNDLE_PATH = 'build/bundles/typedi.mjs';
 const MJS_MIN_BUNDLE_PATH = 'build/bundles/typedi.min.mjs';
 
+// There are two different build targets for TypeDI++:
+// - The first is "full", which contains everything exported from the index,
+//   alongside all contributory modules in <src/contrib>.
+// - The second, "compact", elides these modules, and just exports from the index.
+
+const UMD_COMPACT_BUNDLE_PATH = 'build/bundles/typedi.umd.compact.js';
+const UMD_COMPACT_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.compact.min.js';
+
+const UMD_FULL_BUNDLE_PATH = 'build/bundles/typedi.umd.full.js';
+const UMD_FULL_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.full.min.js';
+
+const MJS_COMPACT_BUNDLE_PATH = 'build/bundles/typedi.compact.mjs';
+const MJS_COMPACT_MIN_BUNDLE_PATH = 'build/bundles/typedi.compact.min.mjs';
+
+const MJS_FULL_BUNDLE_PATH = 'build/bundles/typedi.full.mjs';
+const MJS_FULL_MIN_BUNDLE_PATH = 'build/bundles/typedi.full.min.mjs';
+
 // See below for information on tiny builds.
 const MJS_TINY_BUNDLE_PATH = 'build/bundles/typedi.tiny.min.mjs';
 
@@ -197,42 +214,47 @@ function createOutput(options) {
   return mergeObjects(DEFAULT_ROLLUP_OUTPUT_OPTIONS, options);
 }
 
-export default {
-  input: 'build/esm5/index.mjs',
-  output: [
-    {
-      name: UMD_NAME,
-      format: 'umd',
-      file: UMD_BUNDLE_PATH,
-    },
-    {
-      name: UMD_NAME,
-      format: 'umd',
-      file: UMD_MIN_BUNDLE_PATH,
-      plugins: [terser(TERSER_OPTIONS)],
-    },
-    {
-      format: 'es',
-      file: MJS_BUNDLE_PATH,
-    },
-    {
-      format: 'es',
-      file: MJS_MIN_BUNDLE_PATH,
-      plugins: [terser(MJS_TERSER_OPTIONS)],
-    },
+/** @type {import('rollup').RollupOptions[]} */
+const ROLLUP_OUTPUTS = [
+  {
+    input: 'build/esm5/index.mjs',
+    output: [
+      { name: UMD_NAME, format: 'umd', file: UMD_BUNDLE_PATH },
+      { name: UMD_NAME, format: 'umd', file: UMD_MIN_BUNDLE_PATH, plugins: [terser(TERSER_OPTIONS)] },
+      { format: 'es', file: MJS_BUNDLE_PATH },
+      { format: 'es', file: MJS_MIN_BUNDLE_PATH, plugins: [terser(MJS_TERSER_OPTIONS)] },
 
-    // Tiny builds of TypeDI are experimental; they're mostly designed for private use,
-    // to investigate ways to optimize the Container architecture.
-    // They include minification for more private symbols, which may cause issues for
-    // those who require access to private Container API's.
-    //
-    // They're also only available in ES Modules format (so no UMD variants).
-    // Therefore, they're not yet recommended for public consumption.
-    {
-      format: 'es',
-      file: MJS_TINY_BUNDLE_PATH,
-      plugins: [terser(MJS_TINY_TERSER_OPTIONS)],
-    },
-  ].map(createOutput),
-  plugins: [commonjs(), nodeResolve()],
-};
+      // Tiny builds of TypeDI are experimental; they're mostly designed for private use,
+      // to investigate ways to optimize the Container architecture.
+      // They include minification for more private symbols, which may cause issues for
+      // those who require access to private Container API's.
+      //
+      // They're also only available in ES Modules format (so no UMD variants).
+      // Therefore, they're not yet recommended for public consumption.
+      { format: 'es', file: MJS_TINY_BUNDLE_PATH, plugins: [terser(MJS_TINY_TERSER_OPTIONS)] },
+    ].map(createOutput),
+    plugins: [commonjs(), nodeResolve()],
+  },
+  {
+    input: 'build/esm5/entry/web.full.mjs',
+    // todo: all these need to support the contrib import prefix
+    output: [
+      { format: 'umd', file: UMD_FULL_BUNDLE_PATH },
+      { format: 'umd', file: UMD_FULL_MIN_BUNDLE_PATH, plugins: [terser(TERSER_OPTIONS)] },
+      { format: 'es', file: MJS_FULL_BUNDLE_PATH },
+      { format: 'es', file: MJS_FULL_MIN_BUNDLE_PATH, plugins: [terser(MJS_TERSER_OPTIONS)] },
+    ],
+  },
+  {
+    input: 'build/esm5/entry/web.minimal.mjs',
+    output: [
+      // @prettier-ignore
+      { format: 'umd', file: UMD_COMPACT_BUNDLE_PATH },
+      { format: 'umd', file: UMD_COMPACT_MIN_BUNDLE_PATH, plugins: [terser(TERSER_OPTIONS)] },
+      { format: 'es', file: MJS_COMPACT_BUNDLE_PATH },
+      { format: 'es', file: MJS_COMPACT_MIN_BUNDLE_PATH, plugins: [terser(MJS_TERSER_OPTIONS)] },
+    ],
+  },
+];
+
+export default ROLLUP_OUTPUTS;
