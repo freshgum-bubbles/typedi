@@ -554,69 +554,37 @@ export class ContainerInstance implements Disposable {
   ): T[] | U {
     this.throwIfDisposed();
 
-    // TODO: redo this, very clunky wording.
     /**
      * # An explanation of `multiple: true` semantics
      *
-     * Internally, we store IDs set with `{ multiple: true }` as objects containing anonymous tokens
-     * which are then stored in the usual metadata map.  For every many-to-one value stored with the
-     * flag gets its own token, and that token is then added to an object which is stored in the
-     * "multiServiceIds" Map, with the public identifier used as a key."
+     * The `multiple` keyword can be used to link multiple values to one identifier,
+     * as opposed to the usual one-to-one mapping present in the container.
      *
-     * To demonstrate this, let's provide an example:
+     * How this works is very simple: while one map is usually used for retrieving
+     * values (`metadataMap`: Identifier -> Token), multiple-bound values use a second.
+     * This secondary map looks like this: `{ [id]: [Token(...)] }` (Identifier -> Token...).
      *
-     * ```ts
-     * const NAME = new Token<string>();
+     * When an identifier is stored with `multiple: true`, its identifier is
+     * actually stored in the 2nd map.  The value the identifier is set to
+     * is then bound to an anonymous `Token` in the container.  This token
+     * is then stored in the secondary map.
      *
-     * Container.set({ id: NAME, multiple: true, value: 1 });
-     * Container.set({ id: NAME, multiple: true, value: 2 });
-     * ```
+     * When `getMany` is called, we first check if any tokens exist for the identifier.
+     * If not, we fail immediately.  If we do, however, we can safely iterate over the
+     * list of tokens, mapping them to very simple `get` calls internally.
      *
-     * *Internally, this code will result in the following:*
+     * ## Scoping
      *
-     * The container checks if the identifier (which, in this case, is `NAME`) is present
-     * in the {@link ContainerInstance.multiServiceIds} Map.  If it is not, an object is
-     * created with the following properties:
-     *
-     * ```ts
-     * interface ManyServicesMetadata {
-     *   scope: ContainerScope;
-     *   tokens: Token<unknown>[];
-     * }
-     * ```
-     *
-     * This object is then stored in the {@link Container.multiServiceIds} Map, with the key
-     * being the identifier passed to {@link Container.set} by the user.  In the above example,
-     * the identifier would be the `NAME` token.
-     *
-     * 1. The `scope` property is a {@link ContainerScope}.
-     *    It tells {@link ContainerInstance.getManyOrDefault} how to resolve the identifier.
-     * 2. The `tokens` property is explained below.
-     *
-     * For each call to {@link ContainerInstance.set} with `multiple: true`, a new {@link Token} is created.
-     * This would then be passed to {@link ContainerInstance.set}, much like an ordinary call to set a new value.
-     *
-     * The new {@link Token} is then bound to a value.
-     * In the case of the above example, the value is the number 1.
-     *
-     * Once the token has been bound, it is then added to the array of tokens
-     * inside the {@link ManyServicesMetadata} object referenced above.
+     * A disadvantage of this design is that all values for an identifier have to
+     * be in the same scope (you can't have `singleton` and `transient` values).
      *
      * ---
      *
-     * In the presence of new features, this deceptively simplistic design has required some
-     * specialized support to accomplish correctly.
-     *
-     * For example, in the case of the {@link ContainerTreeVisitor} API,
-     * a flag ({@link ContainerInstance.isRetrievingPrivateToken} was required to prevent callers
-     * being notified of the retrieval of anonymous tokens to retrieve values required by a call
-     * to {@link ContainerInstance.getMany} (or its counterparts).
-     *
-     * Furthermore, this design has one implicit side-effect: the scope of all values associated
-     * with a single identifier must be equal.  For example, you would not be able to set one
-     * value as a singleton, and have another as a transient service -- in the current API,
-     * this would not be possible.
+     * You, as the consumer of the API, don't need to worry about internal mappings,
+     * though.  This is just an implementation choice; like everything else, don't
+     * think too hard about it, and it'll begin to make sense :-)
      */
+    null;
     const [location, idMap] = this.resolveMultiID(identifier, recursive);
 
     /** Notify listeners we have retrieved a service. */
