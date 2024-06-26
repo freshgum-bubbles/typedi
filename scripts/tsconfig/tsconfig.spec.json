@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDirs": ["../../src/", "../../test/"],
     "strict": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "removeComments": true,
     "paths": {
       "internal:typedi": ["../../src/index.mts"],
