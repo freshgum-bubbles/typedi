@@ -6,6 +6,7 @@ const configuration = {
   testEnvironment: 'node',
   maxWorkers: 4,
   collectCoverageFrom: ['src/**/*.{mts,mjs,ts,js,tsx,jsx}'],
+  coverageProvider: 'v8',
   transform: {
     '^.+\\.(m?[tj]sx?)$': ['ts-jest', { tsconfig: TYPESCRIPT_CONFIGURATIONS.Spec }],
   },
