@@ -149,6 +149,7 @@ export class VisitorCollection implements Disposable {
       this.anyVisitorsPresent = true;
     }
 
+    // ???: Why does this function return {boolean | undefined}?  Why not cast to `false`?
     let isAllowedToAttachVisitor: boolean | undefined;
 
     try {
