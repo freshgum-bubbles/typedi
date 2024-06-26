@@ -3,6 +3,7 @@ import { Container, ContainerInstance, HostContainer, Token } from 'internal:typ
 import { ExecutableToken, isExecutableToken } from 'internal:typedi/executable-token.class.mjs';
 import { EXECUTABLE_TOKEN, ExecutableTokenStamp } from 'internal:typedi/constants/stamps/executable-token.const.mjs';
 import { hasOwnProperty } from '../utils/has-own-property.util';
+import { addNameToTestCaseIfNotExists } from '../utils/add-names-to-test-cases';
 
 class MyExecutableToken extends ExecutableToken<string> {
   execute(subject: ContainerInstance): string {
@@ -37,7 +38,7 @@ describe('isExecutableToken', () => {
     { value: function () {}, name: 'an anonymous function' },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     { value: () => {}, name: 'an anonymous arrow function' },
-  ].map(x => ({ ...x, name: x.name ?? inspect(x.value) }));
+  ].map(addNameToTestCaseIfNotExists);
 
   test.each(FALSE_CASES)('it returns false for $name', ({ value }) => {
     expect(isExecutableToken(value)).toBe(false);
