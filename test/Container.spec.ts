@@ -9,6 +9,7 @@ import {
 } from 'internal:typedi';
 import { Disposable } from 'internal:typedi/types/disposable.type.mjs';
 import { createRandomUid } from './utils/create-random-name.util';
+import { addNameToTestCaseIfNotExists } from './utils/add-names-to-test-cases';
 
 describe('Container', function () {
   beforeEach(() => Container.reset({ strategy: 'resetValue' }));
@@ -237,6 +238,17 @@ describe('Container', function () {
       expect(Container.get(TestService)).not.toBe(testService);
       expect(Container.get(TestService).name).toBe('frank');
     });
+
+    it.each([1, undefined, null, "ono", new Map, {}]
+      .map(x => ({ value: x }))
+      .map(addNameToTestCaseIfNotExists))('should fail if an invalid strategy ($name) is provided', ({ value }) => {
+        const myContainer = Container.of(Symbol());
+        expect(() => myContainer.reset({ strategy: value as any })).toThrowError();
+      });
+
+    // it.each('should fail if the provided strategy is invalid', () => {
+    //   const invalidValues = [1, null, 'ono', undefined, {}, [], new Map()];
+    // });
   });
 
   describe('set with ServiceMetadata passed', function () {
