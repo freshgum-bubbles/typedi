@@ -124,7 +124,7 @@ export class VisitorCollection implements Disposable {
    * @param visitor The visitor to append to the collection.
    * @param container The container to initialise the container on.
    */
-  addVisitorToCollection(visitor: ContainerTreeVisitor, container: ContainerInstance) {
+  addVisitorToCollection(visitor: ContainerTreeVisitor, container: ContainerInstance): boolean | undefined {
     /** If the visitor is already present, do not add another. */
     if (this.visitors.includes(visitor)) {
       return false;
