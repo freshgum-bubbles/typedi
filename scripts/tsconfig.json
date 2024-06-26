@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig/tsconfig.base.json",
+    "compilerOptions": {
+        "checkJs": true,
+        "moduleResolution": "Node",
+        "module": "ES2020",
+        "noEmit": true
+    },
+    "include": [
+        "./**/*",
+        "../"
+    ]
+}
