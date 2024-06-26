@@ -3,7 +3,7 @@ import assert from "assert";
 /**
  * Throw an error.
  *
- * @param {string | Error | undefined} The message or Error instance to throw.
+ * @param {string | Error | undefined} message - The message or Error instance to throw.
  * @returns {never}
  */
 export function assertUnreachable (message) {
