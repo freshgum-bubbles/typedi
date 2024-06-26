@@ -10,11 +10,11 @@
  */
 
 const path = require('path');
-const basePath = path.resolve(__dirname, '../../');
+const basePath = path.resolve(__dirname, '../../../');
 
 const MAGIC_TYPEDI_IMPORT_SPECIFIER = 'internal:typedi';
 
-/** @type {(path: string, options: import('./resolver-options').ResolverOptions) => string} */
+/** @type {(path: string, options: import('../resolver-options').ResolverOptions) => string} */
 module.exports = (modulePath, options) => {
   let newPath = modulePath;
   let newOptions = options;

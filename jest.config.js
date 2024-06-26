@@ -9,7 +9,7 @@ const configuration = {
   transform: {
     '^.+\\.(m?[tj]sx?)$': ['ts-jest', { tsconfig: TYPESCRIPT_CONFIGURATIONS.Spec }],
   },
-  resolver: '<rootDir>/scripts/testing/jestModuleResolver.cjs',
+  resolver: '<rootDir>/scripts/testing/jest/moduleResolver.cjs',
 };
 
 module.exports = configuration;
