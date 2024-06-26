@@ -8,6 +8,9 @@ export { CannotInstantiateValueError } from './error/cannot-instantiate-value.er
 export { ContainerRegistryError } from './error/container-registry-error.error.mjs';
 export { ServiceNotFoundError } from './error/service-not-found.error.mjs';
 
+// Executable Tokens
+export { ExecutableToken, isExecutableToken } from './executable-token.class.mjs';
+
 // Functions
 export { HostContainer } from './functions/host-container.function.mjs';
 export { Lazy } from './functions/lazy.function.mjs';
