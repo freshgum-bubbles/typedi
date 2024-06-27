@@ -28,19 +28,8 @@ const UMD_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.min.js';
 const MJS_BUNDLE_PATH = 'build/bundles/typedi.mjs';
 const MJS_MIN_BUNDLE_PATH = 'build/bundles/typedi.min.mjs';
 
-// There are two different build targets for TypeDI++:
-// - The first is "full", which contains everything exported from the index,
-//   alongside all contributory modules in <src/contrib>.
-// - The second, "compact", elides these modules, and just exports from the index.
-
-const UMD_COMPACT_BUNDLE_PATH = 'build/bundles/typedi.umd.compact.js';
-const UMD_COMPACT_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.compact.min.js';
-
 const UMD_FULL_BUNDLE_PATH = 'build/bundles/typedi.umd.full.js';
 const UMD_FULL_MIN_BUNDLE_PATH = 'build/bundles/typedi.umd.full.min.js';
-
-const MJS_COMPACT_BUNDLE_PATH = 'build/bundles/typedi.compact.mjs';
-const MJS_COMPACT_MIN_BUNDLE_PATH = 'build/bundles/typedi.compact.min.mjs';
 
 const MJS_FULL_BUNDLE_PATH = 'build/bundles/typedi.full.mjs';
 const MJS_FULL_MIN_BUNDLE_PATH = 'build/bundles/typedi.full.min.mjs';
@@ -317,24 +306,7 @@ async function createRollupOptions() {
       addTypeScriptPluginToOutput,
       addWebPluginsToOptions,
       addModuleResolutionPluginsToOptions
-    ),
-    pipeInto(
-      {
-        input: './src/entry/web/web.minimal.mts',
-        output: (
-          [
-            umd({ file: UMD_COMPACT_BUNDLE_PATH }),
-            umd({ file: UMD_COMPACT_MIN_BUNDLE_PATH, plugins: [terser(TERSER_OPTIONS)] }),
-            { format: 'es', file: MJS_COMPACT_BUNDLE_PATH },
-            { format: 'es', file: MJS_COMPACT_MIN_BUNDLE_PATH, plugins: [terser(MJS_TERSER_OPTIONS)] },
-          ] as OutputOptions[]
-        ).map(createOutput),
-        plugins: [commonjs(), nodeResolve()],
-      },
-      addTypeScriptPluginToOutput,
-      addWebPluginsToOptions,
-      addModuleResolutionPluginsToOptions
-    ),
+    )
   ];
 
   return options;
