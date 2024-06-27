@@ -11,5 +11,10 @@
     "hide-files.files": [],
     "typescript.tsdk": "node_modules/typescript/lib",
     "jest.jestCommandLine": "pnpm run test",
-    "npm.packageManager": "pnpm"
+    "npm.packageManager": "pnpm",
+
+    "todo-tree.filtering.excludeGlobs": [
+        "**/node_modules/*/**",
+        "build/*/**"
+    ]
 }
