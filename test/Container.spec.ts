@@ -239,12 +239,13 @@ describe('Container', function () {
       expect(Container.get(TestService).name).toBe('frank');
     });
 
-    it.each([1, undefined, null, "ono", new Map, {}]
-      .map(x => ({ value: x }))
-      .map(addNameToTestCaseIfNotExists))('should fail if an invalid strategy ($name) is provided', ({ value }) => {
+    it.each([1, undefined, null, 'ono', new Map(), {}].map(x => ({ value: x })).map(addNameToTestCaseIfNotExists))(
+      'should fail if an invalid strategy ($name) is provided',
+      ({ value }) => {
         const myContainer = Container.of(Symbol());
         expect(() => myContainer.reset({ strategy: value as any })).toThrowError();
-      });
+      }
+    );
 
     // it.each('should fail if the provided strategy is invalid', () => {
     //   const invalidValues = [1, null, 'ono', undefined, {}, [], new Map()];
