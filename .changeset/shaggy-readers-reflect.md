@@ -6,8 +6,7 @@ Dedicated entry-points have been added for web-facing builds <sup>([#184][gh-iss
 You're now able to use modules from contrib/ without relying on a bundler,
 or importing contrib/ packages separately from `/esm5/`.
 
-> [!NOTE]
-> **The changes made here do not impact current UMD / MJS entry-points.**
+> [!NOTE] > **The changes made here do not impact current UMD / MJS entry-points.**
 >
 > If you're using these, you won't experience any changes.
 > To make use of contrib/ modules, you'll need to switch to the new builds shown above.
@@ -18,7 +17,6 @@ The new entry-points are as follows (all files are under `./build/bundles/`):
 - `typedi.full.mjs`
 - `typedi.umd.full.js` <sup>([UMD][umd-module-explainer] modules.)</sup>
 - `typedi.umd.full.min.js`
-
 
 You can now do the following:
 
@@ -35,15 +33,17 @@ The same can be done using UMD modules, like so:
 ```html
 <!doctype html>
 <html>
-    <head><!-- ... --></head>
-    <body>
-        <!-- Be sure to use subresource integrity in production! ;-) -->
-        <script src="https://unpkg.dev/@freshgum/typedi/build/bundles/typedi.umd.full.min.js"></script>
-        <script>
-            const { Container, Contrib } = TypeDI;
-            // ...
-        </script>
-    </body>
+  <head>
+    <!-- ... -->
+  </head>
+  <body>
+    <!-- Be sure to use subresource integrity in production! ;-) -->
+    <script src="https://unpkg.dev/@freshgum/typedi/build/bundles/typedi.umd.full.min.js"></script>
+    <script>
+      const { Container, Contrib } = TypeDI;
+      // ...
+    </script>
+  </body>
 </html>
 ```
 
