@@ -293,7 +293,6 @@ async function createRollupOptions() {
     pipeInto(
       {
         input: './src/entry/web/web.full.mts',
-        // todo: all these need to support the contrib import prefix
         output: (
           [
             umd({ file: UMD_FULL_BUNDLE_PATH }),
