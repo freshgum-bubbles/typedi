@@ -16,14 +16,18 @@ const __dirname = Path.dirname(Url.fileURLToPath(import.meta.url));
 /** The directory in which web build entry points shall be generated. */
 const ENTRY_POINT_DIR = Path.resolve(__dirname, '../../src/entry/web/');
 
+// TODO: Entry point name no longer used, remove this.
 const ENTRY_POINT_CONTRIB_NAME = 'contrib.full.generated.mts';
 
+// TODO: Preamble should be in barrel config as callback?
 const GENERATED_CONTRIB_BARREL_PREAMBLE = `
 /* <!> THIS FILE IS GENERATED. DO NOT EDIT. <!> */
 `;
 
+// TODO: Entry point names should be in barrel config.
 const CONTRIB_PACKAGE_ENTRY_POINT_FILE_NAMES = ['index.mts'];
 
+// TODO: These dirs should be in barrel config.
 /** The directory in which contributory features are located. */
 const CONTRIB_DIR = Path.resolve(__dirname, '../../src/contrib/');
 const SRC_DIR = Path.resolve(__dirname, '../../src/');
@@ -33,7 +37,7 @@ const SRC_DIR = Path.resolve(__dirname, '../../src/');
  * A map of overrides for certain contributory package names.
  */
 const PACKAGE_NAME_OVERRIDES = {
-  es: 'ES',
+  es: 'ES', // TODO: Shouldn't these overrides be in barrelconfig?
 };
 
 export const BarrelConfiguration = Rt.Record({
