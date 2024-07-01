@@ -1,3 +1,10 @@
 [submodule "src/contrib/upstream/tree"]
 	path = src/contrib/upstream/tree
 	url = https://github.com/typestack/typedi
+
+	# The version of typestack/typedi available on NPM actually publishes the code
+	# in the master branch, as opposed to the develop branch (which has significant
+	# changes.)  For simplicity's sake, we're only going to support master, as the
+	# module seems to be more or less abandoned, so develop will most likely remain
+	# in development for eternity.
+	branch = master
