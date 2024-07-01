@@ -30,7 +30,6 @@ const CONTRIB_PACKAGE_ENTRY_POINT_FILE_NAMES = ['index.mts'];
 // TODO: These dirs should be in barrel config.
 /** The directory in which contributory features are located. */
 const CONTRIB_DIR = Path.resolve(__dirname, '../../src/contrib/');
-const SRC_DIR = Path.resolve(__dirname, '../../src/');
 
 /**
  * @type {{ [k: string]: string }}
