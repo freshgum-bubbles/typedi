@@ -1,10 +1,9 @@
 import { ContainerInstance as OurContainerInstance } from "../../../index.mjs";
 import { ContainerIdentifier as UpstreamContainerIdentifier } from "../tree/src/types/container-identifier.type";
-import { UpstreamContainerInstance, UpstreamContainerScope, UpstreamHandler, UpstreamServiceIdentifier, UpstreamServiceMetadata, UpstreamServiceOptions, UpstreamToken } from "../upstream.types";
-import { ContainerRegistryStub } from "./upstream-container-registry-proxy.class.mjs";
+import { UpstreamConstructable, UpstreamContainerInstance, UpstreamServiceIdentifier, UpstreamServiceMetadata, UpstreamToken } from "../upstream.types";
 
 /**
- * An internal map of {@link ContainerInstanceStub} instances to their
+ * An internal map of {@link ContainerInstanceProxy} instances to their
  * respective host {@link OurContainerInstance} objects.
  *
  * It should be noted that the {@link OurContainerInstance} instances are not direct
@@ -17,6 +16,11 @@ import { ContainerRegistryStub } from "./upstream-container-registry-proxy.class
  */
 const STUB_TO_HOST_CONTAINER_MAP: WeakMap<UpstreamContainerInstance, OurContainerInstance> = new WeakMap();
 
+/**
+ * Find the host of the {@link ContainerInstanceProxy}, if it exists.
+ *
+ * @returns The host, or `null` if one doesn't exist.
+ */
 function getHostIfExists (stub: UpstreamContainerInstance) {
     return STUB_TO_HOST_CONTAINER_MAP.get(stub) ?? null;
 }
@@ -35,62 +39,27 @@ function getHostIfExists (stub: UpstreamContainerInstance) {
  * The name of this class remains identical to upstream, as changing it may cause
  * unintented compatibility issues.
  */
-const ContainerInstanceStub = class ContainerInstance implements UpstreamContainerInstance {
-    public readonly id: UpstreamContainerIdentifier;
-    private metadataMap: Map<UpstreamServiceIdentifier, UpstreamServiceMetadata<unknown>> = new Map();
-    private multiServiceIds: Map<UpstreamServiceIdentifier, { tokens: UpstreamToken<unknown>[]; scope: UpstreamContainerScope }> = new Map();
-    private readonly handlers: UpstreamHandler[] = [ ];
+const ContainerInstanceProxy = class ContainerInstance implements UpstreamContainerInstance {
+    constructor (public readonly id: string) { }
 
-    /** Not used by typestack's implementation, but kept for compatibility. */
-    private disposed = false;
+    // For the purpose of maximal backwards compatibility, we're also going to implement private Container methods.
+    private services: UpstreamServiceMetadata<unknown>[] = [ ];
 
-    public constructor (id: UpstreamContainerIdentifier) {
-        this.id = id;
-
-        ContainerRegistryStub.registerContainer(this);
-        this.handlers = ContainerRegistryStub.defaultContainer?.handlers || [];
+    has<T>(type: UpstreamConstructable<T>): boolean;
+    has<T>(id: string): boolean;
+    has<T>(id: UpstreamToken<T>): boolean;
+    has<T>(identifier: UpstreamServiceIdentifier): boolean {
+      return !!this.findService(identifier);
     }
 
-    public has<T = unknown>(identifier: UpstreamServiceIdentifier<T>): boolean {
-        return getHostIfExists(this)?.has(identifier) ?? this.multiServiceIds.has(identifier) || this.metadataMap.has(identifier);
-    }
 
-    public get<T = unknown>(identifier: UpstreamServiceIdentifier<T>): T {
-        throw new Error("Method not implemented.");
-    }
-    public getMany<T = unknown>(identifier: UpstreamServiceIdentifier<T>): T[] {
-        throw new Error("Method not implemented.");
-    }
-    public set<T = unknown>(serviceOptions: UpstreamServiceOptions<T>): this {
-        throw new Error("Method not implemented.");
-    }
-    public remove(identifierOrIdentifierArray: UpstreamServiceIdentifier | UpstreamServiceIdentifier[]): this {
-        throw new Error("Method not implemented.");
-    }
-    public of(containerId?: UpstreamContainerIdentifier): UpstreamContainerInstance {
-        throw new Error("Method not implemented.");
-    }
-    public registerHandler(handler: UpstreamHandler<unknown>): UpstreamContainerInstance {
-        throw new Error("Method not implemented.");
-    }
-    public import(services: Function[]): UpstreamContainerInstance {
-        throw new Error("Method not implemented.");
-    }
-    public reset(options?: { strategy: "resetValue" | "resetServices"; }): this {
-        throw new Error("Method not implemented.");
-    }
-    public dispose(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
 }
 
-export function createContainerInstanceStub (host: OurContainerInstance, id?: UpstreamContainerIdentifier) {
-    const stub = new ContainerInstanceStub(id ?? host.id);
+export function createContainerInstanceProxy (host: OurContainerInstance, id?: UpstreamContainerIdentifier) {
+    const stub = new ContainerInstanceProxy(id ?? host.id);
     STUB_TO_HOST_CONTAINER_MAP.set(stub, host);
 
     return stub;
 }
 
-export function isContainerInstance
-
-export { ContainerInstanceStub };
+export { ContainerInstanceProxy as ContainerInstanceStub };
