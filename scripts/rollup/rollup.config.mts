@@ -205,11 +205,23 @@ const CONTRIB_GENERATED_BARREL_IMPORT = 'internal:web_entry_contrib_barrel_do_no
 
 /** The barrel configuration used for generating web bundle entry points. */
 const WEB_ENTRY_BARREL_CONFIG = WebEntryPointCreator.BarrelConfiguration.check({
-  // All contributory packages are exported.
+  inputDirectory: CONTRIB_DIR_PATH,
+  entryPointFileNames: [
+    'index.mts',
+  ],
+
   packagesToExport: 'all',
   generatedImports: {
     importPrefix: CONTRIB_IMPORT_PREFIX,
   },
+
+  packageNameOverrides: {
+    'ES': 'es'
+  },
+
+  // Now that I think about it, a preamble isn't really needed anymore as the file is
+  // never actually written to disk.  For now, let's keep it anyway though.
+  preamble: '/* <!> <!> <!> THIS FILE IS GENERATED.  DO NOT EDIT. <!> <!> <!> */'
 });
 
 const ROLLUP_BUNDLE_TSCONFIG_PATH = resolvePathFromCurrentDir('../tsconfig/tsconfig.rollup.json');

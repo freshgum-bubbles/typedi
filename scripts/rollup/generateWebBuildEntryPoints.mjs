@@ -10,36 +10,13 @@ import camelcase from 'camelcase';
 import { assertUnreachable } from '../utils/assertUnreachable.mjs';
 import { createUuidIterator } from '../utils/uuid.mjs';
 
-// All hail Node.
-const __dirname = Path.dirname(Url.fileURLToPath(import.meta.url));
-
-/** The directory in which web build entry points shall be generated. */
-const ENTRY_POINT_DIR = Path.resolve(__dirname, '../../src/entry/web/');
-
-// TODO: Entry point name no longer used, remove this.
-const ENTRY_POINT_CONTRIB_NAME = 'contrib.full.generated.mts';
-
-// TODO: Preamble should be in barrel config as callback?
-const GENERATED_CONTRIB_BARREL_PREAMBLE = `
-/* <!> THIS FILE IS GENERATED. DO NOT EDIT. <!> */
-`;
-
-// TODO: Entry point names should be in barrel config.
-const CONTRIB_PACKAGE_ENTRY_POINT_FILE_NAMES = ['index.mts'];
-
-// TODO: These dirs should be in barrel config.
-/** The directory in which contributory features are located. */
-const CONTRIB_DIR = Path.resolve(__dirname, '../../src/contrib/');
-
-/**
- * @type {{ [k: string]: string }}
- * A map of overrides for certain contributory package names.
- */
-const PACKAGE_NAME_OVERRIDES = {
-  es: 'ES', // TODO: Shouldn't these overrides be in barrelconfig?
-};
-
 export const BarrelConfiguration = Rt.Record({
+  // The directory to scan for modules.
+  inputDirectory: Rt.String,
+
+  // An array of possible entry-point file-names.
+  entryPointFileNames: Rt.Array(Rt.String),
+
   packagesToExport: Rt.Union(
     // All packages are exported.
     Rt.Literal('all'),
@@ -51,20 +28,31 @@ export const BarrelConfiguration = Rt.Record({
     // The import prefix to use when generating imports for contributory packages.
     importPrefix: Rt.Union(Rt.String),
   }),
+
+  // A map of overrides for certain package names.
+  packageNameOverrides: Rt.Optional(Rt.Dictionary(Rt.String, Rt.String)),
+
+  // A string to prepend the barrel file with.
+  preamble: Rt.Optional(Rt.String),
 });
 
 let GENERATED_EXPORT_UUID_ITERATOR = createUuidIterator();
 const GENERATED_EXPORT_PREFIX = 'GeneratedWebEntryPointExport$';
 
 /**
- * Get a list of all contributory packages.
+ * Get a list of all packages in the specified directory.
+ * Packages are expected in folder form.
+ *
  * The returned list of packages is not checked for missing entry-points.
+ *
+ * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The barrel configuration to check.
  */
-export async function* getAllDirsInContribDir() {
-  const dir = await AsyncFS.readdir(CONTRIB_DIR);
+export async function* findPackagesInDirectory(barrelConfig) {
+  const { inputDirectory } = barrelConfig;
+  const dir = await AsyncFS.readdir(inputDirectory);
 
   for (const entry of dir) {
-    const fullPath = Path.resolve(CONTRIB_DIR, entry);
+    const fullPath = Path.resolve(inputDirectory, entry);
     const stat = await AsyncFS.stat(fullPath);
     const isDirectory = stat.isDirectory();
     const isValidEntry = isDirectory;
@@ -82,19 +70,23 @@ export async function* getAllDirsInContribDir() {
 /**
  * Get a list of all contributory packages.
  *
- * Like {@link getAllDirsInContribDir}, but the returned packages are checked
+ * Like {@link findPackagesInDirectory}, but the returned packages are checked
  * for missing entry-points.
+ *
+ * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The barrel configuration to check.
  *
  * @returns {Promise<{ [k: string]: string }>} A mapping of contributory package names to
  * their respective entry-points.  The entry-point file names are named as they appear in
  * the file system.
  */
-export async function getAllContribPackagesWithEntryPoints() {
-  const packages = getAllDirsInContribDir();
+export async function findPackagesWithEntryPointsInDirectory(barrelConfig) {
+  const { inputDirectory } = barrelConfig;
+
+  const packages = findPackagesInDirectory(barrelConfig);
   let map = Object.create(null);
 
   for await (const packageName of packages) {
-    const entryPoint = getEntryPointForContribPackage(packageName);
+    const entryPoint = getEntryPointForContribPackage(packageName, barrelConfig);
     map = { ...map, [packageName]: entryPoint };
   }
 
@@ -106,10 +98,13 @@ export async function getAllContribPackagesWithEntryPoints() {
  * The existence of files is checked synchronously.
  *
  * @param {string} contribPackageName - The name of the contributory package to check.
+ * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The barrel configuration to check.
  */
-export function getEntryPointForContribPackage(contribPackageName) {
-  const fullPackagePath = Path.resolve(CONTRIB_DIR, contribPackageName);
-  const matches = CONTRIB_PACKAGE_ENTRY_POINT_FILE_NAMES.filter(possibleEntryPointFileName => {
+export function getEntryPointForContribPackage(contribPackageName, barrelConfig) {
+  const { inputDirectory, entryPointFileNames } = barrelConfig;
+  const fullPackagePath = Path.resolve(inputDirectory, contribPackageName);
+
+  const matches = entryPointFileNames.filter(possibleEntryPointFileName => {
     const fullEntryPointFileName = Path.resolve(fullPackagePath, possibleEntryPointFileName);
     return FS.existsSync(fullEntryPointFileName);
   });
@@ -119,7 +114,7 @@ export function getEntryPointForContribPackage(contribPackageName) {
       [
         `A valid entry-point for the "${contribPackageName}" contributory package could not be found.`,
         'The following entry-point file-names are supported:',
-        ...CONTRIB_PACKAGE_ENTRY_POINT_FILE_NAMES.map(x => `  - ${x}`),
+        ...entryPointFileNames.map(x => `  - ${x}`),
       ].join('\n')
     );
   }
@@ -159,14 +154,16 @@ function resolveEntryPointNameToImportName(fileName, contribPackageName) {
 }
 
 /**
- * Like {@link getAllContribPackagesWithEntryPoints}, but with the entry-point names transformed
+ * Like {@link findPackagesWithEntryPointsInDirectory}, but with the entry-point names transformed
  * to import specifiers via {@link resolveEntryPointNameToImportName}.
+ *
+ * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The barrel configuration to check.
  *
  * @returns {Promise<{ [k: string]: string }>} A mapping of contributory package names to their
  * respective entry-points as valid import specifiers.
  */
-export async function getAllContribPackagesWithImportNames() {
-  const packagesWithEntryPoints = await getAllContribPackagesWithEntryPoints();
+export async function getPackagesInDirectoryAsImportSpecifiers(barrelConfig) {
+  const packagesWithEntryPoints = await findPackagesWithEntryPointsInDirectory(barrelConfig);
 
   return Object.entries(packagesWithEntryPoints).reduce((map, [packageName, entryPoint]) => {
     const importName = resolveEntryPointNameToImportName(entryPoint, packageName);
@@ -180,12 +177,13 @@ export async function getAllContribPackagesWithImportNames() {
  * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The barrel configuration to use.
  */
 export async function createBarrelAsString(barrelConfig) {
-  const allPackagesWithImports = await getAllContribPackagesWithImportNames();
+  const allPackagesWithImports = await getPackagesInDirectoryAsImportSpecifiers(barrelConfig);
 
   // All generated imports must be prefixed with the import prefix specified.
   // We do this because we can substitute this for "@internal:contrib" in the build
   // stage; this means this script does not have to generate relative paths.
   const { importPrefix } = barrelConfig.generatedImports;
+  const { preamble } = barrelConfig;
 
   return Object.entries(allPackagesWithImports)
     .filter(([packageName]) => !doesBarrelConfigExcludePackageName(barrelConfig, packageName))
@@ -193,10 +191,10 @@ export async function createBarrelAsString(barrelConfig) {
       const resolvedPath = `${importPrefix}/${packageName}/${importName}`;
 
       // Convert the directory name to PascalCase, e.g. transient-ref -> TransientRef.
-      const reexportName = getExportNameForPackage(packageName);
+      const reexportName = getExportNameForPackage(packageName, barrelConfig);
 
       return generatedBarrelFile + generateBarrelReexportForPath(resolvedPath, reexportName);
-    }, GENERATED_CONTRIB_BARREL_PREAMBLE);
+    }, preamble ?? '');
 }
 
 /**
@@ -204,10 +202,13 @@ export async function createBarrelAsString(barrelConfig) {
  * For instance, `transient-ref` would be transformed to `TransientRef`.
  *
  * @param {string} packageName - The package name to transform.
+ * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The barrel configuration to check.
+ *
  * @returns { string } The transformed package name.
  */
-function getExportNameForPackage(packageName) {
-  return PACKAGE_NAME_OVERRIDES[packageName] ?? camelcase(packageName, { pascalCase: true });
+function getExportNameForPackage(packageName, barrelConfig) {
+  const { packageNameOverrides } = barrelConfig;
+  return packageNameOverrides?.[packageName] ?? camelcase(packageName, { pascalCase: true });
 }
 
 /**
@@ -239,10 +240,9 @@ function generateUuidForExport() {
  * Write a barrel file following the provided configuration to the specified output path.
  *
  * @param {Rt.Static<typeof BarrelConfiguration>} barrelConfig - The configuration to use to generate the barrel.
- * @param {string | null} baseOutputPath - The path to output the barrel file to.
+ * @param {string} outputPath - The path to output the barrel file to.
  */
-export async function writeBarrelFileForConfig(barrelConfig, baseOutputPath = null) {
-  const outputPath = baseOutputPath ?? Path.resolve(ENTRY_POINT_DIR, ENTRY_POINT_CONTRIB_NAME);
+export async function writeBarrelFileForConfig(barrelConfig, outputPath) {
   const barrelFile = await createBarrelAsString(barrelConfig);
   return AsyncFS.writeFile(outputPath, barrelFile);
 }
