@@ -4,6 +4,8 @@ Elegant dependency injection in TypeScript and JavaScript.
 
 ---
 
+**Contributors wanted!** For a place to start, check out [the list of good first issues](https://github.com/freshgum-bubbles/typedi/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) or open an issue to talk.
+
 <!-- prettier-ignore -->
 > [!WARNING]
 > From 0.4.0, support for Node versions under v15.3.0 has been removed, as the package has transitioned to ES Modules.
