@@ -39,8 +39,17 @@ import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
 import { NativeNull } from './constants/minification/native-null.const.mjs';
 import { ExecutableToken, isExecutableToken } from './executable-token.class.mjs';
+import { DEV } from './constants/env.const.mjs';
 
 let defaultContainer!: ContainerInstance;
+
+if (DEV && (typeof Map !== 'function' || typeof Set !== 'function')) {
+  /** In development mode, check that the environment has working Map / Set classes. */
+  console.error([
+    'The container relies upon working Map and Set built-in types.',
+    'Consider loading a polyfill.'
+  ].join('\n'));
+}
 
 /**
  * # The Container.
