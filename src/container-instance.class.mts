@@ -882,12 +882,6 @@ export class ContainerInstance implements Disposable {
         this.multiServiceIds.set(newMetadata.id, { tokens: [maskedToken] });
       }
 
-      /**
-       * We mask the original metadata with this generated ID, mark the service
-       * as  and continue multiple: false and continue. Marking it as
-       * non-multiple is important otherwise Container.get would refuse to
-       * resolve the value.
-       */
       newMetadata.id = maskedToken;
       newMetadata.multiple = false;
     }
