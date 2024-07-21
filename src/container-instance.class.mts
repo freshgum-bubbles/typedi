@@ -1367,6 +1367,12 @@ export class ContainerInstance implements Disposable {
     }
 
     if (value === EMPTY_VALUE) {
+      if (DEV) {
+        console.error([
+          `The value of service "${serviceMetadata.id}" could not be resolved.`,
+          'This is most likely an internal bug.  Please file an issue.'
+        ].join('\n'));
+      }
       /** This branch should never execute, but better to be safe than sorry. */
       throw new CannotInstantiateValueError(serviceMetadata.id);
     }
