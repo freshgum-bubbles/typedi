@@ -1316,6 +1316,17 @@ export class ContainerInstance implements Disposable {
       if (isArray(factoryMeta)) {
         const [factoryServiceId, factoryServiceMethod] = factoryMeta;
 
+        if (DEV) {
+          console.warn([
+            `Creating an instance of service "${serviceMetadata.id}" using a factory tuple.`,
+            'This is not recommended, as the result of the factory cannot be type-checked.',
+            'To fix this, change the service declaration to the following:',
+            '  @Service({',
+            '    factory: (...) => {}',
+            '  });'
+          ].join('\n'));
+        }
+
         /** Try to get the factory from TypeDI first, if failed, fall back to simply initiating the class. */
         const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId();
         value = factoryInstance[factoryServiceMethod](this, serviceMetadata.id, parameters);
