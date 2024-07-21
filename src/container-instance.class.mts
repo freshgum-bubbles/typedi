@@ -1597,6 +1597,14 @@ export class ContainerInstance implements Disposable {
           (value as { dispose: CallableFunction }).dispose();
         } catch (error) {
           /** We simply ignore the errors from the destroy function. */
+          if (DEV) {
+            console.error([
+              `The disposal function for service "${serviceMetadata.id}" threw an error.`,
+              'In production, these errors are silently ignored.',
+              'This behaviour may be changed in a future version of TypeDI.'
+            ].join('\n'));
+            console.error(error);
+          }
           // TODO: is this really a good idea?
         }
       }
