@@ -1597,6 +1597,7 @@ export class ContainerInstance implements Disposable {
           (value as { dispose: CallableFunction }).dispose();
         } catch (error) {
           /** We simply ignore the errors from the destroy function. */
+          // TODO: is this really a good idea?
         }
       }
 
