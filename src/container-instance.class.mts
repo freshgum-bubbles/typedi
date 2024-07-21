@@ -773,6 +773,45 @@ export class ContainerInstance implements Disposable {
       throw NativeError('Executable identifiers can not be overridden.');
     }
 
+    if (DEV) {
+      const thisContainer = this;
+
+      const { id, multiple } = serviceOptions;
+
+      // Is the ID already set as a multiple?
+      function getIsMultiple (id: ServiceIdentifier<unknown>) {
+        let currentContainer: ContainerInstance | void = thisContainer;
+
+        while (currentContainer) {
+          if (currentContainer.has(id, false)) {
+            const isMultiple = currentContainer.multiServiceIds.has(id);
+            return isMultiple;
+          }
+
+          currentContainer = currentContainer.parent;
+        }
+      }
+
+      const isMultiple = getIsMultiple(id!) === true; // Prevent `undefined` from evaluating to `true`.
+
+      if (this.has(id!) && multiple !== isMultiple) {
+        console.error([
+          `A value for the "${serviceOptions.id}" service is being set with \`multiple\` as \`${multiple}\`,`,
+          `but this value is already bound with \`multiple\` as \`${!multiple}\`.`,
+          'This isn\'t recommended, as it creates ambiguity between multiple and singular services.',
+          'This behaviour may be changed in a future version.'
+        ].join('\n'));
+      }
+
+      if (typeof id === 'string') {
+        console.error([
+          `A string identifier has been used to define service "${id}".`,
+          'This isn\'t recommended, as it prevents explicit type-checks from taking place.',
+          'This behaviour may be changed in a future version.'
+        ].join('\n'));
+      }
+    }
+
     /**
      * If the service is marked as singleton, we set it in the default container.
      * (And avoid an infinite loop via checking if we are in the default container or not.)
