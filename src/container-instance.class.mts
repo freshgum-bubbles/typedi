@@ -1591,7 +1591,7 @@ export class ContainerInstance implements Disposable {
     const shouldResetValue = force || !!type || !!factory;
 
     if (shouldResetValue) {
-      /** If we wound a function named destroy we call it without any params. */
+      /** If we found a function named destroy, we call it without any params. */
       if (typeof (value as Record<string, unknown>)?.['dispose'] === 'function') {
         try {
           (value as { dispose: CallableFunction }).dispose();
