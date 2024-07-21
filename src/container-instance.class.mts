@@ -963,6 +963,7 @@ export class ContainerInstance implements Disposable {
     if (isArray(identifierOrIdentifierArray)) {
       identifierOrIdentifierArray.forEach(id => this.remove(id));
     } else {
+      // XXX: Hang on a second: what about multiple: true?
       const serviceMetadata = this.metadataMap.get(identifierOrIdentifierArray);
 
       if (serviceMetadata) {
