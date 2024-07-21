@@ -1329,6 +1329,14 @@ export class ContainerInstance implements Disposable {
 
         /** Try to get the factory from TypeDI first, if failed, fall back to simply initiating the class. */
         const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId();
+
+        if (DEV && typeof factoryInstance[factoryServiceMethod] !== 'function') {
+          console.error([
+            `The factory tuple for service "${serviceMetadata.id}" does not exist.`,
+            'Consider updating it to a valid function declaration, or remove it entirely.'
+          ].join('\n'));
+        }
+
         value = factoryInstance[factoryServiceMethod](this, serviceMetadata.id, parameters);
       } else {
         /** If only a simple function was provided we simply call it. */
