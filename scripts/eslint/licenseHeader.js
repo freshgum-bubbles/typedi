@@ -6,8 +6,3 @@
  * Copyright (c) 2023-2024 freshgum (https://github.com/freshgum-bubbles)
  * For a full copy of the license, see the LICENSE file in the root folder.
  */
-
-import { ServiceIdentifier } from './service-identifier.type.mjs';
-import { TypeWrapper } from './type-wrapper.type.mjs';
-
-export type AnyInjectIdentifier = ServiceIdentifier | TypeWrapper;
