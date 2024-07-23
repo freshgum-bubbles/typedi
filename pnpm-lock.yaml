@@ -73,6 +73,9 @@ devDependencies:
   eslint-plugin-jest:
     specifier: ^27.6.0
     version: 27.6.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.53.0)(jest@29.7.0)(typescript@5.2.2)
+  eslint-plugin-license-header:
+    specifier: 0.6.1
+    version: 0.6.1
   execa:
     specifier: ^8.0.1
     version: 8.0.1
@@ -2694,6 +2697,12 @@ packages:
       - typescript
     dev: true
 
+  /eslint-plugin-license-header@0.6.1:
+    resolution: {integrity: sha512-9aIz8q3OaMr1/uQmCGCWySjTs5nEXUJexNegz/8lluNcZbEl82Ag1Vyr1Hu3oIveRW1NbXDPs6nu4zu9mbrmWA==}
+    dependencies:
+      requireindex: 1.2.0
+    dev: true
+
   /eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
@@ -4906,6 +4915,11 @@ packages:
 
   /require-main-filename@2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
+    dev: true
+
+  /requireindex@1.2.0:
+    resolution: {integrity: sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==}
+    engines: {node: '>=0.10.5'}
     dev: true
 
   /resolve-cwd@3.0.0:
