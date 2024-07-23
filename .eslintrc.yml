@@ -1,6 +1,7 @@
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
+  - 'license-header'
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
@@ -48,3 +49,8 @@ rules:
   '@typescript-eslint/no-unsafe-call': off
   '@typescript-eslint/no-unsafe-member-access': off
   '@typescript-eslint/explicit-module-boundary-types': off
+
+  # Ensure each source file has a corresponding license header.
+  'license-header/header':
+    - 'error'
+    - './scripts/eslint/licenseHeader.js'
