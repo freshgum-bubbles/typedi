@@ -13,7 +13,6 @@ export { ExecutableToken, isExecutableToken } from './executable-token.class.mjs
 
 // Functions
 export { HostContainer } from './functions/host-container.function.mjs';
-export { Lazy } from './functions/lazy.function.mjs';
 export { Many, Optional, Self, SkipSelf } from './functions/resolution-constraints.functions.mjs';
 
 // Interfaces
