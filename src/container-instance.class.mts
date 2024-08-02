@@ -965,6 +965,12 @@ export class ContainerInstance implements Disposable {
     parent: ContainerInstance | null = defaultContainer,
     options?: TOptions
   ): CreateContainerResult<TOptions> {
+    /*
+      TODO: containerId = 'default' is absolutely nuts, and we need to stop doing that now.
+      It makes working with this stuff a lot harder.
+      Specifically, when you call ofChild() without an ID, you SHOULD get a child, not the
+      default container.  What was I thinking :/
+    */
     if (containerId === 'default') {
       return defaultContainer;
     }
