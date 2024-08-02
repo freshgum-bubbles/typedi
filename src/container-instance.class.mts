@@ -950,7 +950,7 @@ export class ContainerInstance implements Disposable {
    * ContainerInstance.of('my-new-special-container', myOtherContainer);
    * ```
    *
-   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * @param containerId The ID of the container to resolve or create.
    * @param parent The parent of the container, or null to explicitly signal that one should not be provided.
    * Defaults to the default container.
    * @param options The options to supplement how the container is created.
@@ -961,7 +961,7 @@ export class ContainerInstance implements Disposable {
    * if one already exists.
    */
   public static of<TOptions extends CreateContainerOptions>(
-    containerId: ContainerIdentifier = 'default',
+    containerId: ContainerIdentifier,
     parent: ContainerInstance | null = defaultContainer,
     options?: TOptions
   ): CreateContainerResult<TOptions> {
@@ -1049,7 +1049,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Gets a separate container instance for the given instance id.
    *
-   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * @param containerId The ID of the container to resolve or create.
    *
    * @example
    * ```
@@ -1063,7 +1063,7 @@ export class ContainerInstance implements Disposable {
    * with the same name if one already exists.
    */
   public of<TOptions extends CreateContainerOptions>(
-    containerId?: ContainerIdentifier,
+    containerId: ContainerIdentifier,
     options?: TOptions
   ): CreateContainerResult<TOptions> {
     // Todo: make this get the constructor at runtime to aid
@@ -1075,7 +1075,7 @@ export class ContainerInstance implements Disposable {
   /**
    * Create a registry with the specified ID, with this instance as its parent.
    *
-   * @param containerId The ID of the container to resolve or create.  Defaults to "default".
+   * @param containerId The ID of the container to resolve or create.
    *
    * @returns The newly-created {@link ContainerInstance}, or the pre-existing container
    * with the same name if one already exists.
@@ -1084,7 +1084,7 @@ export class ContainerInstance implements Disposable {
    * This exception is thrown if the container has been disposed.
    */
   public ofChild<TOptions extends CreateContainerOptions>(
-    containerId?: ContainerIdentifier,
+    containerId: ContainerIdentifier,
     options?: TOptions
   ): CreateContainerResult<TOptions> {
     this.throwIfDisposed();
