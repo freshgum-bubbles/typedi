@@ -30,7 +30,7 @@ describe.each(DECORATORS_TO_TEST)('$name decorator ($description)', ({ decorator
     // There's actually a good reason for this: before [0], ESService didn't actually support
     // static properties due to bad types.  That's fixed now, but this test case should ensure
     // that it doesn't happen again.
-    // [0]: 
+    // [0]: https://github.com/freshgum-bubbles/typedi/pull/193/
     class ClassWithStaticMethodsAndProperties {
       static property = true;
 
