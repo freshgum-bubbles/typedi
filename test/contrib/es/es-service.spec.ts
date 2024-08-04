@@ -2,7 +2,7 @@ import { Container } from 'internal:typedi';
 import { createFakeClassDecoratorContext } from './test-utils/fake-context.util';
 import { ESService } from 'internal:typedi/contrib/es/es-service.decorator.mjs';
 
-// Due to the testing structure, we can't actually use ES Decorators
+// Due to the tsconfig setup, we can't actually use ES Decorators
 // here.  Instead, we have to pretend we're using them, by manually
 // passing descriptors and functions to them.
 // P.S. The actual conformance testing goes on in <test/decorators/Service.spec.ts>
