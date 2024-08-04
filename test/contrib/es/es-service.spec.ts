@@ -23,11 +23,11 @@ describe('ESService', () => {
     class ClassWithStaticMethodsAndProperties {
       static property = true;
 
-      static get getter () {
+      static get getter() {
         return 'value';
       }
 
-      static method () { }
+      static method() {}
     }
 
     const context = createFakeClassDecoratorContext(ClassWithStaticMethodsAndProperties);
