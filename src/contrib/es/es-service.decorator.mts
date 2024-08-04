@@ -35,7 +35,7 @@ import { ESClassDecorator } from '../util/es-class-decorator.type.mjs';
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
+export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
   dependencies: AnyServiceDependency[]
 ): ESClassDecorator<TClass>;
 
@@ -76,7 +76,7 @@ export function ESService<TInstance, TClass extends Constructable<TInstance> = C
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
+export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
   options: Omit<ServiceOptions<TClass>, 'dependencies'>,
   dependencies: AnyServiceDependency[]
 ): ESClassDecorator<TClass>;
@@ -117,11 +117,11 @@ export function ESService<TInstance, TClass extends Constructable<TInstance> = C
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
+export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
   options: ServiceOptionsWithDependencies<Constructable<unknown>>
 ): ESClassDecorator<TClass>;
 
-export function ESService<TInstance, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
+export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
   optionsOrDependencies: Omit<ServiceOptions<TClass>, 'dependencies'> | ServiceOptions<TClass> | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]
 ): ESClassDecorator<TClass> {
