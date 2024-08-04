@@ -18,4 +18,22 @@ describe('ESService', () => {
     const context = createFakeClassDecoratorContext(MyService);
     expect(() => ESService([])(class {}, context)).not.toThrow();
   });
+
+  it('should support static properties and methods', function () {
+    class ClassWithStaticMethodsAndProperties {
+      static property = true;
+
+      static get getter () {
+        return 'value';
+      }
+
+      static method () { }
+    }
+
+    const context = createFakeClassDecoratorContext(ClassWithStaticMethodsAndProperties);
+
+    // We don't need an expect(...) here as this is a typing issue, not a runtime one.
+    ESService([])(ClassWithStaticMethodsAndProperties, context);
+    expect(true).toBe(true);
+  });
 });
