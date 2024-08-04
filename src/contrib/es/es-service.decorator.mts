@@ -35,7 +35,9 @@ import { ESClassDecorator } from '../util/es-class-decorator.type.mjs';
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance, TClass extends Constructable<TInstance> = Constructable<TInstance>>(dependencies: AnyServiceDependency[]): ESClassDecorator<TClass>;
+export function ESService<TInstance, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
+  dependencies: AnyServiceDependency[]
+): ESClassDecorator<TClass>;
 
 /**
  * Marks class as a service that can be injected using Container.
