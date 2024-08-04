@@ -11,6 +11,9 @@ const configuration = {
     '^.+\\.(m?[tj]sx?)$': ['ts-jest', { tsconfig: TYPESCRIPT_CONFIGURATIONS.Spec }],
   },
   resolver: '<rootDir>/scripts/testing/jest/moduleResolver.cjs',
+  testPathIgnorePatterns: [
+    'src/contrib/upstream'
+  ]
 };
 
 module.exports = configuration;
