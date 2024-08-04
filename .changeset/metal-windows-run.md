@@ -14,6 +14,5 @@ to [`TInstance = unknown, TClass extends Constructable<TInstance> = Constructabl
 
 Current code which relies on the type signature of `ESService` will not be affected.
 
-
 [esservice-old-type-params]: https://github.com/freshgum-bubbles/typedi/blob/4c76133d3a94e119d5b4d44846213df42d3010a5/src/contrib/es/es-service.decorator.mts#L38
 [esservice-new-type-params]: https://github.com/freshgum-bubbles/typedi/blob/a3825b77fadf6143f282e5cf4b68c084076b8369/src/contrib/es/es-service.decorator.mts#L38
