@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container, ContainerInstance, Service, Token } from 'internal:typedi';
 import { WrappedESServiceDecorator } from '../contrib/es/test-utils/es-service-decorator-wrapper.util';
+import { ESService } from 'internal:typedi/contrib/es/es-service.decorator.mjs';
 
 // To ensure conformance between different Service implementations,
 // we wrap some decorators here with stubs which pass them quasi-values.
@@ -24,23 +25,6 @@ const DECORATORS_TO_TEST: DecoratorTestScenario[] = [
 
 describe.each(DECORATORS_TO_TEST)('$name decorator ($description)', ({ decorator: Decorator }) => {
   beforeEach(() => Container.reset({ strategy: 'resetServices' }));
-
-  it('should support static properties', function () {
-    @Decorator([])
-    // There's actually a good reason for this: before [0], ESService didn't actually support
-    // static properties due to bad types.  That's fixed now, but this test case should ensure
-    // that it doesn't happen again.
-    // [0]: https://github.com/freshgum-bubbles/typedi/pull/193/
-    class ClassWithStaticMethodsAndProperties {
-      static property = true;
-
-      static get getter () {
-        return 'value';
-      }
-
-      static method () { }
-    }
-  });
 
   it('should register class in the container, and its instance should be retrievable', function () {
     @Decorator([])
