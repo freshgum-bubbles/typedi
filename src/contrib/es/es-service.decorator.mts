@@ -122,7 +122,10 @@ export function ESService<TInstance = unknown, TClass extends Constructable<TIns
 ): ESClassDecorator<TClass>;
 
 export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
-  optionsOrDependencies: Omit<ServiceOptions<TInstance>, 'dependencies'> | ServiceOptions<TInstance> | AnyServiceDependency[],
+  optionsOrDependencies:
+    | Omit<ServiceOptions<TInstance>, 'dependencies'>
+    | ServiceOptions<TInstance>
+    | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]
 ): ESClassDecorator<TClass> {
   return (target: TClass, context: ClassDecoratorContext) => {
