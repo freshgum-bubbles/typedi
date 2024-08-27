@@ -1,6 +1,19 @@
-import { Container, Lazy, Service, ServiceIdentifier, SkipSelf, Token } from 'internal:typedi';
+import {
+  // Functions prefixed with `base*` to make accidental usage in test cases harder.
+  Lazy as baseLazy,
+  forwardRef as baseForwardRef,
 
-describe('Lazy()', function () {
+  Container,
+  Service,
+  ServiceIdentifier,
+  SkipSelf,
+  Token,
+} from 'internal:typedi';
+
+describe.each([
+  { fn: baseLazy, name: 'Lazy' },
+  { fn: baseForwardRef, name: 'forwardRef' },
+])('$name(...)', function ({ fn }) {
   /**
    * Create an empty function just to test the interface.
    * This would obviously never work in usage.
@@ -8,15 +21,15 @@ describe('Lazy()', function () {
   let emptyFunction = (): ServiceIdentifier => undefined as unknown as ServiceIdentifier;
 
   it('should accept a function and return an object', () => {
-    expect(() => Lazy(emptyFunction)).not.toThrowError();
-    expect(Lazy(emptyFunction)).toBeInstanceOf(Object);
+    expect(() => fn(emptyFunction)).not.toThrowError();
+    expect(fn(emptyFunction)).toBeInstanceOf(Object);
   });
 
   it('should be usable as a service dependency', () => {
     @Service([])
     class AnotherService {}
 
-    @Service([Lazy(() => AnotherService)])
+    @Service([fn(() => AnotherService)])
     class MyService {
       constructor(public receivedValue: unknown) {}
     }
@@ -32,7 +45,7 @@ describe('Lazy()', function () {
       Child = 'child',
     }
 
-    @Service([[Lazy(() => LOCATION), SkipSelf()], Lazy(() => LOCATION)])
+    @Service([[fn(() => LOCATION), SkipSelf()], fn(() => LOCATION)])
     class MyService {
       constructor(
         public skipSelfLocation: Location,
