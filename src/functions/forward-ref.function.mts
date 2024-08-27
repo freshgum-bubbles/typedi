@@ -4,6 +4,14 @@ import { ContainerInternals } from "../interfaces/container-internals.interface.
 import { InferServiceType } from "../types/infer-service-type.type.mjs";
 import { TypeWrapper } from "../types/type-wrapper.type.mjs";
 
+/**
+ * Create a forward reference to a value.
+ *
+ * This is useful in the case of cyclic dependencies, where two `@Service` calls are referencing each other.
+ * In this case, the cyclic dependency can be broken by this function.
+ *
+ * This function is the equivalent to Angular's `forwardRef`.
+ */
 export function forwardRef<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>>(
     fn: () => TIdentifier
 ): TypeWrapper<TIdentifier, TInstance> {
