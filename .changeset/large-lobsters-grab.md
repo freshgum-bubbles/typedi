@@ -9,7 +9,7 @@ describe its purpose, which is to break cyclic dependency
 chains at the service initialization stage.
 
 The renaming of this function to `forwardRef` more clearly
-explains its function.  The name was 1:1 inspired by Angular,
+explains its function. The name was 1:1 inspired by Angular,
 which contains a function that does exactly the same thing.
 
 Note that, while `lazy` is deprecated, it will still be supported.
