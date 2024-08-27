@@ -1,7 +1,10 @@
+import { DEV } from '../constants/env.const.mjs';
 import { ServiceIdentifier } from '../index.mjs';
 import { InferServiceType } from '../types/infer-service-type.type.mjs';
 import { TypeWrapper } from '../types/type-wrapper.type.mjs';
 import { forwardRef } from './forward-ref.function.mjs';
+
+let DEV_hasWarnedAboutLazyUsage = false;
 
 /**
  * Create a lazy reference to a value.
@@ -17,5 +20,16 @@ import { forwardRef } from './forward-ref.function.mjs';
 export function Lazy<TIdentifier extends ServiceIdentifier, TInstance = InferServiceType<TIdentifier>>(
   fn: () => TIdentifier
 ): TypeWrapper<TIdentifier, TInstance> {
+  if (DEV && !DEV_hasWarnedAboutLazyUsage) {
+    console.warn(
+      [
+        'lazy(...) has now been replaced by forwardRef(...), which provides the same functionality but under a different name.',
+        'To migrate to forwardRef, replace all calls to lazy with ones to forwardRef.',
+      ].join('\n')
+    );
+
+    DEV_hasWarnedAboutLazyUsage = true;
+  }
+
   return forwardRef(fn);
 }
