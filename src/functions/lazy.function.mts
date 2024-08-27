@@ -1,6 +1,4 @@
-import { TYPE_WRAPPER, TypeWrapperStamp } from '../constants/type-wrapper.const.mjs';
 import { ServiceIdentifier } from '../index.mjs';
-import { ContainerInternals } from '../interfaces/container-internals.interface.mjs';
 import { InferServiceType } from '../types/infer-service-type.type.mjs';
 import { TypeWrapper } from '../types/type-wrapper.type.mjs';
 import { forwardRef } from './forward-ref.function.mjs';
