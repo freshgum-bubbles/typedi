@@ -2,7 +2,6 @@ import {
   // Functions prefixed with `base*` to make accidental usage in test cases harder.
   Lazy as baseLazy,
   forwardRef as baseForwardRef,
-
   Container,
   Service,
   ServiceIdentifier,
