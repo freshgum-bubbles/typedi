@@ -1625,54 +1625,20 @@ export class ContainerInstance implements Disposable {
   /**
    * Create a function which disposes the provided object, if it hosts a
    * suitable method for object disposal.
-   * 
+   *
    * @param subject The subject of the disposal operation.
-   * 
-   * @returns A function which will dispose the provided object.
-   * 
-   * @remarks
-   * The return type of the returned function depends upon the declared disposal method.
-   * If {@link Symbol.asyncDispose} is declared, it is more than likely that a {@link Promise} will be returned.
-   * Note that if a disposal method does not exist, void is returned.
+   *
+   * @returns The returned value of the object's disposal method.
    */
   private invokeDisposal (subject: object) {
-    /**
-     * In order of priority, we check for the existence of the following properties:
-     *   1. TypeDI's own {@link DISPOSE} constant.
-     *      This acts as an override for the usual {@link Symbol.dispose} logic.
-     *   2. {@link Symbol.dispose}.
-     *   3. {@link Symbol.asyncDispose}.
-     *   4. For backwards compatibility, we maintain support for an ordinary dispose method.
-     *      However, this remnant is not ideal, as it may result in unexpected behaviour.
-     *
-     * For the uninitiated, both {@link Symbol.dispose} and {@link Symbol.asyncDispose}
-     * are parts of the newly-created (as of 2023) Explicit Resource Management proposal:
-     * <https://tc39.es/proposal-explicit-resource-management/>.
-     *
-     * As a result, we ensure that they exist in the environment before checking for
-     * their existence on the target value.  If the checks below did not exist, if
-     * `Symbol.dispose` evaluated to `undefined`, we would be searching for an
-     * `undefined` property on the target value, which is unwanted behaviour.
-     *
-     * One important distinction from the previous behaviour, however, is that this
-     * method no longer swallows promises from calls to a service's disposal method.
-     * (This is, quite frankly, an absolutely terrible idea.)
-     *
-     * This allows the caller of the `reset`/`remove` calls to actually handle errors,
-     * instead of hoping that the service in question's disposal method won't throw
-     * any unexpected errors.
-     *
-     * One aspect of note is that now, a call to `remove` or `reset` will result in a
-     * `Promise`, which may be rejected.  This is a worthy breakage, as the previous
-     * behaviour of returning nothing means we have a safe migration path to the new
-     * behaviour.  Furthermore, it is a required change, as future revisions of Node
-     * will quit the process in the case of an uncaught rejected promise.
-     */
     const disposeMethod = (
       (subject as ObjectWithDISymbolDispose)[DISPOSE] ??
-      (Symbol.dispose && (subject as ObjectWithSymbolDispose)[Symbol.dispose]) ?? 
-      (Symbol.asyncDispose && (subject as ObjectWithSymbolAsyncDispose)[Symbol.asyncDispose]) ?? 
       // eslint-disable-next-line @typescript-eslint/unbound-method
+
+      /**
+       * Keep compatibility with the old .dispose method for now.
+       * It's something we'd hopefully be able to get rid of in future.
+       */
       (subject as ObjectWithDisposeMethod).dispose
     );
 
