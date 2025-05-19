@@ -1,6 +1,6 @@
 {
   "name": "@freshgum/typedi",
-  "version": "0.7.2",
+  "version": "0.0.0-experimental-1-20250519161454",
   "description": "Elegant Dependency Injection in JavaScript and TypeScript.",
   "homepage": "https://typedi.js.org",
   "main": "./build/esm5/entry/index.mjs",
