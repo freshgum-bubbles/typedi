@@ -35,9 +35,7 @@ import { ESClassDecorator } from '../util/es-class-decorator.type.mjs';
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
-  dependencies: AnyServiceDependency[]
-): ESClassDecorator<TClass>;
+export function ESService<T extends Function>(dependencies: AnyServiceDependency[]): ESClassDecorator<T>;
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -76,10 +74,10 @@ export function ESService<TInstance = unknown, TClass extends Constructable<TIns
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
-  options: Omit<ServiceOptions<TInstance>, 'dependencies'>,
+export function ESService<T extends Function>(
+  options: Omit<ServiceOptions<T>, 'dependencies'>,
   dependencies: AnyServiceDependency[]
-): ESClassDecorator<TClass>;
+): ESClassDecorator<T>;
 
 /**
  * Marks class as a service that can be injected using Container.
@@ -117,26 +115,25 @@ export function ESService<TInstance = unknown, TClass extends Constructable<TIns
  *
  * @returns A decorator which is then used upon a class.
  */
-export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
-  options: ServiceOptionsWithDependencies<TInstance>
-): ESClassDecorator<TClass>;
+export function ESService<T extends Function>(
+  options: ServiceOptionsWithDependencies<Constructable<unknown>>
+): ESClassDecorator<T>;
 
-export function ESService<TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>>(
-  optionsOrDependencies:
-    | Omit<ServiceOptions<TInstance>, 'dependencies'>
-    | ServiceOptions<TInstance>
-    | AnyServiceDependency[],
+export function ESService<T extends Function>(
+  optionsOrDependencies: Omit<ServiceOptions<T>, 'dependencies'> | ServiceOptions<T> | AnyServiceDependency[],
   maybeDependencies?: AnyServiceDependency[]
-): ESClassDecorator<TClass> {
-  return (target: TClass, context: ClassDecoratorContext) => {
+): ESClassDecorator<T> {
+  return (target: T, context: ClassDecoratorContext) => {
     // This is probably overcautious.
     if (context.kind !== 'class') {
       throw new Error('@ESService() must only be used to decorate classes.');
     }
 
     Service(
-      optionsOrDependencies as ServiceOptionsWithoutDependencies<TClass>,
+      optionsOrDependencies as ServiceOptionsWithoutDependencies<T>,
       maybeDependencies as AnyServiceDependency[]
     )(target);
+
+    return target;
   };
 }
