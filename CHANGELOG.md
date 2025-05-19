@@ -1,5 +1,170 @@
 # @freshgum/typedi
 
+## 1.0.0
+
+### Major Changes
+
+- 40c0f8c: **This is a breaking change to the core API**.
+
+  The container no longer provides a default `containerId` parameter for the following methods:
+
+  - `ContainerInstance.ofChild`
+  - `ContainerInstance.of`
+  - `static ContainerInstance.of`
+
+  In retrospect, this was a bad idea. I'll explain this further with the code below.
+
+  ```ts
+  import { Container } from '@freshgum/typedi';
+
+  const c1 = Container.ofChild(Symbol('c1'));
+
+  @Service({ container: c1 }, [])
+  class MyService {}
+
+  const c2 = c1.ofChild();
+
+  c2.get(MyService); // -> ServiceNotFoundError
+  ```
+
+  Ignoring the hints above, the problem with this code may not be obvious at a first glance.
+  While you'd _assume_ the call to `c1.ofChild()` returns a child container of `c1` (which
+  would then inherit its services), it's actually just returned an exact reference to the
+  default container (`Container` itself.)
+
+  This raises a great deal of ambiguity, as it's no longer immediately clear whether a call
+  to these methods does as you would initially expect.
+
+  Therefore, type-safe calls to these methods without a container ID will now raise an error at
+  compile-time.
+  The signature of these methods has been changed to require the container ID parameter.
+
+  **Migrating** away from this behaviour is quite simple: replace all calls to `X.ofChild()`
+  with a reference to the default container (`Container`).
+
+  Whilst I'm not a fan of making breaking changes to the Container, I believe this one makes
+  sense in the pursuit of a safer, more streamlined API -- if you experience any issues with
+  this, please feel free to open a GitHub issue.
+
+### Minor Changes
+
+- e70148c: The `lazy` function has been renamed to `forwardRef`.
+
+  In retrospect, the name of this function didn't clearly
+  describe its purpose, which is to break cyclic dependency
+  chains at the service initialization stage.
+
+  The renaming of this function to `forwardRef` more clearly
+  explains its function. The name was 1:1 inspired by Angular,
+  which contains a function that does exactly the same thing.
+
+  Note that, while `lazy` is deprecated, it will still be supported.
+  The implementation of the `lazy` function has been moved to
+  `forwardRef`, which is a 1:1 replacement for the former.
+
+- 0111aeb: The `ESService` decorator now supports classes with static properties.
+  This was an oversight in the original design of the decorator's signature.
+
+  This change affects the type parameters consumed by `ESService`; the main difference
+  being that there is now a second parameter, `TClass`, which directly pertains to the
+  type of the class being decorated (and thus, the type returned by the decorator.)
+
+  Therefore, the type parameters of the function have changed from [`T = unknown`][esservice-old-type-params]
+  to [`TInstance = unknown, TClass extends Constructable<TInstance> = Constructable<TInstance>`][esservice-new-type-params].
+
+  Current code which relies on the type signature of `ESService` will not be affected.
+
+  [esservice-old-type-params]: https://github.com/freshgum-bubbles/typedi/blob/4c76133d3a94e119d5b4d44846213df42d3010a5/src/contrib/es/es-service.decorator.mts#L38
+  [esservice-new-type-params]: https://github.com/freshgum-bubbles/typedi/blob/a3825b77fadf6143f282e5cf4b68c084076b8369/src/contrib/es/es-service.decorator.mts#L38
+
+- 431fa27: Currently, ESService does not return its target. The usage of the `Constructable` type also causes issues, as it makes
+  the decorator return the wrong type.
+
+  This causes the following error:
+
+  > "Decorator function return type 'void | Constructable<AuthStoreService>' is not assignable to type 'void | typeof AuthStoreService'".
+
+  This occured when I added the decorator to a class which extended another.
+
+  I've updated the decorator to return the target, as opposed to a wrapped version, and this seems to have fixed the issue.
+
+### Patch Changes
+
+- 02fe3cc: The code for virtual tokens (such as `HostContainer()`) has been moved into individual tokens,
+  as opposed to hosting logic for these tokens in `ContainerInstance`.
+
+  This means that we no longer have to check for individual tokens in the container's
+  `.get` code-path, [which has historically been the case.](https://github.com/freshgum-bubbles/typedi/blob/cd4b8437ac14882a0ed4d1964d76e29b32bd1b3e/src/container-instance.class.mts#L331)
+
+  Instead, logic for these tokens is now moved into special tokens called Executable Tokens.
+
+  This yields numerous advantages, one of which being that, should a certain special token go
+  unused, its code can safely be removed from a bundle via dead-code elimination.
+
+  While **this is mostly an internal change**, the concept of Executable Tokens works quite well,
+  and so I'm considering making it part of the public API surface + documentation after further testing.
+
+- ad8f4f6: Dedicated entry-points have been added for web-facing builds <sup>([#184][gh-issue-184])</sup>.
+  You're now able to use modules from contrib/ without relying on a bundler,
+  or importing contrib/ packages separately from `/esm5/`.
+
+  > [!NOTE] > **The changes made here do not impact current UMD / MJS entry-points.**
+  >
+  > If you're using these, you won't experience any changes.
+  > To make use of contrib/ modules, you'll need to switch to the new builds shown above.
+
+  The new entry-points are as follows (all files are under `./build/bundles/`):
+
+  - `typedi.full.min.mjs` <sup>(ES Module format.)</sup>
+  - `typedi.full.mjs`
+  - `typedi.umd.full.js` <sup>([UMD][umd-module-explainer] modules.)</sup>
+  - `typedi.umd.full.min.js`
+
+  You can now do the following:
+
+  ```js
+  import Container, { Contrib } from 'https://unpkg.dev/@freshgum/typedi/build/bundles/typedi.full.mjs';
+
+  // Let's use some modules:
+  const { TransientRef, ES } = Contrib;
+  assert(TransientRef.TransientRefHost);
+  ```
+
+  The same can be done using UMD modules, like so:
+
+  ```html
+  <!doctype html>
+  <html>
+    <head>
+      <!-- ... -->
+    </head>
+    <body>
+      <!-- Be sure to use subresource integrity in production! ;-) -->
+      <script src="https://unpkg.dev/@freshgum/typedi/build/bundles/typedi.umd.full.min.js"></script>
+      <script>
+        const { Container, Contrib } = TypeDI;
+        // ...
+      </script>
+    </body>
+  </html>
+  ```
+
+  > [!TIP]
+  > If you've noticed, you can actually import the Container through unpkg!
+  >
+  > Here's a link to the latest bundles: https://unpkg.dev/browse/@freshgum/typedi/build/bundles/
+
+  ***
+
+  I've been wanting to implement this for a while, but life has repeatedly found itself in the way.
+  When spending some time on it, it was mostly a simple job: the majority of the work lied in creating
+  a new build step to generate a barrel file for contrib/, and then integrating Rollup with that.
+
+  If you're interested, the original code for this lies in [#184][gh-issue-184]. It's actually quite interesting!
+
+  [umd-module-explainer]: https://jameshfisher.com/2020/10/04/what-are-umd-modules/
+  [gh-issue-184]: https://github.com/freshgum-bubbles/typedi/pull/184
+
 ## 0.7.2
 
 ### Patch Changes
