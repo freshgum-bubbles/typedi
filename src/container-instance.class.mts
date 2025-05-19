@@ -614,6 +614,8 @@ export class ContainerInstance implements Disposable {
     /** Restore the flag we set above to its original value. */
     this.isRetrievingPrivateToken = false;
 
+    this.visitor.notifyRetrievalVisitedEnd();
+
     return mapped;
   }
 
@@ -854,6 +856,8 @@ export class ContainerInstance implements Disposable {
     if (newMetadata.eager && newMetadata.scope !== 'transient') {
       this.get(newMetadata.id);
     }
+
+    this.visitor.notifyNewServiceVisitedEnd();
 
     return newMetadata.id;
   }

@@ -108,6 +108,17 @@ export class VisitorCollection implements Disposable {
   }
 
   /**
+   * Notify all attached visitors that the newly-created service has
+   * been fully initialised, and has been returned to the caller.
+   * @internal
+   *
+   * @see {@link ContainerTreeVisitor.visitNewServiceEnd}
+   */
+  public notifyNewServiceVisitedEnd (): void {
+    this.forEachVisitor(visitor => visitor.visitNewServiceEnd?.());
+  }
+
+  /**
    * Notify all attached visitors of a retrieval.
    * @internal
    *
@@ -115,6 +126,17 @@ export class VisitorCollection implements Disposable {
    */
   public notifyRetrievalVisited(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void {
     this.forEachVisitor(visitor => visitor.visitRetrieval?.(identifier, options));
+  }
+
+  /**
+   * Notify all attached visitors that the last retrieval has finished.
+   * This is primarily used for cleaning up data stores.
+   * @internal
+   *
+   * @see {@link ContainerTreeVisitor.visitRetrievalEnd}
+   */
+  public notifyRetrievalVisitedEnd (): void {
+    this.forEachVisitor(visitor => visitor.visitRetrievalEnd?.());
   }
 
   /**

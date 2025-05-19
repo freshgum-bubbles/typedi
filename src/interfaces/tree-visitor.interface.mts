@@ -126,6 +126,7 @@ export interface ContainerTreeVisitor extends Disposable {
    * @param serviceOptions The options of the new service.
    */
   visitNewService?(serviceOptions: ServiceMetadata<unknown>): void;
+  visitNewServiceEnd?(): void;
 
   /**
    * Visit the given container.
@@ -154,6 +155,7 @@ export interface ContainerTreeVisitor extends Disposable {
    * Documented in {@link VisitRetrievalOptions}.
    */
   visitRetrieval?(identifier: ServiceIdentifier<unknown>, options: VisitRetrievalOptions): void;
+  visitRetrievalEnd?(): void;
 }
 
 export type ContainerTreeVisitorWithOrphanedContainerVisitor = SetRequired<
