@@ -39,8 +39,17 @@ import { isArray } from './utils/is-array.util.mjs';
 import { NativeError } from './constants/minification/native-error.const.mjs';
 import { NativeNull } from './constants/minification/native-null.const.mjs';
 import { ExecutableToken, isExecutableToken } from './executable-token.class.mjs';
+import { DEV } from './constants/env.const.mjs';
 
 let defaultContainer!: ContainerInstance;
+
+if (DEV && (typeof Map !== 'function' || typeof Set !== 'function')) {
+  /** In development mode, check that the environment has working Map / Set classes. */
+  console.error([
+    'The container relies upon working Map and Set built-in types.',
+    'Consider loading a polyfill.'
+  ].join('\n'));
+}
 
 /**
  * # The Container.
@@ -453,6 +462,7 @@ export class ContainerInstance implements Disposable {
     /** This should never happen as multi services are masked with custom token in Container.set. */
     if (metadata?.multiple) {
       /* eslint-disable @typescript-eslint/restrict-template-expressions */
+      // TODO: This error message is pretty poor.
       /* istanbul ignore next */
       throw NativeError(`Cannot resolve multiple values for ${identifier} service!`);
       /* eslint-enable @typescript-eslint/restrict-template-expressions */
@@ -763,6 +773,45 @@ export class ContainerInstance implements Disposable {
       throw NativeError('Executable identifiers can not be overridden.');
     }
 
+    if (DEV) {
+      const thisContainer = this;
+
+      const { id, multiple } = serviceOptions;
+
+      // Is the ID already set as a multiple?
+      function getIsMultiple (id: ServiceIdentifier<unknown>) {
+        let currentContainer: ContainerInstance | void = thisContainer;
+
+        while (currentContainer) {
+          if (currentContainer.has(id, false)) {
+            const isMultiple = currentContainer.multiServiceIds.has(id);
+            return isMultiple;
+          }
+
+          currentContainer = currentContainer.parent;
+        }
+      }
+
+      const isMultiple = getIsMultiple(id!) === true; // Prevent `undefined` from evaluating to `true`.
+
+      if (this.has(id!) && multiple !== isMultiple) {
+        console.error([
+          `A value for the "${serviceOptions.id}" service is being set with \`multiple\` as \`${multiple}\`,`,
+          `but this value is already bound with \`multiple\` as \`${!multiple}\`.`,
+          'This isn\'t recommended, as it creates ambiguity between multiple and singular services.',
+          'This behaviour may be changed in a future version.'
+        ].join('\n'));
+      }
+
+      if (typeof id === 'string') {
+        console.error([
+          `A string identifier has been used to define service "${id}".`,
+          'This isn\'t recommended, as it prevents explicit type-checks from taking place.',
+          'This behaviour may be changed in a future version.'
+        ].join('\n'));
+      }
+    }
+
     /**
      * If the service is marked as singleton, we set it in the default container.
      * (And avoid an infinite loop via checking if we are in the default container or not.)
@@ -833,12 +882,6 @@ export class ContainerInstance implements Disposable {
         this.multiServiceIds.set(newMetadata.id, { tokens: [maskedToken] });
       }
 
-      /**
-       * We mask the original metadata with this generated ID, mark the service
-       * as  and continue multiple: false and continue. Marking it as
-       * non-multiple is important otherwise Container.get would refuse to
-       * resolve the value.
-       */
       newMetadata.id = maskedToken;
       newMetadata.multiple = false;
     }
@@ -920,6 +963,7 @@ export class ContainerInstance implements Disposable {
     if (isArray(identifierOrIdentifierArray)) {
       identifierOrIdentifierArray.forEach(id => this.remove(id));
     } else {
+      // XXX: Hang on a second: what about multiple: true?
       const serviceMetadata = this.metadataMap.get(identifierOrIdentifierArray);
 
       if (serviceMetadata) {
@@ -1272,8 +1316,27 @@ export class ContainerInstance implements Disposable {
       if (isArray(factoryMeta)) {
         const [factoryServiceId, factoryServiceMethod] = factoryMeta;
 
+        if (DEV) {
+          console.warn([
+            `Creating an instance of service "${serviceMetadata.id}" using a factory tuple.`,
+            'This is not recommended, as the result of the factory cannot be type-checked.',
+            'To fix this, change the service declaration to the following:',
+            '  @Service({',
+            '    factory: (...) => {}',
+            '  });'
+          ].join('\n'));
+        }
+
         /** Try to get the factory from TypeDI first, if failed, fall back to simply initiating the class. */
         const factoryInstance = this.getOrNull<any>(factoryServiceId) ?? new factoryServiceId();
+
+        if (DEV && typeof factoryInstance[factoryServiceMethod] !== 'function') {
+          console.error([
+            `The factory tuple for service "${serviceMetadata.id}" does not exist.`,
+            'Consider updating it to a valid function declaration, or remove it entirely.'
+          ].join('\n'));
+        }
+
         value = factoryInstance[factoryServiceMethod](this, serviceMetadata.id, parameters);
       } else {
         /** If only a simple function was provided we simply call it. */
@@ -1304,6 +1367,12 @@ export class ContainerInstance implements Disposable {
     }
 
     if (value === EMPTY_VALUE) {
+      if (DEV) {
+        console.error([
+          `The value of service "${serviceMetadata.id}" could not be resolved.`,
+          'This is most likely an internal bug.  Please file an issue.'
+        ].join('\n'));
+      }
       /** This branch should never execute, but better to be safe than sorry. */
       throw new CannotInstantiateValueError(serviceMetadata.id);
     }
@@ -1522,12 +1591,21 @@ export class ContainerInstance implements Disposable {
     const shouldResetValue = force || !!type || !!factory;
 
     if (shouldResetValue) {
-      /** If we wound a function named destroy we call it without any params. */
+      /** If we found a function named destroy, we call it without any params. */
       if (typeof (value as Record<string, unknown>)?.['dispose'] === 'function') {
         try {
           (value as { dispose: CallableFunction }).dispose();
         } catch (error) {
           /** We simply ignore the errors from the destroy function. */
+          if (DEV) {
+            console.error([
+              `The disposal function for service "${serviceMetadata.id}" threw an error.`,
+              'In production, these errors are silently ignored.',
+              'This behaviour may be changed in a future version of TypeDI.'
+            ].join('\n'));
+            console.error(error);
+          }
+          // TODO: is this really a good idea?
         }
       }
 
